@@ -5,4 +5,6 @@ export const navigationStrings = {
     favourites: "favourites",
     playlists: "playlists",
     settings: "settings",
+    home: "home",
+    bottom: "bottom"
 }
