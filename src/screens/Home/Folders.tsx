@@ -3,7 +3,7 @@ import React from 'react'
 
 const Folders = () => {
   return (
-    <View>
+    <View className='bg-[#181a20] w-full h-screen'>
       <Text>Folders</Text>
     </View>
   )
