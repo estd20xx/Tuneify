@@ -1,13 +1,12 @@
-import { View, Text, StatusBar } from 'react-native'
-import React from 'react'
 
+import React from 'react'
+import MainNavigation from './src/mainNavigation/MainNavigation'
+import { StatusBar } from "react-native"
 const App = () => {
   return (
     <>
-      <StatusBar backgroundColor={"rgb(255,255,255)"} barStyle={"dark-content"} />
-      <View className='w-full h-screen bg-green-800'>
-        <Text>App</Text>
-      </View>
+      <StatusBar backgroundColor={"#181a20"} />
+      <MainNavigation />
     </>
   )
 }
