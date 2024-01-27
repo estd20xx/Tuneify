@@ -3,7 +3,7 @@ import React from 'react'
 
 const Artists = () => {
   return (
-    <View>
+    <View className='bg-[#181a20] w-full h-screen'>
       <Text>Artists</Text>
     </View>
   )

@@ -3,8 +3,8 @@ import React from 'react'
 
 const Favourites = () => {
   return (
-    <View>
-      <Text>Favourites</Text>
+    <View className='bg-[#181a20] w-full h-screen flex items-center justify-center'>
+      <Text className='text-white'>Favourites</Text>
     </View>
   )
 }
