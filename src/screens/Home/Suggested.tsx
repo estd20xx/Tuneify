@@ -1,24 +1,43 @@
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
-import axios from "axios"
+import { View, Text, ScrollView, TouchableOpacity, FlatList, Image } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import homeHelper from '../../helpers/suggestedHelper'
+import { home_url } from '../../api/api'
+import { AlbumTypes, ChartsTypes, PlaylistTypes, TrendingAlbumTypes, TrendingSongTypes } from '../../Types/Types'
+import Albums from '../../components/Albums'
+import Playlist from '../../components/Playlist'
+import Charts from '../../components/Charts'
+import TrendingSong from '../../components/TrendingSong'
+import TrendingAlbum from '../../components/TrendingAlbum'
 const Suggested = () => {
-  const [albums, setAlbums] = useState()
+  const [albums, setAlbums] = useState<AlbumTypes[]>([])
+  const [plst, setPlst] = useState<PlaylistTypes[]>([])
+  const [chst, setChst] = useState<ChartsTypes[]>([])
+  const [trndSong, setTrndSong] = useState<TrendingSongTypes[]>([])
+  const [trndAlb, setTrndAlb] = useState<TrendingAlbumTypes[]>([])
   const getData = async () => {
     try {
-      const result = await axios.get("https://saavn.me/modules?language=hindi,english,nepali")
-      console.log(result.data.data.albums[3].image[2].link)
+      const result = await homeHelper.getData(home_url)
+      setAlbums(result.data.albums)
+      setPlst(result.data.playlists)
+      setChst(result.data.charts)
+      setTrndSong(result.data.trending["songs"])
+      setTrndAlb(result.data.trending["albums"])
     } catch (error) {
       console.log(error)
     }
   }
+  useEffect(() => {
+    getData()
+  }, [])
   return (
     <ScrollView>
-      <View className='bg-[#181a20] w-full h-screen flex items-center justify-center'>
-        <TouchableOpacity className=' bg-green-500 h-10 px-5 flex items-center justify-center rounded-lg ' onPress={getData}>
-          <Text className='text-white'>Suggested</Text>
-        </TouchableOpacity>
+      <View className='bg-[#181a20] w-full h-auto pb-10'>
+        <TrendingAlbum data={trndAlb} topic={"Trending Albums"} />
+        <Playlist data={plst} topic={"Playlists"} />
+        <Albums data={albums} topic={"Albums"} />
+        <Charts data={chst} topic={"Top Flavour"} />
+        {trndSong.length > 0 && <TrendingSong data={trndSong} topic='Trending Song' />}
       </View>
-      <View className='w-full h-screen'></View>
     </ScrollView>
   )
 }
