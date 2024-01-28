@@ -64,3 +64,4 @@ yarn-error.log
 .env
 # testing
 /coverage
+api/
