@@ -9,11 +9,12 @@ import Playlists from '../screens/Playlists'
 import Settings from '../screens/Settings'
 import Splash from '../screens/Splash'
 import Bottom from './Bottom'
+import { View, Text } from 'react-native'
 const Stack = createNativeStackNavigator()
 const MainNavigation = () => {
   return (
     <Container>
-      <Stack.Navigator>
+      <Stack.Navigator >
         <Stack.Screen name={navigationStrings.splash} component={Splash} options={{ headerShown: false }} />
         <Stack.Screen name={navigationStrings.homePage} component={HomePage} options={{ headerShown: false }} />
         <Stack.Screen name={navigationStrings.home} component={Home} options={{ headerShown: false }} />
