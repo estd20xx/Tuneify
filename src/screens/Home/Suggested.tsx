@@ -1,11 +1,12 @@
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import axios from "axios"
 const Suggested = () => {
+  const [albums, setAlbums] = useState()
   const getData = async () => {
     try {
-      const result = await axios.get("https://www.jiosaavn.com/album/kun-faya-kun-lofi-version-/B2H,91yobww_")
-      console.log(result.data)
+      const result = await axios.get("https://saavn.me/modules?language=hindi,english,nepali")
+      console.log(result.data.data.albums[3].image[2].link)
     } catch (error) {
       console.log(error)
     }
@@ -17,6 +18,7 @@ const Suggested = () => {
           <Text className='text-white'>Suggested</Text>
         </TouchableOpacity>
       </View>
+      <View className='w-full h-screen'></View>
     </ScrollView>
   )
 }

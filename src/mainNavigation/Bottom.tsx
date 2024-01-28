@@ -12,14 +12,16 @@ import Settings from '../screens/Settings'
 const Tab = createBottomTabNavigator()
 const BottomNavigation = () => {
   return (
-    <Tab.Navigator screenOptions={{ tabBarActiveTintColor: "#ff8216", tabBarInactiveTintColor: "#a1a0a3", tabBarLabelStyle: { marginBottom: 3, fontSize: 16 }, tabBarStyle: { backgroundColor: "#181a20", height: 60, paddingTop: 7 } }}   >
+
+    <Tab.Navigator screenOptions={{ tabBarActiveTintColor: "#ff8216", tabBarInactiveTintColor: "#a1a0a3", tabBarLabelStyle: { marginBottom: 10, fontSize: 11, marginTop: 0 }, tabBarStyle: { backgroundColor: "#181a20", height: 55, paddingTop: 6 } }}   >
       <Tab.Screen name={navigationStrings.home} component={Home} options={{
         headerShown: false, tabBarIcon: ({ color, focused }) => {
           return (
             <>
               {
                 focused ?
-                  <HomeFocused name={"home"} color={color} size={35} /> : <HomeIcon name="home" size={29} color={"gray"} />
+                  <HomeFocused name={"home"} color={color} size={25} /> :
+                  <HomeIcon name="home" size={20} color={"gray"} />
               }
             </>
           )
@@ -30,8 +32,8 @@ const BottomNavigation = () => {
           return (
             <>
               {focused ?
-                <HomeIcon color={color} name='heart-fill' size={29} /> :
-                <HomeIcon color={color} name='heart' size={29} />
+                <HomeIcon color={color} name='heart-fill' size={20} /> :
+                <HomeIcon color={color} name='heart' size={20} />
               }
             </>
           )
@@ -42,8 +44,8 @@ const BottomNavigation = () => {
           return (
             <>
               {focused ?
-                <PlayListIcon color={color} name='playlist-music' size={29} /> :
-                <PlayListIcon color={color} name='playlist-music-outline' size={29} />
+                <PlayListIcon color={color} name='playlist-music' size={20} /> :
+                <PlayListIcon color={color} name='playlist-music-outline' size={20} />
               }
             </>
           )
@@ -54,15 +56,14 @@ const BottomNavigation = () => {
           return (
             <>
               {focused ?
-                <SettingsIcon color={color} name='settings' size={29} /> :
-                <SettingsIcon color={color} name='settings-outline' size={29} />
+                <SettingsIcon color={color} name='settings' size={20} /> :
+                <SettingsIcon color={color} name='settings-outline' size={20} />
               }
             </>
           )
         }
       }} />
     </Tab.Navigator >
-
   )
 }
 export default BottomNavigation
