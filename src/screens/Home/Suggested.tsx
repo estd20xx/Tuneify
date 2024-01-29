@@ -8,6 +8,7 @@ import Playlist from '../../components/Playlist'
 import Charts from '../../components/Charts'
 import TrendingSong from '../../components/TrendingSong'
 import TrendingAlbum from '../../components/TrendingAlbum'
+import SuggestedSkeleton from '../../components/skeleton/SuggestedSkeleton'
 const Suggested = () => {
   const [albums, setAlbums] = useState<AlbumTypes[]>([])
   const [plst, setPlst] = useState<PlaylistTypes[]>([])
@@ -32,6 +33,7 @@ const Suggested = () => {
   return (
     <ScrollView>
       <View className='bg-[#181a20] w-full h-auto pb-10'>
+        {/* <SuggestedSkeleton /> */}
         <TrendingAlbum data={trndAlb} topic={"Trending Albums"} />
         <Playlist data={plst} topic={"Playlists"} />
         <Albums data={albums} topic={"Albums"} />
