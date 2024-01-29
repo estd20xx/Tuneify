@@ -12,7 +12,7 @@ class MainActivity : ReactActivity() {
    * rendering of the component.
    */
   override fun getMainComponentName(): String = "Musify"
-
+  AppCenter.start(application, "3f1b1b6d-19c8-4d64-8976-80f708381287", Analytics::class.java, Crashes::class.java)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(null)
   }
