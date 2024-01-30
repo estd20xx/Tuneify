@@ -41,7 +41,7 @@ const Songs = () => {
                 </View>
                 <View className='w-[70%]  h-full pl-2 flex justify-evenly'>
                   <Text className='text-white text-xl font-semibold tracking-wider'>{currentSong.label}</Text>
-                  <Text className='text-[#a1a0a3] tracking-wider'>{currentSong.primaryArtists}</Text>
+                  <Text  className='text-[#a1a0a3] tracking-wider'>{currentSong.primaryArtists}</Text>
                 </View>
               </View>
               <View className='w-1/5 h-full flex items-center justify-evenly flex-row'>
