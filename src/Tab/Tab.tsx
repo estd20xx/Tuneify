@@ -49,7 +49,7 @@ const TabBar = () => {
                     fontWeight: "700"
                 }
             }}>
-                <Tab.Screen name="Suggested" component={Suggested} />
+                {/* <Tab.Screen name="Suggested" component={Suggested} /> */}
                 <Tab.Screen name="Songs" component={Songs} />
                 <Tab.Screen name="Artists" component={Artists} />
                 <Tab.Screen name="Albums" component={Albums} />
