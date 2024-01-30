@@ -151,3 +151,33 @@ export interface TrendingAlbumPropsTypes {
     data: TrendingAlbumTypes[]
     topic: string
 }
+
+export interface DownliadUrlType {
+    quality: string
+    link: string
+}
+
+export interface SongsTypes {
+    id: string,
+    name: string
+    type: string
+    album: {
+        id: string
+        name: string
+        url: string
+    }
+    year: string
+    releaseData: string
+    duration: string
+    label: string
+    primaryArtists: string
+    featuredArtists: string
+    explicitContent: string
+    playCount: string
+    language: string
+    hashLyrics: string
+    url: string
+    copyright: string
+    image: ImageType[]
+    downloadUrl: DownliadUrlType[]
+}

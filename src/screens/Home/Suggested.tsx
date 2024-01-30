@@ -31,7 +31,7 @@ const Suggested = () => {
     getData()
   }, [])
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View className='bg-[#181a20] w-full h-auto pb-10'>
         {/* <SuggestedSkeleton /> */}
         <TrendingAlbum data={trndAlb} topic={"Trending Albums"} />

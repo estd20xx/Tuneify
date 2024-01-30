@@ -15,18 +15,17 @@ class Homehelper {
             return error
         }
     }
-    getRecentyPlayedSong = async () => {
-
+    randomGenerator = (initial: number, final: number): number => {
+        const randomNumber = Math.floor(Math.random() * final) + initial;
+        return randomNumber
     }
-    getMoreArtists = async () => {
-
+    getRelatedSongs = () => {
+        const songsArray = ["fuck+love", "love+you", "sacrifice", "forever", "watch", "loyal", "east+side", "make+me+love", "angel", "worthit"]
+        return songsArray[this.randomGenerator(0, 10)]
     }
-    getMostPlayed = async () => {
-
-    }
-    getTrndingTopic = async () => {
-    }
-    getTrendingAlbums = async () => {
+    getSongs = async () => {
+        const songs = `https://saavn.me/search/songs?query=love+you`
+        return songs
     }
     getHomeData = async (url: string) => {
         try {
