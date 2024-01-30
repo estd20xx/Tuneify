@@ -36,12 +36,12 @@ const Songs = () => {
           return (
             <View key={currentSong.id} className='w-full h-24  mb-2 flex flex-row'>
               <View className='w-4/5  h-full pl-3 flex flex-row'>
-                <View className='w-24 rounded-md overflow-hidden'>
+                <View className='w-24 rounded-lg overflow-hidden'>
                   <Image source={{ uri: currentSong.image[2].link }} className='h-full' />
                 </View>
-                <View className='w-[70%]  h-full pl-2 flex justify-evenly'>
-                  <Text className='text-white text-xl font-semibold tracking-wider'>{currentSong.label}</Text>
-                  <Text  className='text-[#a1a0a3] tracking-wider'>{currentSong.primaryArtists}</Text>
+                <View className='w-[70%]  h-full pl-3 flex justify-evenly'>
+                  <Text className='text-white text-lg font-semibold tracking-wider'>{currentSong.label}</Text>
+                  <Text className='text-[#a1a0a3] tracking-wider'>{currentSong.primaryArtists}</Text>
                 </View>
               </View>
               <View className='w-1/5 h-full flex items-center justify-evenly flex-row'>
