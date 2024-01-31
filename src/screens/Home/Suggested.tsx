@@ -15,12 +15,14 @@ const Suggested = () => {
   const [chst, setChst] = useState<ChartsTypes[]>([])
   const [trndSong, setTrndSong] = useState<TrendingSongTypes[]>([])
   const [trndAlb, setTrndAlb] = useState<TrendingAlbumTypes[]>([])
+  const [ld, setld] = useState<boolean>(true)
   const getData = async () => {
     try {
       const result = await homeHelper.getData(home_url)
       setAlbums(result.data.albums)
       setPlst(result.data.playlists)
       setChst(result.data.charts)
+      setld(false)
       setTrndSong(result.data.trending["songs"])
       setTrndAlb(result.data.trending["albums"])
     } catch (error) {
@@ -33,12 +35,21 @@ const Suggested = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View className='bg-[#181a20] w-full h-auto pb-10'>
-        {/* <SuggestedSkeleton /> */}
-        <TrendingAlbum data={trndAlb} topic={"Trending Albums"} />
-        <Playlist data={plst} topic={"Playlists"} />
-        <Albums data={albums} topic={"Albums"} />
-        <Charts data={chst} topic={"Top Flavour"} />
-        {trndSong.length > 0 && <TrendingSong data={trndSong} topic='Trending Song' />}
+        {ld ?
+          <View>
+            <SuggestedSkeleton />
+            <SuggestedSkeleton />
+            <SuggestedSkeleton />
+            <SuggestedSkeleton />
+          </View> :
+          <>
+            <TrendingAlbum data={trndAlb} topic={"Trending Albums"} />
+            <Playlist data={plst} topic={"Playlists"} />
+            <Albums data={albums} topic={"Albums"} />
+            <Charts data={chst} topic={"Top Flavour"} />
+            {trndSong.length > 0 && <TrendingSong data={trndSong} topic='Trending Song' />}
+          </>
+        }
       </View>
     </ScrollView>
   )
