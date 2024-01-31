@@ -181,3 +181,38 @@ export interface SongsTypes {
     image: ImageType[]
     downloadUrl: DownliadUrlType[]
 }
+
+export interface CustomPArt {
+    id: string
+    name: string
+    url: string
+    image: boolean
+    type: boolean
+    role: boolean
+}
+export interface CArt {
+    id: string
+    name: string
+    url: string
+    image: boolean
+    type: boolean
+    role: boolean
+}
+export interface SeperateAlbumTypes {
+    id: string
+    name: string
+    year: string
+    type: string
+    playCount: string
+    language: string
+    explicitContent: string
+    songCount: string
+    url: string
+    primaryArtists: CustomPArt[]
+    featuredArtists: []
+    artist: CArt[]
+    image: ImageType[]
+}
+export interface SeperateAlbumDataPropsTypes {
+    data: SeperateAlbumTypes
+}
