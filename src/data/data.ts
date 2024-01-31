@@ -16,18 +16,18 @@ import Splash from "../screens/Splash";
 import HomePage from "../screens/HomePage";
 import BottomNavigation from "../mainNavigation/Bottom";
 export const tabBar = [
-    {
-        name: "Suggested",
-        component: Suggested
-    },
-    {
-        name: "Songs",
-        component: Songs
-    },
-    {
-        name: "Artists",
-        component: Artists
-    },
+    // {
+    //     name: "Suggested",
+    //     component: Suggested
+    // },
+    // {
+    //     name: "Songs",
+    //     component: Songs
+    // },
+    // {
+    //     name: "Artists",
+    //     component: Artists
+    // },
     {
         name: "Albums",
         component: Albums
