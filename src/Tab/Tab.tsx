@@ -34,9 +34,9 @@ const TabBar = () => {
                     fontWeight: "700"
                 }
             }}>
-                {tabBar.map((bar, index) => {
+                {tabBar.map((bar) => {
                     return (
-                        <Tab.Screen name={bar.name} component={bar.component} key={index} />
+                        <Tab.Screen name={bar.name} component={bar.component} key={bar.name} />
                     )
                 })}
             </Tab.Navigator>

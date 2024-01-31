@@ -22,7 +22,7 @@ const BottomNavigation = () => {
                 </>
               )
             }
-          }} key={index} />
+          }} key={cTab.name} />
         )
       })}
     </Tab.Navigator >
