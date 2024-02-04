@@ -10,7 +10,7 @@ const Songs = () => {
   const [sng, setSng] = useState<SongsTypes[]>([])
   const getData = async () => {
     try {
-      const getRelateedSongs = await homeHelper.getData(`https://saavn.me/search/songs?query=codependent`)
+      const getRelateedSongs = await homeHelper.getData(`https://musify-api-red-gula.vercel.app/search/songs?query=codependent`)
       // console.log(getRelateedSongs.data.results)
       setSng(getRelateedSongs.data.results)
     } catch (error) {
