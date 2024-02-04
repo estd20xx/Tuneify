@@ -15,6 +15,7 @@ import SettingsIcon from "react-native-vector-icons/Ionicons"
 import Splash from "../screens/Splash";
 import HomePage from "../screens/HomePage";
 import BottomNavigation from "../mainNavigation/Bottom";
+import Onboading from "../screens/onboading/Onboading";
 export const tabBar = [
     {
         name: "Suggested",
@@ -81,6 +82,10 @@ export const bottomTab = [
 ]
 
 export const MainNavigationItems = [
+    {
+        name: navigationStrings.onboarding,
+        component: Onboading
+    },
     {
         name: navigationStrings.splash,
         component: Splash

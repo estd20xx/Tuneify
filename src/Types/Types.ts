@@ -21,10 +21,14 @@ type RootStackParamList = {
     bottom: undefined
 };
 export type splashScreen = NativeStackNavigationProp<RootStackParamList, "splash">;
+export type onBoardingScreen = NativeStackNavigationProp<RootStackParamList, "onboarding">
 export interface SplashScreenPropsTypes {
     navigation: splashScreen;
 }
 
+export interface OnBoardingPropsTypes {
+    navigation: onBoardingScreen
+}
 // ===== Album types
 export interface ImageType {
     quality: string
