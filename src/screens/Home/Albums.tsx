@@ -10,7 +10,7 @@ const Albums = () => {
   const [isL, setIsL] = useState<boolean>(true)
   const ablumDatFetcher = async () => {
     try {
-      const data = await homeHelper.getData("https://saavn.me/search/albums?query=rockstar")
+      const data = await homeHelper.getData("https://musify-api-red-gula.vercel.app/search/albums?query=rockstar")
       setCAlb(data.data.results)
       setIsL(false)
     } catch (error) {
