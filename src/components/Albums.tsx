@@ -5,13 +5,13 @@ const Albums: React.FC<AlbumDataProps> = ({ data, topic }) => {
     return (
         <View className='w-full h-auto  mt-3 '>
             <View className='w-full pl-3 h-10 flex items-center flex-row  mb-3'>
-                <Text className='text-2xl text-white font-semibold tracking-widest'>{topic}</Text>
+                <Text className='text-xl text-white font-semibold tracking-widest'>{topic}</Text>
             </View>
             <FlatList
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 data={data}
-                keyExtractor={(item)=>item.id}
+                keyExtractor={(item) => item.id}
                 initialNumToRender={3}
                 renderItem={({ item }) => {
                     return (
@@ -19,9 +19,9 @@ const Albums: React.FC<AlbumDataProps> = ({ data, topic }) => {
                             <View className=' h-36 w-36  rounded-3xl overflow-hidden'>
                                 <Image source={{ uri: item.image[2].link }} className='w-full h-full' />
                             </View>
-                            <View className=' w-full h-9 flex items-center justify-center'>
-                                <Text className='text-white text-xl tracking-wider font-semibold '>
-                                    {item.name.length > 10 ? item.name.slice(0, 10) + ".." : item.name}
+                            <View className=' w-full h-9 flex items-center  justify-center'>
+                                <Text className='text-white text-sm tracking-wider font-semibold '>
+                                    {item.name.length > 10 ? item.name.slice(0, 14) + ".." : item.name}
                                 </Text>
                             </View>
                         </View>

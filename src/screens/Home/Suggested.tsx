@@ -1,8 +1,14 @@
-import { View, Text, ScrollView, TouchableOpacity, FlatList, Image } from 'react-native'
+import { View, ScrollView, } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import homeHelper from '../../helpers/suggestedHelper'
 import { home_url } from '../../api/api'
-import { AlbumTypes, ChartsTypes, PlaylistTypes, TrendingAlbumTypes, TrendingSongTypes } from '../../Types/Types'
+import {
+  AlbumTypes,
+  ChartsTypes,
+  PlaylistTypes,
+  TrendingAlbumTypes,
+  TrendingSongTypes
+} from '../../Types/Types'
 import Albums from '../../components/Albums'
 import Playlist from '../../components/Playlist'
 import Charts from '../../components/Charts'
@@ -15,14 +21,14 @@ const Suggested = () => {
   const [chst, setChst] = useState<ChartsTypes[]>([])
   const [trndSong, setTrndSong] = useState<TrendingSongTypes[]>([])
   const [trndAlb, setTrndAlb] = useState<TrendingAlbumTypes[]>([])
-  const [ld, setld] = useState<boolean>(true)
+  const [ld, setLd] = useState<boolean>(true)
   const getData = async () => {
     try {
       const result = await homeHelper.getData(home_url)
       setAlbums(result.data.albums)
       setPlst(result.data.playlists)
       setChst(result.data.charts)
-      setld(false)
+      setLd(false)
       setTrndSong(result.data.trending["songs"])
       setTrndAlb(result.data.trending["albums"])
     } catch (error) {
