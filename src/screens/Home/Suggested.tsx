@@ -1,5 +1,5 @@
-import { View, ScrollView, } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, ScrollView, RefreshControl } from 'react-native'
+import React, { useEffect, useState, useCallback } from 'react'
 import homeHelper from '../../helpers/suggestedHelper'
 import { home_url } from '../../api/api'
 import {
@@ -22,8 +22,19 @@ const Suggested = () => {
   const [trndSong, setTrndSong] = useState<TrendingSongTypes[]>([])
   const [trndAlb, setTrndAlb] = useState<TrendingAlbumTypes[]>([])
   const [ld, setLd] = useState<boolean>(true)
-  const getData = async () => {
+
+  const [refreshing, seTFe] = useState(false)
+  const wait = (timeout: number) => {
+    return new Promise(resolve => setTimeout(resolve, timeout))
+  }
+  const onRefresh = useCallback(async () => {
+    seTFe(true)
+    getData()
+    wait(2000).then(() => seTFe(false))
+  }, [])
+  const getData = useCallback(async () => {
     try {
+
       const result = await homeHelper.getData(home_url)
       setAlbums(result.data.albums)
       setPlst(result.data.playlists)
@@ -34,12 +45,14 @@ const Suggested = () => {
     } catch (error) {
       console.log(error)
     }
-  }
+  }, [refreshing])
   useEffect(() => {
     getData()
   }, [])
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }>
       <View className='bg-[#181a20] w-full h-auto pb-10'>
         {ld ?
           <View>
