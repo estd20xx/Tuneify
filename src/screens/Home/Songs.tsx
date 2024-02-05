@@ -11,7 +11,6 @@ const Songs = () => {
   const getData = async () => {
     try {
       const getRelateedSongs = await homeHelper.getData(`https://musify-api-red-gula.vercel.app/search/songs?query=codependent`)
-      // console.log(getRelateedSongs.data.results)
       setSng(getRelateedSongs.data.results)
     } catch (error) {
       console.log(error)
@@ -21,7 +20,7 @@ const Songs = () => {
     getData()
   }, [])
   return (
-    <View className='bg-[#181a20] w-full h-auto pt-2'>
+    <View className='bg-[#181a20] w-full h-auto pt-2' >
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className='w-full h-14  flex  flex-row'>
           <View className='w-1/2  h-full flex justify-center pl-3'>

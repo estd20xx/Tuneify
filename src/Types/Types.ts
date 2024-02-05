@@ -1,4 +1,5 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import HomeIcon from "react-native-vector-icons/Octicons"
 export interface NavigationStringsTypes {
     splash: string
     onboarding: string
@@ -224,4 +225,14 @@ export interface OnBoardingDataTypes {
     first: string
     second: string
     third: string
+}
+
+export interface ItemTypes {
+    route: string;
+    label: string;
+    ICON:typeof HomeIcon;
+    icon: string;
+    component: () => React.JSX.Element;
+    color: string;
+    alphaClr: string;
 }

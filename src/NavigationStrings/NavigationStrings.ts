@@ -6,5 +6,7 @@ export const navigationStrings = {
     playlists: "playlists",
     settings: "settings",
     home: "home",
-    bottom: "bottom"
+    bottom: "bottom",
+    testBottom: "testBottom",
+    enrtyPoint:"entryPoint"
 }

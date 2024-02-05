@@ -8,7 +8,8 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "cache": " react-native start --reset-cache"
+    "cache": " react-native start --reset-cache",
+    "build:release": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
     "@react-native-community/slider": "^4.5.0",

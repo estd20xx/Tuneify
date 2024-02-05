@@ -16,7 +16,10 @@ import Splash from "../screens/Splash";
 import HomePage from "../screens/HomePage";
 import BottomNavigation from "../mainNavigation/Bottom";
 import Onboading from "../screens/onboading/Onboading";
-import { OnBoardingDataTypes } from "../Types/Types";
+import { ItemTypes, OnBoardingDataTypes } from "../Types/Types";
+import {} from "react-native-vector-icons"
+import TestBottom from "../screens/TestBottom";
+import EntryPoint from "../screens/EntryPoint";
 export const tabBar = [
     {
         name: "Suggested",
@@ -115,6 +118,14 @@ export const MainNavigationItems = [
         name: navigationStrings.bottom,
         component: BottomNavigation
     },
+    {
+        name: navigationStrings.testBottom,
+        component: TestBottom
+    },
+    {
+        name: navigationStrings.enrtyPoint,
+        component: EntryPoint
+    },
 ]
 
 
@@ -136,3 +147,10 @@ export const onboardingData: OnBoardingDataTypes[] = [
         third: "Musify now!"
     },
 ]
+
+export const TabArr: ItemTypes[] = [
+    { route: 'Home', label: 'Home', ICON: HomeIcon, icon: 'home', component: Settings, color: "green", alphaClr: "red" },
+    { route: 'Search', label: 'Search', ICON: HomeIcon, icon: 'home', component: Favourites, color: "green", alphaClr: "red" },
+    { route: 'Add', label: 'Add New', ICON: HomeIcon, icon: 'home', component: TestBottom, color: "green", alphaClr: "red" },
+    { route: 'Account', label: 'Account', ICON: HomeIcon, icon: 'home', component: EntryPoint, color: "green", alphaClr: "red" },
+];
