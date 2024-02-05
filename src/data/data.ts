@@ -16,6 +16,7 @@ import Splash from "../screens/Splash";
 import HomePage from "../screens/HomePage";
 import BottomNavigation from "../mainNavigation/Bottom";
 import Onboading from "../screens/onboading/Onboading";
+import { OnBoardingDataTypes } from "../Types/Types";
 export const tabBar = [
     {
         name: "Suggested",
@@ -83,12 +84,12 @@ export const bottomTab = [
 
 export const MainNavigationItems = [
     {
-        name: navigationStrings.onboarding,
-        component: Onboading
-    },
-    {
         name: navigationStrings.splash,
         component: Splash
+    },
+    {
+        name: navigationStrings.onboarding,
+        component: Onboading
     },
     {
         name: navigationStrings.homePage,
@@ -113,5 +114,25 @@ export const MainNavigationItems = [
     {
         name: navigationStrings.bottom,
         component: BottomNavigation
+    },
+]
+
+
+
+export const onboardingData: OnBoardingDataTypes[] = [
+    {
+        first: "User friendly mp3",
+        second: "music player for",
+        third: "your device"
+    },
+    {
+        first: "We provide a better",
+        second: "audio experience",
+        third: "than others"
+    },
+    {
+        first: "Listen to the best",
+        second: "audio & music with",
+        third: "Musify now!"
     },
 ]

@@ -4,8 +4,8 @@ import { SplashScreenPropsTypes } from '../Types/Types'
 const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      navigation.push("bottom")
-    }, 100);
+      navigation.push("onboarding")
+    }, 1000);
     return () => { clearTimeout(timeOut) }
   }, [])
   return (

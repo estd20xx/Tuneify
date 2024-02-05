@@ -220,3 +220,8 @@ export interface SeperateAlbumTypes {
 export interface SeperateAlbumDataPropsTypes {
     data: SeperateAlbumTypes
 }
+export interface OnBoardingDataTypes {
+    first: string
+    second: string
+    third: string
+}
