@@ -1,24 +1,16 @@
-import { View, Text, ScrollView, FlatList, Image } from 'react-native'
+import { View, ScrollView, } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import homeHelper from '../../helpers/suggestedHelper'
 import { SeperateAlbumTypes } from '../../Types/Types'
 import SeperateAlbum from '../../components/SeperateAlbum'
 import SeperateSkeleton from '../../components/skeleton/SeperateAlbumSkeleton';
-
+import AlbumService from '../../services/album.service'
+import { albumsApi } from '../../api/api'
+const service = new AlbumService(albumsApi)
 const Albums = () => {
   const [cAlb, setCAlb] = useState<SeperateAlbumTypes[]>([])
   const [isL, setIsL] = useState<boolean>(true)
-  const ablumDatFetcher = async () => {
-    try {
-      const data = await homeHelper.getData("https://musify-api-red-gula.vercel.app/search/albums?query=rockstar")
-      setCAlb(data.data.results)
-      setIsL(false)
-    } catch (error) {
-      console.log(error)
-    }
-  }
   useEffect(() => {
-    ablumDatFetcher()
+    service.getAlbums(setCAlb, setIsL)
   }, [])
   return (
     <ScrollView>
