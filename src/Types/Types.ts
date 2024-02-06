@@ -192,17 +192,17 @@ export interface CustomPArt {
     name: string
     url: string
     image: boolean
-    type: boolean
-    role: boolean
+    type: string
+    role: string
 }
-export interface CArt {
-    id: string
-    name: string
-    url: string
-    image: boolean
-    type: boolean
-    role: boolean
-}
+// export interface CArt {
+//     id: string
+//     name: string
+//     url: string
+//     image: boolean
+//     type: boolean
+//     role: boolean
+// }
 export interface SeperateAlbumTypes {
     id: string
     name: string
@@ -215,7 +215,7 @@ export interface SeperateAlbumTypes {
     url: string
     primaryArtists: CustomPArt[]
     featuredArtists: []
-    artist: CArt[]
+    artist: CustomPArt[]
     image: ImageType[]
 }
 export interface SeperateAlbumDataPropsTypes {
@@ -226,11 +226,32 @@ export interface OnBoardingDataTypes {
     second: string
     third: string
 }
+interface Tr {
+    albums: TrendingAlbumTypes[]
+    songs: TrendingSongTypes[]
+}
+
+export interface SuggestedDataInterfaceChild {
+    albums: AlbumTypes[]
+    playlists: PlaylistTypes[]
+    charts: ChartsTypes[]
+    trending: Tr
+}
+export interface Http {
+    data: SuggestedDataInterfaceChild
+}
+
+// interface Res {
+//     results: SongsTypes[]
+// }
+// export interface HttpS {
+//     data: Res
+// }
 
 export interface ItemTypes {
     route: string;
     label: string;
-    ICON:typeof HomeIcon;
+    ICON: typeof HomeIcon;
     icon: string;
     component: () => React.JSX.Element;
     color: string;
