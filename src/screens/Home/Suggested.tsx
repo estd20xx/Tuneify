@@ -7,12 +7,7 @@ import {
   TrendingAlbumTypes,
   TrendingSongTypes,
 } from '../../Types/Types'
-import Albums from '../../components/Albums'
-import Playlist from '../../components/Playlist'
-import Charts from '../../components/Charts'
-import TrendingSong from '../../components/TrendingSong'
-import TrendingAlbum from '../../components/TrendingAlbum'
-import SuggestedSkeleton from '../../components/skeleton/SuggestedSkeleton'
+import { component } from "../../constants/screens"
 import SuggestedServices from '../../services/suggested.service'
 const service = new SuggestedServices()
 const Suggested = () => {
@@ -25,11 +20,11 @@ const Suggested = () => {
   const [ref, setRef] = useState(false)
   const onRefresh = useCallback(async () => {
     setRef(true)
-    service.getSuggestedData(setAlbums,setPlst, setChst,setLd,setTrndSong,setTrndAlb)
+    service.getSuggestedData(setAlbums, setPlst, setChst, setLd, setTrndSong, setTrndAlb)
     await service.wait(2000).then(() => setRef(false))
   }, [])
   useEffect(() => {
-    service.getSuggestedData(setAlbums,setPlst, setChst,setLd,setTrndSong,setTrndAlb)
+    service.getSuggestedData(setAlbums, setPlst, setChst, setLd, setTrndSong, setTrndAlb)
   }, [])
   return (
     <ScrollView showsVerticalScrollIndicator={false} refreshControl={
@@ -38,17 +33,17 @@ const Suggested = () => {
       <View className='bg-[#181a20] w-full h-auto pb-10'>
         {ld ?
           <View>
-            <SuggestedSkeleton />
-            <SuggestedSkeleton />
-            <SuggestedSkeleton />
-            <SuggestedSkeleton />
+            <component.CSuggestedSkeleton />
+            <component.CSuggestedSkeleton />
+            <component.CSuggestedSkeleton />
+            <component.CSuggestedSkeleton />
           </View> :
           <>
-            <TrendingAlbum data={trndAlb} topic={"Trending Albums"} />
-            <Playlist data={plst} topic={"Playlists"} />
-            <Albums data={albums} topic={"Albums"} />
-            <Charts data={chst} topic={"Top Flavour"} />
-            {trndSong.length > 0 && <TrendingSong data={trndSong} topic='Trending Song' />}
+            <component.CTrendingAlbum data={trndAlb} topic={"Trending Albums"} />
+            <component.CPlaylist data={plst} topic={"Playlists"} />
+            <component.CAlbums data={albums} topic={"Albums"} />
+            <component.CCharts data={chst} topic={"Top Flavour"} />
+            {trndSong.length > 0 && <component.CTrendingSong data={trndSong} topic='Trending Song' />}
           </>
         }
       </View>

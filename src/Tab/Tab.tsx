@@ -1,13 +1,13 @@
 
 import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { tabBar } from '../data/data';
-import Header from '../components/Header';
+import { tabBar } from '../constants/naviG';
+import { component } from '../constants/screens';
 const Tab = createMaterialTopTabNavigator();
 const TabBar = () => {
     return (
         <>
-            <Header />
+            <component.CHeader />
             <Tab.Navigator screenOptions={{
                 tabBarScrollEnabled: true,
                 tabBarActiveTintColor: "#ff8216",

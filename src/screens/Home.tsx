@@ -1,7 +1,5 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import Tab from '../Tab/Tab'
-
 const Home = () => {
   return (
     <Tab />
