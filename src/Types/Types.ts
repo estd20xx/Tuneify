@@ -1,4 +1,5 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React from 'react';
 import HomeIcon from "react-native-vector-icons/Octicons"
 export interface NavigationStringsTypes {
     splash: string
@@ -195,14 +196,6 @@ export interface CustomPArt {
     type: string
     role: string
 }
-// export interface CArt {
-//     id: string
-//     name: string
-//     url: string
-//     image: boolean
-//     type: boolean
-//     role: boolean
-// }
 export interface SeperateAlbumTypes {
     id: string
     name: string
@@ -241,19 +234,23 @@ export interface Http {
     data: SuggestedDataInterfaceChild
 }
 
-// interface Res {
-//     results: SongsTypes[]
-// }
-// export interface HttpS {
-//     data: Res
-// }
-
 export interface ItemTypes {
-    route: string;
-    label: string;
-    ICON: typeof HomeIcon;
-    icon: string;
-    component: () => React.JSX.Element;
-    color: string;
-    alphaClr: string;
+    name: string,
+    activeSize: number,
+    inactiveSize: number,
+    activeName: string,
+    inactiveName: string,
+    Active: typeof HomeIcon,
+    Inactive: typeof HomeIcon,
+    component: () => React.JSX.Element,
+    active: string,
+}
+
+export interface MinNItemTypes {
+    name: string,
+    component: () => React.JSX.Element
+}
+export interface TabItemTypes {
+    name: string
+    component: () => React.JSX.Element
 }
