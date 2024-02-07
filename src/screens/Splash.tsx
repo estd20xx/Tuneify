@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React, { useEffect } from 'react'
 import { SplashScreenPropsTypes } from '../Types/Types'
 const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {
- 
+
 
   useEffect(() => {
     const timeOut = setTimeout(() => {

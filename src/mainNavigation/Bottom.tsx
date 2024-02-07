@@ -11,8 +11,8 @@ const BottomNavigation = () => {
         tabBarStyle: {
           height: 60,
           position: 'absolute',
-          borderRadius: 10,
-          backgroundColor: "#1B4242"
+          backgroundColor: "#1c1e24",
+          borderTopWidth: 0
         }
       }}
     >

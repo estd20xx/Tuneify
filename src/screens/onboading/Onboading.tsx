@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StatusBar, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { OnBoardingDataTypes, OnBoardingPropsTypes } from '../../Types/Types'
 import onboardHelper from '../../helpers/onboarding.helper'
@@ -9,6 +9,12 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
   useEffect(() => {
     setD(onboardingData[nre])
   }, [nre])
+  
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      StatusBar.setBackgroundColor("#e28f22");
+    }
+  }, [])
   return (
     <View className='w-full h-screen bg-[#181a20]'>
       <View className='w-full h-[80%] overflow-hidden'>

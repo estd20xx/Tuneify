@@ -31,5 +31,4 @@ const TrendingSong: React.FC<TrendingSongsPropsTypes> = ({ data, topic }) => {
     </View>
   )
 }
-
 export default TrendingSong
