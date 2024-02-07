@@ -1,13 +1,19 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { tabBar } from '../constants/naviG';
 import { component } from '../constants/screens';
+import { Platform, StatusBar } from 'react-native';
 const Tab = createMaterialTopTabNavigator();
 const TabBar = () => {
+    useEffect(() => {
+        if (Platform.OS === "android") {
+            StatusBar.setBackgroundColor("#181a20");
+        }
+    }, [])
     return (
         <>
-            <component.CHeader />
+            {/* <component.CHeader /> */}
             <Tab.Navigator screenOptions={{
                 tabBarScrollEnabled: true,
                 tabBarActiveTintColor: "#ff8216",
