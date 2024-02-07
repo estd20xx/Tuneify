@@ -1,10 +1,9 @@
 import { View, ScrollView, } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SeperateAlbumTypes } from '../../Types/Types'
-import SeperateAlbum from '../../components/SeperateAlbum'
-import SeperateSkeleton from '../../components/skeleton/SeperateAlbumSkeleton';
 import AlbumService from '../../services/album.service'
 import { albumsApi } from '../../api/api'
+import { component } from '../../constants/screens';
 const service = new AlbumService(albumsApi)
 const Albums = () => {
   const [cAlb, setCAlb] = useState<SeperateAlbumTypes[]>([])
@@ -19,13 +18,13 @@ const Albums = () => {
 
           Array.from({ length: 6 }, (_, index) => {
             return (
-              <SeperateSkeleton key={index} />
+              <component.CSeperateSkeleton key={index} />
             )
           })
           :
           cAlb.map((cA: SeperateAlbumTypes) => {
             return (
-              <SeperateAlbum data={cA} key={cA.id} />
+              <component.CSeperateAlbum data={cA} key={cA.id} />
             )
           })
         }

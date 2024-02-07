@@ -1,7 +1,6 @@
 import { View, Text, FlatList, Image } from 'react-native'
 import React from 'react'
 import { ChartsPropsTypes } from '../Types/Types'
-
 const Charts: React.FC<ChartsPropsTypes> = ({ data, topic }) => {
     return (
         <View className='w-full h-auto  mt-3 '>

@@ -9,5 +9,4 @@ const Artists = () => {
     </View>
   )
 }
-
 export default Artists

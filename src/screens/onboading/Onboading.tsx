@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { OnBoardingDataTypes, OnBoardingPropsTypes } from '../../Types/Types'
 import onboardHelper from '../../helpers/onboarding.helper'
-import { onboardingData } from '../../data/data'
+import { onboardingData } from '../../constants/naviG'
 const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
   const [nre, setNre] = useState<number>(0)
   const [d, setD] = useState<OnBoardingDataTypes>(onboardingData[nre])
@@ -32,5 +32,4 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
     </View>
   )
 }
-
 export default Onboading
