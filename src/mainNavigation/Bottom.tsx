@@ -1,31 +1,107 @@
-import React from 'react'
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-import { View } from 'react-native'
-import { bottomTab } from '../data/data'
-const Tab = createBottomTabNavigator()
-const BottomNavigation = () => {
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { ElementRef, useEffect, useRef } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import * as Animatable from 'react-native-animatable';
+import { TabArr } from '../data/Icon';
+const Tab = createBottomTabNavigator();
+const IanimationValue = {
+  0: { scale: 0 },
+  0.3: { scale: .3 },
+  0.5: { scale: .5 },
+  0.8: { scale: .8 },
+  1: { scale: 1 },
+}
+const DanimationValue = {
+  0: { scale: 1 },
+  0.3: { scale: .8 },
+  0.5: { scale: .5 },
+  0.8: { scale: .3 },
+  1: { scale: 0 },
+}
+const TabButton = (props: any) => {
+  const { item, onPress, accessibilityState } = props;
+  const focused = accessibilityState.selected;
+  const viewRef = useRef<ElementRef<"view"> | any>(null);
+  const textViewRef = useRef<ElementRef<"view"> | any>(null);
+  const iconRef = useRef<ElementRef<"view"> | any>(null)
+  useEffect(() => {
+    if (focused) {
+      viewRef.current?.animate(IanimationValue);
+      textViewRef.current?.animate(IanimationValue);
+      iconRef.current?.animate(IanimationValue);
+    } else {
+      viewRef.current?.animate(DanimationValue);
+      textViewRef.current?.animate(DanimationValue);
+    }
+  }, [focused])
+
   return (
-    <Tab.Navigator screenOptions={{ tabBarShowLabel: false, tabBarActiveTintColor: "white", tabBarInactiveTintColor: "#ff8216", tabBarStyle: { backgroundColor: "#181a20", height: 55 } }}   >
-      {bottomTab.map((cTab, index) => {
-        return (
-          <Tab.Screen name={cTab.name} component={cTab.component} options={{
-            headerShown: false, tabBarIcon: ({ color, focused }) => {
-              return (
-                <>
-                  {
-                    focused ?
-                      <View className='bg-[#ff8216] h-[80%] w-full flex items-center justify-center rounded-md duration-500'>
-                        <cTab.Active name={cTab.activeName} color={color} size={cTab.activeSize} />
-                      </View> :
-                      <cTab.Inactive name={cTab.inactiveName} size={cTab.inactiveSize} color={color} />
-                  }
-                </>
-              )
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={1}
+      style={[styles.container, { flex: focused ? 1 : 0.65 }]}>
+      <View>
+        <Animatable.View
+          ref={viewRef}
+          style={[StyleSheet.absoluteFillObject, { backgroundColor: item.active, borderRadius: 16 }]} />
+        <View style={[styles.btn, {}]}>
+          <Animatable.View ref={iconRef} className=''>
+            {focused ?
+              <item.Active name={item.activeName} size={item.activeSize} color={focused ? "#fff" : "orange"} /> :
+              <item.Inactive name={item.inactiveName} size={item.inactiveSize} color={focused ? "#fff" : "orange"} />
             }
-          }} key={cTab.name} />
-        )
-      })}
-    </Tab.Navigator >
+          </Animatable.View>
+          <Animatable.View
+            ref={textViewRef}>
+            {focused && <Text style={{
+              color: "white", paddingHorizontal: 8
+            }}>{item.name}</Text>}
+          </Animatable.View>
+        </View>
+      </View>
+    </TouchableOpacity>
   )
 }
-export default BottomNavigation
+
+export default function AnimTab3() {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          height: 60,
+          position: 'absolute',
+          bottom: 16,
+          right: 16,
+          left: 16,
+          borderRadius: 16,
+          backgroundColor: "#181a20"
+        }
+      }}
+    >
+      {TabArr.map((item, index) => {
+        return (
+          <Tab.Screen key={index} name={item.name} component={item.component}
+            options={{
+              tabBarShowLabel: false,
+              tabBarButton: (props) => <TabButton {...props} item={item} />
+            }}
+          />
+        )
+      })}
+    </Tab.Navigator>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 8,
+    borderRadius: 16,
+  }
+})
