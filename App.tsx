@@ -4,7 +4,7 @@ import MainNavigation from './src/mainNavigation/MainNavigation'
 import { Platform, StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { configureFonts } from 'react-native-paper';
-
+import MusifyPlayer from 'react-native-track-player';
 const fontConfig = {
   fontFamily: 'Roboto'
 };
@@ -21,6 +21,8 @@ const App = () => {
   //   //   StatusBar.setTranslucent(true);
   //   // }
   // }, [])
+
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
 

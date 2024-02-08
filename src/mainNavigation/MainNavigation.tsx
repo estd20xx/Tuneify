@@ -12,7 +12,7 @@ const MainNavigation = () => {
             <Stack.Screen name={cn.name} component={cn.component}
               options={{
                 headerShown: false,
-                animation:"ios",
+                animation: "ios",
                 presentation: "card",
               }}
               key={cn.name} />
