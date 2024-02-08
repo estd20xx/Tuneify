@@ -1,27 +1,23 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TabItems } from '../constants/naviG';
 import { ItemTypes } from '../Types/Types';
-const Tab = createBottomTabNavigator();
-import { component } from '../constants/screens';
-const BottomNavigation = () => {
+import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
+const Tab = createMaterialBottomTabNavigator();
+const BottomNavigations = () => {
   return (
     <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: {
-          height: 60,
-          position: 'absolute',
-          backgroundColor: "#1c1e24",
-          borderTopWidth: 0
-        }
-      }}
+      activeColor="#F90716"
+      inactiveColor="#ff8216"
+      barStyle={{ backgroundColor: "#0c0c0c" }}
+      backBehavior={"history"}
+      shifting={true}
     >
       {TabItems.map((item: ItemTypes) => {
         return (
-          <Tab.Screen key={item.name} name={item.name} component={item.component}
+          <Tab.Screen name={item.name} component={item.component} key={item.name}
             options={{
-              tabBarShowLabel: false,
-              tabBarButton: (props) => <component.TabButton {...props} item={item} />
+              tabBarIcon: ({ color }) => (
+                <item.Active name={item.activeName} color={color} size={26} />
+              ),
             }}
           />
         )
@@ -30,4 +26,4 @@ const BottomNavigation = () => {
   )
 }
 
-export default BottomNavigation
+export default BottomNavigations
