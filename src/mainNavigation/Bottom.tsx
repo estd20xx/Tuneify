@@ -2,6 +2,7 @@ import { TabItems } from '../constants/naviG';
 import { ItemTypes } from '../Types/Types';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 const Tab = createMaterialBottomTabNavigator();
+import Animated from 'react-native-reanimated';
 const BottomNavigations = () => {
   return (
     <Tab.Navigator
@@ -15,9 +16,7 @@ const BottomNavigations = () => {
         return (
           <Tab.Screen name={item.name} component={item.component} key={item.name}
             options={{
-              tabBarIcon: ({ color }) => (
-                <item.Active name={item.activeName} color={color} size={26} />
-              ),
+              tabBarIcon: ({ color }) => <item.Active name={item.activeName} color={color} size={26} />
             }}
           />
         )

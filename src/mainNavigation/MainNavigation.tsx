@@ -9,7 +9,13 @@ const MainNavigation = () => {
       <Stack.Navigator >
         {MainNavigationItems.map((cn) => {
           return (
-            <Stack.Screen name={cn.name} component={cn.component} options={{ headerShown: false }} key={cn.name} />
+            <Stack.Screen name={cn.name} component={cn.component}
+              options={{
+                headerShown: false,
+                animation:"ios",
+                presentation: "card",
+              }}
+              key={cn.name} />
           )
         })}
       </Stack.Navigator>

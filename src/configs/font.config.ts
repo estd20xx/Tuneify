@@ -1,40 +1,40 @@
 export const fontConfig = {
-    // web: {
-    //     regular: {
-    //         fontFamily: 'Roboto-Regular',
-    //         fontWeight: 'normal',
-    //     },
-    //     medium: {
-    //         fontFamily: 'Robot-medium',
-    //         fontWeight: 'normal',
-    //     },
-    //     light: {
-    //         fontFamily: 'Roboto-Light',
-    //         fontWeight: 'normal',
-    //     },
-    //     thin: {
-    //         fontFamily: 'Roboto-thin',
-    //         fontWeight: 'normal',
-    //     },
-    // },
-    // ios: {
-    //     regular: {
-    //         fontFamily: 'Roboto-Regular',
-    //         fontWeight: 'normal',
-    //     },
-    //     medium: {
-    //         fontFamily: 'Robot-medium',
-    //         fontWeight: 'normal',
-    //     },
-    //     light: {
-    //         fontFamily: 'Roboto-Light',
-    //         fontWeight: 'normal',
-    //     },
-    //     thin: {
-    //         fontFamily: 'Roboto-thin',
-    //         fontWeight: 'normal',
-    //     },
-    // },
+    web: {
+        regular: {
+            fontFamily: 'Roboto-Regular',
+            fontWeight: 'normal',
+        },
+        medium: {
+            fontFamily: 'Robot-medium',
+            fontWeight: 'normal',
+        },
+        light: {
+            fontFamily: 'Roboto-Light',
+            fontWeight: 'normal',
+        },
+        thin: {
+            fontFamily: 'Roboto-thin',
+            fontWeight: 'normal',
+        },
+    },
+    ios: {
+        regular: {
+            fontFamily: 'Roboto-Regular',
+            fontWeight: 'normal',
+        },
+        medium: {
+            fontFamily: 'Robot-medium',
+            fontWeight: 'normal',
+        },
+        light: {
+            fontFamily: 'Roboto-Light',
+            fontWeight: 'normal',
+        },
+        thin: {
+            fontFamily: 'Roboto-thin',
+            fontWeight: 'normal',
+        },
+    },
     android: {
         regular: {
             fontFamily: 'Roboto',

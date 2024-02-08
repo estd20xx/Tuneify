@@ -4,6 +4,7 @@ import { SongsTypes } from '../../Types/Types'
 import SongService from '../../services/songs.service';
 import { songsApi } from '../../api/api';
 import { Icons } from '../../constants/Icon';
+import { TouchableRipple } from 'react-native-paper';
 const service = new SongService(songsApi)
 const cardHeight = 96
 const padding = 5
@@ -15,7 +16,7 @@ const Songs = () => {
     service.getSongs(setSng)
   }, [])
   return (
-    <View className='bg-[#181a20] w-full h-auto pt-2 pb-14' >
+    <View className='bg-[#181a20] w-full h-auto pt-2' >
       <ScrollView showsVerticalScrollIndicator={false}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
           useNativeDriver: false
@@ -42,6 +43,7 @@ const Songs = () => {
               className={`w-full h-[96px]  mb-2 flex flex-row`}>
               <View className='w-4/5  h-full pl-3 flex flex-row'>
                 <View className='w-24 rounded-lg overflow-hidden'>
+              
                   <Image source={{ uri: currentSong.image[2].link }} className='h-full' />
                 </View>
                 <View className='w-[70%]  h-full pl-3 flex justify-center '>
@@ -50,6 +52,7 @@ const Songs = () => {
                 </View>
               </View>
               <View className='w-1/5 h-full flex items-center justify-evenly flex-row'>
+                
                 <Icons.PlayIcon name='play-circle-sharp' size={36} color={"#ff8216"} />
                 <Icons.MoreIcon name='more-vert' size={30} color={"white"} />
               </View>

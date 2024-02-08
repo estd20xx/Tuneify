@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import MainNavigation from './src/mainNavigation/MainNavigation'
 import { Platform, StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { PaperProvider, configureFonts } from 'react-native-paper';
+import { configureFonts } from 'react-native-paper';
 
 const fontConfig = {
   fontFamily: 'Roboto'
@@ -23,10 +23,10 @@ const App = () => {
   // }, [])
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <PaperProvider theme={theme}>
-        <StatusBar backgroundColor={"#181a20"} />
-        <MainNavigation />
-      </PaperProvider>
+
+      <StatusBar backgroundColor={"#181a20"} />
+      <MainNavigation />
+
     </GestureHandlerRootView>
   )
 }
