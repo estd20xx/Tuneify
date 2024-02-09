@@ -21,7 +21,6 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
             useNativeDriver: true,
         }).start(() => {
             setIsFlipped(!isFlipped);
-            console.log("start")
         });
     }, [isFlipped])
     const frontInterpolate = flip.interpolate({
