@@ -1,17 +1,21 @@
 import {
     Text,
     TouchableOpacity,
+    Image,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import LinearGradient from 'react-native-linear-gradient';
 import SongPlayer from './SongPlayer';
-import TrackPlayer, { AppKilledPlaybackBehavior, Capability } from 'react-native-track-player'
+import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Track, usePlaybackState, State } from 'react-native-track-player'
 import { songsList } from '../../constants/songs'
+import { View } from 'react-native-animatable';
+import { Icons } from '../../constants/Icon';
 const BottomPlayer = () => {
     const [isVisible, setIsVisible] = useState(false)
+    const [currentTrack, setCurrentTrrack] = useState<Track>()
+    const playbackState = usePlaybackState();
     const setUpPlayer = async () => {
         try {
-            await TrackPlayer.setupPlayer({ maxCacheSize: 1024 * 5 })
+            await TrackPlayer.setupPlayer({ maxCacheSize: 1024 * 10 })
             await TrackPlayer.updateOptions({
                 android: {
                     appKilledPlaybackBehavior: AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification
@@ -26,91 +30,91 @@ const BottomPlayer = () => {
                 compactCapabilities: [Capability.Play, Capability.Pause]
             })
             await TrackPlayer.add(songsList)
+            handleBottomCondition()
         } catch (error) {
             console.log(error)
         }
     }
     useEffect(() => {
         setUpPlayer()
-        return () => { setUpPlayer() }
+
     }, []);
+    const handleBottomCondition = async () => {
+        try {
+            let trackIndex = await TrackPlayer.getCurrentTrack();
+            let trackObject = await TrackPlayer.getTrack(trackIndex!)
+            trackObject && setCurrentTrrack(trackObject)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     const handlePlay = async () => {
         try {
+            console.log("called play")
             await TrackPlayer.play()
-            let trackIndex = await TrackPlayer.getCurrentTrack();
-            console.log("playing Number =>  " + trackIndex)
-            let trackObject = await TrackPlayer.getTrack(trackIndex!);
-            console.log(`Title: ${trackObject?.title}`);
+            // let trackIndex = await TrackPlayer.getCurrentTrack();
+            // console.log("playing Number =>  " + trackIndex)
+            // let trackObject = await TrackPlayer.getTrack(trackIndex!);
+            // console.log(`Title: ${trackObject?.title}`);
 
-            const position = await TrackPlayer.getPosition();
-            console.log("Position => " + position)
-            const duration = await TrackPlayer.getDuration();
-            console.log("Duration => " + duration)
+            // const position = await TrackPlayer.getPosition();
+            // console.log("Position => " + position)
+            // const duration = await TrackPlayer.getDuration();
+            // console.log("Duration => " + duration)
         } catch (error) {
             console.log(error)
         }
     }
-    const handlePause = async () => {
-        try {
-            await TrackPlayer.pause()
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const handlePrevious = async () => {
-        try {
-            await TrackPlayer.skipToPrevious()
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const handleNext = async () => {
-        try {
-            await TrackPlayer.skipToNext()
-        } catch (error) {
-            console.log(error)
-        }
+    const playPauseAction=()=>{
+        playbackState.state == "playing" ? TrackPlayer.pause() : TrackPlayer.play()
     }
     return (
-        <LinearGradient
-            colors={['#a34c0d', '#592804', '#241001', '#000000']}
-            style={{ flex: 1 }}>
-            <TouchableOpacity
-                activeOpacity={1}
-                style={{
-                    width: '100%',
-                    height: 70,
-                    position: 'absolute',
-                    bottom: 0,
-                    backgroundColor: '#7E2553',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingLeft: 20,
-                    paddingRight: 20,
-                    justifyContent: 'space-between',
-                }} onPress={() => {
-                    setIsVisible(true)
-                }}>
-                <TouchableOpacity className='bg-green-500 py-3 px-2 rounded-lg' onPress={handlePrevious}>
-                    <Text>Previous</Text>
-                </TouchableOpacity>
-                <TouchableOpacity className='bg-green-500 py-3 px-2 rounded-lg' onPress={handlePlay}>
-                    <Text>Play</Text>
-                </TouchableOpacity>
-                <TouchableOpacity className='bg-green-500 py-3 px-2 rounded-lg' onPress={handlePause}>
-                    <Text>Pause</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleNext} className='bg-green-500 py-3 px-2 rounded-lg'>
-                    <Text>Next</Text>
-                </TouchableOpacity>
-            </TouchableOpacity>
-            <SongPlayer
-                isVisible={isVisible}
-                onClose={() => {
-                    setIsVisible(false)
-                }}
-            />
-        </LinearGradient>
+        <>
+            {currentTrack &&
+                <View>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        style={{
+                            width: '100%',
+                            height: 70,
+                            position: 'absolute',
+                            bottom: 0,
+                            backgroundColor: '#2D3250',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            paddingLeft: 20,
+                            paddingRight: 20,
+                            justifyContent: 'space-between',
+                        }} onPress={() => {
+                            setIsVisible(true)
+                        }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Image
+                                source={{ uri: currentTrack?.artwork }}
+                                style={{ width: 50, height: 50, borderRadius: 5 }}
+                            />
+                            <View style={{ marginLeft: 10 }}>
+                                <Text className='text-white text-[14px] mb-1'>{currentTrack.title}</Text>
+                                <Text style={{ color: 'white', fontSize: 10 }}>{currentTrack.artist}</Text>
+                            </View>
+                        </View>
+                        <TouchableOpacity onPress={playPauseAction}>
+                            {playbackState.state == "playing" ?
+                                <Icons.PlayIcon name='pause' color={"white"} size={30} /> :
+                                <Icons.PlayIcon name='play' color={"white"} size={30} />
+                            }
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                    <SongPlayer
+                        isVisible={isVisible}
+                        onClose={() => {
+                            setIsVisible(false)
+                        }}
+                    />
+                </View>
+
+            }
+        </>
     );
 };
 

@@ -3,9 +3,9 @@ import React from 'react'
 import { AlbumDataProps } from '../Types/Types'
 const Albums: React.FC<AlbumDataProps> = ({ data, topic }) => {
     return (
-        <View className='w-full h-auto  mt-3 '>
+        <View className='w-full h-auto  '>
             <View className='w-full pl-3 h-10 flex items-center flex-row  mb-3'>
-                <Text className='text-xl text-white font-semibold tracking-widest'>{topic}</Text>
+                <Text className='text-lg text-white font-semibold tracking-widest'>{topic}</Text>
             </View>
             <FlatList
                 horizontal
@@ -20,7 +20,7 @@ const Albums: React.FC<AlbumDataProps> = ({ data, topic }) => {
                                 <Image source={{ uri: item.image[2].link }} className='w-full h-full' />
                             </View>
                             <View className=' w-full h-9 flex items-center  justify-center'>
-                                <Text className='text-white text-sm tracking-wider font-semibold '>
+                                <Text className='text-white text-xs tracking-wider font-semibold '>
                                     {item.name.length > 10 ? item.name.slice(0, 14) + ".." : item.name}
                                 </Text>
                             </View>

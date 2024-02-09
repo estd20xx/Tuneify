@@ -10,6 +10,7 @@ import Animated, {
     useSharedValue,
     withSpring
 } from 'react-native-reanimated';
+
 const { width } = Dimensions.get('screen');
 
 const minHeight = 70;
