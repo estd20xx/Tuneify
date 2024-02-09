@@ -5,6 +5,8 @@ import { Platform, StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { configureFonts } from 'react-native-paper';
 import MusifyPlayer from 'react-native-track-player';
+import { Provider } from 'react-redux';
+import store from './src/store/store';
 const fontConfig = {
   fontFamily: 'Roboto'
 };
@@ -25,9 +27,10 @@ const App = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-
       <StatusBar backgroundColor={"#181a20"} />
-      <MainNavigation />
+      <Provider store={store}>
+        <MainNavigation />
+      </Provider>
 
     </GestureHandlerRootView>
   )

@@ -9,7 +9,13 @@ import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Track, usePlaybackS
 import { songsList } from '../../constants/songs'
 import { View } from 'react-native-animatable';
 import { Icons } from '../../constants/Icon';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { musifyData } from '../../store/Musify';
 const BottomPlayer = () => {
+    const TypedHook: TypedUseSelectorHook<RootState> = useSelector
+    const data = TypedHook(musifyData)
+    const [songList, setSongList] = useState(data.storeSong)
     const [isVisible, setIsVisible] = useState(false)
     const [currentTrack, setCurrentTrrack] = useState<Track>()
     const playbackState = usePlaybackState();
@@ -29,20 +35,23 @@ const BottomPlayer = () => {
                 ],
                 compactCapabilities: [Capability.Play, Capability.Pause]
             })
-            await TrackPlayer.add(songsList)
+            await TrackPlayer.add(data.storeSong)
             handleBottomCondition()
         } catch (error) {
             console.log(error)
         }
     }
     useEffect(() => {
-        setUpPlayer()
-
-    }, []);
+        if (data.storeSong.length>0) {
+            setUpPlayer()
+        }
+    }, [data]);
     const handleBottomCondition = async () => {
         try {
             let trackIndex = await TrackPlayer.getCurrentTrack();
             let trackObject = await TrackPlayer.getTrack(trackIndex!)
+  
+            
             trackObject && setCurrentTrrack(trackObject)
         } catch (error) {
             console.log(error)
@@ -65,7 +74,7 @@ const BottomPlayer = () => {
             console.log(error)
         }
     }
-    const playPauseAction=()=>{
+    const playPauseAction = () => {
         playbackState.state == "playing" ? TrackPlayer.pause() : TrackPlayer.play()
     }
     return (
