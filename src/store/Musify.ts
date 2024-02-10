@@ -3,11 +3,11 @@ import { RootState } from './store';
 import { SongsTypes } from '../Types/Types';
 
 export interface StoreSong {
+    id: string;
     title: string;
     artist: string;
     artwork: string;
     url: string;
-    id: string;
 }
 export interface InitialStateTypes {
     storeSong: StoreSong[]

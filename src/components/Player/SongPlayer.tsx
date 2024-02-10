@@ -5,13 +5,15 @@ import {
 import React, { useEffect, useState, useCallback } from 'react';
 import Modal from 'react-native-modal';
 import LinearGradient from 'react-native-linear-gradient';
-import TrackPlayer, { Track, usePlaybackState, useProgress } from 'react-native-track-player';
+import TrackPlayer, { Track, usePlaybackState, useProgress, Event, useTrackPlayerEvents, State } from 'react-native-track-player';
 import { Icons } from '../../constants/Icon';
 import Slider from "@react-native-community/slider"
+import axios from 'axios';
 const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [flip, setFlip] = useState(new Animated.Value(0));
     const [currentTrack, setCurrentTrrack] = useState<Track>()
+    const [lyric, setLyric] = useState<string>("We are working on it.! 💻")
     const playbackState = usePlaybackState()
     const progress = useProgress();
     const flipCard = useCallback(() => {
@@ -76,6 +78,26 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
         let secs = (Math.trunc(seconds) % 60).toString().padStart(2, '0');
         return `${mins}:${secs}`;
     };
+    const getLyrics = async () => {
+        try {
+            let currentTrack = await TrackPlayer.getActiveTrack()
+            const data = await axios.get(`https://musify-api-red-gula.vercel.app/lyrics?id=${currentTrack?.id}`)
+            if (data.data.data) {
+                setLyric(data.data.data.lyrics)
+            } else {
+                setLyric("We are working on it.! 💻")
+            }
+        } catch (error) {
+            setLyric("We are working on it.! 💻")
+        }
+    }
+    const events = [
+        Event.PlaybackState,
+        Event.PlaybackError,
+    ];
+    useTrackPlayerEvents(events, (event: any) => {
+        event.state == State.Playing && [handleBottomCondition(), getLyrics()]
+    })
     return (
         <Modal isVisible={isVisible} style={{ margin: 0 }}>
             <StatusBar backgroundColor={'#e57800'} />
@@ -106,9 +128,14 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                         </Animated.View>
                         <Animated.View
                             style={[backAnimatedStyle, { backfaceVisibility: "hidden" }]}
-                            className='absolute w-[85%] h-80 bg-[#2D3250] justify-center items-center rounded-xl'
+                            className='flex absolute w-[85%] h-80 bg-[#2D3250] justify-center items-center rounded-xl '
                         >
-                            <Text className='text-white text-xl'>We are working on it!.   💻</Text>
+                            {lyric.length > 15 ?
+                                <ScrollView showsVerticalScrollIndicator={false}>
+                                    <Text className='text-white text-lg min-h-[100px]  px-5 flex items-center justify-center '>{lyric}</Text>
+                                </ScrollView> :
+                                <Text className='absolute top-52 left-0 '>{lyric}</Text>
+                            }
                         </Animated.View>
                     </View>
                     <View className='w-full mt-5 h-auto' >
@@ -129,6 +156,9 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                             value={progress.position}
                             minimumTrackTintColor="#FFFFFF"
                             maximumTrackTintColor="#fff"
+                            onSlidingComplete={(e) => {
+                                TrackPlayer.seekTo(e)
+                            }}
                         />
                         <View
                             style={{
