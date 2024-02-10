@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import SongPlayer from './SongPlayer';
-import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Track, usePlaybackState, State } from 'react-native-track-player'
+import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Track, usePlaybackState, State, Event, useTrackPlayerEvents } from 'react-native-track-player'
 import { songsList } from '../../constants/songs'
 import { View } from 'react-native-animatable';
 import { Icons } from '../../constants/Icon';
@@ -21,7 +21,7 @@ const BottomPlayer = () => {
     const playbackState = usePlaybackState();
     const setUpPlayer = async () => {
         try {
-            await TrackPlayer.setupPlayer({ maxCacheSize: 1024 * 10 })
+            await TrackPlayer.setupPlayer({ maxCacheSize: 1024 * 10, autoHandleInterruptions: true})
             await TrackPlayer.updateOptions({
                 android: {
                     appKilledPlaybackBehavior: AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification
@@ -33,7 +33,7 @@ const BottomPlayer = () => {
                     Capability.Stop,
                     Capability.SeekTo
                 ],
-                compactCapabilities: [Capability.Play, Capability.Pause]
+                compactCapabilities: [Capability.Play, Capability.Pause, Capability.SkipToNext, Capability.SkipToPrevious]
             })
             await TrackPlayer.add(data.storeSong)
             handleBottomCondition()
@@ -42,7 +42,7 @@ const BottomPlayer = () => {
         }
     }
     useEffect(() => {
-        if (data.storeSong.length>0) {
+        if (data.storeSong.length > 0) {
             setUpPlayer()
         }
     }, [data]);
@@ -50,8 +50,8 @@ const BottomPlayer = () => {
         try {
             let trackIndex = await TrackPlayer.getCurrentTrack();
             let trackObject = await TrackPlayer.getTrack(trackIndex!)
-  
-            
+
+
             trackObject && setCurrentTrrack(trackObject)
         } catch (error) {
             console.log(error)
@@ -77,6 +77,13 @@ const BottomPlayer = () => {
     const playPauseAction = () => {
         playbackState.state == "playing" ? TrackPlayer.pause() : TrackPlayer.play()
     }
+    const events = [
+        Event.PlaybackState,
+        Event.PlaybackError,
+    ];
+    useTrackPlayerEvents(events, (event: any) => {
+        event.state == State.Playing && handleBottomCondition()
+    })
     return (
         <>
             {currentTrack &&
