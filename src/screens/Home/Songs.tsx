@@ -1,16 +1,14 @@
-import { View, Text, ScrollView, Image, Animated, Pressable, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, Image, Animated, TouchableOpacity } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { SongsTypes } from '../../Types/Types'
 import SongService from '../../services/songs.service';
 import { songsApi } from '../../api/api';
 import { Icons } from '../../constants/Icon';
-import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux"
-import { RootState } from '../../store/store';
-import { addSongList, musifyData } from '../../store/Musify';
-import TrackPlayer from 'react-native-track-player';
-import { State, usePlaybackState, useProgress } from 'react-native-track-player';
+import { useDispatch } from "react-redux"
+import { addSongList } from '../../store/Musify';
+import TrackPlayer, { State, usePlaybackState, useProgress } from 'react-native-track-player';
 const service = new SongService(songsApi)
-const cardHeight = 96
+const cardHeight = 50
 const padding = 5
 const offset = cardHeight + padding
 const AnimatedComp = Animated.createAnimatedComponent(TouchableOpacity)

@@ -1,5 +1,5 @@
 import React from 'react';
-import {  View } from 'react-native';
+import { View } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation } from 'react-native-paper';
@@ -13,15 +13,16 @@ const BottomTab = () => {
       screenOptions={{ headerShown: false }}
       tabBar={({ navigation, state, descriptors, insets, }) => (
         <View>
-          <BottomPlayer/>
+          <BottomPlayer />
           <BottomNavigation.Bar
+            theme={{ colors: { secondaryContainer: "#FF0060" } }}
             navigationState={state}
             safeAreaInsets={insets}
             shifting={true}
-            activeColor='#F90716'
-            inactiveColor='#ff8216'
+            activeColor='#FFF7F1'
+            inactiveColor='#DDDDDD'
             style={{
-              backgroundColor: "#0c0c0c",
+              backgroundColor: "#000000",
             }}
             onTabPress={({ route, preventDefault }) => {
               const event = navigation.emit({
@@ -57,7 +58,7 @@ const BottomTab = () => {
         return (
           <Tab.Screen name={item.name} component={item.component} key={item.name}
             options={{
-              tabBarIcon: ({ color }) => <item.Active name={item.activeName} color={color} size={26} />
+              tabBarIcon: ({ color }) => <item.Active name={item.activeName} color={color} size={item.activeSize} />
             }}
           />
         )
