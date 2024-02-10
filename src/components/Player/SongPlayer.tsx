@@ -161,9 +161,6 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                         </View>
                         <Icons.SearchIcon name='repeat' color={"#bababa"} size={25} />
                     </View>
-                    <ScrollView>
-
-                    </ScrollView>
                 </View>
 
             </LinearGradient>
