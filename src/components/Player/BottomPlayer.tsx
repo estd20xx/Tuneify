@@ -6,44 +6,23 @@ import {
 import React, { useEffect, useState } from 'react';
 import SongPlayer from './SongPlayer';
 import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Track, usePlaybackState, State, Event, useTrackPlayerEvents } from 'react-native-track-player'
-import { songsList } from '../../constants/songs'
-import { View } from 'react-native-animatable';
-import { Icons } from '../../constants/Icon';
+import { View } from 'react-native-animatable'
+import { Icons } from '../../constants/Icon'
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { musifyData } from '../../store/Musify';
+import { RootState } from '../../store/store'
+import { musifyData } from '../../store/Musify'
+import { InitialStateTypes } from '../../Interfaces/MusifySlice.interface';
+import { MusifyService } from '../../services/Musify.service';
+const service = new MusifyService()
 const BottomPlayer = () => {
     const TypedHook: TypedUseSelectorHook<RootState> = useSelector
     const data = TypedHook(musifyData)
-    const [songList, setSongList] = useState(data.storeSong)
     const [isVisible, setIsVisible] = useState(false)
     const [currentTrack, setCurrentTrrack] = useState<Track>()
     const playbackState = usePlaybackState();
-    const setUpPlayer = async () => {
-        try {
-            await TrackPlayer.setupPlayer({ maxCacheSize: 1024 * 10, autoHandleInterruptions: true})
-            await TrackPlayer.updateOptions({
-                android: {
-                    appKilledPlaybackBehavior: AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification
-                },
-                capabilities: [
-                    Capability.Play,
-                    Capability.Pause,
-                    Capability.SkipToPrevious,
-                    Capability.Stop,
-                    Capability.SeekTo
-                ],
-                compactCapabilities: [Capability.Play, Capability.Pause, Capability.SkipToNext, Capability.SkipToPrevious]
-            })
-            await TrackPlayer.add(data.storeSong)
-            handleBottomCondition()
-        } catch (error) {
-            console.log(error)
-        }
-    }
     useEffect(() => {
         if (data.storeSong.length > 0) {
-            setUpPlayer()
+            service.setUpPlayer(data, handleBottomCondition,setCurrentTrrack)
         }
     }, [data]);
     const handleBottomCondition = async () => {
@@ -53,23 +32,6 @@ const BottomPlayer = () => {
 
 
             trackObject && setCurrentTrrack(trackObject)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const handlePlay = async () => {
-        try {
-            console.log("called play")
-            await TrackPlayer.play()
-            // let trackIndex = await TrackPlayer.getCurrentTrack();
-            // console.log("playing Number =>  " + trackIndex)
-            // let trackObject = await TrackPlayer.getTrack(trackIndex!);
-            // console.log(`Title: ${trackObject?.title}`);
-
-            // const position = await TrackPlayer.getPosition();
-            // console.log("Position => " + position)
-            // const duration = await TrackPlayer.getDuration();
-            // console.log("Duration => " + duration)
         } catch (error) {
             console.log(error)
         }

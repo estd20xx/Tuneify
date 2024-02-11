@@ -1,17 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from './store';
 import { SongsTypes } from '../Types/Types';
-
-export interface StoreSong {
-    id: string;
-    title: string;
-    artist: string;
-    artwork: string;
-    url: string;
-}
-export interface InitialStateTypes {
-    storeSong: StoreSong[]
-}
+import { InitialStateTypes, StoreSong } from '../Interfaces/MusifySlice.interface';
 
 const initialState: InitialStateTypes = {
     storeSong: []
