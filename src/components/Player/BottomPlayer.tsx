@@ -5,50 +5,32 @@ import {
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import SongPlayer from './SongPlayer';
-import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Track, usePlaybackState, State, Event, useTrackPlayerEvents } from 'react-native-track-player'
+import { Track, usePlaybackState, State, useTrackPlayerEvents, PlaybackState } from 'react-native-track-player'
 import { View } from 'react-native-animatable'
 import { Icons } from '../../constants/Icon'
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { RootState } from '../../store/store'
 import { musifyData } from '../../store/Musify'
-import { InitialStateTypes } from '../../Interfaces/MusifySlice.interface';
-import { MusifyService } from '../../services/Musify.service';
-const service = new MusifyService()
+import MusifyService  from '../../services/Musify.service';
+import { lyricsApi } from '../../api/api';
+const service = new MusifyService(lyricsApi)
 const BottomPlayer = () => {
     const TypedHook: TypedUseSelectorHook<RootState> = useSelector
     const data = TypedHook(musifyData)
     const [isVisible, setIsVisible] = useState(false)
-    const [currentTrack, setCurrentTrrack] = useState<Track>()
-    const playbackState = usePlaybackState();
+    const [cTrack, setCTrack] = useState<Track>()
+    const playbackState: PlaybackState | { state: undefined } = usePlaybackState();
     useEffect(() => {
         if (data.storeSong.length > 0) {
-            service.setUpPlayer(data, handleBottomCondition,setCurrentTrrack)
+            service.setUpPlayer(data, setCTrack)
         }
     }, [data]);
-    const handleBottomCondition = async () => {
-        try {
-            let trackIndex = await TrackPlayer.getCurrentTrack();
-            let trackObject = await TrackPlayer.getTrack(trackIndex!)
-
-
-            trackObject && setCurrentTrrack(trackObject)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const playPauseAction = () => {
-        playbackState.state == "playing" ? TrackPlayer.pause() : TrackPlayer.play()
-    }
-    const events = [
-        Event.PlaybackState,
-        Event.PlaybackError,
-    ];
-    useTrackPlayerEvents(events, (event: any) => {
-        event.state == State.Playing && handleBottomCondition()
+    useTrackPlayerEvents(service.getEvent(), (event: any) => {
+        event.state == State.Playing && service.handleBottomCondition(setCTrack)
     })
     return (
         <>
-            {currentTrack &&
+            {cTrack &&
                 <View>
                     <TouchableOpacity
                         activeOpacity={1}
@@ -68,15 +50,15 @@ const BottomPlayer = () => {
                         }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Image
-                                source={{ uri: currentTrack?.artwork }}
+                                source={{ uri: cTrack?.artwork }}
                                 style={{ width: 50, height: 50, borderRadius: 5 }}
                             />
                             <View style={{ marginLeft: 10 }}>
-                                <Text className='text-white text-[14px] mb-1'>{currentTrack.title}</Text>
-                                <Text style={{ color: 'white', fontSize: 10 }}>{currentTrack.artist}</Text>
+                                <Text className='text-white text-[14px] mb-1'>{cTrack.title}</Text>
+                                <Text style={{ color: 'white', fontSize: 10 }}>{cTrack.artist}</Text>
                             </View>
                         </View>
-                        <TouchableOpacity onPress={playPauseAction}>
+                        <TouchableOpacity onPress={() => service.playPauseAction(playbackState)}>
                             {playbackState.state == "playing" ?
                                 <Icons.PlayIcon name='pause' color={"white"} size={30} /> :
                                 <Icons.PlayIcon name='play' color={"white"} size={30} />
@@ -90,12 +72,9 @@ const BottomPlayer = () => {
                         }}
                     />
                 </View>
-
             }
         </>
     );
 };
 
-export default BottomPlayer;
-
-//'#a34c0d', '#592804', '#241001', '#000000'
+export default BottomPlayer

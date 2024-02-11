@@ -18,7 +18,6 @@ const Songs = () => {
     service.getSongs(setSng)
   }, [])
   useEffect(() => {
-    console.log("dispatch")
     if (sng) {
       dispatch(addSongList(sng))
     }
