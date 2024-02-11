@@ -5,17 +5,19 @@ import {
 import React, { useEffect, useState, useCallback } from 'react';
 import Modal from 'react-native-modal';
 import LinearGradient from 'react-native-linear-gradient';
-import TrackPlayer, { Track, usePlaybackState, useProgress, Event, useTrackPlayerEvents, State } from 'react-native-track-player';
+import TrackPlayer, { Track, usePlaybackState, useProgress, useTrackPlayerEvents, State } from 'react-native-track-player';
 import { Icons } from '../../constants/Icon';
 import Slider from "@react-native-community/slider"
-import axios from 'axios';
+import MusifyService from '../../services/Musify.service';
+import { lyricsApi } from '../../api/api';
+const service = new MusifyService(lyricsApi)
 const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [flip, setFlip] = useState(new Animated.Value(0));
     const [currentTrack, setCurrentTrrack] = useState<Track>()
     const [lyric, setLyric] = useState<string>("We are working on it.! 💻")
     const playbackState = usePlaybackState()
-    const progress = useProgress();
+    const progress = useProgress()
     const flipCard = useCallback(() => {
         Animated.timing(flip, {
             toValue: isFlipped ? 0 : 180,
@@ -34,69 +36,26 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
         outputRange: ['180deg', '360deg'],
     })
     const frontAnimatedStyle = {
-        transform: [{ rotateY: frontInterpolate }],
+        transform: [{ rotateY: frontInterpolate }]
     }
     const backAnimatedStyle = {
         transform: [{ rotateY: backInterpolate }],
     }
-    const handlePlay = async () => {
-        try {
-            console.log("called play")
-            await TrackPlayer.play()
-            // let trackIndex = await TrackPlayer.getCurrentTrack();
-            // console.log("playing Number =>  " + trackIndex)
-            // let trackObject = await TrackPlayer.getTrack(trackIndex!);
-            // console.log(`Title: ${trackObject?.title}`);
-
-            // const position = await TrackPlayer.getPosition();
-            // console.log("Position => " + position)
-            // const duration = await TrackPlayer.getDuration();
-            // console.log("Duration => " + duration)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const handleBottomCondition = async () => {
-        try {
-            let trackIndex = await TrackPlayer.getCurrentTrack();
-            let trackObject = await TrackPlayer.getTrack(trackIndex!)
-            trackObject && setCurrentTrrack(trackObject)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    const playPauseAction = () => {
-        playbackState.state == "playing" ? TrackPlayer.pause() : TrackPlayer.play()
-    }
     useEffect(() => {
-        handleBottomCondition()
+        service.handleBottomCondition(setCurrentTrrack)
     }, [])
     const format = (seconds: number) => {
         let mins = Math.floor(seconds / 60)
             .toString()
-            .padStart(2, '0');
-        let secs = (Math.trunc(seconds) % 60).toString().padStart(2, '0');
-        return `${mins}:${secs}`;
-    };
-    const getLyrics = async () => {
-        try {
-            let currentTrack = await TrackPlayer.getActiveTrack()
-            const data = await axios.get(`https://musify-api-red-gula.vercel.app/lyrics?id=${currentTrack?.id}`)
-            if (data.data.data) {
-                setLyric(data.data.data.lyrics)
-            } else {
-                setLyric("We are working on it.! 💻")
-            }
-        } catch (error) {
-            setLyric("We are working on it.! 💻")
-        }
+            .padStart(2, '0')
+        let secs = (Math.trunc(seconds) % 60).toString().padStart(2, '0')
+        return `${mins}:${secs}`
     }
-    const events = [
-        Event.PlaybackState,
-        Event.PlaybackError,
-    ];
-    useTrackPlayerEvents(events, (event: any) => {
-        event.state == State.Playing && [handleBottomCondition(), getLyrics()]
+    useTrackPlayerEvents(service.getEvent(), (event: any) => {
+        if (event.state == State.Playing) {
+            service.handleBottomCondition(setCurrentTrrack)
+            service.getLyrics(setLyric)
+        }
     })
     return (
         <Modal isVisible={isVisible} style={{ margin: 0 }}>
@@ -177,16 +136,16 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                         </TouchableOpacity>
                         <View className=' w-[40%] flex items-center justify-evenly flex-row'>
                             <Icons.KeyboardDown name='skip-previous' color={"white"} size={30}
-                                onPress={() => [TrackPlayer.skipToPrevious(), handleBottomCondition()]}
+                                onPress={() => [TrackPlayer.skipToPrevious(), service.handleBottomCondition(setCurrentTrrack)]}
                             />
-                            <TouchableOpacity onPress={playPauseAction} >
+                            <TouchableOpacity onPress={() => service.playPauseAction(playbackState)} >
                                 {playbackState.state == "playing" ?
                                     <Icons.PlayIcon name='pause' color={"white"} size={30} /> :
                                     <Icons.PlayIcon name='play' color={"white"} size={30} />
                                 }
                             </TouchableOpacity>
                             <Icons.KeyboardDown name='skip-next' color={"white"} size={30}
-                                onPress={() => [TrackPlayer.skipToNext(), handleBottomCondition()]}
+                                onPress={() => [TrackPlayer.skipToNext(), service.handleBottomCondition(setCurrentTrrack)]}
                             />
                         </View>
                         <Icons.SearchIcon name='repeat' color={"#bababa"} size={25} />

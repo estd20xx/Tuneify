@@ -1,39 +1,46 @@
+import axios from "axios";
 import { IMusify } from "../Interfaces/MusifySetUp.interface";
 import { InitialStateTypes } from "../Interfaces/MusifySlice.interface";
-import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Track } from "react-native-track-player";
-export class MusifyService implements IMusify {
-
-    getTrackObject = async (): Promise<Track> => {
+import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Event, PlaybackState, State, Track } from "react-native-track-player";
+export default class MusifyService implements IMusify {
+    constructor(private lyricApi: string) { }
+    public getEvent = (): Event[] => {
+        const events: Event[] = [
+            Event.PlaybackState,
+            Event.PlaybackError,
+            Event.PlaybackState,
+            Event.PlaybackError,
+        ]
+        return events
+    }
+    public getLyrics = async (setLyric: (lyric: string) => void): Promise<void> => {
         try {
-            let trackIndex = await TrackPlayer.getCurrentTrack();
-            let trackObject = await TrackPlayer.getTrack(trackIndex!)
-            return trackObject!
-        } catch (error) {
-            const data: Track = {
-                url: '',
-                title: '',
-                artist: '',
-                album: '',
-                genre: '',
-                date: '',
-                artwork: 'http://example.com/cover.png',
-                duration: 402
-
+            let currentTrack = await TrackPlayer.getActiveTrack()
+            const data = await axios.get(`${this.lyricApi}${currentTrack?.id}`)
+            if (data.data.data) {
+                setLyric(data.data.data.lyrics)
+            } else {
+                console.log("else")
+                setLyric("We are working on it.! 💻")
             }
-            return data
+        } catch (error) {
+            console.log("error")
+            setLyric("We are working on it.! 💻")
         }
     }
-    handleBottomCondition = async (setCurrentTrrack: (track: Track) => void): Promise<void> => {
+    public playPauseAction = (playbackState: PlaybackState | { state: undefined }): void => {
+        playbackState.state == State.Playing ? TrackPlayer.pause() : TrackPlayer.play()
+    }
+    public handleBottomCondition = async (setCurrentTrrack: (track: Track) => void): Promise<void> => {
         try {
             let trackIndex = await TrackPlayer.getCurrentTrack();
             let trackObject = await TrackPlayer.getTrack(trackIndex!)
             trackObject && setCurrentTrrack(trackObject)
-
         } catch (error) {
             console.log(error)
         }
     }
-    setUpPlayer = async (data: InitialStateTypes, handleBottomCondition: () => void, setCurrentTrrack: (track: Track) => void) => {
+    public setUpPlayer = async (data: InitialStateTypes, setCurrentTrack: (track: Track) => void) => {
         try {
             await TrackPlayer.setupPlayer({ maxCacheSize: 1024 * 10, autoHandleInterruptions: true })
             await TrackPlayer.updateOptions({
@@ -50,7 +57,7 @@ export class MusifyService implements IMusify {
                 compactCapabilities: [Capability.Play, Capability.Pause, Capability.SkipToNext, Capability.SkipToPrevious]
             })
             await TrackPlayer.add(data.storeSong)
-            this.handleBottomCondition()
+            this.handleBottomCondition(setCurrentTrack)
         } catch (error) {
             console.log(error)
         }

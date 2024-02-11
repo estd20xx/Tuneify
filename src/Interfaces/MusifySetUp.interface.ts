@@ -1,7 +1,10 @@
-import { Track } from "react-native-track-player";
-import { InitialStateTypes, StoreSong } from "./MusifySlice.interface";
+import { Event, PlaybackState, Track } from "react-native-track-player";
+import { InitialStateTypes } from "./MusifySlice.interface";
 
 export interface IMusify {
-    setUpPlayer: (data: InitialStateTypes, handleBottomCondition: () => void,setCurrentTrrack: (track: Track) => void) => void
-    handleBottomCondition: (setCurrentTrrack:(track: Track)=> void) => Promise<void>
+    getLyrics: (setlyrics: (lyric: string) => void) => Promise<void>
+    playPauseAction: (playbackState: PlaybackState | { state: undefined }) => void
+    getEvent: () => Event[]
+    setUpPlayer: (data: InitialStateTypes, setCurrentTrrack: (track: Track) => void) => void
+    handleBottomCondition: (setCurrentTrack: (track: Track) => void) => Promise<void>
 }
