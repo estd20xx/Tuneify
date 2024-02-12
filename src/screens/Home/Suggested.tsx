@@ -10,6 +10,7 @@ import {
 import { component } from "../../constants/screens"
 import SuggestedServices from '../../services/suggested.service'
 const service = new SuggestedServices()
+import Toast from 'react-native-toast-message'
 const Suggested = () => {
   const [albums, setAlbums] = useState<AlbumTypes[]>([])
   const [plst, setPlst] = useState<PlaylistTypes[]>([])

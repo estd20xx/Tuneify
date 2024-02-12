@@ -1,12 +1,11 @@
 
 import React, { useEffect } from 'react'
 import MainNavigation from './src/mainNavigation/MainNavigation'
-import { Platform, StatusBar } from 'react-native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { configureFonts } from 'react-native-paper';
-import MusifyPlayer from 'react-native-track-player';
-import { Provider } from 'react-redux';
-import store from './src/store/store';
+import { Platform, StatusBar } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { configureFonts } from 'react-native-paper'
+import { Provider } from 'react-redux'
+import store from './src/store/store'
 const fontConfig = {
   fontFamily: 'Roboto'
 };
@@ -24,6 +23,9 @@ const App = () => {
   //   // }
   // }, [])
 
+  useEffect(() => {
+
+  })
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
