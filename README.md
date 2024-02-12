@@ -25,8 +25,8 @@ Contributions are welcome. Please read our [contributing guidelines](https://git
 ```
 Musify does not own or have any affiliation with the songs and other content available through the app.
 All songs and other content are the property of their respective owners and are protected by copyright law.
-BlackHole is not responsible for any infringement of copyright or other intellectual property rights that may result
-from the use of the songs and other content available through the app. BlackHole uses third-party plugins and
+Musify is not responsible for any infringement of copyright or other intellectual property rights that may result
+from the use of the songs and other content available through the app. Musify uses third-party plugins and
 is not responsible for any harm or damage to the respective owners or any other parties resulting from the use
 of the songs and other content through the third-party plugins.
 By using the app, you agree to use the songs and other content only for personal, non-commercial purposes
