@@ -54,11 +54,8 @@ react {
     // hermesFlags = ["-O", "-output-source-map"]
 }
 
-/**
- * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
- */
-def enableProguardInReleaseBuilds = false
-
+ def enableSeparateBuildPerCPUArchitecture= true
+def enableProguardInReleaseBuilds = true
 /**
  * The preferred build flavor of JavaScriptCore (JSC)
  *
@@ -72,6 +69,7 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
+
 android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -82,8 +80,9 @@ android {
         applicationId "com.musify"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
+        
     }
     signingConfigs {
         debug {
@@ -97,7 +96,14 @@ android {
                 storePassword 'new@Namelessnerd1.'
                 keyAlias 'my-key-alias'
                 keyPassword 'new@Namelessnerd1.'
-            
+        }
+    }
+    splits{
+        abi{
+            reset()
+            enable enableSeparateBuildPerCPUArchitecture
+            universalApk true
+            include "armeabi-v7a","x86","arm64-v8a","x86_64"
         }
     }
     buildTypes {
@@ -105,10 +111,11 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
+            debuggable false
             signingConfig signingConfigs.release
-            minifyEnabled enableProguardInReleaseBuilds
+            minifyEnabled true
+            shrinkResources true
+          
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
