@@ -20,11 +20,9 @@ export default class MusifyService implements IMusify {
             if (data.data.data) {
                 setLyric(data.data.data.lyrics)
             } else {
-                console.log("else")
                 setLyric("We are working on it.! 💻")
             }
         } catch (error) {
-            console.log("error")
             setLyric("We are working on it.! 💻")
         }
     }
@@ -62,5 +60,4 @@ export default class MusifyService implements IMusify {
             console.log(error)
         }
     }
-
 }

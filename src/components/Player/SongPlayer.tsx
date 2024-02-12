@@ -8,7 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import TrackPlayer, { Track, usePlaybackState, useProgress, useTrackPlayerEvents, State } from 'react-native-track-player';
 import { Icons } from '../../constants/Icon';
 import Slider from "@react-native-community/slider"
-import MusifyService from '../../services/Musify.service';
+import MusifyService from '../../services/Musify.service'
 import { lyricsApi } from '../../api/api';
 const service = new MusifyService(lyricsApi)
 const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) => {
@@ -156,4 +156,4 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
         </Modal>
     )
 }
-export default SongPlayer;
+export default SongPlayer

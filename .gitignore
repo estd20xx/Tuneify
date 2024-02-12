@@ -65,3 +65,7 @@ yarn-error.log
 # testing
 /coverage
 api/
+# Expo
+.expo
+dist/
+web-build/
