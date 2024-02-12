@@ -15,7 +15,6 @@ const Albums = () => {
     <ScrollView>
       <View className='bg-[#181a20] w-full h-auto flex flex-row flex-wrap justify-evenly py-3'>
         {isL ?
-
           Array.from({ length: 6 }, (_, index) => {
             return (
               <component.CSeperateSkeleton key={index} />
