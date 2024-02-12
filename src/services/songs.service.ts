@@ -11,7 +11,6 @@ export default class SongService implements Isongs {
             const result = await axios.get(this.getUrl())
             setSng(result.data.data.results)
         } catch (error) {
-            console.log(this.getUrl())
             console.log("something went wrong in songs")
         }
     }
