@@ -15,12 +15,12 @@ const BottomTab = () => {
         <View>
           <BottomPlayer />
           <BottomNavigation.Bar
-            theme={{ colors: { secondaryContainer: "#FF0060" } }}
+            theme={{ colors: { secondaryContainer: "#2D3250" } }}
             navigationState={state}
             safeAreaInsets={insets}
             shifting={true}
-            activeColor='#FFF7F1'
-            inactiveColor='#DDDDDD'
+            activeColor='#a1a0a3'
+            inactiveColor='#a1a0a3'
             style={{
               backgroundColor: "#000000",
             }}
