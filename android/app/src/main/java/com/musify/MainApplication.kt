@@ -1,5 +1,5 @@
 package com.musify
-
+import com.rnfs.RNFSPackage;
 import android.app.Application
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
@@ -18,6 +18,7 @@ class MainApplication : Application(), ReactApplication {
       object : DefaultReactNativeHost(this) {
         override fun getPackages(): List<ReactPackage> =
             PackageList(this).packages.apply {
+              RNFSPackage()
             }
 
         override fun getJSMainModuleName(): String = "index"

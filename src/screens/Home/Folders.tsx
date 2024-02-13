@@ -1,10 +1,33 @@
-import { View, Text } from 'react-native'
+import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { TypedUseSelectorHook, useSelector } from 'react-redux'
+import { RootState } from '../../store/store'
+import { musifyData } from '../../store/Musify'
 const Folders = () => {
+  const TypedHook: TypedUseSelectorHook<RootState> = useSelector
+  const localFile = TypedHook(musifyData)
   return (
-    <View className='bg-[#181a20] w-full h-screen flex items-center justify-center'>
-      <Text className='text-white'>Folders</Text>
+    <View className='bg-[#181a20] w-full h-auto'>
+      <FlatList
+        data={localFile.localFile}
+        keyExtractor={(item) => item.url}
+        initialNumToRender={3}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity className='w-full h-16  mt-2 flex flex-row items-center'>
+              <View className='h-16 w-20  pl-2'>
+                <Image source={require("../../assets/images/new.png")} className='h-16 w-16 rounded-md' />
+              </View>
+              <View className='w-4/5'>
+                <Text style={{ fontSize: 14, color: "white" }}>{item.title}</Text>
+                <Text style={{ fontSize: 10, color: "#d0d0d1" }}>{item.artist}</Text>
+              </View>
+            </TouchableOpacity>
+          )
+        }}
+      />
     </View>
   )
-} 
+}
 export default Folders
