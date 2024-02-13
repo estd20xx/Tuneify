@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Icons } from '../constants/Icon'
 const data = [
@@ -61,6 +61,7 @@ const Settings = () => {
   return (
     <View className='bg-[#181a20] w-full h-screen '>
       <View className='w-full h-auto flex items-center flex-row justify-end pr-3 py-2'>
+        <Text className='absolute left-4 text-white text-3xl tracking-wider font-bold shadow-md shadow-cyan-50'>Setting</Text>
         <Icons.MoreIcon name='more-horiz' size={30} color={"white"} />
       </View>
       <FlatList
