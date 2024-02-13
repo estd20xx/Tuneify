@@ -38,26 +38,27 @@ const ListItem: React.FC<ListItemProps> = React.memo(({ item, viewableItems, ind
             style={[
                 {
                     width: '100%',
-                    height: 50,
+                    height: 60,
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     paddingLeft: 2,
                     paddingRight: 5,
                     marginTop: 10,
+                    // backgroundColor: "red"
                 },
                 rStyle
-            ]}
+            ]} 
         >
             <View className='w-4/5  h-full pl-3 flex flex-row '>
                 <View className='w-full rounded-lg overflow-hidden '>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Image
                             source={{ uri: item.image[2].link }}
-                            style={{ width: 50, height: 50, borderRadius: 5 }}
+                            style={{ width: 60, height: 60, borderRadius: 5 }}
                         />
                         <View style={{ marginLeft: 10 }}>
-                            <Text style={{ color: 'white' }}>{item.name}</Text>
-                            <Text style={{ color: 'white', fontSize: 10 }}>
+                            <Text style={{ color: 'white', fontSize: 14 }}>{item.name}</Text>
+                            <Text style={{ color: '#d0d0d1', fontSize: 10, marginTop: 1 }}>
                                 {item.primaryArtists}
                             </Text>
                         </View>
