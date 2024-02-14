@@ -3,18 +3,18 @@ import Isuggested from "../Interfaces/suggested.interface";
 import { AlbumTypes, ChartsTypes, Http, PlaylistTypes, TrendingAlbumTypes, TrendingSongTypes } from "../Types/Types";
 import { api } from "../api/api";
 export default class SuggestedServices implements Isuggested {
-    wait = async (timeout: number): Promise<void> => {
+   public wait = async (timeout: number): Promise<void> => {
         return new Promise(resolve => setTimeout(resolve, timeout))
     }
-    randomGenerator = (initial: number, final: number): number => {
+   public randomGenerator = (initial: number, final: number): number => {
         const randomNumber = Math.floor(Math.random() * final) + initial;
         return randomNumber
     }
-    http = async <Http>(url: string): Promise<Http> => {
+    public http = async <Http>(url: string): Promise<Http> => {
         const data = await axios.get(url)
         return data.data
     }
-    getSuggestedData = async (
+    public getSuggestedData = async (
         setAlbums: (albums: AlbumTypes[]) => void,
         setPlst: (playlist: PlaylistTypes[]) => void,
         setChst: (charts: ChartsTypes[]) => void,

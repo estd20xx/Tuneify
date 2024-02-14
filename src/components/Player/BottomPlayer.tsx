@@ -2,17 +2,17 @@ import {
     Text,
     TouchableOpacity,
     Image,
-} from 'react-native';
-import React, { useEffect, useState } from 'react';
-import SongPlayer from './SongPlayer';
+} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import SongPlayer from './SongPlayer'
 import { Track, usePlaybackState, State, useTrackPlayerEvents, PlaybackState } from 'react-native-track-player'
 import { View } from 'react-native-animatable'
 import { Icons } from '../../constants/Icon'
-import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import { RootState } from '../../store/store'
 import { musifyData } from '../../store/Musify'
-import MusifyService  from '../../services/Musify.service';
-import { lyricsApi } from '../../api/api';
+import MusifyService  from '../../services/Musify.service'
+import { lyricsApi } from '../../api/api'
 const service = new MusifyService(lyricsApi)
 const BottomPlayer = () => {
     const TypedHook: TypedUseSelectorHook<RootState> = useSelector
