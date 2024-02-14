@@ -1,19 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { RootState } from './store';
-import { SongsTypes } from '../Types/Types';
-import { InitialStateTypes, LocalFileTypes, StoreSong } from '../Interfaces/MusifySlice.interface';
-
-export interface LocalFile {
-    album: string
-    artist: string
-    cover: string
-    duration: string
-    url: string
-}
-
+import { RootState } from './store'
+import { SongsTypes } from '../Types/Types'
+import { InitialStateTypes, LocalFileTypes, StoreSong } from '../Interfaces/musifySlice.interface'
 const initialState: InitialStateTypes = {
     storeSong: [],
-    localFile: []
+    localFile: [],
+    isUploaded: false
 }
 const Musify = createSlice({
     name: "musifyDev",
@@ -42,9 +34,12 @@ const Musify = createSlice({
                 return t
             })
             state.localFile = [...data]
+        },
+        checkLocal(state: InitialStateTypes, actions: PayloadAction<boolean>) {
+            state.isUploaded = actions.payload
         }
     }
 })
-export const { addSongList, addLocalFiles } = Musify.actions
-export const musifyData = (state: RootState) => state.Musify
+export const { addSongList, addLocalFiles, checkLocal } = Musify.actions
+export const musifyData = (state: RootState) => state.persistedReducer
 export default Musify.reducer

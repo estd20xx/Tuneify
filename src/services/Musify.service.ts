@@ -1,6 +1,6 @@
 import axios from "axios";
-import { IMusify } from "../Interfaces/MusifySetUp.interface";
-import { InitialStateTypes } from "../Interfaces/MusifySlice.interface";
+import { IMusify } from "../Interfaces/musifySetUp.interface";
+import { InitialStateTypes } from "../Interfaces/musifySlice.interface";
 import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Event, PlaybackState, State, Track } from "react-native-track-player";
 export default class MusifyService implements IMusify {
     constructor(private lyricApi: string) { }
@@ -31,9 +31,8 @@ export default class MusifyService implements IMusify {
     }
     public handleBottomCondition = async (setCurrentTrrack: (track: Track) => void): Promise<void> => {
         try {
-            let trackIndex = await TrackPlayer.getCurrentTrack();
-            let trackObject = await TrackPlayer.getTrack(trackIndex!)
-            trackObject && setCurrentTrrack(trackObject)
+            let currentTrack = await TrackPlayer.getActiveTrack()
+            currentTrack && setCurrentTrrack(currentTrack)
         } catch (error) {
             console.log(error)
         }
