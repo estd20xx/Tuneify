@@ -1,7 +1,10 @@
-import { View, Text, FlatList, Image } from 'react-native'
+import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { TrendingAlbumPropsTypes } from '../Types/Types'
+import { RootStackParamList, TrendingAlbumPropsTypes } from '../Types/Types'
+import { useNavigation } from '@react-navigation/core'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({ data, topic }) => {
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
     return (
         <View className='w-full h-auto  mt-3'>
             <View className='w-full pl-3 h-7 flex items-center flex-row  mb-3'>
@@ -14,8 +17,9 @@ const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({ data, topic }) => {
                 keyExtractor={(item) => item.id}
                 initialNumToRender={3}
                 renderItem={({ item }) => {
+                    // console.log(item.name)
                     return (
-                        <View className=' h-full flex items-center juc w-36 ml-2 '>
+                        <TouchableOpacity className=' h-full flex items-center juc w-36 ml-2 ' onPress={() => navigation.navigate("TrendingAlbumDetails", { albumData: item })}>
                             <View className=' h-36 w-36  rounded-3xl overflow-hidden'>
                                 <Image source={{ uri: item.image[2].link }} className='w-full h-full' />
                             </View>
@@ -24,7 +28,7 @@ const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({ data, topic }) => {
                                     {item.name.length > 10 ? item.name.slice(0, 14) + ".." : item.name}
                                 </Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     )
                 }}
             />

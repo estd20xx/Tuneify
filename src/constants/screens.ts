@@ -22,9 +22,13 @@ import TabButton from '../components/TabButton';
 import CHeader from '../components/Header';
 import CSeperateAlbum from '../components/SeperateAlbum'
 import CSeperateSkeleton from '../components/skeleton/SeperateAlbumSkeleton';
+import TrendingAlbumDetails from "../components/suggested/TrendingAlbum.details";
+import AlbumDetails from "../components/suggested/Album.details";
+import PlaylistDetails from "../components/suggested/Playlist.details";
 export const component = {
     Home, Albums, Artists, Folders, Songs, Suggested, Playlists, CAlbums, TabButton,
     Settings, Favourites, CPlaylist, CCharts, CTrendingAlbum, CTrendingSong,
     Splash, HomePage, BottomNavigation, Onboading, EntryPoint, CSuggestedSkeleton,
-    CHeader, CSeperateAlbum, CSeperateSkeleton
+    CHeader, CSeperateAlbum, CSeperateSkeleton, TrendingAlbumDetails, AlbumDetails,
+    PlaylistDetails
 }
