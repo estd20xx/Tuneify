@@ -21,14 +21,12 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
     const fetchAudio = async () => {
         try {
             const PlaylistData = await axios.get(`${baseApi}playlists?id=${data.id}`)
-            console.log(PlaylistData.data.data.songs.length)
             setPlaylistSongs(PlaylistData.data.data.songs)
         } catch (error) {
             console.log(error)
         }
     }
     useEffect(() => {
-        console.log(data.id)
         fetchAudio()
     }, [])
     return (

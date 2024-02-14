@@ -15,6 +15,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
     const [isFlipped, setIsFlipped] = useState(false);
     const [flip, setFlip] = useState(new Animated.Value(0));
     const [currentTrack, setCurrentTrrack] = useState<Track>()
+    const [colors, setColors] = useState<string[]>([])
     const [lyric, setLyric] = useState<string>("We are working on it.! 💻")
     const playbackState = usePlaybackState()
     const progress = useProgress()
@@ -55,15 +56,14 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
         if (event.state == State.Playing) {
             service.handleBottomCondition(setCurrentTrrack)
             service.getLyrics(setLyric)
+            setColors(service.getGradient())
         }
     })
     return (
         <Modal isVisible={isVisible} style={{ margin: 0 }}>
-            <StatusBar backgroundColor={'#e57800'} />
+            <StatusBar backgroundColor={colors[0]} />
             <LinearGradient
-                colors={['#e57800', '#cc6b00', '#b25d00', "#995000", "#7f4300", "#663500",
-                    "#4c2800",
-                    "#331a00",]}
+                colors={colors}
                 style={{ flex: 1 }}>
                 <View className='w-full h-screen  px-3'>
                     <View className=' h-10 w-full flex items-center justify-between flex-row'>
@@ -101,7 +101,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                         <View className=' flex items-center justify-between flex-row px-3 '>
                             <View className=' py-2'>
                                 <Text className='text-white text-xl mb-1'>{currentTrack?.title}</Text>
-                                <Text className='text-[#a1a0a3] text-sm'>{currentTrack?.artist}</Text>
+                                <Text className='text-white text-sm'>{currentTrack?.artist}</Text>
                             </View>
                             <TouchableOpacity>
                                 <Icons.HomeIcon name='heart-fill' size={20} color={"#FF0060"} />
