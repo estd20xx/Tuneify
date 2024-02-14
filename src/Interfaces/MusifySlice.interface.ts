@@ -16,5 +16,6 @@ export interface LocalFileTypes {
 }
 export interface InitialStateTypes {
     storeSong: StoreSong[],
-    localFile: LocalFileTypes[]
+    localFile: LocalFileTypes[],
+    isUploaded: boolean
 }

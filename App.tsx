@@ -1,11 +1,12 @@
 
 import React, { useEffect } from 'react'
 import MainNavigation from './src/mainNavigation/MainNavigation'
-import { Platform, StatusBar } from 'react-native'
+import { StatusBar } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { configureFonts } from 'react-native-paper'
 import { Provider } from 'react-redux'
-import store from './src/store/store'
+import store, { persistor } from './src/store/store'
+import { PersistGate } from 'redux-persist/integration/react'
 const fontConfig = {
   fontFamily: 'Roboto'
 };
@@ -31,7 +32,9 @@ const App = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar backgroundColor={"#181a20"} />
       <Provider store={store}>
-        <MainNavigation />
+        <PersistGate persistor={persistor}>
+          <MainNavigation />
+        </PersistGate>
       </Provider>
 
     </GestureHandlerRootView>

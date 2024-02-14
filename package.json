@@ -14,12 +14,13 @@
     "clean": "rimraf node_modules && yarn install & yarn run cache"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-community/slider": "^4.5.0",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/material-top-tabs": "^6.6.5",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
-    "@reduxjs/toolkit": "^2.1.0",
+    "@reduxjs/toolkit": "^2.2.0",
     "axios": "^1.6.7",
     "depcheck": "^1.4.7",
     "nativewind": "^2.0.11",
@@ -40,7 +41,8 @@
     "react-native-toast-message": "^2.2.0",
     "react-native-track-player": "^4.0.1",
     "react-native-vector-icons": "^10.0.3",
-    "react-redux": "^9.1.0"
+    "react-redux": "^9.1.0",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -53,6 +55,7 @@
     "@types/react": "^18.2.6",
     "@types/react-native-vector-icons": "^6.4.18",
     "@types/react-test-renderer": "^18.0.0",
+    "@types/redux-persist": "^4.3.1",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
