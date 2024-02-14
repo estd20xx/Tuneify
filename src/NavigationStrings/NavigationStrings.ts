@@ -7,5 +7,10 @@ export const navigationStrings = {
     settings: "Settings",
     home: "Home",
     bottom: "bottom",
-    enrtyPoint: "entryPoint"
+    enrtyPoint: "entryPoint",
+    TrendingAlbumDetails: "TrendingAlbumDetails",
+    PlaylistDetails: "PlaylistDetails",
+    albumsDetails: "albumsDetaila",
+    trendingSongDetails: "trandingSongDetails",
+    charts: "charts"
 }

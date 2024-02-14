@@ -1,7 +1,7 @@
-import { navigationStrings } from "../NavigationStrings/NavigationStrings";
-import { ItemTypes, OnBoardingDataTypes, TabItemTypes } from "../Types/Types";
-import { component } from "./screens";
-import { Icons } from "./Icon";
+import { navigationStrings } from "../NavigationStrings/NavigationStrings"
+import { ItemTypes, OnBoardingDataTypes, TabItemTypes } from "../Types/Types"
+import { component } from "./screens"
+import { Icons } from "./Icon"
 export const tabBar: TabItemTypes[] = [
     {
         name: "Suggested",
@@ -61,6 +61,18 @@ export const MainNavigationItems: any[] = [
     {
         name: navigationStrings.enrtyPoint,
         component: component.EntryPoint
+    },
+    {
+        name: navigationStrings.TrendingAlbumDetails,
+        component: component.TrendingAlbumDetails
+    },
+    {
+        name: navigationStrings.albumsDetails,
+        component: component.AlbumDetails
+    },
+    {
+        name: navigationStrings.PlaylistDetails,
+        component: component.PlaylistDetails
     },
 ]
 export const onboardingData: OnBoardingDataTypes[] = [

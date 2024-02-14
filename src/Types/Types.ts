@@ -10,9 +10,13 @@ export interface NavigationStringsTypes {
     settings: string
     home: string
     bottom: string
+    TrendingAlbumDetails: string
+    PlaylistDetails: string
+    albumsDetails: string
+    trendingSongDetails: string
+    charts: string
 }
-
-type RootStackParamList = {
+export type RootStackParamList = {
     splash: undefined
     onboarding: undefined
     homePage: undefined
@@ -21,9 +25,18 @@ type RootStackParamList = {
     settings: undefined
     home: undefined
     bottom: undefined
-};
+    TrendingAlbumDetails: { albumData: TrendingAlbumTypes }
+    PlaylistDetails: { playlistData: PlaylistTypes }
+    albumsDetails: undefined
+    trendingSongDetails: undefined
+    charts: undefined
+}
 export type splashScreen = NativeStackNavigationProp<RootStackParamList, "splash">;
 export type onBoardingScreen = NativeStackNavigationProp<RootStackParamList, "onboarding">
+export interface TrendingAlbumPropsTypes {
+    data: TrendingAlbumTypes[]
+    topic: string
+}
 export interface SplashScreenPropsTypes {
     navigation: splashScreen;
 }
@@ -78,6 +91,21 @@ export interface AlbumDataProps {
 export interface PlaylistTypes {
     id: string
     userId: string
+    title: string
+    subtitle: string
+    type: string
+    image: ImageType[]
+    url: string
+    songCount: string
+    firstname: string
+    followerCount: string
+    lastUpdated: string
+    explicitContent: string
+}
+export interface PlaylistTypesDetails {
+    id: string
+    userId: string
+    name: string
     title: string
     subtitle: string
     type: string
@@ -148,15 +176,12 @@ export interface TrendingAlbumTypes {
     explicitContent: string
     songCount: string
     url: string
-    primaryArtists: PrimaryArtistsTypes[]
+    primaryArtists: string
     featuredArtists: []
     artists: ArtistsTypes[]
     image: ImageType[]
 }
-export interface TrendingAlbumPropsTypes {
-    data: TrendingAlbumTypes[]
-    topic: string
-}
+
 
 export interface DownliadUrlType {
     quality: string
