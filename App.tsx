@@ -6,6 +6,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { configureFonts } from 'react-native-paper'
 import { Provider } from 'react-redux'
 import store, { persistor } from './src/store/store'
+import CodePush from 'react-native-code-push';
+
 import { PersistGate } from 'redux-persist/integration/react'
 const fontConfig = {
   fontFamily: 'Roboto'
@@ -41,4 +43,8 @@ const App = () => {
   )
 }
 
-export default App 
+export default App
+
+// export default CodePush({
+//   updateDialog: true,
+// })(App);

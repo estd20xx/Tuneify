@@ -2,6 +2,8 @@ apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
+
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 react {
 }
  def enableSeparateBuildPerCPUArchitecture= true
@@ -17,8 +19,8 @@ android {
         applicationId "com.musify"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 7
+        versionName "1.0.6"
         
     }
     signingConfigs {
