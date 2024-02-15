@@ -12,6 +12,8 @@ import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.flipper.ReactNativeFlipper
 import com.facebook.soloader.SoLoader
 
+import com.microsoft.codepush.react.CodePush;
+
 class MainApplication : Application(), ReactApplication {
 
   override val reactNativeHost: ReactNativeHost =
@@ -19,7 +21,11 @@ class MainApplication : Application(), ReactApplication {
         override fun getPackages(): List<ReactPackage> =
             PackageList(this).packages.apply {
               RNFSPackage()
+              
             }
+            override fun getJSBundleFile(): String? {
+              return CodePush.getJSBundleFile()
+              }
 
         override fun getJSMainModuleName(): String = "index"
 

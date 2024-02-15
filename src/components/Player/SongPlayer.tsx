@@ -11,14 +11,21 @@ import Slider from "@react-native-community/slider"
 import MusifyService from '../../services/Musify.service'
 import { lyricsApi } from '../../api/api';
 const service = new MusifyService(lyricsApi)
+import { useDispatch } from 'react-redux';
+import { addUserFavouritesData } from '../../store/Musify';
 const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) => {
-    const [isFlipped, setIsFlipped] = useState(false);
-    const [flip, setFlip] = useState(new Animated.Value(0));
+    const dispatch = useDispatch()
+    const [isFlipped, setIsFlipped] = useState(false)
+    const [flip, setFlip] = useState(new Animated.Value(0))
     const [currentTrack, setCurrentTrrack] = useState<Track>()
     const [colors, setColors] = useState<string[]>([])
     const [lyric, setLyric] = useState<string>("We are working on it.! 💻")
     const playbackState = usePlaybackState()
     const progress = useProgress()
+
+    const FavouriteHandler = () => {
+        dispatch(addUserFavouritesData(currentTrack!))
+    }
     const flipCard = useCallback(() => {
         Animated.timing(flip, {
             toValue: isFlipped ? 0 : 180,
@@ -103,7 +110,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                                 <Text className='text-white text-xl mb-1'>{currentTrack?.title}</Text>
                                 <Text className='text-white text-sm'>{currentTrack?.artist}</Text>
                             </View>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={FavouriteHandler}>
                                 <Icons.HomeIcon name='heart-fill' size={20} color={"#FF0060"} />
                             </TouchableOpacity>
                         </View>

@@ -1,10 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from './store'
 import { SongsTypes } from '../Types/Types'
-import { InitialStateTypes, LocalFileTypes, StoreSong } from '../Interfaces/musifySlice.interface'
+import { InitialStateTypes, LocalFileTypes, StoreSong, UserFavouritesTypes } from '../Interfaces/musifySlice.interface'
+import { Track } from 'react-native-track-player'
 const initialState: InitialStateTypes = {
     storeSong: [],
     localFile: [],
+    favouritesData: [],
     isUploaded: false
 }
 const Musify = createSlice({
@@ -15,7 +17,7 @@ const Musify = createSlice({
             const data = (actions.payload).map((cx) => {
                 const t: StoreSong = {
                     id: cx.id, title: cx.name, artist: cx.primaryArtists,
-                    artwork: cx.image[2].link, url: cx.downloadUrl[4].link
+                    artwork: cx.image[2].link, url: cx.downloadUrl[4].link,
                 }
                 return t
             })
@@ -37,9 +39,20 @@ const Musify = createSlice({
         },
         checkLocal(state: InitialStateTypes, actions: PayloadAction<boolean>) {
             state.isUploaded = actions.payload
+        },
+        addUserFavouritesData(state: InitialStateTypes, actions: PayloadAction<Track>) {
+            const dtx: UserFavouritesTypes = {
+                id: actions.payload.id,
+                title: actions.payload.title!,
+                artist: actions.payload.artist!,
+                artwork: actions.payload.artwork!,
+                url: actions.payload.url,
+                isLiked: false
+            }
+            state.favouritesData.push(dtx)
         }
     }
 })
-export const { addSongList, addLocalFiles, checkLocal } = Musify.actions
+export const { addSongList, addLocalFiles, checkLocal, addUserFavouritesData } = Musify.actions
 export const musifyData = (state: RootState) => state.persistedReducer
 export default Musify.reducer
