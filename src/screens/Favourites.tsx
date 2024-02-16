@@ -1,24 +1,20 @@
-import { View, Text, FlatList, Image } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux'
 import { RootState } from '../store/store'
 import { musifyData } from '../store/Musify'
 import { UserFavouritesTypes } from '../Interfaces/musifySlice.interface'
-import { TouchableOpacity } from 'react-native'
-import ListItem from '../components/ListItem'
 import { Icons } from '../constants/Icon'
-import { ScrollView } from 'react-native'
 const Favourites = () => {
   const dispatch = useDispatch()
   const TypedHook: TypedUseSelectorHook<RootState> = useSelector
   const data = TypedHook(musifyData)
   const [favData, setFavData] = useState<UserFavouritesTypes[]>(data.favouritesData)
-  // console.log(data.favouritesData)
   return (
     <View className='w-full h-screen flex items-center justify-center'>
       <ScrollView>
         <View className='w-full h-20  flex flex-row items-center justify-evenly'>
-          <TouchableOpacity className='bg-[#ff8216] h-11 w-36 rounded-full flex items-center justify-center flex-row'>
+          <TouchableOpacity className='bg-[#ff8216] h-11 w-32 rounded-full flex items-center justify-center flex-row'>
             <Image source={require("../assets/images/suffle.png")} style={{ tintColor: "white", width: 30, height: 30, marginRight: 3 }} />
             <Text className='text-white text-xl' >Suffle</Text>
           </TouchableOpacity>
@@ -39,7 +35,6 @@ const Favourites = () => {
                   paddingLeft: 2,
                   paddingRight: 5,
                   marginTop: 10,
-                  // backgroundColor: "red"
                 }
               }
               key={item.id}
@@ -71,5 +66,4 @@ const Favourites = () => {
     </View>
   )
 }
-
 export default Favourites

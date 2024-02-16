@@ -17,15 +17,11 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
     const dispatch = useDispatch()
     const [isFlipped, setIsFlipped] = useState(false)
     const [flip, setFlip] = useState(new Animated.Value(0))
-    const [currentTrack, setCurrentTrrack] = useState<Track>()
+    const [cTrack, setcTrack] = useState<Track>()
     const [colors, setColors] = useState<string[]>([])
     const [lyric, setLyric] = useState<string>("We are working on it.! 💻")
     const playbackState = usePlaybackState()
     const progress = useProgress()
-
-    const FavouriteHandler = () => {
-        dispatch(addUserFavouritesData(currentTrack!))
-    }
     const flipCard = useCallback(() => {
         Animated.timing(flip, {
             toValue: isFlipped ? 0 : 180,
@@ -50,7 +46,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
         transform: [{ rotateY: backInterpolate }],
     }
     useEffect(() => {
-        service.handleBottomCondition(setCurrentTrrack)
+        service.handleBottomCondition(setcTrack)
     }, [])
     const format = (seconds: number) => {
         let mins = Math.floor(seconds / 60)
@@ -61,7 +57,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
     }
     useTrackPlayerEvents(service.getEvent(), (event: any) => {
         if (event.state == State.Playing) {
-            service.handleBottomCondition(setCurrentTrrack)
+            service.handleBottomCondition(setcTrack)
             service.getLyrics(setLyric)
             setColors(service.getGradient())
         }
@@ -90,7 +86,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                         <Animated.View
                             style={[frontAnimatedStyle, { backfaceVisibility: "hidden" }]}
                             className=' w-[85%] h-80  justify-center items-center rounded-xl overflow-hidden'>
-                            <Image source={{ uri: currentTrack?.artwork }} className='h-full w-full' />
+                            <Image source={{ uri: cTrack?.artwork }} className='h-full w-full' />
                         </Animated.View>
                         <Animated.View
                             style={[backAnimatedStyle, { backfaceVisibility: "hidden" }]}
@@ -107,10 +103,10 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                     <View className='w-full mt-5 h-auto' >
                         <View className=' flex items-center justify-between flex-row px-3 '>
                             <View className=' py-2'>
-                                <Text className='text-white text-xl mb-1'>{currentTrack?.title}</Text>
-                                <Text className='text-white text-sm'>{currentTrack?.artist}</Text>
+                                <Text className='text-white text-xl mb-1'>{cTrack?.title}</Text>
+                                <Text className='text-white text-sm'>{cTrack?.artist}</Text>
                             </View>
-                            <TouchableOpacity onPress={FavouriteHandler}>
+                            <TouchableOpacity onPress={() => dispatch(addUserFavouritesData(cTrack!))}>
                                 <Icons.HomeIcon name='heart-fill' size={20} color={"#FF0060"} />
                             </TouchableOpacity>
                         </View>
@@ -143,7 +139,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                         </TouchableOpacity>
                         <View className=' w-[40%] flex items-center justify-evenly flex-row'>
                             <Icons.KeyboardDown name='skip-previous' color={"white"} size={30}
-                                onPress={() => [TrackPlayer.skipToPrevious(), service.handleBottomCondition(setCurrentTrrack)]}
+                                onPress={() => [TrackPlayer.skipToPrevious(), service.handleBottomCondition(setcTrack)]}
                             />
                             <TouchableOpacity onPress={() => service.playPauseAction(playbackState)} >
                                 {playbackState.state == "playing" ?
@@ -152,7 +148,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                                 }
                             </TouchableOpacity>
                             <Icons.KeyboardDown name='skip-next' color={"white"} size={30}
-                                onPress={() => [TrackPlayer.skipToNext(), service.handleBottomCondition(setCurrentTrrack)]}
+                                onPress={() => [TrackPlayer.skipToNext(), service.handleBottomCondition(setcTrack)]}
                             />
                         </View>
                         <Icons.SearchIcon name='repeat' color={"#bababa"} size={25} />

@@ -4,6 +4,7 @@ import { InitialStateTypes } from "../Interfaces/musifySlice.interface";
 import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Event, PlaybackState, State, Track } from "react-native-track-player";
 import SuggestedServices from "./suggested.service";
 import color from "nice-color-palettes"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default class MusifyService extends SuggestedServices implements IMusify {
     constructor(private lyricApi: string) { super() }
     public getGradient = (): string[] => {

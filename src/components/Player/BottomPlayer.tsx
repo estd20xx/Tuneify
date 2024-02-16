@@ -11,7 +11,7 @@ import { Icons } from '../../constants/Icon'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import { RootState } from '../../store/store'
 import { musifyData } from '../../store/Musify'
-import MusifyService  from '../../services/Musify.service'
+import MusifyService from '../../services/Musify.service'
 import { lyricsApi } from '../../api/api'
 const service = new MusifyService(lyricsApi)
 const BottomPlayer = () => {
