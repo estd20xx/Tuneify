@@ -26,4 +26,5 @@ export interface InitialStateTypes {
     localFile: LocalFileTypes[],
     favouritesData: UserFavouritesTypes[]
     isUploaded: boolean
+    isCurrentTrack: number
 }

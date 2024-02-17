@@ -7,7 +7,8 @@ const initialState: InitialStateTypes = {
     storeSong: [],
     localFile: [],
     favouritesData: [],
-    isUploaded: false
+    isUploaded: false,
+    isCurrentTrack: 0
 }
 const Musify = createSlice({
     name: "musifyDev",
@@ -41,6 +42,9 @@ const Musify = createSlice({
             state.isUploaded = actions.payload
         },
         addUserFavouritesData(state: InitialStateTypes, actions: PayloadAction<Track>) {
+            const data = state.favouritesData.filter((c) => c.title == actions.payload.title)
+            if (data.length != 0)
+                return
             const dtx: UserFavouritesTypes = {
                 id: actions.payload.id,
                 title: actions.payload.title!,

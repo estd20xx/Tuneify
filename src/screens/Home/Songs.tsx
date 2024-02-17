@@ -5,13 +5,13 @@ import ListItem from '../../components/ListItem'
 import { SongsTypes } from '../../Types/Types'
 import SongService from '../../services/songs.service'
 import { songsApi } from '../../api/api'
-import { useDispatch } from "react-redux"
 import { addSongList } from '../../store/Musify'
 import TrackPlayer from 'react-native-track-player'
+import { useAppDispatch } from '../../hooks/store.hook'
 const service = new SongService(songsApi)
 const Songs = () => {
   const viewableItems = useSharedValue<ViewToken[]>([])
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [sng, setSng] = useState<SongsTypes[]>([])
   useEffect(() => {

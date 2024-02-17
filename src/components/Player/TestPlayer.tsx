@@ -1,34 +1,37 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native'
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Animated, {
     useAnimatedStyle,
     useSharedValue,
     withTiming
 } from 'react-native-reanimated'
 export default function RandomFlexReanimated() {
-    const flex1 = useSharedValue(1);
-    const flex2 = useSharedValue(2);
+    const flex1 = useSharedValue(0.5);
+    const flex2 = useSharedValue(0.5);
     const animatedStyles1 = useAnimatedStyle(() => ({
         flex: flex1.value,
     }))
     const animatedStyles2 = useAnimatedStyle(() => ({
-        flex: 0.01,
+        flex: flex2.value,
     }))
     const onPress = () => {
-        flex1.value = withTiming(0.1);
-        flex2.value = withTiming(0.9);
+        flex1.value = withTiming(0.4);
+        flex2.value = withTiming(0.1);
     }
     return (
-        <View style={styles.container}>
-            <Animated.View style={[styles.box1, animatedStyles1]} />
-            <Button title="toggle  flex  values" onPress={onPress} />
+        <View className='bg-green-400 h-36 w-full '>
+            <Animated.View style={[styles.box1, animatedStyles1]} >
+            </Animated.View>
+            <TouchableOpacity onPress={onPress} className='absolute top-2'>
+                <Text> Toggle</Text>
+            </TouchableOpacity>
             <Animated.View style={[styles.box2, animatedStyles2]} />
         </View>
     )
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+
     },
     box1: {
         backgroundColor: 'red',
