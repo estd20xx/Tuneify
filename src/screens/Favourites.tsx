@@ -1,15 +1,16 @@
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState } from 'react'
-import { useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux'
-import { RootState } from '../store/store'
+import React, { useEffect, useState } from 'react'
 import { musifyData } from '../store/Musify'
 import { UserFavouritesTypes } from '../Interfaces/musifySlice.interface'
 import { Icons } from '../constants/Icon'
+import { TypedSelectorHook, useAppDispatch } from '../hooks/store.hook'
 const Favourites = () => {
-  const dispatch = useDispatch()
-  const TypedHook: TypedUseSelectorHook<RootState> = useSelector
-  const data = TypedHook(musifyData)
+  const dispatch = useAppDispatch()
+  const data = TypedSelectorHook(musifyData)
   const [favData, setFavData] = useState<UserFavouritesTypes[]>(data.favouritesData)
+  useEffect(() => {
+    setFavData(data.favouritesData)
+  }, [data.favouritesData])
   return (
     <View className='w-full h-screen flex items-center justify-center'>
       <ScrollView>

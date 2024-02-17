@@ -1,15 +1,14 @@
-import axios from "axios";
-import { IMusify } from "../Interfaces/musifySetUp.interface";
-import { InitialStateTypes } from "../Interfaces/musifySlice.interface";
-import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Event, PlaybackState, State, Track } from "react-native-track-player";
-import SuggestedServices from "./suggested.service";
-import color from "nice-color-palettes"
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios"
+import { IMusify } from "../Interfaces/musifySetUp.interface"
+import { InitialStateTypes } from "../Interfaces/musifySlice.interface"
+import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Event, PlaybackState, State, Track } from "react-native-track-player"
+import SuggestedServices from "./suggested.service"
 export default class MusifyService extends SuggestedServices implements IMusify {
     constructor(private lyricApi: string) { super() }
     public getGradient = (): string[] => {
-        const colors = color[this.randomGenerator(0, color.length)]
-        return colors
+        const colors = ["#b8b7b8", "#a4a3a4", "#8f8e8f", "#7b7a7b", "#666666", "#525152", "#3d3d3d", "#292829", "#141414",
+        ]
+        return colors 
     }
     public getEvent = (): Event[] => {
         const events: Event[] = [

@@ -1,11 +1,9 @@
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { TypedUseSelectorHook, useSelector } from 'react-redux'
-import { RootState } from '../../store/store'
 import { musifyData } from '../../store/Musify'
+import { TypedSelectorHook } from '../../hooks/store.hook'
 const Folders = () => {
-  const TypedHook: TypedUseSelectorHook<RootState> = useSelector
-  const localFile = TypedHook(musifyData)
+  const localFile = TypedSelectorHook(musifyData)
   return (
     <View className='bg-[#181a20] w-full h-auto'>
       <FlatList

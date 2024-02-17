@@ -8,15 +8,13 @@ import SongPlayer from './SongPlayer'
 import { Track, usePlaybackState, State, useTrackPlayerEvents, PlaybackState } from 'react-native-track-player'
 import { View } from 'react-native-animatable'
 import { Icons } from '../../constants/Icon'
-import { TypedUseSelectorHook, useSelector } from 'react-redux'
-import { RootState } from '../../store/store'
 import { musifyData } from '../../store/Musify'
 import MusifyService from '../../services/Musify.service'
 import { lyricsApi } from '../../api/api'
+import { TypedSelectorHook } from '../../hooks/store.hook'
 const service = new MusifyService(lyricsApi)
 const BottomPlayer = () => {
-    const TypedHook: TypedUseSelectorHook<RootState> = useSelector
-    const data = TypedHook(musifyData)
+    const data = TypedSelectorHook(musifyData)
     const [isVisible, setIsVisible] = useState(false)
     const [cTrack, setCTrack] = useState<Track>()
     const playbackState: PlaybackState | { state: undefined } = usePlaybackState();
