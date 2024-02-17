@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { musifyData } from '../store/Musify'
 import { UserFavouritesTypes } from '../Interfaces/musifySlice.interface'
 import { Icons } from '../constants/Icon'
@@ -7,12 +7,9 @@ import { TypedSelectorHook, useAppDispatch } from '../hooks/store.hook'
 const Favourites = () => {
   const dispatch = useAppDispatch()
   const data = TypedSelectorHook(musifyData)
-  const [favData, setFavData] = useState<UserFavouritesTypes[]>(data.favouritesData)
-  useEffect(() => {
-    setFavData(data.favouritesData)
-  }, [data.favouritesData])
+  const facouriteData: UserFavouritesTypes[] = data.favouritesData
   return (
-    <View className='w-full h-screen flex items-center justify-center'>
+    <View className='w-full h-screen flex items-center justify-center pb-36'>
       <ScrollView>
         <View className='w-full h-20  flex flex-row items-center justify-evenly'>
           <TouchableOpacity className='bg-[#ff8216] h-11 w-32 rounded-full flex items-center justify-center flex-row'>
@@ -24,7 +21,7 @@ const Favourites = () => {
             <Text className='text-white text-xl' >Play</Text>
           </TouchableOpacity>
         </View>
-        {favData.map((item) => {
+        {facouriteData.map((item) => {
           return (
             <TouchableOpacity
               style={

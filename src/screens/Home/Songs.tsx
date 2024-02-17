@@ -23,7 +23,7 @@ const Songs = () => {
     }
   }, [sng])
   return (
-    <View className='bg-[#181a20] w-full h-auto pt-2'>
+    <View className='bg-[#181a20] w-full h-auto pt-2 mb-20'>
       {sng.length > 1 &&
         <FlatList
           data={sng}
