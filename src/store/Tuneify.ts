@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { RootState } from './store'
 import { SongsTypes } from '../Types/Types'
-import { InitialStateTypes, LocalFileTypes, StoreSong, UserFavouritesTypes } from '../Interfaces/musifySlice.interface'
+import { InitialStateTypes, LocalFileTypes, StoreSong, UserFavouritesTypes } from '../Interfaces/tuneifySlice.interface'
 import { Track } from 'react-native-track-player'
 const initialState: InitialStateTypes = {
     storeSong: [],
@@ -10,8 +10,8 @@ const initialState: InitialStateTypes = {
     isUploaded: false,
     isCurrentTrack: 0
 }
-const Musify = createSlice({
-    name: "musifyDev",
+const Tuneify = createSlice({
+    name: "TuneifyDev",
     initialState,
     reducers: {
         addSongList(state: InitialStateTypes, actions: PayloadAction<SongsTypes[]>) {
@@ -57,6 +57,6 @@ const Musify = createSlice({
         }
     }
 })
-export const { addSongList, addLocalFiles, checkLocal, addUserFavouritesData } = Musify.actions
-export const musifyData = (state: RootState) => state.persistedReducer
-export default Musify.reducer
+export const { addSongList, addLocalFiles, checkLocal, addUserFavouritesData } = Tuneify.actions
+export const TuneifyData = (state: RootState) => state.persistedReducer
+export default Tuneify.reducer

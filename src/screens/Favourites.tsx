@@ -1,12 +1,12 @@
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
-import { musifyData } from '../store/Musify'
-import { UserFavouritesTypes } from '../Interfaces/musifySlice.interface'
+import { TuneifyData } from '../store/Tuneify'
+import { UserFavouritesTypes } from '../Interfaces/tuneifySlice.interface'
 import { Icons } from '../constants/Icon'
 import { TypedSelectorHook, useAppDispatch } from '../hooks/store.hook'
 const Favourites = () => {
   const dispatch = useAppDispatch()
-  const data = TypedSelectorHook(musifyData)
+  const data = TypedSelectorHook(TuneifyData)
   const facouriteData: UserFavouritesTypes[] = data.favouritesData
   return (
     <View className='w-full h-screen flex items-center justify-center pb-36'>

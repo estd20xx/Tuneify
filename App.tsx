@@ -43,8 +43,8 @@ const App = () => {
   )
 }
 
-export default App
+// export default App
 
-// export default CodePush({
-//   updateDialog: true,
-// })(App);
+export default CodePush({
+  updateDialog: true,
+})(App);

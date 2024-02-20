@@ -1,9 +1,9 @@
 import axios from "axios"
-import { IMusify } from "../Interfaces/musifySetUp.interface"
-import { InitialStateTypes } from "../Interfaces/musifySlice.interface"
+import { ITuneify } from "../Interfaces/tuneifySetUp.interface"
+import { InitialStateTypes } from "../Interfaces/tuneifySlice.interface"
 import TrackPlayer, { AppKilledPlaybackBehavior, Capability, Event, PlaybackState, State, Track } from "react-native-track-player"
 import SuggestedServices from "./suggested.service"
-export default class MusifyService extends SuggestedServices implements IMusify {
+export default class TuneifyService extends SuggestedServices implements ITuneify {
     constructor(private lyricApi: string) { super() }
     public getGradient = (): string[] => {
         const colors = ["#b8b7b8", "#a4a3a4", "#8f8e8f", "#7b7a7b", "#666666", "#525152", "#3d3d3d", "#292829", "#141414",
