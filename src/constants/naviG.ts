@@ -89,7 +89,7 @@ export const onboardingData: OnBoardingDataTypes[] = [
     {
         first: "Listen to the best",
         second: "audio & music with",
-        third: "Musify now!"
+        third: "Tuneify now!"
     },
 ]
 

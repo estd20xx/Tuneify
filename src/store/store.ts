@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import Musify from "./Musify"
+import Tuneify from "./Tuneify"
 import { persistReducer, persistStore } from 'redux-persist'
 import AsyncStorage from "@react-native-async-storage/async-storage"
 const persistConfig = {
-    key: 'testMusify',
+    key: 'testTuneify',
     storage: AsyncStorage
 }
-const persistedReducer = persistReducer(persistConfig, Musify)
+const persistedReducer = persistReducer(persistConfig, Tuneify)
 const store = configureStore({
     reducer: { persistedReducer },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({

@@ -1,6 +1,6 @@
 
-![Screenshot 2024-02-12 164309](https://github.com/NamelesssNerd/Musify/assets/87481819/63bb8980-fc0d-4d8b-94c8-78d25ffc4be9)
-# Musify
+![Screenshot 2024-02-12 164309](https://github.com/NamelesssNerd/Tuneify/assets/87481819/63bb8980-fc0d-4d8b-94c8-78d25ffc4be9)
+# Tuneify
 
 An Open-Source Music Player App for all your needs!
 
@@ -9,6 +9,4 @@ An Open-Source Music Player App for all your needs!
 
 ## Contribute
 
-Contributions are welcome. Please read our [contributing guidelines](https://github.com/NamelesssNerd/Musify/blob/master/CONTRIBUTION.md) before contributing.
-# test
-jjj
+Contributions are welcome. Please read our [contributing guidelines](https://github.com/NamelesssNerd/Tuneify/blob/master/CONTRIBUTION.md) before contributing.

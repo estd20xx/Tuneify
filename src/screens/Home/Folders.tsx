@@ -1,9 +1,9 @@
 import { View, Text, FlatList, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { musifyData } from '../../store/Musify'
+import { TuneifyData } from '../../store/Tuneify'
 import { TypedSelectorHook } from '../../hooks/store.hook'
 const Folders = () => {
-  const localFile = TypedSelectorHook(musifyData)
+  const localFile = TypedSelectorHook(TuneifyData)
   return (
     <View className='bg-[#181a20] w-full h-auto'>
       <FlatList
