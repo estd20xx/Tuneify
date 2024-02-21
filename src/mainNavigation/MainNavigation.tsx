@@ -15,7 +15,7 @@ const MainNavigation = () => {
               options={{
                 headerShown: false,
                 animation: "ios",
-                presentation: "card",
+                presentation: "card" ,
               }}
               key={cn.name} />
           )

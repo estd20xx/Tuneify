@@ -24,7 +24,6 @@ export const tabBar: TabItemTypes[] = [
         component: component.Folders
     },
 ]
-
 export const MainNavigationItems: any[] = [
     {
         name: navigationStrings.splash,

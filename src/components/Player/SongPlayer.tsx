@@ -55,7 +55,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
         let secs = (Math.trunc(seconds) % 60).toString().padStart(2, '0')
         return `${mins}:${secs}`
     }
-    useTrackPlayerEvents(service.getEvent(), (event: any) => {
+    useTrackPlayerEvents(service.getEvent(),async (event: any) => {
         if (event.state == State.Playing) {
             console.log("hellow")
             service.handleBottomCondition(setcTrack)

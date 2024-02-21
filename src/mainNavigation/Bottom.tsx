@@ -1,11 +1,11 @@
-import React from 'react';
-import { View } from 'react-native';
-import { CommonActions } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { BottomNavigation } from 'react-native-paper';
-import { TabItems } from '../constants/naviG';
-import { ItemTypes } from '../Types/Types';
-import BottomPlayer from '../components/Player/BottomPlayer';
+import React from 'react'
+import { View } from 'react-native'
+import { CommonActions } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { BottomNavigation } from 'react-native-paper'
+import { TabItems } from '../constants/naviG'
+import { ItemTypes } from '../Types/Types'
+import BottomPlayer from '../components/Player/BottomPlayer'
 const Tab = createBottomTabNavigator();
 const BottomTab = () => {
   return (

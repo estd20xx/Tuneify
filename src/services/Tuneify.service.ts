@@ -8,7 +8,7 @@ export default class TuneifyService extends SuggestedServices implements ITuneif
     public getGradient = (): string[] => {
         const colors = ["#b8b7b8", "#a4a3a4", "#8f8e8f", "#7b7a7b", "#666666", "#525152", "#3d3d3d", "#292829", "#141414",
         ]
-        return colors 
+        return colors
     }
     public getEvent = (): Event[] => {
         const events: Event[] = [

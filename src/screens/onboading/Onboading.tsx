@@ -2,10 +2,10 @@ import { View, Text, TouchableOpacity, StatusBar, Platform, PermissionsAndroid }
 import React, { useEffect, useState } from 'react'
 import { OnBoardingDataTypes, OnBoardingPropsTypes } from '../../Types/Types'
 import OnboadringService from '../../services/onboarding.service'
-const service = new OnboadringService(onBoardImageApi)
 import { onboardingData } from '../../constants/naviG'
 import * as Animatable from 'react-native-animatable';
 import { onBoardImageApi } from '../../api/api'
+const service = new OnboadringService(onBoardImageApi)
 const AnimatedButton = Animatable.createAnimatableComponent(TouchableOpacity)
 const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
   const [nre, setNre] = useState<number>(0)

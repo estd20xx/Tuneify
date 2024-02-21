@@ -7,7 +7,7 @@ import { configureFonts } from 'react-native-paper'
 import { Provider } from 'react-redux'
 import store, { persistor } from './src/store/store'
 import CodePush from 'react-native-code-push';
-
+import SplashScreen from 'react-native-splash-screen'
 import { PersistGate } from 'redux-persist/integration/react'
 const fontConfig = {
   fontFamily: 'Roboto'
@@ -27,7 +27,7 @@ const App = () => {
   // }, [])
 
   useEffect(() => {
-
+    SplashScreen.hide()
   })
 
   return (
