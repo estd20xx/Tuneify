@@ -1,7 +1,6 @@
-import { View, Text } from 'react-native'
+import { View,  Image } from 'react-native'
 import React, { useEffect } from 'react'
 import { SplashScreenPropsTypes } from '../Types/Types'
-import Toast from 'react-native-toast-message'
 import { checkLocal, TuneifyData } from '../store/Tuneify'
 import LocalMediaService from '../services/localMedia.service';
 import PermissionService from '../services/permission.service'
@@ -25,9 +24,8 @@ const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {
     storeData.isUploaded ? navigation.navigate("onboarding") : fn()
   }, [])
   return (
-    <View className='w-full h-screen flex items-center justify-center bg-gray-800'>
-      <Toast />
-      <Text className='text-xl font-semibold text-white'>Welcome Screen </Text>
+    <View className='w-full h-screen flex items-center justify-center bg-black'>
+      <Image source={require("../assets/images/launch_screen.png")} />
     </View>
   )
 }

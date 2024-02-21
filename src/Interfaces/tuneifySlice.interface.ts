@@ -27,4 +27,5 @@ export interface InitialStateTypes {
     favouritesData: UserFavouritesTypes[]
     isUploaded: boolean
     isCurrentTrack: number
+    userName: string
 }
