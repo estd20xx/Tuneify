@@ -10,3 +10,4 @@ An Open-Source Music Player App for all your needs!
 ## Contribute
 
 Contributions are welcome. Please read our [contributing guidelines](https://github.com/NamelesssNerd/Tuneify/blob/master/CONTRIBUTION.md) before contributing.
+# some testing
