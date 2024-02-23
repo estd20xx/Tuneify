@@ -9,6 +9,7 @@ import store, { persistor } from './src/store/store'
 import CodePush from 'react-native-code-push';
 import SplashScreen from 'react-native-splash-screen'
 import { PersistGate } from 'redux-persist/integration/react'
+
 const fontConfig = {
   fontFamily: 'Roboto'
 };
@@ -37,7 +38,6 @@ const App = () => {
           <MainNavigation />
         </PersistGate>
       </Provider>
-
     </GestureHandlerRootView>
   )
 }

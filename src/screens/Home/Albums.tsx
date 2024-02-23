@@ -12,8 +12,8 @@ const Albums = () => {
     service.getAlbums(setCAlb, setIsL)
   }, [])
   return (
-    <ScrollView>
-      <View className='bg-[#181a20] w-full h-auto flex flex-row flex-wrap justify-evenly py-3'>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View className='bg-[#181a20] w-full h-auto flex flex-row flex-wrap justify-evenly py-3 pb-20'>
         {isL ?
           Array.from({ length: 6 }, (_, index) => {
             return (

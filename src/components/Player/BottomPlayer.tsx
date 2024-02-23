@@ -22,9 +22,9 @@ const BottomPlayer = () => {
         if (data.storeSong.length > 0) {
             service.setUpPlayer(data, setCTrack)
         }
-    }, [data]);
+    }, [data])
     useTrackPlayerEvents(service.getEvent(), (event: any) => {
-        event.state == State.Playing && service.handleBottomCondition(setCTrack)
+        event.state == State.Ready && service.handleBottomCondition(setCTrack)
     })
     return (
         <>

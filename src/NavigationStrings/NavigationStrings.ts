@@ -12,5 +12,6 @@ export const navigationStrings = {
     PlaylistDetails: "PlaylistDetails",
     albumsDetails: "albumsDetaila",
     trendingSongDetails: "trandingSongDetails",
-    charts: "charts"
+    charts: "charts",
+    search: "search"
 }

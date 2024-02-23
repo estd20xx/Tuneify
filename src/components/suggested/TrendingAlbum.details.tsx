@@ -4,7 +4,11 @@ import { TrendingAlbumTypes } from '../../Types/Types'
 import axios from 'axios'
 import { baseApi } from '../../api/api'
 import { Icons } from '../../constants/Icon'
+import { TypedSelectorHook, useAppDispatch } from '../../hooks/store.hook'
+import { TuneifyData, addSongList } from '../../store/Tuneify'
+import { StoreSong } from '../../Interfaces/tuneifySlice.interface';
 import TrackPlayer from 'react-native-track-player'
+
 interface TrendingAlbumData {
     key: string
     name: string
@@ -16,7 +20,9 @@ export interface TrendingAlbumParamsTypes {
     route: TrendingAlbumData
 }
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => {
+    const dispatch = useAppDispatch()
     const [data, setData] = useState(route.params.albumData)
+    const dataa = TypedSelectorHook(TuneifyData)
     const [albumSongs, setAlbumSongs] = useState<TrendingAlbumTypes[]>([])
     const fetchAudio = async () => {
         try {
@@ -29,6 +35,16 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
     useEffect(() => {
         fetchAudio()
     }, [])
+    // useEffect(() => {
+    //     if (albumSongs.length > 0) {
+    //         dispatch(addSongList(albumSongs))
+    //     }
+    // }, [albumSongs])
+    useEffect(() => {
+        if (dataa.storeSong.length > 0) {
+            TrackPlayer.setQueue(dataa.storeSong)
+        }
+    }, [dataa.storeSong])
     return (
         <View className='w-full'>
             <ScrollView showsVerticalScrollIndicator={false}>

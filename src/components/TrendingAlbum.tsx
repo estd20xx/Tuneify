@@ -5,8 +5,8 @@ import { useNavigation } from '@react-navigation/core'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Image from 'react-native-fast-image'
 const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({ data, topic }) => {
+    console.log("Trending render")
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
-    const t: number = 196
     const renderItem = useCallback(({ item }: { item: TrendingAlbumTypes }) => (
         <TouchableOpacity className={`flex items-center justify-center   ml-2 `} onPress={() => navigation.navigate("TrendingAlbumDetails", { albumData: item })}>
             <View className=' h-36 w-36  rounded-3xl overflow-hidden'>
@@ -40,9 +40,6 @@ const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({ data, topic }) => {
                 maxToRenderPerBatch={4}
                 removeClippedSubviews={true}
                 windowSize={4}
-                getItemLayout={(data, index) => (
-                    { length: t, offset: t * index, index }
-                )}
                 renderItem={renderItem}
             />
         </View>

@@ -1,8 +1,8 @@
 import {
     Text, TouchableOpacity, Image, StatusBar, View,
-    ScrollView, Animated,
+    ScrollView, Animated
 } from 'react-native'
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, memo } from 'react'
 import Modal from 'react-native-modal'
 import LinearGradient from 'react-native-linear-gradient'
 import TrackPlayer, { Track, usePlaybackState, useProgress, useTrackPlayerEvents, State } from 'react-native-track-player'
@@ -17,7 +17,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
     const dispatch = useAppDispatch()
     const [isFlipped, setIsFlipped] = useState(false)
     const [flip, setFlip] = useState(new Animated.Value(0))
-    const [cTrack, setcTrack] = useState<Track>()
+    const [ct, setCt] = useState<Track>()
     const [lyric, setLyric] = useState<string>("We are working on it.! 💻")
     const playbackState = usePlaybackState()
     const progress = useProgress()
@@ -45,8 +45,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
         transform: [{ rotateY: backInterpolate }],
     }
     useEffect(() => {
-        service.handleBottomCondition(setcTrack)
-        // console.log("called")
+        service.handleBottomCondition(setCt)
     }, [])
     const format = (seconds: number) => {
         let mins = Math.floor(seconds / 60)
@@ -55,11 +54,10 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
         let secs = (Math.trunc(seconds) % 60).toString().padStart(2, '0')
         return `${mins}:${secs}`
     }
-    useTrackPlayerEvents(service.getEvent(),async (event: any) => {
-        if (event.state == State.Playing) {
-            console.log("hellow")
-            service.handleBottomCondition(setcTrack)
-            // service.getLyrics(setLyric)
+    useTrackPlayerEvents(service.getEvent(), async (event: any) => {
+        if (event.state == State.Ready) {
+            service.handleBottomCondition(setCt)
+            service.getLyrics(setLyric)
         }
     })
     return (
@@ -86,8 +84,8 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                         <View className=' relative h-1/2 w-full flex items-center justify-center '>
                             <Animated.View
                                 style={[frontAnimatedStyle, { backfaceVisibility: "hidden" }]}
-                                className=' w-[85%] h-80  justify-center items-center rounded-xl overflow-hidden'>
-                                <Image source={{ uri: cTrack?.artwork }} className='h-full w-full' />
+                                className=' w-[85%] h-80  justify-center items-center rounded-xl  overflow-hidden'>
+                                <Image source={{ uri: ct?.artwork }} className='h-full w-full ' />
                             </Animated.View>
                             <Animated.View
                                 style={[backAnimatedStyle, { backfaceVisibility: "hidden" }]}
@@ -104,10 +102,10 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                         <View className='w-full mt-5 h-auto' >
                             <View className=' flex items-center justify-between flex-row px-3 '>
                                 <View className=' py-2'>
-                                    <Text className='text-white text-xl mb-1'>{cTrack?.title}</Text>
-                                    <Text className='text-white text-sm'>{cTrack?.artist}</Text>
+                                    <Text className='text-white text-xl mb-1'>{ct?.title}</Text>
+                                    <Text className='text-white text-sm'>{ct?.artist}</Text>
                                 </View>
-                                <TouchableOpacity onPress={() => dispatch(addUserFavouritesData(cTrack!))}>
+                                <TouchableOpacity onPress={() => dispatch(addUserFavouritesData(ct!))}>
                                     <Icons.HomeIcon name='heart-fill' size={20} color={"#FF0060"} />
                                 </TouchableOpacity>
                             </View>
@@ -140,7 +138,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                             </TouchableOpacity>
                             <View className=' w-[40%] flex items-center justify-evenly flex-row'>
                                 <Icons.KeyboardDown name='skip-previous' color={"white"} size={30}
-                                    onPress={() => [TrackPlayer.skipToPrevious(), service.handleBottomCondition(setcTrack), service.getLyrics(setLyric)]}
+                                    onPress={() => [TrackPlayer.skipToPrevious(), service.handleBottomCondition(setCt), service.getLyrics(setLyric)]}
                                 />
                                 <TouchableOpacity onPress={() => service.playPauseAction(playbackState)} >
                                     {playbackState.state == "playing" ?
@@ -149,7 +147,7 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
                                     }
                                 </TouchableOpacity>
                                 <Icons.KeyboardDown name='skip-next' color={"white"} size={30}
-                                    onPress={() => [TrackPlayer.skipToNext(), service.handleBottomCondition(setcTrack), service.getLyrics(setLyric)]}
+                                    onPress={() => [TrackPlayer.skipToNext(), service.handleBottomCondition(setCt), service.getLyrics(setLyric)]}
                                 />
                             </View>
                             <Icons.SearchIcon name='repeat' color={"#bababa"} size={25} />
@@ -160,4 +158,4 @@ const SongPlayer = ({ isVisible, onClose, }: { isVisible: any, onClose: any }) =
         </Modal>
     )
 }
-export default SongPlayer
+export default memo(SongPlayer)

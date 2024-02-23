@@ -6,6 +6,7 @@ import SuggestedServices from "./suggested.service"
 export default class TuneifyService extends SuggestedServices implements ITuneify {
     constructor(private lyricApi: string) { super() }
     public getGradient = (): string[] => {
+        console.log("gradient called")
         const colors = ["#b8b7b8", "#a4a3a4", "#8f8e8f", "#7b7a7b", "#666666", "#525152", "#3d3d3d", "#292829", "#141414",
         ]
         return colors
@@ -37,7 +38,9 @@ export default class TuneifyService extends SuggestedServices implements ITuneif
     }
     public handleBottomCondition = async (setCurrentTrrack: (track: Track) => void): Promise<void> => {
         try {
-            let currentTrack = await TrackPlayer.getActiveTrack()
+            const currentTrack = await TrackPlayer.getActiveTrack()
+            const totl = await TrackPlayer.getQueue()
+            console.log(totl.length)
             currentTrack && setCurrentTrrack(currentTrack)
         } catch (error) {
             console.log(error)
@@ -57,10 +60,13 @@ export default class TuneifyService extends SuggestedServices implements ITuneif
                     Capability.Stop,
                     Capability.SeekTo
                 ],
-                compactCapabilities: [Capability.Play, Capability.Pause, Capability.SkipToNext, Capability.SkipToPrevious]
+                compactCapabilities: [
+                    Capability.Play,
+                    Capability.Pause,
+                    Capability.SkipToNext,
+                    Capability.SkipToPrevious]
             })
             await TrackPlayer.add(data.storeSong)
-            this.handleBottomCondition(setCurrentTrack)
         } catch (error) {
             console.log(error)
         }

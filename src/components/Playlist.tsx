@@ -6,7 +6,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import Image from "react-native-fast-image"
 const Playlist: React.FC<PlaylistDataProps> = ({ data, topic }) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
-    const t: number = 144
     const renderItem = useCallback(({ item }: { item: PlaylistTypes }) => (
         <TouchableOpacity className='   flex items-center justify-center ml-2' onPress={() => navigation.navigate("PlaylistDetails", { playlistData: item })} >
             <View className=' h-36 w-36  rounded-full overflow-hidden'>
@@ -40,9 +39,6 @@ const Playlist: React.FC<PlaylistDataProps> = ({ data, topic }) => {
                 maxToRenderPerBatch={4}
                 removeClippedSubviews={true}
                 windowSize={4}
-                getItemLayout={(data, index) => (
-                    { length: t, offset: t * index, index }
-                )}
                 renderItem={renderItem}
             />
         </View>
