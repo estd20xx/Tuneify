@@ -1,9 +1,9 @@
-import { View, Text, TouchableOpacity, StatusBar, Platform, PermissionsAndroid } from 'react-native'
+import { View, Text, TouchableOpacity, StatusBar, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { OnBoardingDataTypes, OnBoardingPropsTypes } from '../../Types/Types'
 import OnboadringService from '../../services/onboarding.service'
 import { onboardingData } from '../../constants/naviG'
-import * as Animatable from 'react-native-animatable';
+import * as Animatable from 'react-native-animatable'
 import { onBoardImageApi } from '../../api/api'
 const service = new OnboadringService(onBoardImageApi)
 const AnimatedButton = Animatable.createAnimatableComponent(TouchableOpacity)
@@ -19,7 +19,7 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
     }
   }, [])
   return (
-    <View className='w-full h-screen bg-[#181a20]'>
+    <View className='w-full h-screen'>
       <View className='w-full h-[80%] overflow-hidden'>
         <Animatable.Image animation="zoomInUp" source={{ uri: service.getOnboardImage() }} className='w-full h-full' />
       </View>
