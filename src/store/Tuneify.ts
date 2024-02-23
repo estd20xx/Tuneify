@@ -9,7 +9,7 @@ const initialState: InitialStateTypes = {
     favouritesData: [],
     isUploaded: false,
     isCurrentTrack: 0,
-    userName: "sushant"
+    userName: "Namelessnerd"
 }
 const Tuneify = createSlice({
     name: "TuneifyDev",
@@ -54,7 +54,7 @@ const Tuneify = createSlice({
                 url: actions.payload.url,
                 isLiked: false
             }
-            state.favouritesData.push(dtx)
+            state.favouritesData.unshift(dtx)
         },
         addUser(state: InitialStateTypes, actions: PayloadAction<string>) {
             state.userName = actions.payload

@@ -6,7 +6,7 @@ export default class LocalMediaService implements IlocalMedia {
     getLocalmedia = async (dispatch: Dispatch<UnknownAction>): Promise<boolean> => {
         try {
             const songsOrError = await getAll({
-                limit: 30,
+                limit: 50,
                 offset: 0,
                 coverQuality: 50,
                 minSongDuration: 1000,

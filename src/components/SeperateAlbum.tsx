@@ -1,9 +1,9 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { SeperateAlbumDataPropsTypes } from '../Types/Types'
-const SeperateAlbum: React.FC<SeperateAlbumDataPropsTypes> = ({ data }) => {
+const SeperateAlbumData: React.FC<SeperateAlbumDataPropsTypes> = ({ data }) => {
     return (
-        <View key={data.id} className=' h-72 w-[46%] mb-3 rounded-xl overflow-hidden'>
+        <TouchableOpacity className='h-72 w-[46%] mb-3 border-[1px] border-b-8  rounded-xl overflow-hidden'>
             <View className='w-full h-2/3 rounded-md overflow-hidden '>
                 <Image source={{ uri: data.image[2].link }} className='h-full' />
             </View>
@@ -12,7 +12,8 @@ const SeperateAlbum: React.FC<SeperateAlbumDataPropsTypes> = ({ data }) => {
                 <Text className='text-gray-500 text-lg'>{data.primaryArtists[0].name}</Text>
                 <Text className='text-sm text-[#a1a0a3]'>{data.songCount}</Text>
             </View>
-        </View>
+
+        </TouchableOpacity>
     )
 }
-export default SeperateAlbum
+export default SeperateAlbumData

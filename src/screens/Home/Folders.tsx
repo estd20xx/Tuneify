@@ -5,8 +5,9 @@ import { TypedSelectorHook } from '../../hooks/store.hook'
 import { LocalFileTypes } from '../../Interfaces/tuneifySlice.interface'
 const Folders = () => {
   const localFile = TypedSelectorHook(TuneifyData)
+  console.log("folder render")
   const renderItem = useCallback(({ item }: { item: LocalFileTypes }) => (
-    <TouchableOpacity className='w-full h-16  mt-2 flex flex-row items-center'>
+    <TouchableOpacity className='w-full h-16  mt-2  flex flex-row items-center'>
       <View className='h-16 w-20  pl-2'>
         <Image source={require("../../assets/images/new.png")} className='h-16 w-16 rounded-md' />
       </View>
@@ -24,7 +25,7 @@ const Folders = () => {
         initialNumToRender={3}
         showsVerticalScrollIndicator={false}
         maxToRenderPerBatch={4}
-        contentContainerStyle={{ paddingBottom: 35 }}
+        contentContainerStyle={{ paddingBottom: 80 }}
         removeClippedSubviews={true}
         windowSize={10}
         renderItem={renderItem}

@@ -73,6 +73,10 @@ export const MainNavigationItems: any[] = [
         name: navigationStrings.PlaylistDetails,
         component: component.PlaylistDetails
     },
+    {
+        name: navigationStrings.search,
+        component: component.Search
+    }
 ]
 export const onboardingData: OnBoardingDataTypes[] = [
     {
@@ -102,6 +106,17 @@ export const TabItems: ItemTypes[] = [
         Active: Icons.HomeFocused,
         Inactive: Icons.HomeIcon,
         component: component.Home,
+        active: "#ff8214",
+    },
+    {
+        name: navigationStrings.search,
+        activeSize: 25,
+        inactiveSize: 20,
+        activeName: "search",
+        inactiveName: "search",
+        Active: Icons.SortIcon,
+        Inactive: Icons.SortIcon,
+        component: component.Search,
         active: "#ff8214",
     },
     {
@@ -137,4 +152,4 @@ export const TabItems: ItemTypes[] = [
         component: component.Settings,
         active: "#ff8214",
     },
-];
+]

@@ -15,6 +15,7 @@ export interface NavigationStringsTypes {
     albumsDetails: string
     trendingSongDetails: string
     charts: string
+    search: string
 }
 export type RootStackParamList = {
     splash: undefined
@@ -30,6 +31,7 @@ export type RootStackParamList = {
     albumsDetails: undefined
     trendingSongDetails: undefined
     charts: undefined
+    search: undefined
 }
 export type splashScreen = NativeStackNavigationProp<RootStackParamList, "splash">;
 export type onBoardingScreen = NativeStackNavigationProp<RootStackParamList, "onboarding">

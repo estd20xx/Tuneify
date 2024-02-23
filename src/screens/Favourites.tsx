@@ -5,7 +5,6 @@ import { UserFavouritesTypes } from '../Interfaces/tuneifySlice.interface'
 import { Icons } from '../constants/Icon'
 import { TypedSelectorHook, useAppDispatch } from '../hooks/store.hook'
 const Favourites = () => {
-  const dispatch = useAppDispatch()
   const data = TypedSelectorHook(TuneifyData)
   const facouriteData: UserFavouritesTypes[] = data.favouritesData
   return (
@@ -21,7 +20,7 @@ const Favourites = () => {
             <Text className='text-white text-xl' >Play</Text>
           </TouchableOpacity>
         </View>
-        {facouriteData.map((item) => {
+        {facouriteData.map((item, index) => {
           return (
             <TouchableOpacity
               style={

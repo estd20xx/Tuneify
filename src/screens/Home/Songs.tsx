@@ -10,6 +10,7 @@ import TrackPlayer from 'react-native-track-player'
 import { useAppDispatch } from '../../hooks/store.hook'
 const service = new SongService(songsApi)
 const Songs = () => {
+  console.log("songs render")
   const viewableItems = useSharedValue<ViewToken[]>([])
   const dispatch = useAppDispatch()
   const [currentIndex, setCurrentIndex] = useState(0)
