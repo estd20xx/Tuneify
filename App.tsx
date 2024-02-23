@@ -28,8 +28,7 @@ const App = () => {
 
   useEffect(() => {
     SplashScreen.hide()
-  })
-
+  }, [])
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar backgroundColor={"#181a20"} />
@@ -43,8 +42,8 @@ const App = () => {
   )
 }
 
-// export default App
+export default App
 
-export default CodePush({
-  updateDialog: true,
-})(App);
+// export default CodePush({
+//   updateDialog: true,
+// })(App);

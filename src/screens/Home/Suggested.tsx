@@ -11,6 +11,7 @@ import { component } from "../../constants/screens"
 import SuggestedServices from '../../services/suggested.service'
 const service = new SuggestedServices()
 import Toast from 'react-native-toast-message'
+import MainSkeleton from '../../components/skeleton/MainSkeleton'
 const Suggested = () => {
   const [albums, setAlbums] = useState<AlbumTypes[]>([])
   const [plst, setPlst] = useState<PlaylistTypes[]>([])
@@ -33,12 +34,7 @@ const Suggested = () => {
     }>
       <View className='bg-[#181a20] w-full h-auto pb-10'>
         {ld ?
-          <View>
-            <component.CSuggestedSkeleton />
-            <component.CSuggestedSkeleton />
-            <component.CSuggestedSkeleton />
-            <component.CSuggestedSkeleton />
-          </View> :
+          <MainSkeleton /> :
           <>
             <component.CTrendingAlbum data={trndAlb} topic={"Trending Albums"} />
             <component.CPlaylist data={plst} topic={"Playlists"} />
