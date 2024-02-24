@@ -1,13 +1,13 @@
-import React from 'react'
+import React from "react"
 import {
   NavigationContainer as Container,
   DefaultTheme,
-} from '@react-navigation/native'
-import {createNativeStackNavigator} from '@react-navigation/native-stack'
-import {MainNavigationItems} from '../constants/naviG'
+} from "@react-navigation/native"
+import {createNativeStackNavigator} from "@react-navigation/native-stack"
+import {MainNavigationItems} from "../constants/naviG"
 const Stack = createNativeStackNavigator()
 const theme = DefaultTheme
-theme.colors.background = '#181a20'
+theme.colors.background = "#181a20"
 const MainNavigation = () => {
   return (
     <Container theme={theme}>
@@ -19,8 +19,8 @@ const MainNavigation = () => {
               component={cn.component}
               options={{
                 headerShown: false,
-                animation: 'ios',
-                presentation: 'card',
+                animation: "ios",
+                presentation: "card",
               }}
               key={cn.name}
             />

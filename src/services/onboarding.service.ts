@@ -1,5 +1,5 @@
-import {Ionboard} from '../Interfaces/onboard.interface'
-import {onBoardingScreen} from '../Types/Types'
+import {Ionboard} from "../Interfaces/onboard.interface"
+import {onBoardingScreen} from "../Types/Types"
 export default class OnboadringService implements Ionboard {
   constructor(private api: string) {}
   public getOnboardImage = (): string => {
@@ -11,7 +11,7 @@ export default class OnboadringService implements Ionboard {
     navigation: onBoardingScreen,
   ) => {
     if (initial == 2) {
-      navigation.navigate('bottom')
+      navigation.navigate("bottom")
       setnre(0)
       return
     }

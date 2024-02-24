@@ -1,4 +1,4 @@
-import TuneifyPlayer, {Event} from 'react-native-track-player'
+import TuneifyPlayer, {Event} from "react-native-track-player"
 // export const registerTunifyPlayer = async () => {
 //     try {
 //         TuneifyPlayer.addEventListener(Event.RemotePlay, () => {
@@ -33,8 +33,8 @@ module.exports = async function () {
     TuneifyPlayer.addEventListener(Event.RemotePrevious, () => {
       TuneifyPlayer.skipToPrevious()
     })
-    console.log('done')
+    console.log("done")
   } catch (error) {
-    console.log('Player failed to setup')
+    console.log("Player failed to setup")
   }
 }

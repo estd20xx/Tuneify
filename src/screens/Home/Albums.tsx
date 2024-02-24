@@ -1,9 +1,9 @@
-import {View, ScrollView} from 'react-native'
-import React, {useEffect, useState} from 'react'
-import {SeperateAlbumTypes} from '../../Types/Types'
-import AlbumService from '../../services/album.service'
-import {albumsApi} from '../../api/api'
-import {component} from '../../constants/screens'
+import {View, ScrollView} from "react-native"
+import React, {useEffect, useState} from "react"
+import {SeperateAlbumTypes} from "../../Types/Types"
+import AlbumService from "../../services/album.service"
+import {albumsApi} from "../../api/api"
+import {component} from "../../constants/screens"
 const service = new AlbumService(albumsApi)
 const Albums = () => {
   const [cAlb, setCAlb] = useState<SeperateAlbumTypes[]>([])

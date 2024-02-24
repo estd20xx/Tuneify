@@ -1,23 +1,23 @@
-import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native'
-import React, {useCallback} from 'react'
-import {TuneifyData} from '../../store/Tuneify'
-import {TypedSelectorHook} from '../../hooks/store.hook'
-import {LocalFileTypes} from '../../Interfaces/tuneifySlice.interface'
+import {View, Text, FlatList, Image, TouchableOpacity} from "react-native"
+import React, {useCallback} from "react"
+import {TuneifyData} from "../../store/Tuneify"
+import {TypedSelectorHook} from "../../hooks/store.hook"
+import {LocalFileTypes} from "../../Interfaces/tuneifySlice.interface"
 const Folders = () => {
   const localFile = TypedSelectorHook(TuneifyData)
-  console.log('folder render')
+  console.log("folder render")
   const renderItem = useCallback(
     ({item}: {item: LocalFileTypes}) => (
       <TouchableOpacity className="w-full h-16  mt-2  flex flex-row items-center">
         <View className="h-16 w-20  pl-2">
           <Image
-            source={require('../../assets/images/new.png')}
+            source={require("../../assets/images/new.png")}
             className="h-16 w-16 rounded-md"
           />
         </View>
         <View className="w-4/5">
-          <Text style={{fontSize: 14, color: 'white'}}>{item.title}</Text>
-          <Text style={{fontSize: 10, color: '#d0d0d1'}}>{item.artist}</Text>
+          <Text style={{fontSize: 14, color: "white"}}>{item.title}</Text>
+          <Text style={{fontSize: 10, color: "#d0d0d1"}}>{item.artist}</Text>
         </View>
       </TouchableOpacity>
     ),

@@ -1,11 +1,11 @@
-import React from 'react'
-import {View} from 'react-native'
-import {CommonActions} from '@react-navigation/native'
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import {BottomNavigation} from 'react-native-paper'
-import {TabItems} from '../constants/naviG'
-import {ItemTypes} from '../Types/Types'
-import BottomPlayer from '../components/Player/BottomPlayer'
+import React from "react"
+import {View} from "react-native"
+import {CommonActions} from "@react-navigation/native"
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
+import {BottomNavigation} from "react-native-paper"
+import {TabItems} from "../constants/naviG"
+import {ItemTypes} from "../Types/Types"
+import BottomPlayer from "../components/Player/BottomPlayer"
 const Tab = createBottomTabNavigator()
 const BottomTab = () => {
   return (
@@ -15,18 +15,18 @@ const BottomTab = () => {
         <View>
           <BottomPlayer />
           <BottomNavigation.Bar
-            theme={{colors: {secondaryContainer: '#2D3250'}}}
+            theme={{colors: {secondaryContainer: "#2D3250"}}}
             navigationState={state}
             safeAreaInsets={insets}
             shifting={true}
             activeColor="#a1a0a3"
             inactiveColor="#a1a0a3"
             style={{
-              backgroundColor: '#000000',
+              backgroundColor: "#000000",
             }}
             onTabPress={({route, preventDefault}) => {
               const event = navigation.emit({
-                type: 'tabPress',
+                type: "tabPress",
                 target: route.key,
                 canPreventDefault: true,
               })

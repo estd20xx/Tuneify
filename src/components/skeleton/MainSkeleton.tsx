@@ -1,6 +1,6 @@
-import {View} from 'react-native'
-import React from 'react'
-import {component} from '../../constants/screens'
+import {View} from "react-native"
+import React from "react"
+import {component} from "../../constants/screens"
 const MainSkeleton = () => {
   return (
     <View>

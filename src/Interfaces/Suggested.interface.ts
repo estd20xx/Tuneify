@@ -5,7 +5,7 @@ import {
   TrendingSongTypes,
   ChartsTypes,
   PlaylistTypes,
-} from '../Types/Types'
+} from "../Types/Types"
 
 export default interface Isuggested {
   wait: (timeout: number) => Promise<void>

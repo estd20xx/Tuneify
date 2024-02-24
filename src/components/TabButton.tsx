@@ -1,13 +1,13 @@
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
-import React, {ElementRef, useEffect, useRef} from 'react'
-import {DanimationValue, IanimationValue} from '../constants/animation'
-import * as Animatable from 'react-native-animatable'
+import {View, Text, TouchableOpacity, StyleSheet} from "react-native"
+import React, {ElementRef, useEffect, useRef} from "react"
+import {DanimationValue, IanimationValue} from "../constants/animation"
+import * as Animatable from "react-native-animatable"
 const TabButton = (props: any) => {
   const {item, onPress, accessibilityState} = props
   const focused = accessibilityState.selected
-  const viewRef = useRef<ElementRef<'view'> | any>(null)
-  const textViewRef = useRef<ElementRef<'view'> | any>(null)
-  const iconRef = useRef<ElementRef<'view'> | any>(null)
+  const viewRef = useRef<ElementRef<"view"> | any>(null)
+  const textViewRef = useRef<ElementRef<"view"> | any>(null)
+  const iconRef = useRef<ElementRef<"view"> | any>(null)
   useEffect(() => {
     if (focused) {
       viewRef.current?.animate(IanimationValue)
@@ -36,25 +36,25 @@ const TabButton = (props: any) => {
         <View
           style={[
             {
-              flexDirection: 'row',
-              alignItems: 'center',
+              flexDirection: "row",
+              alignItems: "center",
               padding: 8,
               borderRadius: 16,
             },
-            {backgroundColor: 'rgba(28,28,28,.7)'},
+            {backgroundColor: "rgba(28,28,28,.7)"},
           ]}>
           <Animatable.View ref={iconRef} className="">
             {focused ? (
               <item.Active
                 name={item.activeName}
                 size={item.activeSize}
-                color={focused ? '#fff' : 'orange'}
+                color={focused ? "#fff" : "orange"}
               />
             ) : (
               <item.Inactive
                 name={item.inactiveName}
                 size={item.inactiveSize}
-                color={focused ? '#fff' : item.active}
+                color={focused ? "#fff" : item.active}
               />
             )}
           </Animatable.View>
@@ -62,7 +62,7 @@ const TabButton = (props: any) => {
             {focused && (
               <Text
                 style={{
-                  color: 'white',
+                  color: "white",
                   paddingHorizontal: 8,
                 }}>
                 {item.name}

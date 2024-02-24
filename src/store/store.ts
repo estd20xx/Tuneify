@@ -1,9 +1,9 @@
-import {configureStore} from '@reduxjs/toolkit'
-import Tuneify from './Tuneify'
-import {persistReducer, persistStore} from 'redux-persist'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import {configureStore} from "@reduxjs/toolkit"
+import Tuneify from "./Tuneify"
+import {persistReducer, persistStore} from "redux-persist"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 const persistConfig = {
-  key: 'testTuneify',
+  key: "testTuneify",
   storage: AsyncStorage,
 }
 const persistedReducer = persistReducer(persistConfig, Tuneify)

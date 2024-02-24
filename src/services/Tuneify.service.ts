@@ -1,6 +1,6 @@
-import axios from 'axios'
-import {ITuneify} from '../Interfaces/tuneifySetUp.interface'
-import {InitialStateTypes} from '../Interfaces/tuneifySlice.interface'
+import axios from "axios"
+import {ITuneify} from "../Interfaces/tuneifySetUp.interface"
+import {InitialStateTypes} from "../Interfaces/tuneifySlice.interface"
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
@@ -8,8 +8,8 @@ import TrackPlayer, {
   PlaybackState,
   State,
   Track,
-} from 'react-native-track-player'
-import SuggestedServices from './suggested.service'
+} from "react-native-track-player"
+import SuggestedServices from "./suggested.service"
 export default class TuneifyService
   extends SuggestedServices
   implements ITuneify
@@ -18,17 +18,17 @@ export default class TuneifyService
     super()
   }
   public getGradient = (): string[] => {
-    console.log('gradient called')
+    console.log("gradient called")
     const colors = [
-      '#b8b7b8',
-      '#a4a3a4',
-      '#8f8e8f',
-      '#7b7a7b',
-      '#666666',
-      '#525152',
-      '#3d3d3d',
-      '#292829',
-      '#141414',
+      "#b8b7b8",
+      "#a4a3a4",
+      "#8f8e8f",
+      "#7b7a7b",
+      "#666666",
+      "#525152",
+      "#3d3d3d",
+      "#292829",
+      "#141414",
     ]
     return colors
   }
@@ -50,10 +50,10 @@ export default class TuneifyService
       if (data.data.data) {
         setLyric(data.data.data.lyrics)
       } else {
-        setLyric('We are working on it.! 💻')
+        setLyric("We are working on it.! 💻")
       }
     } catch (error) {
-      setLyric('We are working on it.! 💻')
+      setLyric("We are working on it.! 💻")
     }
   }
   public playPauseAction = (

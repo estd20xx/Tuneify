@@ -1,5 +1,5 @@
-import axios from 'axios'
-import Isuggested from '../Interfaces/suggested.interface'
+import axios from "axios"
+import Isuggested from "../Interfaces/suggested.interface"
 import {
   AlbumTypes,
   ChartsTypes,
@@ -7,8 +7,8 @@ import {
   PlaylistTypes,
   TrendingAlbumTypes,
   TrendingSongTypes,
-} from '../Types/Types'
-import {api} from '../api/api'
+} from "../Types/Types"
+import {api} from "../api/api"
 export default class SuggestedServices implements Isuggested {
   public wait = async (timeout: number): Promise<void> => {
     return new Promise(resolve => setTimeout(resolve, timeout))
@@ -35,10 +35,10 @@ export default class SuggestedServices implements Isuggested {
       setPlst(result.data.playlists)
       setChst(result.data.charts)
       setLd(false)
-      setTrndSong(result.data.trending['songs'])
-      setTrndAlb(result.data.trending['albums'])
+      setTrndSong(result.data.trending["songs"])
+      setTrndAlb(result.data.trending["albums"])
     } catch (error) {
-      console.log('somthing went wrong suggested')
+      console.log("somthing went wrong suggested")
     }
   }
 }

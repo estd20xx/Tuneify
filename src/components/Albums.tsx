@@ -1,7 +1,7 @@
-import {View, Text, FlatList, TouchableOpacity} from 'react-native'
-import React, {useCallback} from 'react'
-import {AlbumDataProps, AlbumTypes} from '../Types/Types'
-import Image from 'react-native-fast-image'
+import {View, Text, FlatList, TouchableOpacity} from "react-native"
+import React, {useCallback} from "react"
+import {AlbumDataProps, AlbumTypes} from "../Types/Types"
+import Image from "react-native-fast-image"
 const Albums: React.FC<AlbumDataProps> = ({data, topic}) => {
   const renderItem = useCallback(
     ({item}: {item: AlbumTypes}) => (
@@ -11,7 +11,7 @@ const Albums: React.FC<AlbumDataProps> = ({data, topic}) => {
             <Image
               source={{
                 uri: item.image[2].link,
-                headers: {Authorization: 'someAuthToken'},
+                headers: {Authorization: "someAuthToken"},
                 priority: Image.priority.normal,
                 cache: Image.cacheControl.immutable,
               }}
@@ -21,7 +21,7 @@ const Albums: React.FC<AlbumDataProps> = ({data, topic}) => {
           <View className=" w-full h-9 flex items-center  justify-center">
             <Text className="text-white text-xs tracking-wider font-semibold ">
               {item.name.length > 10
-                ? item.name.slice(0, 14) + '..'
+                ? item.name.slice(0, 14) + ".."
                 : item.name}
             </Text>
           </View>

@@ -1,7 +1,7 @@
-import {View, Text, FlatList, TouchableOpacity} from 'react-native'
-import React, {useCallback} from 'react'
-import {TrendingSongTypes, TrendingSongsPropsTypes} from '../Types/Types'
-import Image from 'react-native-fast-image'
+import {View, Text, FlatList, TouchableOpacity} from "react-native"
+import React, {useCallback} from "react"
+import {TrendingSongTypes, TrendingSongsPropsTypes} from "../Types/Types"
+import Image from "react-native-fast-image"
 const TrendingSong: React.FC<TrendingSongsPropsTypes> = ({data, topic}) => {
   const renderItem = useCallback(
     ({item}: {item: TrendingSongTypes}) => (
@@ -11,7 +11,7 @@ const TrendingSong: React.FC<TrendingSongsPropsTypes> = ({data, topic}) => {
             <Image
               source={{
                 uri: item.image[2].link,
-                headers: {Authorization: 'someAuthToken'},
+                headers: {Authorization: "someAuthToken"},
                 priority: Image.priority.normal,
                 cache: Image.cacheControl.immutable,
               }}
@@ -21,7 +21,7 @@ const TrendingSong: React.FC<TrendingSongsPropsTypes> = ({data, topic}) => {
           <View className=" w-full h-9 flex items-center justify-center">
             <Text className="text-white text-sm tracking-wider font-semibold ">
               {item.label.length > 10
-                ? item.label.slice(0, 14) + '..'
+                ? item.label.slice(0, 14) + ".."
                 : item.label}
             </Text>
           </View>

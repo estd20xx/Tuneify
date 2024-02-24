@@ -1,9 +1,9 @@
-import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native'
-import React, {useEffect, useState} from 'react'
-import {PlaylistTypes, SongsTypes} from '../../Types/Types'
-import axios from 'axios'
-import {baseApi} from '../../api/api'
-import {Icons} from '../../constants/Icon'
+import {View, Text, Image, ScrollView, TouchableOpacity} from "react-native"
+import React, {useEffect, useState} from "react"
+import {PlaylistTypes, SongsTypes} from "../../Types/Types"
+import axios from "axios"
+import {baseApi} from "../../api/api"
+import {Icons} from "../../constants/Icon"
 interface PlaylistData {
   key: string
   name: string
@@ -41,7 +41,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({route}) => {
         <View className="w-full px-3 flex  justify-center">
           <Text className="text-white font-bold text-lg tracking-wider">
             {data.title.length > 15
-              ? data.title.slice(0, 38) + '...'
+              ? data.title.slice(0, 38) + "..."
               : data.title}
           </Text>
           <TouchableOpacity>
@@ -53,27 +53,27 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({route}) => {
             <TouchableOpacity
               key={currentSong.id}
               style={{
-                width: '100%',
+                width: "100%",
                 height: 60,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+                flexDirection: "row",
+                justifyContent: "space-between",
                 paddingLeft: 2,
                 paddingRight: 5,
                 marginTop: 10,
               }}>
               <View className="w-4/5  h-full pl-3 flex flex-row ">
                 <View className="w-full rounded-lg overflow-hidden ">
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View style={{flexDirection: "row", alignItems: "center"}}>
                     <Image
                       source={{uri: currentSong.image[2].link}}
                       style={{width: 60, height: 60, borderRadius: 5}}
                     />
                     <View style={{marginLeft: 10}}>
-                      <Text style={{color: 'white', fontSize: 14}}>
+                      <Text style={{color: "white", fontSize: 14}}>
                         {currentSong.name}
                       </Text>
                       <Text
-                        style={{color: '#d0d0d1', fontSize: 10, marginTop: 2}}>
+                        style={{color: "#d0d0d1", fontSize: 10, marginTop: 2}}>
                         {currentSong.primaryArtists}
                       </Text>
                     </View>
@@ -81,7 +81,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({route}) => {
                 </View>
               </View>
               <View className=" w-1/5 h-full flex items-center justify-end flex-row pr-3">
-                <Icons.MoreIcon name="more-vert" size={25} color={'#bababa'} />
+                <Icons.MoreIcon name="more-vert" size={25} color={"#bababa"} />
               </View>
             </TouchableOpacity>
           )

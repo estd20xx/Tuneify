@@ -1,6 +1,6 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack'
-import React from 'react'
-import HomeIcon from 'react-native-vector-icons/Octicons'
+import {NativeStackNavigationProp} from "@react-navigation/native-stack"
+import React from "react"
+import HomeIcon from "react-native-vector-icons/Octicons"
 export interface NavigationStringsTypes {
   splash: string
   onboarding: string
@@ -35,11 +35,11 @@ export type RootStackParamList = {
 }
 export type splashScreen = NativeStackNavigationProp<
   RootStackParamList,
-  'splash'
+  "splash"
 >
 export type onBoardingScreen = NativeStackNavigationProp<
   RootStackParamList,
-  'onboarding'
+  "onboarding"
 >
 export interface TrendingAlbumPropsTypes {
   data: TrendingAlbumTypes[]

@@ -1,6 +1,6 @@
-import axios from 'axios'
-import {SeperateAlbumTypes} from '../Types/Types'
-import {Ialbum} from '../Interfaces/album.interface'
+import axios from "axios"
+import {SeperateAlbumTypes} from "../Types/Types"
+import {Ialbum} from "../Interfaces/album.interface"
 export default class AlbumService implements Ialbum {
   constructor(public albumApi: string) {}
   getUrl = (): string => {
@@ -15,7 +15,7 @@ export default class AlbumService implements Ialbum {
       setCAlb(result.data.data.results)
       setIsl(false)
     } catch (error) {
-      console.log('something went wrong in album')
+      console.log("something went wrong in album")
     }
   }
 }

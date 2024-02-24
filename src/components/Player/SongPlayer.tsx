@@ -6,30 +6,30 @@ import {
   View,
   ScrollView,
   Animated,
-} from 'react-native'
-import React, {useEffect, useState, useCallback, memo} from 'react'
-import Modal from 'react-native-modal'
-import LinearGradient from 'react-native-linear-gradient'
+} from "react-native"
+import React, {useEffect, useState, useCallback, memo} from "react"
+import Modal from "react-native-modal"
+import LinearGradient from "react-native-linear-gradient"
 import TrackPlayer, {
   Track,
   usePlaybackState,
   useProgress,
   useTrackPlayerEvents,
   State,
-} from 'react-native-track-player'
-import {Icons} from '../../constants/Icon'
-import Slider from '@react-native-community/slider'
-import TuneifyService from '../../services/Tuneify.service'
-import {lyricsApi} from '../../api/api'
+} from "react-native-track-player"
+import {Icons} from "../../constants/Icon"
+import Slider from "@react-native-community/slider"
+import TuneifyService from "../../services/Tuneify.service"
+import {lyricsApi} from "../../api/api"
 const service = new TuneifyService(lyricsApi)
-import {addUserFavouritesData} from '../../store/Tuneify'
-import {useAppDispatch} from '../../hooks/store.hook'
+import {addUserFavouritesData} from "../../store/Tuneify"
+import {useAppDispatch} from "../../hooks/store.hook"
 const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   const dispatch = useAppDispatch()
   const [isFlipped, setIsFlipped] = useState(false)
   const [flip, setFlip] = useState(new Animated.Value(0))
   const [ct, setCt] = useState<Track>()
-  const [lyric, setLyric] = useState<string>('We are working on it.! 💻')
+  const [lyric, setLyric] = useState<string>("We are working on it.! 💻")
   const playbackState = usePlaybackState()
   const progress = useProgress()
   const flipCard = useCallback(() => {
@@ -43,11 +43,11 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   }, [isFlipped])
   const frontInterpolate = flip.interpolate({
     inputRange: [0, 180],
-    outputRange: ['0deg', '180deg'],
+    outputRange: ["0deg", "180deg"],
   })
   const backInterpolate = flip.interpolate({
     inputRange: [0, 180],
-    outputRange: ['180deg', '360deg'],
+    outputRange: ["180deg", "360deg"],
   })
   const frontAnimatedStyle = {
     transform: [{rotateY: frontInterpolate}],
@@ -61,8 +61,8 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   const format = (seconds: number) => {
     let mins = Math.floor(seconds / 60)
       .toString()
-      .padStart(2, '0')
-    let secs = (Math.trunc(seconds) % 60).toString().padStart(2, '0')
+      .padStart(2, "0")
+    let secs = (Math.trunc(seconds) % 60).toString().padStart(2, "0")
     return `${mins}:${secs}`
   }
   useTrackPlayerEvents(service.getEvent(), async (event: any) => {
@@ -85,7 +85,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 <Icons.KeyboardDown
                   name="keyboard-arrow-down"
                   size={35}
-                  color={'white'}
+                  color={"white"}
                 />
               </TouchableOpacity>
               <View className="flex flex-row h-full items-center justify-center">
@@ -93,23 +93,23 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                   <Icons.MoreIcon
                     name="lyrics"
                     size={20}
-                    color={'white'}
+                    color={"white"}
                     className="mr-4"
                   />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  <Icons.MoreIcon name="more-vert" size={25} color={'white'} />
+                  <Icons.MoreIcon name="more-vert" size={25} color={"white"} />
                 </TouchableOpacity>
               </View>
             </View>
             <View className=" relative h-1/2 w-full flex items-center justify-center ">
               <Animated.View
-                style={[frontAnimatedStyle, {backfaceVisibility: 'hidden'}]}
+                style={[frontAnimatedStyle, {backfaceVisibility: "hidden"}]}
                 className=" w-[85%] h-80  justify-center items-center rounded-xl  overflow-hidden">
                 <Image source={{uri: ct?.artwork}} className="h-full w-full " />
               </Animated.View>
               <Animated.View
-                style={[backAnimatedStyle, {backfaceVisibility: 'hidden'}]}
+                style={[backAnimatedStyle, {backfaceVisibility: "hidden"}]}
                 className="flex absolute w-[85%] h-80 bg-[#2D3250] justify-center items-center rounded-xl ">
                 {lyric.length > 15 ? (
                   <ScrollView showsVerticalScrollIndicator={false}>
@@ -133,7 +133,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                   <Icons.HomeIcon
                     name="heart-fill"
                     size={20}
-                    color={'#FF0060'}
+                    color={"#FF0060"}
                   />
                 </TouchableOpacity>
               </View>
@@ -151,15 +151,15 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
               />
               <View
                 style={{
-                  width: '90%',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignSelf: 'center',
+                  width: "90%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignSelf: "center",
                 }}>
-                <Text style={{color: 'white'}}>
+                <Text style={{color: "white"}}>
                   {format(progress.position)}
                 </Text>
-                <Text style={{color: 'white'}}>
+                <Text style={{color: "white"}}>
                   {format(progress.duration)}
                 </Text>
               </View>
@@ -167,14 +167,14 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
             <View className=" h-10 overflow-hidden w-full flex items-center justify-between flex-row mt-3 px-4">
               <TouchableOpacity>
                 <Image
-                  source={require('../../assets/images/suffle.png')}
-                  style={{width: 30, height: 30, tintColor: '#bababa'}}
+                  source={require("../../assets/images/suffle.png")}
+                  style={{width: 30, height: 30, tintColor: "#bababa"}}
                 />
               </TouchableOpacity>
               <View className=" w-[40%] flex items-center justify-evenly flex-row">
                 <Icons.KeyboardDown
                   name="skip-previous"
-                  color={'white'}
+                  color={"white"}
                   size={30}
                   onPress={() => [
                     TrackPlayer.skipToPrevious(),
@@ -184,15 +184,15 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 />
                 <TouchableOpacity
                   onPress={() => service.playPauseAction(playbackState)}>
-                  {playbackState.state == 'playing' ? (
-                    <Icons.PlayIcon name="pause" color={'white'} size={30} />
+                  {playbackState.state == "playing" ? (
+                    <Icons.PlayIcon name="pause" color={"white"} size={30} />
                   ) : (
-                    <Icons.PlayIcon name="play" color={'white'} size={30} />
+                    <Icons.PlayIcon name="play" color={"white"} size={30} />
                   )}
                 </TouchableOpacity>
                 <Icons.KeyboardDown
                   name="skip-next"
-                  color={'white'}
+                  color={"white"}
                   size={30}
                   onPress={() => [
                     TrackPlayer.skipToNext(),
@@ -201,7 +201,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                   ]}
                 />
               </View>
-              <Icons.SearchIcon name="repeat" color={'#bababa'} size={25} />
+              <Icons.SearchIcon name="repeat" color={"#bababa"} size={25} />
             </View>
           </View>
         </LinearGradient>

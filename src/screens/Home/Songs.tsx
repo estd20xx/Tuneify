@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react'
-import {FlatList, View, ViewToken, TouchableOpacity} from 'react-native'
-import {useSharedValue} from 'react-native-reanimated'
-import ListItem from '../../components/ListItem'
-import {SongsTypes} from '../../Types/Types'
-import SongService from '../../services/songs.service'
-import {songsApi} from '../../api/api'
-import {addSongList} from '../../store/Tuneify'
-import TrackPlayer from 'react-native-track-player'
-import {useAppDispatch} from '../../hooks/store.hook'
+import React, {useEffect, useState} from "react"
+import {FlatList, View, ViewToken, TouchableOpacity} from "react-native"
+import {useSharedValue} from "react-native-reanimated"
+import ListItem from "../../components/ListItem"
+import {SongsTypes} from "../../Types/Types"
+import SongService from "../../services/songs.service"
+import {songsApi} from "../../api/api"
+import {addSongList} from "../../store/Tuneify"
+import TrackPlayer from "react-native-track-player"
+import {useAppDispatch} from "../../hooks/store.hook"
 const service = new SongService(songsApi)
 const Songs = () => {
-  console.log('songs render')
+  console.log("songs render")
   const viewableItems = useSharedValue<ViewToken[]>([])
   const dispatch = useAppDispatch()
   const [currentIndex, setCurrentIndex] = useState(0)

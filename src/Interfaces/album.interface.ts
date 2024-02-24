@@ -1,4 +1,4 @@
-import {SeperateAlbumTypes} from '../Types/Types'
+import {SeperateAlbumTypes} from "../Types/Types"
 export interface Ialbum {
   readonly getUrl: () => string
   getAlbums: (

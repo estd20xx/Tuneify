@@ -1,5 +1,5 @@
-import {View, Text} from 'react-native'
-import React from 'react'
+import {View, Text} from "react-native"
+import React from "react"
 const SeperateSkeleton = () => {
   return (
     <View className="bg-gray-700 h-72 w-[46%] mb-3 rounded-xl overflow-hidden">

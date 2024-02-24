@@ -2,10 +2,10 @@ import {
   SortSongFields,
   SortSongOrder,
   getAll,
-} from 'react-native-get-music-files'
-import {IlocalMedia} from '../Interfaces/localMedia.interface'
-import {Dispatch, UnknownAction} from '@reduxjs/toolkit'
-import {addLocalFiles} from '../store/Tuneify'
+} from "react-native-get-music-files"
+import {IlocalMedia} from "../Interfaces/localMedia.interface"
+import {Dispatch, UnknownAction} from "@reduxjs/toolkit"
+import {addLocalFiles} from "../store/Tuneify"
 export default class LocalMediaService implements IlocalMedia {
   getLocalmedia = async (
     dispatch: Dispatch<UnknownAction>,

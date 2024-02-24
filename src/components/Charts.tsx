@@ -1,7 +1,7 @@
-import {View, Text, FlatList, TouchableOpacity} from 'react-native'
-import React, {useCallback} from 'react'
-import {ChartsPropsTypes, ChartsTypes} from '../Types/Types'
-import Image from 'react-native-fast-image'
+import {View, Text, FlatList, TouchableOpacity} from "react-native"
+import React, {useCallback} from "react"
+import {ChartsPropsTypes, ChartsTypes} from "../Types/Types"
+import Image from "react-native-fast-image"
 const Charts: React.FC<ChartsPropsTypes> = ({data, topic}) => {
   const renderItem = useCallback(
     ({item}: {item: ChartsTypes}) => (
@@ -11,7 +11,7 @@ const Charts: React.FC<ChartsPropsTypes> = ({data, topic}) => {
             <Image
               source={{
                 uri: item.image[2].link,
-                headers: {Authorization: 'someAuthToken'},
+                headers: {Authorization: "someAuthToken"},
                 priority: Image.priority.normal,
                 cache: Image.cacheControl.immutable,
               }}
@@ -21,7 +21,7 @@ const Charts: React.FC<ChartsPropsTypes> = ({data, topic}) => {
           <View className=" w-full h-9 flex items-center justify-center">
             <Text className="text-white text-xs tracking-wider font-semibold ">
               {item.title.length > 10
-                ? item.title.slice(0, 14) + '..'
+                ? item.title.slice(0, 14) + ".."
                 : item.title}
             </Text>
           </View>

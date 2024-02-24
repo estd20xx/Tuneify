@@ -1,6 +1,6 @@
-import axios from 'axios'
-import {Isongs} from '../Interfaces/songs.interface'
-import {SongsTypes} from '../Types/Types'
+import axios from "axios"
+import {Isongs} from "../Interfaces/songs.interface"
+import {SongsTypes} from "../Types/Types"
 export default class SongService implements Isongs {
   constructor(public songApi: string) {}
   getUrl = (): string => {
@@ -11,7 +11,7 @@ export default class SongService implements Isongs {
       const result = await axios.get(this.getUrl())
       setSng(result.data.data.results)
     } catch (error) {
-      console.log('something went wrong in songs')
+      console.log("something went wrong in songs")
     }
   }
 }
