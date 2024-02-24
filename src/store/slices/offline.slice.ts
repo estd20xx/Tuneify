@@ -1,6 +1,9 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit"
 import {LocalFileTypes} from "../../Interfaces/tuneifySlice.interface"
 import {RootState} from "../store"
+import localI from "../../assets/images/new.png"
+import {Image} from "react-native"
+const localImage = Image.resolveAssetSource(localI).uri
 interface InitialLocalState {
   LocalSong: LocalFileTypes[]
   isUploaded: boolean
@@ -22,7 +25,7 @@ const offlineSong = createSlice({
           title: cx.title,
           album: cx.album,
           artist: cx.artist,
-          cover: cx.cover,
+          cover: cx.cover ? cx.cover : localImage,
           duration: cx.duration,
           url: cx.url,
         }

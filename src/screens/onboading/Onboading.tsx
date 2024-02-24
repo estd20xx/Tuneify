@@ -16,6 +16,7 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({navigation}) => {
   useEffect(() => {
     if (Platform.OS === "android") {
       StatusBar.setBackgroundColor("#e28f22")
+      // StatusBar.setTranslucent(true)
     }
   }, [])
   return (

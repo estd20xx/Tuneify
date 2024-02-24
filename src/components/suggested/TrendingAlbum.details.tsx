@@ -35,7 +35,8 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
   }, [])
   useEffect(() => {
     if (albumSongs.length > 0) {
-      // dispatch(addSongList(albumSongs))
+      // @ts-ignore
+      dispatch(addSongList(albumSongs))
     }
   }, [albumSongs])
   useEffect(() => {

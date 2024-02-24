@@ -1,16 +1,21 @@
 import axios from "axios"
 import {ITuneify} from "../Interfaces/tuneifySetUp.interface"
-import {InitialStateTypes} from "../Interfaces/tuneifySlice.interface"
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
   Event,
   PlaybackState,
-  State,
+  RepeatMode,
   Track,
 } from "react-native-track-player"
 import SuggestedServices from "./suggested.service"
 import {InitialSongStateTypes} from "../store/slices/song.slice"
+import {
+  InitialChildStateTypes,
+  changeTunifyRepeatMode,
+  changeTunifyState,
+} from "../store/slices/childState.slice"
+import {Dispatch, UnknownAction} from "@reduxjs/toolkit"
 export default class TuneifyService
   extends SuggestedServices
   implements ITuneify
@@ -19,7 +24,6 @@ export default class TuneifyService
     super()
   }
   public getGradient = (): string[] => {
-    console.log("gradient called")
     const colors = [
       "#b8b7b8",
       "#a4a3a4",
@@ -57,29 +61,39 @@ export default class TuneifyService
       setLyric("We are working on it.! 💻")
     }
   }
+  public repeatMode = async (
+    state: InitialChildStateTypes,
+    dispatch: Dispatch<UnknownAction>,
+  ): Promise<void> => {
+    try {
+      state.repeat
+        ? TrackPlayer.setRepeatMode(RepeatMode.Queue)
+        : TrackPlayer.setRepeatMode(RepeatMode.Off)
+      dispatch(changeTunifyRepeatMode())
+    } catch (error) {
+      console.log(error)
+    }
+  }
   public playPauseAction = (
     playbackState: PlaybackState | {state: undefined},
+    state: InitialChildStateTypes,
+    dispatch: Dispatch<UnknownAction>,
   ): void => {
-    playbackState.state == State.Playing
-      ? TrackPlayer.pause()
-      : TrackPlayer.play()
+    state.isPlaying ? TrackPlayer.pause() : TrackPlayer.play()
+    dispatch(changeTunifyState())
   }
   public handleBottomCondition = async (
     setCurrentTrrack: (track: Track) => void,
   ): Promise<void> => {
     try {
       const currentTrack = await TrackPlayer.getActiveTrack()
-      const totl = await TrackPlayer.getQueue()
-      console.log(totl.length)
       currentTrack && setCurrentTrrack(currentTrack)
     } catch (error) {
       console.log(error)
     }
   }
-  public setUpPlayer = async (
-    data: InitialSongStateTypes,
-    setCurrentTrack: (track: Track) => void,
-  ) => {
+
+  public setUpPlayer = async (data: InitialSongStateTypes) => {
     try {
       await TrackPlayer.setupPlayer({
         maxCacheSize: 1024 * 10,

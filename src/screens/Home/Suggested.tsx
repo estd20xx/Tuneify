@@ -48,7 +48,7 @@ const Suggested = () => {
       refreshControl={
         <RefreshControl refreshing={ref} onRefresh={onRefresh} />
       }>
-      <View className="bg-[#181a20] w-full h-auto pb-10">
+      <View className=" w-full h-auto pb-10">
         {ld ? (
           <MainSkeleton />
         ) : (

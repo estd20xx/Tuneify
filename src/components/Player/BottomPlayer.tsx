@@ -1,5 +1,6 @@
-import {Text, TouchableOpacity, Image} from "react-native"
+import {Text, TouchableOpacity} from "react-native"
 import React, {useEffect, useState} from "react"
+import Image from "react-native-fast-image"
 import SongPlayer from "./SongPlayer"
 import {
   Track,
@@ -13,16 +14,19 @@ import {Icons} from "../../constants/Icon"
 import {tuneifySongs} from "../../store/slices/song.slice"
 import TuneifyService from "../../services/Tuneify.service"
 import {lyricsApi} from "../../api/api"
-import {TypedSelectorHook} from "../../hooks/store.hook"
+import {TypedSelectorHook, useAppDispatch} from "../../hooks/store.hook"
 const service = new TuneifyService(lyricsApi)
+import {tunifyChild} from "../../store/slices/childState.slice"
 const BottomPlayer = () => {
+  const dispatch = useAppDispatch()
   const data = TypedSelectorHook(tuneifySongs)
+  const state = TypedSelectorHook(tunifyChild)
   const [isVisible, setIsVisible] = useState(false)
   const [cTrack, setCTrack] = useState<Track>()
   const playbackState: PlaybackState | {state: undefined} = usePlaybackState()
   useEffect(() => {
     if (data.songs.length > 0) {
-      service.setUpPlayer(data, setCTrack)
+      service.setUpPlayer(data)
     }
   }, [data])
   useTrackPlayerEvents(service.getEvent(), (event: any) => {
@@ -51,7 +55,12 @@ const BottomPlayer = () => {
             }}>
             <View style={{flexDirection: "row", alignItems: "center"}}>
               <Image
-                source={{uri: cTrack?.artwork}}
+                source={{
+                  uri: cTrack?.artwork,
+                  headers: {Authorization: "songs"},
+                  priority: Image.priority.high,
+                  cache: Image.cacheControl.immutable,
+                }}
                 style={{width: 50, height: 50, borderRadius: 5}}
               />
               <View style={{marginLeft: 10}}>
@@ -64,8 +73,10 @@ const BottomPlayer = () => {
               </View>
             </View>
             <TouchableOpacity
-              onPress={() => service.playPauseAction(playbackState)}>
-              {playbackState.state == "playing" ? (
+              onPress={() =>
+                service.playPauseAction(playbackState, state, dispatch)
+              }>
+              {state.isPlaying ? (
                 <Icons.PlayIcon name="pause" color={"white"} size={30} />
               ) : (
                 <Icons.PlayIcon name="play" color={"white"} size={30} />
