@@ -1,12 +1,21 @@
-import {configureStore} from "@reduxjs/toolkit"
-import Tuneify from "./Tuneify"
+import {combineReducers, configureStore} from "@reduxjs/toolkit"
 import {persistReducer, persistStore} from "redux-persist"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import userSlice from "./slices/user.slice"
+import favouriteSlice from "./slices/favourite.slice"
+import offlineSlice from "./slices/offline.slice"
+import songSlice from "./slices/song.slice"
 const persistConfig = {
   key: "testTuneify",
   storage: AsyncStorage,
 }
-const persistedReducer = persistReducer(persistConfig, Tuneify)
+const RootReducer = combineReducers({
+  user: userSlice,
+  favourite: favouriteSlice,
+  offline: offlineSlice,
+  storeSong: songSlice,
+})
+const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({
   reducer: {persistedReducer},
   middleware: getDefaultMiddleware =>

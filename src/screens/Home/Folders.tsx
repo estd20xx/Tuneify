@@ -1,10 +1,10 @@
 import {View, Text, FlatList, Image, TouchableOpacity} from "react-native"
 import React, {useCallback} from "react"
-import {TuneifyData} from "../../store/Tuneify"
+import {tuneifyOfflines} from "../../store/slices/offline.slice"
 import {TypedSelectorHook} from "../../hooks/store.hook"
 import {LocalFileTypes} from "../../Interfaces/tuneifySlice.interface"
 const Folders = () => {
-  const localFile = TypedSelectorHook(TuneifyData)
+  const localFile = TypedSelectorHook(tuneifyOfflines)
   console.log("folder render")
   const renderItem = useCallback(
     ({item}: {item: LocalFileTypes}) => (
@@ -26,7 +26,7 @@ const Folders = () => {
   return (
     <View className="bg-[#181a20] w-full h-auto">
       <FlatList
-        data={localFile.localFile}
+        data={localFile.LocalSong}
         keyExtractor={item => item.url}
         initialNumToRender={3}
         showsVerticalScrollIndicator={false}

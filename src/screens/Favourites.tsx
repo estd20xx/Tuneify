@@ -1,12 +1,12 @@
 import {View, Text, Image, TouchableOpacity, ScrollView} from "react-native"
 import React from "react"
-import {TuneifyData} from "../store/Tuneify"
+import {tuneifyFavourites} from "../store/slices/favourite.slice"
 import {UserFavouritesTypes} from "../Interfaces/tuneifySlice.interface"
 import {Icons} from "../constants/Icon"
-import {TypedSelectorHook, useAppDispatch} from "../hooks/store.hook"
+import {TypedSelectorHook} from "../hooks/store.hook"
 const Favourites = () => {
-  const data = TypedSelectorHook(TuneifyData)
-  const facouriteData: UserFavouritesTypes[] = data.favouritesData
+  const data = TypedSelectorHook(tuneifyFavourites)
+  const facouriteData: UserFavouritesTypes[] = data.favouriteData
   return (
     <View className="w-full h-screen flex items-center justify-center pb-36">
       <ScrollView>

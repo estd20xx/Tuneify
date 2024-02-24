@@ -10,18 +10,18 @@ import {
 } from "react-native-track-player"
 import {View} from "react-native-animatable"
 import {Icons} from "../../constants/Icon"
-import {TuneifyData} from "../../store/Tuneify"
+import {tuneifySongs} from "../../store/slices/song.slice"
 import TuneifyService from "../../services/Tuneify.service"
 import {lyricsApi} from "../../api/api"
 import {TypedSelectorHook} from "../../hooks/store.hook"
 const service = new TuneifyService(lyricsApi)
 const BottomPlayer = () => {
-  const data = TypedSelectorHook(TuneifyData)
+  const data = TypedSelectorHook(tuneifySongs)
   const [isVisible, setIsVisible] = useState(false)
   const [cTrack, setCTrack] = useState<Track>()
   const playbackState: PlaybackState | {state: undefined} = usePlaybackState()
   useEffect(() => {
-    if (data.storeSong.length > 0) {
+    if (data.songs.length > 0) {
       service.setUpPlayer(data, setCTrack)
     }
   }, [data])
