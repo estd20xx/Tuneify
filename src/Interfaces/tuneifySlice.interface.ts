@@ -1,4 +1,4 @@
-export interface StoreSong {
+export interface StoreSongTypes {
   id: string
   title: string
   artist: string
@@ -22,7 +22,7 @@ export interface LocalFileTypes {
   url: string
 }
 export interface InitialStateTypes {
-  storeSong: StoreSong[]
+  storeSong: StoreSongTypes[]
   localFile: LocalFileTypes[]
   favouritesData: UserFavouritesTypes[]
   isUploaded: boolean

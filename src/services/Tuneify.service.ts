@@ -10,6 +10,7 @@ import TrackPlayer, {
   Track,
 } from "react-native-track-player"
 import SuggestedServices from "./suggested.service"
+import {InitialSongStateTypes} from "../store/slices/song.slice"
 export default class TuneifyService
   extends SuggestedServices
   implements ITuneify
@@ -76,7 +77,7 @@ export default class TuneifyService
     }
   }
   public setUpPlayer = async (
-    data: InitialStateTypes,
+    data: InitialSongStateTypes,
     setCurrentTrack: (track: Track) => void,
   ) => {
     try {
@@ -103,7 +104,7 @@ export default class TuneifyService
           Capability.SkipToPrevious,
         ],
       })
-      await TrackPlayer.add(data.storeSong)
+      await TrackPlayer.add(data.songs)
     } catch (error) {
       console.log(error)
     }

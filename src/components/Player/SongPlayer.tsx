@@ -17,12 +17,13 @@ import TrackPlayer, {
   useTrackPlayerEvents,
   State,
 } from "react-native-track-player"
+import {FAB as Fab} from "react-native-paper"
 import {Icons} from "../../constants/Icon"
 import Slider from "@react-native-community/slider"
 import TuneifyService from "../../services/Tuneify.service"
 import {lyricsApi} from "../../api/api"
 const service = new TuneifyService(lyricsApi)
-import {addUserFavouritesData} from "../../store/Tuneify"
+import {addUserFavouritesData} from "../../store/slices/favourite.slice"
 import {useAppDispatch} from "../../hooks/store.hook"
 const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   const dispatch = useAppDispatch()
@@ -164,36 +165,36 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 </Text>
               </View>
             </View>
-            <View className=" h-10 overflow-hidden w-full flex items-center justify-between flex-row mt-3 px-4">
+            <View className=" h-18  overflow-hidden w-full flex items-center justify-between flex-row mt-3 px-4">
               <TouchableOpacity>
                 <Image
                   source={require("../../assets/images/suffle.png")}
                   style={{width: 30, height: 30, tintColor: "#bababa"}}
                 />
               </TouchableOpacity>
-              <View className=" w-[40%] flex items-center justify-evenly flex-row">
+              <View className=" w-[45%]   flex items-center justify-evenly flex-row">
                 <Icons.KeyboardDown
                   name="skip-previous"
                   color={"white"}
-                  size={30}
+                  size={35}
                   onPress={() => [
                     TrackPlayer.skipToPrevious(),
                     service.handleBottomCondition(setCt),
                     service.getLyrics(setLyric),
                   ]}
                 />
-                <TouchableOpacity
-                  onPress={() => service.playPauseAction(playbackState)}>
-                  {playbackState.state == "playing" ? (
-                    <Icons.PlayIcon name="pause" color={"white"} size={30} />
-                  ) : (
-                    <Icons.PlayIcon name="play" color={"white"} size={30} />
-                  )}
-                </TouchableOpacity>
+                <Fab
+                  icon={
+                    playbackState.state === State.Playing ? "pause" : "play"
+                  }
+                  onPress={() => service.playPauseAction(playbackState)}
+                  loading={playbackState.state === State.Loading}
+                  style={{backgroundColor: "#a1a0a3", borderRadius: 50}}
+                />
                 <Icons.KeyboardDown
                   name="skip-next"
                   color={"white"}
-                  size={30}
+                  size={35}
                   onPress={() => [
                     TrackPlayer.skipToNext(),
                     service.handleBottomCondition(setCt),
@@ -201,7 +202,9 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                   ]}
                 />
               </View>
-              <Icons.SearchIcon name="repeat" color={"#bababa"} size={25} />
+              <TouchableOpacity>
+                <Icons.SearchIcon name="repeat" color={"#bababa"} size={25} />
+              </TouchableOpacity>
             </View>
           </View>
         </LinearGradient>

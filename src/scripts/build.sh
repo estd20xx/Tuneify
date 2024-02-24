@@ -10,7 +10,7 @@ function formatFiles {
 }
 function checkFolderExists {
     echo "+================================================+"
-    echo "|           checking is folder exists            |"
+    echo "|           checking if folder exists            |"
     echo "+================================================+"
     if [ ! -d "$1" ]; then
     echo "Error: Directory '$1' does not exist."

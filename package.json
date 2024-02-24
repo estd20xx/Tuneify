@@ -13,7 +13,7 @@
     "check": "npx depcheck",
     "clean": "rimraf node_modules && yarn install & yarn run cache",
     "format": "prettier --write .",
-    "b": "./src/scripts/build.sh",
+    "build": "./src/scripts/build.sh",
     "push": "./src/scripts/push.sh"
   },
   "dependencies": {

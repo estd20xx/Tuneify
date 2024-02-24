@@ -1,7 +1,6 @@
 import React, {useEffect} from "react"
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs"
 import {tabBar} from "../constants/naviG"
-import {component} from "../constants/screens"
 import {Platform, StatusBar} from "react-native"
 const Tab = createMaterialTopTabNavigator()
 const TabBar = () => {

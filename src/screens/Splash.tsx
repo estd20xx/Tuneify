@@ -1,7 +1,7 @@
 import {View, Image} from "react-native"
 import React, {useEffect} from "react"
 import {SplashScreenPropsTypes} from "../Types/Types"
-import {checkLocal, TuneifyData} from "../store/Tuneify"
+import {checkLocal, tuneifyOfflines} from "../store/slices/offline.slice"
 import LocalMediaService from "../services/localMedia.service"
 import PermissionService from "../services/permission.service"
 import {TypedSelectorHook, useAppDispatch} from "../hooks/store.hook"
@@ -9,7 +9,7 @@ const permission = new PermissionService()
 const musicService = new LocalMediaService()
 const Splash: React.FC<SplashScreenPropsTypes> = ({navigation}) => {
   const dispatch = useAppDispatch()
-  const storeData = TypedSelectorHook(TuneifyData)
+  const storeData = TypedSelectorHook(tuneifyOfflines)
   const fn = async () => {
     try {
       const per = await permission.askPermission()

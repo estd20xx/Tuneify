@@ -1,6 +1,6 @@
 import React, {useEffect} from "react"
 import MainNavigation from "./src/mainNavigation/MainNavigation"
-import {StatusBar, View} from "react-native"
+import {StatusBar} from "react-native"
 import {GestureHandlerRootView} from "react-native-gesture-handler"
 import {configureFonts} from "react-native-paper"
 import {Provider} from "react-redux"
