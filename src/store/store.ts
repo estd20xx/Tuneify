@@ -5,6 +5,9 @@ import userSlice from "./slices/user.slice"
 import favouriteSlice from "./slices/favourite.slice"
 import offlineSlice from "./slices/offline.slice"
 import songSlice from "./slices/song.slice"
+import childStateSlice from "./slices/childState.slice"
+import parentStateSlice from "./slices/parentState.slice"
+import currentTrackSlice from "./slices/currentTrack.slice"
 const persistConfig = {
   key: "testTuneify",
   storage: AsyncStorage,
@@ -14,6 +17,9 @@ const RootReducer = combineReducers({
   favourite: favouriteSlice,
   offline: offlineSlice,
   storeSong: songSlice,
+  childState: childStateSlice,
+  parentState: parentStateSlice,
+  currentTrack: currentTrackSlice,
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({

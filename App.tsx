@@ -8,24 +8,13 @@ import store, {persistor} from "./src/store/store"
 import CodePush from "react-native-code-push"
 import SplashScreen from "react-native-splash-screen"
 import {PersistGate} from "redux-persist/integration/react"
-
 const fontConfig = {
   fontFamily: "Roboto",
 }
-
 const theme = {
   fonts: configureFonts({config: fontConfig}),
 }
-
 const App = () => {
-  // StatusBar.setBarStyle("light-content");
-  // useEffect(() => {
-  //   // if (Platform.OS === "android") {
-  //   //   StatusBar.setBackgroundColor("rgba(0,0,0,0)");
-  //   //   StatusBar.setTranslucent(true);
-  //   // }
-  // }, [])
-
   useEffect(() => {
     SplashScreen.hide()
   }, [])

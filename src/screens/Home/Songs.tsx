@@ -13,7 +13,7 @@ const Songs = () => {
   console.log("songs render")
   const viewableItems = useSharedValue<ViewToken[]>([])
   const dispatch = useAppDispatch()
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentId, setCurrentId] = useState<string>("")
   const [sng, setSng] = useState<SongsTypes[]>([])
   useEffect(() => {
     service.getSongs(setSng)
@@ -40,15 +40,15 @@ const Songs = () => {
               <TouchableOpacity
                 onPress={async () => {
                   await TrackPlayer.pause()
-                  setCurrentIndex(index)
+                  setCurrentId(item.id)
                   await TrackPlayer.skip(index)
                   await TrackPlayer.play()
                 }}>
                 <ListItem
                   item={item}
                   viewableItems={viewableItems}
-                  currentIndex={currentIndex}
-                  index={index}
+                  currentId={currentId}
+                  id={item.id}
                 />
               </TouchableOpacity>
             )

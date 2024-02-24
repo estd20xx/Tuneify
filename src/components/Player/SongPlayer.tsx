@@ -1,12 +1,13 @@
 import {
   Text,
   TouchableOpacity,
-  Image,
-  StatusBar,
   View,
   ScrollView,
+  Image,
   Animated,
+  StatusBar,
 } from "react-native"
+import TrackImage from "react-native-fast-image"
 import React, {useEffect, useState, useCallback, memo} from "react"
 import Modal from "react-native-modal"
 import LinearGradient from "react-native-linear-gradient"
@@ -24,8 +25,13 @@ import TuneifyService from "../../services/Tuneify.service"
 import {lyricsApi} from "../../api/api"
 const service = new TuneifyService(lyricsApi)
 import {addUserFavouritesData} from "../../store/slices/favourite.slice"
-import {useAppDispatch} from "../../hooks/store.hook"
+import {TypedSelectorHook, useAppDispatch} from "../../hooks/store.hook"
+import {
+  changeTunifyRepeatMode,
+  tunifyChild,
+} from "../../store/slices/childState.slice"
 const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
+  const state = TypedSelectorHook(tunifyChild)
   const dispatch = useAppDispatch()
   const [isFlipped, setIsFlipped] = useState(false)
   const [flip, setFlip] = useState(new Animated.Value(0))
@@ -107,11 +113,19 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
               <Animated.View
                 style={[frontAnimatedStyle, {backfaceVisibility: "hidden"}]}
                 className=" w-[85%] h-80  justify-center items-center rounded-xl  overflow-hidden">
-                <Image source={{uri: ct?.artwork}} className="h-full w-full " />
+                <TrackImage
+                  source={{
+                    uri: ct?.artwork,
+                    headers: {Authorization: "songs"},
+                    priority: TrackImage.priority.high,
+                    cache: TrackImage.cacheControl.immutable,
+                  }}
+                  className="h-full w-full "
+                />
               </Animated.View>
               <Animated.View
                 style={[backAnimatedStyle, {backfaceVisibility: "hidden"}]}
-                className="flex absolute w-[85%] h-80 bg-[#2D3250] justify-center items-center rounded-xl ">
+                className="flex absolute w-[95%] h-96  justify-center items-center rounded-xl ">
                 {lyric.length > 15 ? (
                   <ScrollView showsVerticalScrollIndicator={false}>
                     <Text className="text-white text-base min-h-[100px] leading-8 px-5 flex items-center justify-center ">
@@ -184,10 +198,10 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                   ]}
                 />
                 <Fab
-                  icon={
-                    playbackState.state === State.Playing ? "pause" : "play"
+                  icon={state.isPlaying ? "pause" : "play"}
+                  onPress={() =>
+                    service.playPauseAction(playbackState, state, dispatch)
                   }
-                  onPress={() => service.playPauseAction(playbackState)}
                   loading={playbackState.state === State.Loading}
                   style={{backgroundColor: "#a1a0a3", borderRadius: 50}}
                 />
@@ -202,8 +216,13 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                   ]}
                 />
               </View>
-              <TouchableOpacity>
-                <Icons.SearchIcon name="repeat" color={"#bababa"} size={25} />
+              <TouchableOpacity
+                onPress={() => service.repeatMode(state, dispatch)}>
+                <Icons.PlayListIcon
+                  name={state.repeat ? "repeat" : "repeat-off"}
+                  color={state.repeat ? "#FF0060" : "#bababa"}
+                  size={28}
+                />
               </TouchableOpacity>
             </View>
           </View>
