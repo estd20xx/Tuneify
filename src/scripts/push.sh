@@ -37,5 +37,5 @@ function makeGitCommit {
 }
 makeGitCommit
 addingToGitStage "$gitMessage"
-# pushToDevelopmentBranch
+pushToDevelopmentBranch
 read -p "Press Enter to exits"
