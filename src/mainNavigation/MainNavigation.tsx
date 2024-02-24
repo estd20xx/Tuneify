@@ -1,23 +1,29 @@
-import React from 'react'
-import { NavigationContainer as Container, DefaultTheme } from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { MainNavigationItems } from '../constants/naviG'
+import React from "react"
+import {
+  NavigationContainer as Container,
+  DefaultTheme,
+} from "@react-navigation/native"
+import {createNativeStackNavigator} from "@react-navigation/native-stack"
+import {MainNavigationItems} from "../constants/naviG"
 const Stack = createNativeStackNavigator()
 const theme = DefaultTheme
 theme.colors.background = "#181a20"
 const MainNavigation = () => {
   return (
-    <Container theme={theme} >
-      <Stack.Navigator >
-        {MainNavigationItems.map((cn) => {
+    <Container theme={theme}>
+      <Stack.Navigator>
+        {MainNavigationItems.map(cn => {
           return (
-            <Stack.Screen name={cn.name} component={cn.component}
+            <Stack.Screen
+              name={cn.name}
+              component={cn.component}
               options={{
                 headerShown: false,
                 animation: "ios",
-                presentation: "card" ,
+                presentation: "card",
               }}
-              key={cn.name} />
+              key={cn.name}
+            />
           )
         })}
       </Stack.Navigator>

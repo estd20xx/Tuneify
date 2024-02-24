@@ -11,7 +11,10 @@
     "cache": " react-native start --reset-cache",
     "build:release": "cd android && ./gradlew assembleRelease",
     "check": "npx depcheck",
-    "clean": "rimraf node_modules && yarn install & yarn run cache"
+    "clean": "rimraf node_modules && yarn install & yarn run cache",
+    "format": "prettier --write .",
+    "b": "./src/scripts/build.sh",
+    "push": "./src/scripts/push.sh"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.21.0",
