@@ -1,12 +1,12 @@
 import {View, Text, Image, TouchableOpacity, ScrollView} from "react-native"
 import React, {useEffect, useState} from "react"
-import {TrendingAlbumTypes} from "../../Types/Types"
 import axios from "axios"
 import {baseApi} from "../../api/api"
 import {Icons} from "../../constants/Icon"
 import {TypedSelectorHook, useAppDispatch} from "../../hooks/store.hook"
 import {addSongList, tuneifySongs} from "../../store/slices/song.slice"
 import TrackPlayer from "react-native-track-player"
+import {TrendingAlbumTypes} from "../../Interfaces/album.interface"
 interface TrendingAlbumData {
   key: string
   name: string

@@ -2,11 +2,11 @@ import React from "react"
 import {View, Text, ViewToken, Image} from "react-native"
 import Animated, {useAnimatedStyle, withTiming} from "react-native-reanimated"
 import {Icons} from "../constants/Icon"
-import {SongsTypes} from "../Types/Types"
 import {State, usePlaybackState} from "react-native-track-player"
 import {TypedSelectorHook} from "../hooks/store.hook"
 import {tunifyChild} from "../store/slices/childState.slice"
 import CoverImage from "react-native-fast-image"
+import {SongsTypes} from "../Interfaces/songs.interface"
 type ListItemProps = {
   viewableItems: Animated.SharedValue<ViewToken[]>
   item: SongsTypes

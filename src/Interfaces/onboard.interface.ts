@@ -1,4 +1,12 @@
 import {onBoardingScreen} from "../Types/Types"
+export interface OnBoardingDataTypes {
+  first: string
+  second: string
+  third: string
+}
+export interface OnBoardingPropsTypes {
+  navigation: onBoardingScreen
+}
 export interface Ionboard {
   getOnboardImage: () => string
   onboardHandler: (

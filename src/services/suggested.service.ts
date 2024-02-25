@@ -1,14 +1,10 @@
 import axios from "axios"
-import Isuggested from "../Interfaces/suggested.interface"
-import {
-  AlbumTypes,
-  ChartsTypes,
-  Http,
-  PlaylistTypes,
-  TrendingAlbumTypes,
-  TrendingSongTypes,
-} from "../Types/Types"
+import Isuggested, {Http} from "../Interfaces/suggested.interface"
 import {api} from "../api/api"
+import {AlbumTypes, TrendingAlbumTypes} from "../Interfaces/album.interface"
+import {PlaylistTypes} from "../Interfaces/playlist.interface"
+import {ChartsTypes} from "../Types/Types"
+import {TrendingSongTypes} from "../Interfaces/songs.interface"
 export default class SuggestedServices implements Isuggested {
   public wait = async (timeout: number): Promise<void> => {
     return new Promise(resolve => setTimeout(resolve, timeout))

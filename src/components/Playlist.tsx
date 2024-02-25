@@ -1,13 +1,13 @@
 import {View, Text, FlatList, TouchableOpacity} from "react-native"
 import React, {useCallback} from "react"
-import {
-  PlaylistDataProps,
-  PlaylistTypes,
-  RootStackParamList,
-} from "../Types/Types"
+import {RootStackParamList} from "../Types/Types"
 import {useNavigation} from "@react-navigation/core"
 import {NativeStackNavigationProp} from "@react-navigation/native-stack"
 import Image from "react-native-fast-image"
+import {
+  PlaylistDataProps,
+  PlaylistTypes,
+} from "../Interfaces/playlist.interface"
 const Playlist: React.FC<PlaylistDataProps> = ({data, topic}) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>()

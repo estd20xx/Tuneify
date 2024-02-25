@@ -1,13 +1,13 @@
 import {View, Text, FlatList, TouchableOpacity} from "react-native"
 import React, {useCallback} from "react"
-import {
-  RootStackParamList,
-  TrendingAlbumPropsTypes,
-  TrendingAlbumTypes,
-} from "../Types/Types"
+import {RootStackParamList} from "../Types/Types"
 import {useNavigation} from "@react-navigation/core"
 import {NativeStackNavigationProp} from "@react-navigation/native-stack"
 import Image from "react-native-fast-image"
+import {
+  TrendingAlbumPropsTypes,
+  TrendingAlbumTypes,
+} from "../Interfaces/album.interface"
 const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({data, topic}) => {
   console.log("Trending render")
   const navigation =

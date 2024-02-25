@@ -1,10 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit"
 import {RootState} from "../store"
-export interface InitialChildStateTypes {
-  isPlaying: boolean
-  isLoading: boolean
-  repeat: boolean
-}
+import {InitialChildStateTypes} from "../../Interfaces/tuneifySlice.interface"
+
 const initialState: InitialChildStateTypes = {
   isPlaying: false,
   isLoading: false,

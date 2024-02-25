@@ -1,11 +1,16 @@
-import {
-  AlbumTypes,
-  Http,
-  TrendingAlbumTypes,
-  TrendingSongTypes,
-  ChartsTypes,
-  PlaylistTypes,
-} from "../Types/Types"
+import {ChartsTypes} from "../Types/Types"
+import {Tr, TrendingAlbumTypes, AlbumTypes} from "./album.interface"
+import {TrendingSongTypes} from "./songs.interface"
+import {PlaylistTypes} from "./playlist.interface"
+export interface SuggestedDataInterfaceChild {
+  albums: AlbumTypes[]
+  playlists: PlaylistTypes[]
+  charts: ChartsTypes[]
+  trending: Tr
+}
+export interface Http {
+  data: SuggestedDataInterfaceChild
+}
 
 export default interface Isuggested {
   wait: (timeout: number) => Promise<void>

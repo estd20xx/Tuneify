@@ -1,8 +1,7 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit"
 import {RootState} from "../store"
-interface InitialUserState {
-  userName: string
-}
+import {InitialUserState} from "../../Interfaces/tuneifySlice.interface"
+
 const initialState: InitialUserState = {
   userName: "namelessnerd",
 }

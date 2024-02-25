@@ -1,13 +1,13 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit"
-import {LocalFileTypes} from "../../Interfaces/tuneifySlice.interface"
+import {
+  InitialLocalState,
+  LocalFileTypes,
+} from "../../Interfaces/tuneifySlice.interface"
 import {RootState} from "../store"
 import localI from "../../assets/images/new.png"
 import {Image} from "react-native"
 const localImage = Image.resolveAssetSource(localI).uri
-interface InitialLocalState {
-  LocalSong: LocalFileTypes[]
-  isUploaded: boolean
-}
+
 const initialState: InitialLocalState = {
   LocalSong: [],
   isUploaded: false,

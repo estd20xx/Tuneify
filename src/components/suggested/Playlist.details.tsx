@@ -1,9 +1,10 @@
 import {View, Text, Image, ScrollView, TouchableOpacity} from "react-native"
 import React, {useEffect, useState} from "react"
-import {PlaylistTypes, SongsTypes} from "../../Types/Types"
 import axios from "axios"
 import {baseApi} from "../../api/api"
 import {Icons} from "../../constants/Icon"
+import {SongsTypes} from "../../Interfaces/songs.interface"
+import {PlaylistTypes} from "../../Interfaces/playlist.interface"
 interface PlaylistData {
   key: string
   name: string

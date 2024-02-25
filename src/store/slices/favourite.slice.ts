@@ -1,10 +1,11 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit"
-import {UserFavouritesTypes} from "../../Interfaces/tuneifySlice.interface"
+import {
+  InitialFavouriteState,
+  UserFavouritesTypes,
+} from "../../Interfaces/tuneifySlice.interface"
 import {Track} from "react-native-track-player"
 import {RootState} from "../store"
-interface InitialFavouriteState {
-  favouriteData: UserFavouritesTypes[]
-}
+
 const initialState: InitialFavouriteState = {
   favouriteData: [],
 }
