@@ -1,6 +1,6 @@
 import {View, Text, Image, TouchableOpacity} from "react-native"
 import React from "react"
-import {SeperateAlbumDataPropsTypes} from "../Types/Types"
+import {SeperateAlbumDataPropsTypes} from "../Interfaces/album.interface"
 const SeperateAlbumData: React.FC<SeperateAlbumDataPropsTypes> = ({data}) => {
   return (
     <TouchableOpacity className="h-72 w-[46%] mb-3 border-[1px] border-b-8  rounded-xl overflow-hidden">

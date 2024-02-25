@@ -5,6 +5,31 @@ export interface StoreSongTypes {
   artwork: string
   url: string
 }
+export interface InitialCurrentTrackStateTypes {
+  trackId: string
+}
+export interface InitialChildStateTypes {
+  isPlaying: boolean
+  isLoading: boolean
+  repeat: boolean
+}
+export interface InitialFavouriteState {
+  favouriteData: UserFavouritesTypes[]
+}
+export interface InitialLocalState {
+  LocalSong: LocalFileTypes[]
+  isUploaded: boolean
+}
+export interface InitialCurrentStateTypes {
+  albumId: string
+  playListId: string
+}
+export interface InitialSongStateTypes {
+  songs: StoreSongTypes[]
+}
+export interface InitialUserState {
+  userName: string
+}
 export interface UserFavouritesTypes {
   id: string
   title: string

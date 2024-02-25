@@ -1,10 +1,11 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit"
-import {StoreSongTypes} from "../../Interfaces/tuneifySlice.interface"
-import {SongsTypes} from "../../Types/Types"
+import {
+  InitialSongStateTypes,
+  StoreSongTypes,
+} from "../../Interfaces/tuneifySlice.interface"
 import {RootState} from "../store"
-export interface InitialSongStateTypes {
-  songs: StoreSongTypes[]
-}
+import {SongsTypes} from "../../Interfaces/songs.interface"
+
 const initialState: InitialSongStateTypes = {
   songs: [],
 }

@@ -1,9 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit"
 import {RootState} from "../store"
-export interface InitialCurrentStateTypes {
-  albumId: string
-  playListId: string
-}
+import {InitialCurrentStateTypes} from "../../Interfaces/tuneifySlice.interface"
+
 const initialState: InitialCurrentStateTypes = {
   albumId: "",
   playListId: "",

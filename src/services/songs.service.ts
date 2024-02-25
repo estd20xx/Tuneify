@@ -1,6 +1,5 @@
 import axios from "axios"
-import {Isongs} from "../Interfaces/songs.interface"
-import {SongsTypes} from "../Types/Types"
+import {Isongs, SongsTypes} from "../Interfaces/songs.interface"
 export default class SongService implements Isongs {
   constructor(public songApi: string) {}
   getUrl = (): string => {

@@ -1,9 +1,7 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit"
 import {RootState} from "../store"
+import {InitialCurrentTrackStateTypes} from "../../Interfaces/tuneifySlice.interface"
 
-export interface InitialCurrentTrackStateTypes {
-  trackId: string
-}
 const initialState: InitialCurrentTrackStateTypes = {
   trackId: "",
 }

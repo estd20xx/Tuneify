@@ -1,6 +1,5 @@
 import axios from "axios"
-import {SeperateAlbumTypes} from "../Types/Types"
-import {Ialbum} from "../Interfaces/album.interface"
+import {Ialbum, SeperateAlbumTypes} from "../Interfaces/album.interface"
 export default class AlbumService implements Ialbum {
   constructor(public albumApi: string) {}
   getUrl = (): string => {

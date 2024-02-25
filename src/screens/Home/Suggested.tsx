@@ -1,17 +1,14 @@
 import {View, ScrollView, RefreshControl} from "react-native"
 import React, {useEffect, useState, useCallback} from "react"
-import {
-  AlbumTypes,
-  ChartsTypes,
-  PlaylistTypes,
-  TrendingAlbumTypes,
-  TrendingSongTypes,
-} from "../../Types/Types"
+import {ChartsTypes} from "../../Types/Types"
 import {component} from "../../constants/screens"
 import SuggestedServices from "../../services/suggested.service"
 const service = new SuggestedServices()
 import Toast from "react-native-toast-message"
 import MainSkeleton from "../../components/skeleton/MainSkeleton"
+import {TrendingAlbumTypes, AlbumTypes} from "../../Interfaces/album.interface"
+import {TrendingSongTypes} from "../../Interfaces/songs.interface"
+import {PlaylistTypes} from "../../Interfaces/playlist.interface"
 const Suggested = () => {
   const [albums, setAlbums] = useState<AlbumTypes[]>([])
   const [plst, setPlst] = useState<PlaylistTypes[]>([])

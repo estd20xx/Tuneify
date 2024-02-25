@@ -1,7 +1,10 @@
 import {View, Text, FlatList, TouchableOpacity} from "react-native"
 import React, {useCallback} from "react"
-import {TrendingSongTypes, TrendingSongsPropsTypes} from "../Types/Types"
 import Image from "react-native-fast-image"
+import {
+  TrendingSongTypes,
+  TrendingSongsPropsTypes,
+} from "../Interfaces/songs.interface"
 const TrendingSong: React.FC<TrendingSongsPropsTypes> = ({data, topic}) => {
   const renderItem = useCallback(
     ({item}: {item: TrendingSongTypes}) => (

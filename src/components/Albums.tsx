@@ -1,7 +1,7 @@
 import {View, Text, FlatList, TouchableOpacity} from "react-native"
 import React, {useCallback} from "react"
-import {AlbumDataProps, AlbumTypes} from "../Types/Types"
 import Image from "react-native-fast-image"
+import {AlbumDataProps, AlbumTypes} from "../Interfaces/album.interface"
 const Albums: React.FC<AlbumDataProps> = ({data, topic}) => {
   const renderItem = useCallback(
     ({item}: {item: AlbumTypes}) => (
