@@ -23,19 +23,21 @@ const Folders = () => {
           />
         </View>
         <View className="w-4/5 ">
-          <Text style={{fontSize: 14, color: "white"}}>
+          <Text style={{fontSize: 15, color: "white", fontFamily: "500"}}>
             {item.title.length > 45
               ? item.title.slice(0, 45) + "..."
               : item.title}
           </Text>
-          <Text style={{fontSize: 10, color: "#d0d0d1"}}>{item.artist}</Text>
+          <Text style={{fontSize: 10, color: "#d0d0d1", fontFamily: "200"}}>
+            {item.artist}
+          </Text>
         </View>
       </TouchableOpacity>
     ),
     [],
   )
   return (
-    <View className="bg-[#181a20] w-full h-auto">
+    <View className=" w-full h-auto">
       <FlatList
         data={localFile.LocalSong}
         keyExtractor={item => item.url}

@@ -9,13 +9,15 @@ import TrackPlayer, {
   Track,
 } from "react-native-track-player"
 import SuggestedServices from "./suggested.service"
-import {InitialSongStateTypes} from "../store/slices/song.slice"
 import {
-  InitialChildStateTypes,
   changeTunifyRepeatMode,
   changeTunifyState,
 } from "../store/slices/childState.slice"
 import {Dispatch, UnknownAction} from "@reduxjs/toolkit"
+import {
+  InitialChildStateTypes,
+  InitialSongStateTypes,
+} from "../Interfaces/tuneifySlice.interface"
 export default class TuneifyService
   extends SuggestedServices
   implements ITuneify

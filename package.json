@@ -14,7 +14,8 @@
     "clean": "rimraf node_modules && yarn install & yarn run cache",
     "format": "prettier --write .",
     "build": "./src/scripts/build.sh",
-    "push": "./src/scripts/push.sh"
+    "push": "./src/scripts/push.sh",
+    "link": "npx react-native-asset"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.21.0",
@@ -31,6 +32,7 @@
     "react": "18.2.0",
     "react-native": "0.73.2",
     "react-native-animatable": "^1.4.0",
+    "react-native-asset": "^2.1.1",
     "react-native-fast-image": "^8.6.3",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.15.0",

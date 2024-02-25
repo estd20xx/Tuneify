@@ -53,7 +53,7 @@ const BottomPlayer = () => {
             onPress={() => {
               setIsVisible(true)
             }}>
-            <View style={{flexDirection: "row", alignItems: "center"}}>
+            <View className="flex flex-row  w-11/12 overflow-hidden">
               <Image
                 source={{
                   uri: cTrack?.artwork,
@@ -64,10 +64,10 @@ const BottomPlayer = () => {
                 style={{width: 50, height: 50, borderRadius: 5}}
               />
               <View style={{marginLeft: 10}}>
-                <Text className="text-white text-[14px] mb-1">
+                <Text className="text-white  mb-1 text-sm font-[400]  tracking-wider">
                   {cTrack.title}
                 </Text>
-                <Text style={{color: "white", fontSize: 10}}>
+                <Text className="text-gray-200 text-[9px]">
                   {cTrack.artist}
                 </Text>
               </View>

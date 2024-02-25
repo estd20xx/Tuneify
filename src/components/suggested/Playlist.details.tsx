@@ -16,7 +16,6 @@ export interface PlaylistDetailsTypes {
   route: PlaylistData
 }
 const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({route}) => {
-  console.log(route.params.playlistData)
   const [data, setData] = useState(route.params.playlistData)
   const [playlistSong, setPlaylistSongs] = useState<SongsTypes[]>([])
   const fetchAudio = async () => {
@@ -40,13 +39,15 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({route}) => {
           />
         </View>
         <View className="w-full px-3 flex  justify-center">
-          <Text className="text-white font-bold text-lg tracking-wider">
+          <Text className="text-white  text-lg tracking-wider font-[500]">
             {data.title.length > 15
               ? data.title.slice(0, 38) + "..."
               : data.title}
           </Text>
           <TouchableOpacity>
-            <Text className="text-gray-300 text-base">{data.userId}</Text>
+            <Text className="text-gray-300 text-base font-[400]">
+              {data.userId}
+            </Text>
           </TouchableOpacity>
         </View>
         {playlistSong.map(currentSong => {
@@ -70,11 +71,21 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({route}) => {
                       style={{width: 60, height: 60, borderRadius: 5}}
                     />
                     <View style={{marginLeft: 10}}>
-                      <Text style={{color: "white", fontSize: 14}}>
+                      <Text
+                        style={{
+                          color: "white",
+                          fontSize: 14,
+                          fontFamily: "400",
+                        }}>
                         {currentSong.name}
                       </Text>
                       <Text
-                        style={{color: "#d0d0d1", fontSize: 10, marginTop: 2}}>
+                        style={{
+                          color: "#d0d0d1",
+                          fontSize: 10,
+                          marginTop: 2,
+                          fontFamily: "300",
+                        }}>
                         {currentSong.primaryArtists}
                       </Text>
                     </View>

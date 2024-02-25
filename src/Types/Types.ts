@@ -42,12 +42,9 @@ export type onBoardingScreen = NativeStackNavigationProp<
   RootStackParamList,
   "onboarding"
 >
-
 export interface SplashScreenPropsTypes {
   navigation: splashScreen
 }
-
-// ===== Album types
 export interface ImageType {
   quality: string
   link: string
