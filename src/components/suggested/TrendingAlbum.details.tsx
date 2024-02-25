@@ -54,11 +54,11 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
           />
         </View>
         <View className="w-full px-3 flex  justify-center">
-          <Text className="text-white font-bold text-lg tracking-wider">
+          <Text className="text-white font-[500] text-lg tracking-wider">
             {data.name.length > 15 ? data.name.slice(0, 38) + "..." : data.name}
           </Text>
           <TouchableOpacity>
-            <Text className="text-gray-300 text-base">
+            <Text className="text-gray-300 text-base font-[400]">
               {data.artists[0].name}
             </Text>
           </TouchableOpacity>
@@ -84,11 +84,21 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
                       style={{width: 60, height: 60, borderRadius: 5}}
                     />
                     <View style={{marginLeft: 10}}>
-                      <Text style={{color: "white", fontSize: 14}}>
+                      <Text
+                        style={{
+                          color: "white",
+                          fontSize: 14,
+                          fontFamily: "400",
+                        }}>
                         {currentSong.name}
                       </Text>
                       <Text
-                        style={{color: "#d0d0d1", fontSize: 10, marginTop: 2}}>
+                        style={{
+                          color: "#d0d0d1",
+                          fontSize: 10,
+                          marginTop: 2,
+                          fontFamily: "300",
+                        }}>
                         {currentSong.primaryArtists}
                       </Text>
                     </View>

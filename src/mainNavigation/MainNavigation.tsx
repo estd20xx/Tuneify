@@ -11,7 +11,7 @@ theme.colors.background = "#181a20"
 const MainNavigation = () => {
   return (
     <Container theme={theme}>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
         {MainNavigationItems.map(cn => {
           return (
             <Stack.Screen

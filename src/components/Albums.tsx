@@ -19,7 +19,7 @@ const Albums: React.FC<AlbumDataProps> = ({data, topic}) => {
             />
           </View>
           <View className=" w-full h-9 flex items-center  justify-center">
-            <Text className="text-white text-xs tracking-wider font-semibold ">
+            <Text className="text-white text-xs tracking-wider font-[500] ">
               {item.name.length > 10
                 ? item.name.slice(0, 14) + ".."
                 : item.name}
@@ -33,7 +33,7 @@ const Albums: React.FC<AlbumDataProps> = ({data, topic}) => {
   return (
     <View className="w-full h-auto  ">
       <View className="w-full pl-3 h-10 flex items-center flex-row  mb-3">
-        <Text className="text-lg text-white font-semibold tracking-widest">
+        <Text className="text-lg text-white font-[500] tracking-widest">
           {topic}
         </Text>
       </View>

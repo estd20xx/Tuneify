@@ -26,10 +26,7 @@ import {lyricsApi} from "../../api/api"
 const service = new TuneifyService(lyricsApi)
 import {addUserFavouritesData} from "../../store/slices/favourite.slice"
 import {TypedSelectorHook, useAppDispatch} from "../../hooks/store.hook"
-import {
-  changeTunifyRepeatMode,
-  tunifyChild,
-} from "../../store/slices/childState.slice"
+import {tunifyChild} from "../../store/slices/childState.slice"
 const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   const state = TypedSelectorHook(tunifyChild)
   const dispatch = useAppDispatch()
@@ -109,7 +106,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <View className=" relative h-1/2 w-full flex items-center justify-center ">
+            <View className=" relative h-1/2 w-full flex items-center justify-center  ">
               <Animated.View
                 style={[frontAnimatedStyle, {backfaceVisibility: "hidden"}]}
                 className=" w-[85%] h-80  justify-center items-center rounded-xl  overflow-hidden">
@@ -125,10 +122,10 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
               </Animated.View>
               <Animated.View
                 style={[backAnimatedStyle, {backfaceVisibility: "hidden"}]}
-                className="flex absolute w-[95%] h-96  justify-center items-center rounded-xl ">
+                className="flex absolute   w-[95%] h-full   justify-center items-center rounded-xl ">
                 {lyric.length > 15 ? (
                   <ScrollView showsVerticalScrollIndicator={false}>
-                    <Text className="text-white text-base min-h-[100px] leading-8 px-5 flex items-center justify-center ">
+                    <Text className="text-white text-base min-h-[100px] leading-8 px-5 flex items-center justify-center font-[300]  ">
                       {lyric}
                     </Text>
                   </ScrollView>
@@ -140,15 +137,19 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
             <View className="w-full mt-5 h-auto">
               <View className=" flex items-center justify-between flex-row px-3 ">
                 <View className=" py-2">
-                  <Text className="text-white text-xl mb-1">{ct?.title}</Text>
-                  <Text className="text-white text-sm">{ct?.artist}</Text>
+                  <Text className="text-white text-xl mb-1 font-[400]">
+                    {ct?.title}
+                  </Text>
+                  <Text className="text-white text-sm font-[300]">
+                    {ct?.artist}
+                  </Text>
                 </View>
                 <TouchableOpacity
                   onPress={() => dispatch(addUserFavouritesData(ct!))}>
                   <Icons.HomeIcon
                     name="heart-fill"
                     size={20}
-                    color={"#FF0060"}
+                    color={"#16FF00"}
                   />
                 </TouchableOpacity>
               </View>
@@ -160,6 +161,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 value={progress.position}
                 minimumTrackTintColor="#FFFFFF"
                 maximumTrackTintColor="#fff"
+                thumbTintColor="white"
                 onSlidingComplete={e => {
                   TrackPlayer.seekTo(e)
                 }}
@@ -171,10 +173,10 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                   justifyContent: "space-between",
                   alignSelf: "center",
                 }}>
-                <Text style={{color: "white"}}>
+                <Text style={{color: "white", fontFamily: "300"}}>
                   {format(progress.position)}
                 </Text>
-                <Text style={{color: "white"}}>
+                <Text style={{color: "white", fontFamily: "300"}}>
                   {format(progress.duration)}
                 </Text>
               </View>
@@ -203,7 +205,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                     service.playPauseAction(playbackState, state, dispatch)
                   }
                   loading={playbackState.state === State.Loading}
-                  style={{backgroundColor: "#a1a0a3", borderRadius: 50}}
+                  style={{backgroundColor: "#bababa", borderRadius: 50}}
                 />
                 <Icons.KeyboardDown
                   name="skip-next"
@@ -220,7 +222,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 onPress={() => service.repeatMode(state, dispatch)}>
                 <Icons.PlayListIcon
                   name={state.repeat ? "repeat" : "repeat-off"}
-                  color={state.repeat ? "#FF0060" : "#bababa"}
+                  color={state.repeat ? "#16FF00" : "#bababa"}
                   size={28}
                 />
               </TouchableOpacity>

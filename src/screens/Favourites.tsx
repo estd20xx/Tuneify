@@ -21,7 +21,7 @@ const Favourites = () => {
                 marginRight: 3,
               }}
             />
-            <Text className="text-white text-xl">Suffle</Text>
+            <Text className="text-white text-xl font-[400]">Suffle</Text>
           </TouchableOpacity>
           <TouchableOpacity className="bg-[#35383f] h-11 w-36 rounded-full flex items-center justify-center flex-row">
             <Icons.PlayIcon
@@ -30,7 +30,7 @@ const Favourites = () => {
               size={20}
               className="mr-1"
             />
-            <Text className="text-white text-xl">Play</Text>
+            <Text className="text-white text-xl font-[400]">Play</Text>
           </TouchableOpacity>
         </View>
         {facouriteData.map((item, index) => {
@@ -54,11 +54,21 @@ const Favourites = () => {
                       style={{width: 60, height: 60, borderRadius: 5}}
                     />
                     <View style={{marginLeft: 10}}>
-                      <Text style={{color: "white", fontSize: 14}}>
+                      <Text
+                        style={{
+                          color: "white",
+                          fontSize: 15,
+                          fontFamily: "400",
+                        }}>
                         {item.title}
                       </Text>
                       <Text
-                        style={{color: "#d0d0d1", fontSize: 10, marginTop: 1}}>
+                        style={{
+                          color: "#d0d0d1",
+                          fontSize: 10,
+                          marginTop: 1,
+                          fontFamily: "300",
+                        }}>
                         {item.artist}
                       </Text>
                     </View>

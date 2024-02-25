@@ -49,10 +49,15 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Roboto-Light.ttf</string>
-		<string>Roboto-Medium.ttf</string>
-		<string>Roboto-Regular.ttf</string>
-		<string>Roboto-Thin.ttf</string>
+		<string>100.ttf</string>
+		<string>200.ttf</string>
+		<string>300.ttf</string>
+		<string>400.ttf</string>
+		<string>500.ttf</string>
+		<string>600.ttf</string>
+		<string>700.ttf</string>
+		<string>800.ttf</string>
+		<string>900.ttf</string>
 	</array>
 </dict>
 </plist>

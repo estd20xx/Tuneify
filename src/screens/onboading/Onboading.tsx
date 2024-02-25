@@ -36,19 +36,19 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({navigation}) => {
           <Animatable.Text
             animation={"slideInLeft"}
             duration={1200}
-            className="text-white text-4xl tracking-widest font-medium">
+            className="text-white text-4xl tracking-widest  font-[500]">
             {d.first}
           </Animatable.Text>
           <Animatable.Text
             animation={"slideInLeft"}
             duration={1700}
-            className="text-white text-4xl tracking-widest font-medium">
+            className="text-white text-4xl tracking-widest font-[500]">
             {d.second}
           </Animatable.Text>
           <Animatable.Text
             animation={"slideInLeft"}
             duration={2200}
-            className="text-white text-4xl tracking-widest font-medium">
+            className="text-white text-4xl tracking-widest font-[500]">
             {d.third}
           </Animatable.Text>
         </View>
@@ -70,7 +70,7 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({navigation}) => {
           animation={"slideInUp"}
           className="bg-[#ff8216] absolute bottom-12 w-11/12 flex items-center justify-center py-3 rounded-3xl"
           onPress={() => service.onboardHandler(setNre, nre, navigation)}>
-          <Text className="text-white text-xl">Next</Text>
+          <Text className="text-white text-xl font-[400]">Next</Text>
         </AnimatedButton>
       </View>
     </View>

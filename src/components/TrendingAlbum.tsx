@@ -31,7 +31,7 @@ const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({data, topic}) => {
           />
         </View>
         <View className=" w-full h-9 flex items-center justify-center ">
-          <Text className="text-white text-xs tracking-wider font-semibold ">
+          <Text className="text-white text-xs font-[500] tracking-wider  ">
             {item.name.length > 10 ? item.name.slice(0, 14) + ".." : item.name}
           </Text>
         </View>
@@ -42,7 +42,7 @@ const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({data, topic}) => {
   return (
     <View className="w-full h-56  mt-3">
       <View className="w-full pl-3 h-7 flex items-center flex-row  mb-3">
-        <Text className="text-lg text-white font-semibold tracking-widest">
+        <Text className="text-lg font-[500] text-white  tracking-widest">
           {topic}
         </Text>
       </View>

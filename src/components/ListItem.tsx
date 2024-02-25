@@ -1,5 +1,5 @@
 import React from "react"
-import {View, Text, ViewToken, Image} from "react-native"
+import {View, Text, ViewToken, Image, StyleSheet} from "react-native"
 import Animated, {useAnimatedStyle, withTiming} from "react-native-reanimated"
 import {Icons} from "../constants/Icon"
 import {State, usePlaybackState} from "react-native-track-player"
@@ -61,8 +61,22 @@ const ListItem: React.FC<ListItemProps> = React.memo(
                 style={{width: 60, height: 60, borderRadius: 5}}
               />
               <View style={{marginLeft: 10}}>
-                <Text style={{color: "white", fontSize: 14}}>{item.name}</Text>
-                <Text style={{color: "#d0d0d1", fontSize: 10, marginTop: 1}}>
+                <Text
+                  style={{
+                    color:
+                      id == currentId && state.isPlaying ? "#16FF00" : "white",
+                    fontSize: 16,
+                    fontFamily: "400",
+                  }}>
+                  {item.name}
+                </Text>
+                <Text
+                  style={{
+                    color: "#d0d0d1",
+                    fontSize: 12,
+                    marginTop: 2,
+                    fontFamily: "200",
+                  }}>
                   {item.primaryArtists}
                 </Text>
               </View>
@@ -70,21 +84,17 @@ const ListItem: React.FC<ListItemProps> = React.memo(
           </View>
         </View>
         <View className=" w-1/5 h-full flex items-center justify-end flex-row pr-3">
-          {id == currentId && state.isPlaying && (
-            <Image
-              source={require("../assets/images/playing.png")}
-              style={{
-                width: 18,
-                height: 18,
-                tintColor: "white",
-                marginLeft: 20,
-              }}
-            />
-          )}
           <Icons.MoreIcon name="more-vert" size={25} color={"#bababa"} />
         </View>
       </Animated.View>
     )
   },
 )
+const styles = StyleSheet.create({
+  name: {
+    color: "white",
+    fontSize: 14,
+    fontFamily: "Outfit-Black",
+  },
+})
 export default ListItem
