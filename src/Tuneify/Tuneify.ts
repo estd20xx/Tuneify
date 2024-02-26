@@ -13,6 +13,12 @@ module.exports = async function () {
     TuneifyPlayer.addEventListener(Event.RemotePrevious, () => {
       TuneifyPlayer.skipToPrevious()
     })
+    TuneifyPlayer.addEventListener(Event.RemoteSeek, ({position}) => {
+      TuneifyPlayer.seekTo(position)
+    })
+    TuneifyPlayer.addEventListener(Event.RemoteStop, () => {
+      TuneifyPlayer.stop()
+    })
     console.log("done")
   } catch (error) {
     console.log("Player failed to setup")

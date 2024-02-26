@@ -16,6 +16,7 @@ export interface PlaylistDetailsTypes {
   route: PlaylistData
 }
 const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({route}) => {
+  console.log("called")
   const [data, setData] = useState(route.params.playlistData)
   const [playlistSong, setPlaylistSongs] = useState<SongsTypes[]>([])
   const fetchAudio = async () => {
@@ -39,13 +40,13 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({route}) => {
           />
         </View>
         <View className="w-full px-3 flex  justify-center">
-          <Text className="text-white  text-lg tracking-wider font-[500]">
+          <Text className="text-white  text-lg tracking-wider font-['500']">
             {data.title.length > 15
               ? data.title.slice(0, 38) + "..."
               : data.title}
           </Text>
           <TouchableOpacity>
-            <Text className="text-gray-300 text-base font-[400]">
+            <Text className="text-gray-300 text-base font-['400']">
               {data.userId}
             </Text>
           </TouchableOpacity>

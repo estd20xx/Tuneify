@@ -64,11 +64,13 @@ const BottomPlayer = () => {
                 style={{width: 50, height: 50, borderRadius: 5}}
               />
               <View style={{marginLeft: 10}}>
-                <Text className="text-white  mb-1 text-sm font-[400]  tracking-wider">
+                <Text className="text-white  mb-1 text-sm font-['500']  tracking-wider">
                   {cTrack.title}
                 </Text>
-                <Text className="text-gray-200 text-[9px]">
-                  {cTrack.artist}
+                <Text className="text-gray-200 text-[9px] font-['300']">
+                  {cTrack.artist!.length > 60
+                    ? cTrack.artist?.slice(0, 62) + "..."
+                    : cTrack.artist}
                 </Text>
               </View>
             </View>

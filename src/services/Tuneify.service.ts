@@ -113,11 +113,21 @@ export default class TuneifyService
           Capability.Stop,
           Capability.SeekTo,
         ],
-        compactCapabilities: [
+        notificationCapabilities: [
           Capability.Play,
+          Capability.Stop,
           Capability.Pause,
           Capability.SkipToNext,
           Capability.SkipToPrevious,
+          Capability.SeekTo,
+        ],
+        compactCapabilities: [
+          Capability.Play,
+          Capability.Stop,
+          Capability.Pause,
+          Capability.SkipToNext,
+          Capability.SkipToPrevious,
+          Capability.SeekTo,
         ],
       })
       await TrackPlayer.add(data.songs)

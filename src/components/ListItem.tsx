@@ -90,11 +90,4 @@ const ListItem: React.FC<ListItemProps> = React.memo(
     )
   },
 )
-const styles = StyleSheet.create({
-  name: {
-    color: "white",
-    fontSize: 14,
-    fontFamily: "Outfit-Black",
-  },
-})
 export default ListItem
