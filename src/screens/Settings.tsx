@@ -60,8 +60,8 @@ const data = [
 const Settings = () => {
   return (
     <View className="w-full h-screen ">
-      <View className="w-full mb-10 h-auto flex items-center flex-row justify-end pr-3 py-2">
-        <Text className="absolute left-4 text-white text-3xl tracking-wider font-bold shadow-md shadow-cyan-50">
+      <View className="w-full mb-5 mt-4 h-auto flex items-center flex-row justify-end pr-3 py-2 ">
+        <Text className="absolute left-4 text-white text-3xl tracking-wider font-['400'] shadow-md">
           Setting
         </Text>
         <Icons.MoreIcon name="more-horiz" size={30} color={"white"} />
@@ -73,20 +73,21 @@ const Settings = () => {
             <TouchableOpacity
               style={{
                 width: "95%",
-                height: 60,
+                height: 50,
                 flexDirection: "row",
                 alignItems: "center",
                 paddingLeft: 2,
                 paddingRight: 5,
                 marginTop: 4,
                 alignSelf: "center",
+                // backgroundColor:"red"
               }}>
               <Image
                 source={item.leftIcon}
                 style={{tintColor: "#d0d0d1"}}
-                className="h-6 w-6"
+                className="h-4 w-4"
               />
-              <Text className="ml-4 text-gray-300 text-sm font-semibold tracking-widest">
+              <Text className="ml-4 text-gray-300 text-sm font-['300'] tracking-widest">
                 {item.title}
               </Text>
             </TouchableOpacity>

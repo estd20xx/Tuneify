@@ -125,7 +125,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 className="flex absolute   w-[95%] h-full   justify-center items-center rounded-xl ">
                 {lyric.length > 15 ? (
                   <ScrollView showsVerticalScrollIndicator={false}>
-                    <Text className="text-white text-base min-h-[100px] leading-8 px-5 flex items-center justify-center font-[300]  ">
+                    <Text className="text-white text-base min-h-[100px] leading-8 px-5 flex items-center justify-center font-['300']  ">
                       {lyric}
                     </Text>
                   </ScrollView>
@@ -137,10 +137,10 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
             <View className="w-full mt-5 h-auto">
               <View className=" flex items-center justify-between flex-row px-3 ">
                 <View className=" py-2">
-                  <Text className="text-white text-xl mb-1 font-[400]">
+                  <Text className="text-white text-xl mb-1 font-['400']">
                     {ct?.title}
                   </Text>
-                  <Text className="text-white text-sm font-[300]">
+                  <Text className="text-white text-sm font-['300']">
                     {ct?.artist}
                   </Text>
                 </View>
@@ -162,9 +162,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 minimumTrackTintColor="#FFFFFF"
                 maximumTrackTintColor="#fff"
                 thumbTintColor="white"
-                onSlidingComplete={e => {
-                  TrackPlayer.seekTo(e)
-                }}
+                onSlidingComplete={e => TrackPlayer.seekTo(e)}
               />
               <View
                 style={{
