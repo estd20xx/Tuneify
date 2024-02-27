@@ -22,6 +22,8 @@ function pushToDevelopmentBranch {
     checkCommandStatus "Git push"
 }
 function addingToGitStage {
+    git pull origin development
+    checkCommandStatus "Git pull"
     git add .
     checkCommandStatus "Git add"
     echo "'$1'"
@@ -33,7 +35,7 @@ function addingToGitStage {
 
 function makeGitCommit {
     projectPrettify
-    checkCommandStatus "Prettifying error"
+    checkCommandStatus "Prettifying "
 }
 makeGitCommit
 addingToGitStage "$gitMessage"

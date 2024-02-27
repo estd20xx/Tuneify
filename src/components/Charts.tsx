@@ -6,7 +6,7 @@ const Charts: React.FC<ChartsPropsTypes> = ({data, topic}) => {
   const renderItem = useCallback(
     ({item}: {item: ChartsTypes}) => (
       <TouchableOpacity>
-        <View className="  flex items-center justify-center w-36 ml-2">
+        <View className=" flex items-center justify-center w-36 ml-2">
           <View className=" h-36 w-36  rounded-3xl overflow-hidden">
             <Image
               source={{
