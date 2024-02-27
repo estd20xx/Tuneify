@@ -15,7 +15,7 @@ const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({data, topic}) => {
   const renderItem = useCallback(
     ({item}: {item: TrendingAlbumTypes}) => (
       <TouchableOpacity
-        className={`flex items-center justify-center   ml-2 `}
+        className={`flex items-center justify-center ml-2 `}
         onPress={() =>
           navigation.navigate("TrendingAlbumDetails", {albumData: item})
         }>
