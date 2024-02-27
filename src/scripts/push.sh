@@ -22,6 +22,8 @@ function pushToDevelopmentBranch {
     checkCommandStatus "Git push"
 }
 function addingToGitStage {
+    git pull origin development
+    checkCommandStatus "Git pull"
     git add .
     checkCommandStatus "Git add"
     echo "'$1'"
