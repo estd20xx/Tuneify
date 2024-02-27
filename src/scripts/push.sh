@@ -35,7 +35,7 @@ function addingToGitStage {
 
 function makeGitCommit {
     projectPrettify
-    checkCommandStatus "Prettifying error"
+    checkCommandStatus "Prettifying "
 }
 makeGitCommit
 addingToGitStage "$gitMessage"
