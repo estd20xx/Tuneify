@@ -4,6 +4,7 @@ import {InitialCurrentTrackStateTypes} from "../../Interfaces/tuneifySlice.inter
 
 const initialState: InitialCurrentTrackStateTypes = {
   trackId: "",
+  index: null,
 }
 const currentTrackSlice = createSlice({
   name: "cTrackdev",
@@ -15,9 +16,15 @@ const currentTrackSlice = createSlice({
     ) {
       state.trackId = actions.payload
     },
+    addTrackIndex(
+      state: InitialCurrentTrackStateTypes,
+      actions: PayloadAction<number>,
+    ) {
+      state.index = actions.payload
+    },
   },
 })
-export const {addTrackId} = currentTrackSlice.actions
+export const {addTrackId, addTrackIndex} = currentTrackSlice.actions
 export const tunifyCurrentTrack = (state: RootState) =>
   state.persistedReducer.currentTrack
 export default currentTrackSlice.reducer

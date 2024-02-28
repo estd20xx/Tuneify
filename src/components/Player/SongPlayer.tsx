@@ -26,7 +26,10 @@ import {lyricsApi} from "../../api/api"
 const service = new TuneifyService(lyricsApi)
 import {addUserFavouritesData} from "../../store/slices/favourite.slice"
 import {TypedSelectorHook, useAppDispatch} from "../../hooks/store.hook"
-import {tunifyChild} from "../../store/slices/childState.slice"
+import {
+  changeTunifyState,
+  tunifyChild,
+} from "../../store/slices/childState.slice"
 const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   const state = TypedSelectorHook(tunifyChild)
   const dispatch = useAppDispatch()
@@ -69,7 +72,11 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
     let secs = (Math.trunc(seconds) % 60).toString().padStart(2, "0")
     return `${mins}:${secs}`
   }
+  console.log(state.isPlaying)
   useTrackPlayerEvents(service.getEvent(), async (event: any) => {
+    if (event.state == State.Ended) {
+      // service.playPauseAction(playbackState, state, dispatch)
+    }
     if (event.state == State.Ready) {
       service.handleBottomCondition(setCt)
       service.getLyrics(setLyric)

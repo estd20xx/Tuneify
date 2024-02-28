@@ -1,24 +1,23 @@
 import {View, Text, Image, TouchableOpacity, ScrollView} from "react-native"
-import React, {useEffect, useState} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import axios from "axios"
 import {baseApi} from "../../api/api"
 import {Icons} from "../../constants/Icon"
 import {TypedSelectorHook, useAppDispatch} from "../../hooks/store.hook"
 import {addSongList, tuneifySongs} from "../../store/slices/song.slice"
 import TrackPlayer from "react-native-track-player"
-import {TrendingAlbumTypes} from "../../Interfaces/album.interface"
-interface TrendingAlbumData {
-  key: string
-  name: string
-  params: {
-    albumData: TrendingAlbumTypes
-  }
-}
-export interface TrendingAlbumParamsTypes {
-  route: TrendingAlbumData
-}
+import {
+  TrendingAlbumParamsTypes,
+  TrendingAlbumTypes,
+} from "../../Interfaces/album.interface"
+import {
+  addTrackId,
+  addTrackIndex,
+  tunifyCurrentTrack,
+} from "../../store/slices/currentTrack.slice"
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
   const dispatch = useAppDispatch()
+  const current = TypedSelectorHook(tunifyCurrentTrack)
   const [data, setData] = useState(route.params.albumData)
   const storeSongs = TypedSelectorHook(tuneifySongs)
   const [albumSongs, setAlbumSongs] = useState<TrendingAlbumTypes[]>([])
@@ -39,11 +38,27 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
       dispatch(addSongList(albumSongs))
     }
   }, [albumSongs])
-  useEffect(() => {
-    if (storeSongs.songs.length > 0) {
-      TrackPlayer.setQueue(storeSongs.songs)
-    }
-  }, [storeSongs.songs])
+  const InitialiseThisOne = useCallback(
+    async (index: number) => {
+      console.log(current.trackId)
+      console.log(data.id)
+      try {
+        if (current.trackId == data.id) {
+          await TrackPlayer.skip(index)
+          dispatch(addTrackIndex(index))
+        } else {
+          await TrackPlayer.reset()
+          await TrackPlayer.setQueue(storeSongs.songs)
+          await TrackPlayer.skip(index)
+          await TrackPlayer.play()
+          dispatch(addTrackId(data.id), addTrackIndex(index))
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [storeSongs.songs, current.trackId],
+  )
   return (
     <View className="w-full">
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -63,7 +78,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
             </Text>
           </TouchableOpacity>
         </View>
-        {albumSongs.map(currentSong => {
+        {albumSongs.map((currentSong, index) => {
           return (
             <TouchableOpacity
               key={currentSong.id}
@@ -75,7 +90,8 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
                 paddingLeft: 2,
                 paddingRight: 5,
                 marginTop: 10,
-              }}>
+              }}
+              onPress={() => InitialiseThisOne(index)}>
               <View className="w-4/5  h-full pl-3 flex flex-row ">
                 <View className="w-full rounded-lg overflow-hidden ">
                   <View style={{flexDirection: "row", alignItems: "center"}}>
@@ -86,7 +102,10 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
                     <View style={{marginLeft: 10}}>
                       <Text
                         style={{
-                          color: "white",
+                          color:
+                            index == current.index && data.id == current.trackId
+                              ? "#16FF00"
+                              : "#FFF",
                           fontSize: 14,
                           fontFamily: "400",
                         }}>
