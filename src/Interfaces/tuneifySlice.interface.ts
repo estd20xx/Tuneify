@@ -7,6 +7,7 @@ export interface StoreSongTypes {
 }
 export interface InitialCurrentTrackStateTypes {
   trackId: string
+  index: number | null
 }
 export interface InitialChildStateTypes {
   isPlaying: boolean

@@ -22,9 +22,7 @@ const App = () => {
     </GestureHandlerRootView>
   )
 }
-
 export default App
-
 // export default CodePush({
 //   updateDialog: true,
 // })(App);

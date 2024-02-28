@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import {FlatList, View, ViewToken, TouchableOpacity} from "react-native"
 import {useSharedValue} from "react-native-reanimated"
 import ListItem from "../../components/ListItem"
@@ -6,8 +6,12 @@ import SongService from "../../services/songs.service"
 import {songsApi} from "../../api/api"
 import {addSongList} from "../../store/slices/song.slice"
 import TrackPlayer from "react-native-track-player"
-import {useAppDispatch} from "../../hooks/store.hook"
+import {TypedSelectorHook, useAppDispatch} from "../../hooks/store.hook"
 import {SongsTypes} from "../../Interfaces/songs.interface"
+import {
+  addTrackIndex,
+  tunifyCurrentTrack,
+} from "../../store/slices/currentTrack.slice"
 const service = new SongService(songsApi)
 const Songs = () => {
   console.log("songs render")
@@ -24,7 +28,7 @@ const Songs = () => {
     }
   }, [sng])
   return (
-    <View className="bg-[#181a20] w-full h-auto pt-2 mb-20">
+    <View className="bg-[#181a20] w-full h-auto pt-2">
       {sng.length > 1 && (
         <FlatList
           data={sng}
@@ -32,6 +36,7 @@ const Songs = () => {
             viewableItems.value = vItems
           }}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={{paddingBottom: 70}}
           keyExtractor={item => item.id}
           initialNumToRender={3}
           renderItem={items => {

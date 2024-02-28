@@ -9,6 +9,16 @@ export interface TrendingAlbumPropsTypes {
   data: TrendingAlbumTypes[]
   topic: string
 }
+interface TrendingAlbumData {
+  key: string
+  name: string
+  params: {
+    albumData: TrendingAlbumTypes
+  }
+}
+export interface TrendingAlbumParamsTypes {
+  route: TrendingAlbumData
+}
 export interface AlbumDataProps {
   data: AlbumTypes[]
   topic: string
