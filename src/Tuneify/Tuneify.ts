@@ -19,7 +19,6 @@ module.exports = async function () {
     TuneifyPlayer.addEventListener(Event.RemoteStop, () => {
       TuneifyPlayer.stop()
     })
-    console.log("done")
   } catch (error) {
     console.log("Player failed to setup")
   }
