@@ -6,6 +6,7 @@ import {
 import {IlocalMedia} from "../Interfaces/localMedia.interface"
 import {Dispatch, UnknownAction} from "@reduxjs/toolkit"
 import {addLocalFiles} from "../store/slices/offline.slice"
+import {Song} from "react-native-get-music-files/lib/typescript/src/NativeTurboSongs"
 export default class LocalMediaService implements IlocalMedia {
   getLocalmedia = async (
     dispatch: Dispatch<UnknownAction>,

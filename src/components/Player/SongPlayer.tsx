@@ -119,7 +119,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 className=" w-[85%] h-80  justify-center items-center rounded-xl  overflow-hidden">
                 <TrackImage
                   source={{
-                    uri: ct?.artwork,
+                    uri: ct?.artwork ? ct.artwork : ct?.cover,
                     headers: {Authorization: "songs"},
                     priority: TrackImage.priority.high,
                     cache: TrackImage.cacheControl.immutable,

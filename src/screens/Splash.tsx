@@ -1,4 +1,4 @@
-import {View} from "react-native"
+import {StatusBar, View} from "react-native"
 import React, {useEffect} from "react"
 import {SplashScreenPropsTypes} from "../Types/Types"
 import {checkLocal, tuneifyOfflines} from "../store/slices/offline.slice"
@@ -24,8 +24,7 @@ const Splash: React.FC<SplashScreenPropsTypes> = ({navigation}) => {
     }
   }
   useEffect(() => {
-    fn()
-    // storeData.isUploaded ? navigation.navigate("bottom") : fn()
+    storeData.isUploaded ? navigation.navigate("bottom") : fn()
   }, [])
   return (
     <View className="w-full h-screen flex items-center justify-center bg-black">

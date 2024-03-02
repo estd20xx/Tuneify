@@ -14,9 +14,7 @@ const themeSlice = createSlice({
   reducers: {
     assignTheme(state: Themes, actions: PayloadAction<number>) {
       console.log("comming ", actions.payload)
-      // state = { ...themes[actions.payload] }
       Object.assign(state, themes[actions.payload])
-      console.log(state)
     },
   },
 })
