@@ -24,7 +24,8 @@ const Splash: React.FC<SplashScreenPropsTypes> = ({navigation}) => {
     }
   }
   useEffect(() => {
-    storeData.isUploaded ? navigation.navigate("bottom") : fn()
+    fn()
+    // storeData.isUploaded ? navigation.navigate("bottom") : fn()
   }, [])
   return (
     <View className="w-full h-screen flex items-center justify-center bg-black">
