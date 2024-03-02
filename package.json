@@ -12,7 +12,7 @@
     "build:release": "cd android && ./gradlew assembleRelease",
     "check": "npx depcheck",
     "clean": "rimraf node_modules && yarn install & yarn run cache",
-    "format": "prettier --write \"./**/*.{ts,tsx,json}\"",
+    "format": "prettier --write ./src",
     "build": "./src/scripts/build.sh",
     "push": "./src/scripts/push.sh",
     "link": "npx react-native-asset"

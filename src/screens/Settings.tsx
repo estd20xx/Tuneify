@@ -3,58 +3,59 @@ import React from "react"
 import {Icons} from "../constants/Icon"
 const data = [
   {
+    leftIcon: require("../assets/images/setting.png"),
+    title: "General Settings",
+    link: "",
+  },
+  {
     leftIcon: require("../assets/images/backup-file.png"),
     title: "BackUp",
     link: "",
-    rightIcon: require("../assets/images/next.png"),
   },
   {
     leftIcon: require("../assets/images/notification.png"),
     title: "Notification",
     link: "",
-    rightIcon: require("../assets/images/next.png"),
   },
   {
     leftIcon: require("../assets/images/language.png"),
     title: "Language",
     link: "",
-    rightIcon: require("../assets/images/next.png"),
   },
   {
     leftIcon: require("../assets/images/mode.png"),
     title: "Accent Color",
     link: "",
-    rightIcon: require("../assets/images/next.png"),
   },
   {
     leftIcon: require("../assets/images/shareApp.png"),
     title: "Share App",
     link: "",
-    rightIcon: require("../assets/images/next.png"),
   },
   {
     leftIcon: require("../assets/images/log.png"),
     title: "Change Log",
     link: "",
-    rightIcon: require("../assets/images/next.png"),
   },
   {
     leftIcon: require("../assets/images/privacy.png"),
     title: "Privacy Policy",
     link: "",
-    rightIcon: require("../assets/images/next.png"),
   },
   {
     leftIcon: require("../assets/images/faq.png"),
     title: "FAQ",
     link: "",
-    rightIcon: require("../assets/images/next.png"),
+  },
+  {
+    leftIcon: require("../assets/images/info.png"),
+    title: "About Tuneify",
+    link: "",
   },
   {
     leftIcon: require("../assets/images/exit.png"),
     title: "Quit",
     link: "",
-    rightIcon: require("../assets/images/next.png"),
   },
 ]
 const Settings = () => {
@@ -80,14 +81,14 @@ const Settings = () => {
                 paddingRight: 5,
                 marginTop: 4,
                 alignSelf: "center",
-                // backgroundColor:"red"
+                // backgroundColor: "red"
               }}>
               <Image
                 source={item.leftIcon}
                 style={{tintColor: "#d0d0d1"}}
-                className="h-4 w-4"
+                className="h-5 w-5"
               />
-              <Text className="ml-4 text-gray-300 text-sm font-['300'] tracking-widest">
+              <Text className="ml-4 text-gray-300 text-base font-['300'] tracking-widest">
                 {item.title}
               </Text>
             </TouchableOpacity>
@@ -97,5 +98,4 @@ const Settings = () => {
     </View>
   )
 }
-
 export default Settings
