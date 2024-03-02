@@ -4,6 +4,7 @@ import {tuneifyFavourites} from "../store/slices/favourite.slice"
 import {UserFavouritesTypes} from "../Interfaces/tuneifySlice.interface"
 import {Icons} from "../constants/Icon"
 import {TypedSelectorHook} from "../hooks/store.hook"
+import TrackImage from "react-native-fast-image"
 const Favourites = () => {
   const data = TypedSelectorHook(tuneifyFavourites)
   const facouriteData: UserFavouritesTypes[] = data.favouriteData
@@ -45,12 +46,17 @@ const Favourites = () => {
                 paddingRight: 5,
                 marginTop: 10,
               }}
-              key={item.id}>
+              key={item.id + JSON.stringify(index)}>
               <View className="w-4/5  h-full pl-3 flex flex-row ">
                 <View className="w-full rounded-lg overflow-hidden ">
                   <View style={{flexDirection: "row", alignItems: "center"}}>
-                    <Image
-                      source={{uri: item.artwork}}
+                    <TrackImage
+                      source={{
+                        uri: item?.artwork,
+                        headers: {Authorization: "songs"},
+                        priority: TrackImage.priority.high,
+                        cache: TrackImage.cacheControl.immutable,
+                      }}
                       style={{width: 60, height: 60, borderRadius: 5}}
                     />
                     <View style={{marginLeft: 10}}>

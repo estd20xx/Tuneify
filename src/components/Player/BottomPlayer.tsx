@@ -56,7 +56,7 @@ const BottomPlayer = () => {
             <View className="flex flex-row  w-11/12 overflow-hidden">
               <Image
                 source={{
-                  uri: cTrack?.artwork,
+                  uri: cTrack?.artwork ? cTrack?.artwork : cTrack?.cover,
                   headers: {Authorization: "songs"},
                   priority: Image.priority.high,
                   cache: Image.cacheControl.immutable,
