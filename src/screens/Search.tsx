@@ -5,7 +5,9 @@ import {TypedSelectorHook} from "../hooks/store.hook"
 import {tuneifySongs} from "../store/slices/song.slice"
 import {StoreSongTypes} from "../Interfaces/tuneifySlice.interface"
 import axios from "axios"
+import {useDebounce} from "../hooks/useDebounce"
 const Search = () => {
+  const {debouncedValue, isloading} = useDebounce("ok", 2)
   const data = TypedSelectorHook(tuneifySongs)
   console.log(data.songs.length)
   const [searchQuery, setSearchQuery] = useState<string>("")
