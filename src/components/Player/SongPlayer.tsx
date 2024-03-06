@@ -74,9 +74,6 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   }
   console.log(state.isPlaying)
   useTrackPlayerEvents(service.getEvent(), async (event: any) => {
-    if (event.state == State.Ended) {
-      // service.playPauseAction(playbackState, state, dispatch)
-    }
     if (event.state == State.Ready) {
       service.handleBottomCondition(setCt)
       service.getLyrics(setLyric)
@@ -145,7 +142,9 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
               <View className=" flex items-center justify-between flex-row px-3 ">
                 <View className=" py-2">
                   <Text className="text-white text-xl mb-1 font-['400']">
-                    {ct?.title}
+                    {ct && ct.title!.length > 30
+                      ? ct?.title?.slice(0, 31) + "..."
+                      : ct?.title}
                   </Text>
                   <Text className="text-white text-sm font-['300']">
                     {ct?.artist}
