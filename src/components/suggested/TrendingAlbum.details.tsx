@@ -15,6 +15,7 @@ import {
   addTrackIndex,
   tunifyCurrentTrack,
 } from "../../store/slices/currentTrack.slice"
+import SongSkeleton from "../skeleton/SongSkeleton"
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
   const dispatch = useAppDispatch()
   const current = TypedSelectorHook(tunifyCurrentTrack)
@@ -78,58 +79,67 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
             </Text>
           </TouchableOpacity>
         </View>
-        {albumSongs.map((currentSong, index) => {
-          return (
-            <TouchableOpacity
-              key={currentSong.id}
-              style={{
-                width: "100%",
-                height: 60,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                paddingLeft: 2,
-                paddingRight: 5,
-                marginTop: 10,
-              }}
-              onPress={() => InitialiseThisOne(index)}>
-              <View className="w-4/5  h-full pl-3 flex flex-row ">
-                <View className="w-full rounded-lg overflow-hidden ">
-                  <View style={{flexDirection: "row", alignItems: "center"}}>
-                    <Image
-                      source={{uri: currentSong.image[2].link}}
-                      style={{width: 60, height: 60, borderRadius: 5}}
-                    />
-                    <View style={{marginLeft: 10}}>
-                      <Text
-                        style={{
-                          color:
-                            index == current.index && data.id == current.trackId
-                              ? "#16FF00"
-                              : "#FFF",
-                          fontSize: 14,
-                          fontFamily: "400",
-                        }}>
-                        {currentSong.name}
-                      </Text>
-                      <Text
-                        style={{
-                          color: "#d0d0d1",
-                          fontSize: 10,
-                          marginTop: 2,
-                          fontFamily: "300",
-                        }}>
-                        {currentSong.primaryArtists}
-                      </Text>
+        {albumSongs.length > 0 ? (
+          albumSongs.map((currentSong, index) => {
+            return (
+              <TouchableOpacity
+                key={currentSong.id}
+                style={{
+                  width: "100%",
+                  height: 60,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingLeft: 2,
+                  paddingRight: 5,
+                  marginTop: 10,
+                }}
+                onPress={() => InitialiseThisOne(index)}>
+                <View className="w-4/5  h-full pl-3 flex flex-row ">
+                  <View className="w-full rounded-lg overflow-hidden ">
+                    <View style={{flexDirection: "row", alignItems: "center"}}>
+                      <Image
+                        source={{uri: currentSong.image[2].link}}
+                        style={{width: 60, height: 60, borderRadius: 5}}
+                      />
+                      <View style={{marginLeft: 10}}>
+                        <Text
+                          style={{
+                            color:
+                              index == current.index &&
+                              data.id == current.trackId
+                                ? "#16FF00"
+                                : "#FFF",
+                            fontSize: 14,
+                            fontFamily: "400",
+                          }}>
+                          {currentSong.name}
+                        </Text>
+                        <Text
+                          style={{
+                            color: "#d0d0d1",
+                            fontSize: 10,
+                            marginTop: 2,
+                            fontFamily: "300",
+                          }}>
+                          {currentSong.primaryArtists}
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
-              <View className=" w-1/5 h-full flex items-center justify-end flex-row pr-3">
-                <Icons.MoreIcon name="more-vert" size={25} color={"#bababa"} />
-              </View>
-            </TouchableOpacity>
-          )
-        })}
+                <View className=" w-1/5 h-full flex items-center justify-end flex-row pr-3">
+                  <Icons.MoreIcon
+                    name="more-vert"
+                    size={25}
+                    color={"#bababa"}
+                  />
+                </View>
+              </TouchableOpacity>
+            )
+          })
+        ) : (
+          <SongSkeleton />
+        )}
       </ScrollView>
     </View>
   )
