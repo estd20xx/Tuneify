@@ -11,8 +11,6 @@ An Open-Source Music Player App for all your needs!
 Contributions are welcome. Please read our [contributing guidelines](https://github.com/NamelesssNerd/Tuneify/blob/master/CONTRIBUTION.md) before contributing.
 
 ## Backend for this app is writing
-
-uuu8uh
 1. text, background==> background and text color
 2. primary--> for important button or ssections
 3. secondary --> after secondary less important
