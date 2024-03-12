@@ -58,7 +58,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
         console.log(error)
       }
     },
-    [storeSongs.songs, current.trackId],
+    [storeSongs.songs, current.trackId]
   )
   return (
     <View className="w-full">
@@ -104,11 +104,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
                       <View style={{marginLeft: 10}}>
                         <Text
                           style={{
-                            color:
-                              index == current.index &&
-                              data.id == current.trackId
-                                ? "#16FF00"
-                                : "#FFF",
+                            color: "#FFF",
                             fontSize: 14,
                             fontFamily: "400",
                           }}>

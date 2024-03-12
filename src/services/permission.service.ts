@@ -4,7 +4,7 @@ export default class PermissionService implements Ipermission {
   public askPermission = async (): Promise<boolean> => {
     try {
       const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO,
+        PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO
       )
       return granted === PermissionsAndroid.RESULTS.GRANTED
     } catch (err) {

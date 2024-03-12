@@ -15,7 +15,7 @@ const songSlice = createSlice({
   reducers: {
     addSongList(
       state: InitialSongStateTypes,
-      actions: PayloadAction<SongsTypes[]>,
+      actions: PayloadAction<SongsTypes[]>
     ) {
       const data = actions.payload.map(cx => {
         const t: StoreSongTypes = {

@@ -8,7 +8,7 @@ export default class OnboadringService implements Ionboard {
   public onboardHandler = (
     setnre: (newNre: number) => void,
     initial: number,
-    navigation: onBoardingScreen,
+    navigation: onBoardingScreen
   ) => {
     if (initial == 2) {
       navigation.navigate("bottom")

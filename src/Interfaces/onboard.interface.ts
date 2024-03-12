@@ -12,6 +12,6 @@ export interface Ionboard {
   onboardHandler: (
     setnre: (newNre: number) => void,
     initial: number,
-    navigation: onBoardingScreen,
+    navigation: onBoardingScreen
   ) => void
 }

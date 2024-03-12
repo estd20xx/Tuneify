@@ -49,7 +49,7 @@ export default class TuneifyService
     return events
   }
   public getLyrics = async (
-    setLyric: (lyric: string) => void,
+    setLyric: (lyric: string) => void
   ): Promise<void> => {
     try {
       let currentTrack = await TrackPlayer.getActiveTrack()
@@ -65,7 +65,7 @@ export default class TuneifyService
   }
   public repeatMode = async (
     state: InitialChildStateTypes,
-    dispatch: Dispatch<UnknownAction>,
+    dispatch: Dispatch<UnknownAction>
   ): Promise<void> => {
     try {
       state.repeat
@@ -79,13 +79,13 @@ export default class TuneifyService
   public playPauseAction = (
     playbackState: PlaybackState | {state: undefined},
     state: InitialChildStateTypes,
-    dispatch: Dispatch<UnknownAction>,
+    dispatch: Dispatch<UnknownAction>
   ): void => {
     state.isPlaying ? TrackPlayer.pause() : TrackPlayer.play()
     dispatch(changeTunifyState())
   }
   public handleBottomCondition = async (
-    setCurrentTrrack: (track: Track) => void,
+    setCurrentTrrack: (track: Track) => void
   ): Promise<void> => {
     try {
       const currentTrack = await TrackPlayer.getActiveTrack()

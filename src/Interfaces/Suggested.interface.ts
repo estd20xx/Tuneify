@@ -22,6 +22,6 @@ export default interface Isuggested {
     setChst: (charts: ChartsTypes[]) => void,
     setLd: (ld: boolean) => void,
     setTrndSong: (trndSong: TrendingSongTypes[]) => void,
-    setTrndAlb: (trndAlbum: TrendingAlbumTypes[]) => void,
+    setTrndAlb: (trndAlbum: TrendingAlbumTypes[]) => void
   ) => void
 }

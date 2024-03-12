@@ -4,6 +4,6 @@ import {LocalFileTypes} from "./tuneifySlice.interface"
 import {AlbumTypes} from "./album.interface"
 export default interface Isanitizer {
   sanitizeForQueue: (
-    Track: SongsTypes[] | LocalFileTypes[] | AlbumTypes[],
+    Track: SongsTypes[] | LocalFileTypes[] | AlbumTypes[]
   ) => Track[]
 }

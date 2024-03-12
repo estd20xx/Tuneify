@@ -7,7 +7,7 @@ export default class AlbumService implements Ialbum {
   }
   getAlbums = async (
     setCAlb: (albums: SeperateAlbumTypes[]) => void,
-    setIsl: (isL: boolean) => void,
+    setIsl: (isL: boolean) => void
   ): Promise<void> => {
     try {
       const result = await axios.get(this.getUrl())
