@@ -9,7 +9,6 @@
     "start": "react-native start",
     "test": "jest",
     "cache": " react-native start --reset-cache",
-    "build:release": "cd android && ./gradlew assembleRelease",
     "check": "npx depcheck",
     "clean": "rimraf node_modules && yarn install & yarn run cache",
     "format": "prettier --write ./src",
