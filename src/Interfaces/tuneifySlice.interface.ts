@@ -30,6 +30,7 @@ export interface InitialSongStateTypes {
 }
 export interface InitialUserState {
   userName: string
+  image: string
 }
 export interface UserFavouritesTypes {
   id: string

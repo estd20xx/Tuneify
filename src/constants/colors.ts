@@ -28,7 +28,7 @@ export const themes: Themes[] = [
     accent: " rgb(247, 37, 205)",
   },
   {
-    text: " rgb(253, 217, 229)",
+    text: "rgb(253, 217, 229)",
     background: " rgb(31, 1, 10)",
     primary: " rgb(249, 131, 171)",
     secondary: " rgb(90, 156, 8)",
