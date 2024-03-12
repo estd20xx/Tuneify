@@ -37,7 +37,7 @@ const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({data, topic}) => {
         </View>
       </TouchableOpacity>
     ),
-    [],
+    []
   )
   return (
     <View className="w-full h-56  mt-3">

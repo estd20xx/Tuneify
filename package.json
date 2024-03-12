@@ -34,6 +34,7 @@
     "react-native-animatable": "^1.4.0",
     "react-native-animated-spinkit": "^1.5.2",
     "react-native-asset": "^2.1.1",
+    "react-native-document-picker": "^9.1.1",
     "react-native-fast-image": "^8.6.3",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.15.0",

@@ -28,7 +28,7 @@ const Albums: React.FC<AlbumDataProps> = ({data, topic}) => {
         </View>
       </TouchableOpacity>
     ),
-    [],
+    []
   )
   return (
     <View className="w-full h-auto  ">

@@ -5,7 +5,7 @@ import {SongsTypes} from "../Interfaces/songs.interface"
 import {LocalFileTypes} from "../Interfaces/tuneifySlice.interface"
 export default class SanitizeService implements Isanitizer {
   sanitizeForQueue = (
-    Track: SongsTypes[] | LocalFileTypes[] | AlbumTypes[],
+    Track: SongsTypes[] | LocalFileTypes[] | AlbumTypes[]
   ): Track[] => {
     return []
   }

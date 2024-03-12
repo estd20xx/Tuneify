@@ -25,7 +25,7 @@ const Suggested = () => {
       setChst,
       setLd,
       setTrndSong,
-      setTrndAlb,
+      setTrndAlb
     )
     await service.wait(2000).then(() => setRef(false))
   }, [])
@@ -36,7 +36,7 @@ const Suggested = () => {
       setChst,
       setLd,
       setTrndSong,
-      setTrndAlb,
+      setTrndAlb
     )
   }, [])
   return (

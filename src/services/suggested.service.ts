@@ -23,7 +23,7 @@ export default class SuggestedServices implements Isuggested {
     setChst: (charts: ChartsTypes[]) => void,
     setLd: (ld: boolean) => void,
     setTrndSong: (trndSong: TrendingSongTypes[]) => void,
-    setTrndAlb: (trndAlbum: TrendingAlbumTypes[]) => void,
+    setTrndAlb: (trndAlbum: TrendingAlbumTypes[]) => void
   ) => {
     try {
       const result = await this.http<Http>(api)

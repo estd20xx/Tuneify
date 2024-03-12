@@ -28,7 +28,7 @@ const Charts: React.FC<ChartsPropsTypes> = ({data, topic}) => {
         </View>
       </TouchableOpacity>
     ),
-    [],
+    []
   )
   return (
     <View className="w-full h-auto  ">

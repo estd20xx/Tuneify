@@ -38,7 +38,7 @@ const Playlist: React.FC<PlaylistDataProps> = ({data, topic}) => {
         </View>
       </TouchableOpacity>
     ),
-    [],
+    []
   )
   return (
     <View className="w-full h-auto    ">

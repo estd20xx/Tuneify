@@ -6,16 +6,16 @@ export interface ITuneify {
   getLyrics: (setlyrics: (lyric: string) => void) => Promise<void>
   repeatMode: (
     state: InitialChildStateTypes,
-    dispatch: Dispatch<UnknownAction>,
+    dispatch: Dispatch<UnknownAction>
   ) => Promise<void>
   playPauseAction: (
     playbackState: PlaybackState | {state: undefined},
     state: InitialChildStateTypes,
-    dispatch: Dispatch<UnknownAction>,
+    dispatch: Dispatch<UnknownAction>
   ) => void
   getEvent: () => Event[]
   setUpPlayer: (data: InitialSongStateTypes) => void
   handleBottomCondition: (
-    setCurrentTrack: (track: Track) => void,
+    setCurrentTrack: (track: Track) => void
   ) => Promise<void>
 }

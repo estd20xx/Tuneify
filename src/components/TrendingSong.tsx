@@ -31,7 +31,7 @@ const TrendingSong: React.FC<TrendingSongsPropsTypes> = ({data, topic}) => {
         </View>
       </TouchableOpacity>
     ),
-    [],
+    []
   )
   return (
     <View className="w-full h-auto  mt-3 ">

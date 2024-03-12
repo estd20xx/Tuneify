@@ -67,7 +67,7 @@ const Folders = () => {
         </View>
       </TouchableOpacity>
     ),
-    [],
+    []
   )
   return (
     <View className=" w-full h-auto">

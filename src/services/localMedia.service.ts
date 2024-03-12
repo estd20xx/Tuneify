@@ -9,7 +9,7 @@ import {addLocalFiles} from "../store/slices/offline.slice"
 import {Song} from "react-native-get-music-files/lib/typescript/src/NativeTurboSongs"
 export default class LocalMediaService implements IlocalMedia {
   getLocalmedia = async (
-    dispatch: Dispatch<UnknownAction>,
+    dispatch: Dispatch<UnknownAction>
   ): Promise<boolean> => {
     try {
       const songsOrError = await getAll({

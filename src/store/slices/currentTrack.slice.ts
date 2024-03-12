@@ -12,13 +12,13 @@ const currentTrackSlice = createSlice({
   reducers: {
     addTrackId(
       state: InitialCurrentTrackStateTypes,
-      actions: PayloadAction<string>,
+      actions: PayloadAction<string>
     ) {
       state.trackId = actions.payload
     },
     addTrackIndex(
       state: InitialCurrentTrackStateTypes,
-      actions: PayloadAction<number>,
+      actions: PayloadAction<number>
     ) {
       state.index = actions.payload
     },

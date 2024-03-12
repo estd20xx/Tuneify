@@ -30,6 +30,7 @@ import {
   changeTunifyState,
   tunifyChild,
 } from "../../store/slices/childState.slice"
+import Messanger from "../message/Message"
 const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   const state = TypedSelectorHook(tunifyChild)
   const dispatch = useAppDispatch()
@@ -38,6 +39,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   const [ct, setCt] = useState<Track>()
   const [lyric, setLyric] = useState<string>("We are working on it.! 💻")
   const playbackState = usePlaybackState()
+  const [visibleSnake, setVisibleSnake] = useState<boolean>(false)
   const progress = useProgress()
   const flipCard = useCallback(() => {
     Animated.timing(flip, {
@@ -84,6 +86,11 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
       <ScrollView>
         <StatusBar backgroundColor={service.getGradient()[0]} />
         <LinearGradient colors={service.getGradient()} style={{flex: 1}}>
+          <Messanger
+            message="Added to Favourite."
+            onDismis={() => setVisibleSnake(false)}
+            isvisible={visibleSnake}
+          />
           <View className="w-full h-screen  px-3 ">
             <View className=" h-10 w-full flex items-center justify-between flex-row">
               <TouchableOpacity
@@ -151,7 +158,10 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                   </Text>
                 </View>
                 <TouchableOpacity
-                  onPress={() => dispatch(addUserFavouritesData(ct!))}>
+                  onPress={() => [
+                    dispatch(addUserFavouritesData(ct!)),
+                    setVisibleSnake(true),
+                  ]}>
                   <Icons.HomeIcon
                     name="heart-fill"
                     size={20}

@@ -15,7 +15,7 @@ const favouriteSlice = createSlice({
   reducers: {
     addUserFavouritesData(
       state: InitialFavouriteState,
-      actions: PayloadAction<Track>,
+      actions: PayloadAction<Track>
     ) {
       const data = state.favouriteData.filter(c => c.id == actions.payload.id)
       if (data.length != 0) return

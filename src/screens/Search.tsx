@@ -25,7 +25,7 @@ const Search = () => {
         <Text>{item.title}</Text>
       </TouchableOpacity>
     ),
-    [],
+    []
   )
   return (
     <View className="w-full h-screen flex items-center ">

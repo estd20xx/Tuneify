@@ -7,7 +7,7 @@ const MainSkeleton = () => {
       {Array.from(
         [1, 2, 3, 4].map(c => {
           return <component.CSuggestedSkeleton key={c} />
-        }),
+        })
       )}
     </View>
   )

@@ -21,7 +21,7 @@ const ListItem: React.FC<ListItemProps> = React.memo(
       const isVisible = Boolean(
         viewableItems.value
           .filter(item => item.isViewable)
-          .find(viewableItem => viewableItem.item.id === item.id),
+          .find(viewableItem => viewableItem.item.id === item.id)
       )
       return {
         opacity: withTiming(isVisible ? 1 : 0),
@@ -88,6 +88,6 @@ const ListItem: React.FC<ListItemProps> = React.memo(
         </View>
       </Animated.View>
     )
-  },
+  }
 )
 export default ListItem
