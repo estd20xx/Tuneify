@@ -7,6 +7,7 @@ import store, {persistor} from "./src/store/store"
 import CodePush from "react-native-code-push"
 import SplashScreen from "react-native-splash-screen"
 import {PersistGate} from "redux-persist/integration/react"
+import Toast from "react-native-toast-message"
 const App = () => {
   useEffect(() => {
     SplashScreen.hide()
@@ -16,6 +17,7 @@ const App = () => {
       <StatusBar backgroundColor={"#181a20"} />
       <Provider store={store}>
         <PersistGate persistor={persistor}>
+          <Toast />
           <MainNavigation />
         </PersistGate>
       </Provider>
