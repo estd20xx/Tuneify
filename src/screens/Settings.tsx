@@ -1,26 +1,14 @@
 import {View, Text, Image, FlatList, TouchableOpacity} from "react-native"
-import React, {useCallback} from "react"
 import {settingsData} from "../constants/Settings"
 import UserImage from "react-native-fast-image"
-import ImagePicker from "react-native-document-picker"
 import {TypedSelectorHook, useAppDispatch} from "../hooks/store.hook"
-import {changeProfile, tuneifyUser} from "../store/slices/user.slice"
+import {tuneifyUser} from "../store/slices/user.slice"
 import Toast from "react-native-toast-message"
-import appNotification from "../services/appNotification.service"
+import SettingService from "../services/setting.service"
+const settingService = new SettingService()
 const Settings = () => {
   const settingData = TypedSelectorHook(tuneifyUser)
-  console.log(settingData)
   const dispatch = useAppDispatch()
-  const changeImage = useCallback(async () => {
-    try {
-      const userImage = await ImagePicker.pickSingle({
-        type: ImagePicker.types.images,
-      })
-      dispatch(changeProfile(userImage.uri))
-    } catch {
-      appNotification.errorMessage("error", "something bad happens")
-    }
-  }, [])
   return (
     <View className="w-full h-screen ">
       <View className="w-full  h-auto flex items-center flex-row justify-center">
@@ -28,9 +16,10 @@ const Settings = () => {
           Setting
         </Text>
       </View>
-
       <View className="w-full h-20  overflow-hidden flex items-center flex-row pl-2">
-        <TouchableOpacity className="-z-30" onPress={() => changeImage()}>
+        <TouchableOpacity
+          className="-z-30"
+          onPress={() => settingService.changeProfileImage(dispatch)}>
           <UserImage
             source={{
               uri: settingData.image,
