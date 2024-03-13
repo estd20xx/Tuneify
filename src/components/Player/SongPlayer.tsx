@@ -76,6 +76,9 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   }
   console.log(state.isPlaying)
   useTrackPlayerEvents(service.getEvent(), async (event: any) => {
+    // if (playbackState.state == State.Ended) {
+    //   dispatch(changeTunifyState())
+    // }
     if (event.state == State.Ready) {
       service.handleBottomCondition(setCt)
       service.getLyrics(setLyric)
@@ -84,8 +87,9 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   return (
     <Modal isVisible={isVisible} style={{margin: 0}}>
       <ScrollView>
-        <StatusBar backgroundColor={service.getGradient()[0]} />
-        <LinearGradient colors={service.getGradient()} style={{flex: 1}}>
+        {/* <StatusBar backgroundColor={service.getGradient()[0]} /> */}
+        {/* <LinearGradient colors={["#181a20"]} style={{ flex: 1 }}> */}
+        <View style={{flex: 1, backgroundColor: "#181a20"}}>
           <Messanger
             message="Added to Favourite."
             onDismis={() => setVisibleSnake(false)}
@@ -117,10 +121,10 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <View className=" relative h-1/2 w-full flex items-center justify-center  ">
+            <View className=" relative  h-1/2 w-full flex items-center justify-center  ">
               <Animated.View
                 style={[frontAnimatedStyle, {backfaceVisibility: "hidden"}]}
-                className=" w-[85%] h-80  justify-center items-center rounded-xl  overflow-hidden">
+                className=" w-[92%] h-[92%]  justify-center items-center rounded-3xl  overflow-hidden">
                 <TrackImage
                   source={{
                     uri: ct?.artwork ? ct.artwork : ct?.cover,
@@ -145,39 +149,27 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 )}
               </Animated.View>
             </View>
-            <View className="w-full mt-5 h-auto">
-              <View className=" flex items-center justify-between flex-row px-3 ">
-                <View className=" py-2">
-                  <Text className="text-white text-xl mb-1 font-['400']">
-                    {ct && ct.title!.length > 30
-                      ? ct?.title?.slice(0, 31) + "..."
-                      : ct?.title}
-                  </Text>
-                  <Text className="text-white text-sm font-['300']">
-                    {ct?.artist}
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  onPress={() => [
-                    dispatch(addUserFavouritesData(ct!)),
-                    setVisibleSnake(true),
-                  ]}>
-                  <Icons.HomeIcon
-                    name="heart-fill"
-                    size={20}
-                    color={"#16FF00"}
-                  />
-                </TouchableOpacity>
-              </View>
+            <View className="w-full mt-5 flex items-center justify-center h-auto ">
+              <Text className="text-white text-2xl  font-['600'] mb-1">
+                {ct && ct.title!.length > 30
+                  ? ct?.title?.slice(0, 31) + "..."
+                  : ct?.title}
+              </Text>
+              <Text className="text-white text-lg font-['300']">
+                {ct && ct.artist!.length > 45
+                  ? ct!.artist?.slice(0, 45) + "..."
+                  : ct?.artist}
+              </Text>
             </View>
+
             <View className="w-full  mt-5 py-2">
               <Slider
                 minimumValue={0}
                 maximumValue={progress.duration}
                 value={progress.position}
-                minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#fff"
-                thumbTintColor="white"
+                minimumTrackTintColor="#ff8216"
+                maximumTrackTintColor="#35373e"
+                thumbTintColor="#ff8216"
                 onSlidingComplete={e => TrackPlayer.seekTo(e)}
               />
               <View
@@ -195,14 +187,9 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 </Text>
               </View>
             </View>
-            <View className=" h-18  overflow-hidden w-full flex items-center justify-between flex-row mt-3 px-4">
-              <TouchableOpacity>
-                <Image
-                  source={require("../../assets/images/suffle.png")}
-                  style={{width: 30, height: 30, tintColor: "#bababa"}}
-                />
-              </TouchableOpacity>
-              <View className=" w-[45%]   flex items-center justify-evenly flex-row">
+
+            <View className=" h-18  w-full flex items-center justify-evenly flex-row mt-3 px">
+              <View className="h-full w-2/5 flex items-center flex-row justify-around pl-2">
                 <Icons.KeyboardDown
                   name="skip-previous"
                   color={"white"}
@@ -213,14 +200,44 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                     service.getLyrics(setLyric),
                   ]}
                 />
+                <TouchableOpacity
+                  className="w-14 h-14 rounded-full flex items-center justify-center"
+                  onPress={() => service.timerSkip(progress.position, false)}>
+                  <Image
+                    source={require("../../assets/images/tes/icons8-replay-10-64.png")}
+                    style={{
+                      tintColor: "white",
+                      height: "60%",
+                      width: "60%",
+                      marginRight: 6,
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View className=" w-1/5 flex items-center justify-center">
                 <Fab
                   icon={state.isPlaying ? "pause" : "play"}
                   onPress={() =>
                     service.playPauseAction(playbackState, state, dispatch)
                   }
                   loading={playbackState.state === State.Loading}
-                  style={{backgroundColor: "#bababa", borderRadius: 50}}
+                  style={{backgroundColor: "#ff8216", borderRadius: 50}}
                 />
+              </View>
+              <View className=" h-full w-2/5 flex items-center flex-row justify-around pr-2 ">
+                <TouchableOpacity
+                  className="w-14 h-14 rounded-full flex items-center justify-center"
+                  onPress={() => service.timerSkip(progress.position, true)}>
+                  <Image
+                    source={require("../../assets/images/tes/icons8-forward-10-64.png")}
+                    style={{
+                      tintColor: "white",
+                      height: "60%",
+                      width: "60%",
+                      marginLeft: 6,
+                    }}
+                  />
+                </TouchableOpacity>
                 <Icons.KeyboardDown
                   name="skip-next"
                   color={"white"}
@@ -232,17 +249,39 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                   ]}
                 />
               </View>
+            </View>
+
+            <View className="h-14 w-full mt-8  flex items-center justify-around flex-row">
               <TouchableOpacity
                 onPress={() => service.repeatMode(state, dispatch)}>
                 <Icons.PlayListIcon
                   name={state.repeat ? "repeat" : "repeat-off"}
-                  color={state.repeat ? "#16FF00" : "#bababa"}
+                  color={state.repeat ? "#ff8216" : "#bababa"}
                   size={28}
                 />
               </TouchableOpacity>
+              <TouchableOpacity>
+                <Image
+                  source={require("../../assets/images/tes/Timer-repeat.png")}
+                  style={{width: 28, height: 28, tintColor: "white"}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image
+                  source={require("../../assets/images/tes/Timer.png")}
+                  style={{width: 32, height: 32, tintColor: "white"}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => [
+                  dispatch(addUserFavouritesData(ct!)),
+                  setVisibleSnake(true),
+                ]}>
+                <Icons.HomeIcon name="heart-fill" size={23} color={"#ff8216"} />
+              </TouchableOpacity>
             </View>
           </View>
-        </LinearGradient>
+        </View>
       </ScrollView>
     </Modal>
   )

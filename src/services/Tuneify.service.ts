@@ -6,6 +6,7 @@ import TrackPlayer, {
   Event,
   PlaybackState,
   RepeatMode,
+  State,
   Track,
 } from "react-native-track-player"
 import SuggestedServices from "./suggested.service"
@@ -76,13 +77,24 @@ export default class TuneifyService
       console.log(error)
     }
   }
-  public playPauseAction = (
+  public timerSkip = async (position: number, forw: boolean): Promise<void> => {
+    try {
+      forw
+        ? await TrackPlayer.seekTo(position + 10)
+        : await TrackPlayer.seekTo(position - 10)
+    } catch (error) {
+      console.log("Error happens during forward and backward")
+    }
+  }
+  public playPauseAction = async (
     playbackState: PlaybackState | {state: undefined},
     state: InitialChildStateTypes,
     dispatch: Dispatch<UnknownAction>
-  ): void => {
-    state.isPlaying ? TrackPlayer.pause() : TrackPlayer.play()
+  ): Promise<void> => {
     dispatch(changeTunifyState())
+    playbackState.state == State.Playing
+      ? await TrackPlayer.pause()
+      : await TrackPlayer.play()
   }
   public handleBottomCondition = async (
     setCurrentTrrack: (track: Track) => void
