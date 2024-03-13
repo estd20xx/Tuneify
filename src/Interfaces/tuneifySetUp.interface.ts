@@ -11,6 +11,11 @@ export interface ITuneify {
     dispatch: Dispatch<UnknownAction>
   ) => Promise<void>
   getGradient: () => string[]
+  timerMusicOff: (
+    period: number,
+    dispatch: Dispatch<UnknownAction>,
+    setIsTimer: (isTimer: boolean) => void
+  ) => void
   timerSkip: (position: number, forw: boolean) => Promise<void>
   playPauseAction: (
     playbackState: PlaybackState | {state: undefined},

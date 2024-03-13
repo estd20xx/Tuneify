@@ -7,7 +7,7 @@ import {
   Animated,
 } from "react-native"
 import TrackImage from "react-native-fast-image"
-import React, {useEffect, useState, useCallback, memo} from "react"
+import React, {useEffect, useState, useCallback, memo, useRef} from "react"
 import Modal from "react-native-modal"
 import TextTicker from "react-native-text-ticker"
 import TrackPlayer, {
@@ -17,7 +17,7 @@ import TrackPlayer, {
   useTrackPlayerEvents,
   State,
 } from "react-native-track-player"
-import {FAB as Fab} from "react-native-paper"
+import {FAB as Fab, Button} from "react-native-paper"
 import {Icons} from "../../constants/Icon"
 import Slider from "@react-native-community/slider"
 import TuneifyService from "../../services/Tuneify.service"
@@ -33,11 +33,15 @@ import Messanger from "../message/Message"
 const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   const state = TypedSelectorHook(tunifyChild)
   const dispatch = useAppDispatch()
+
   const [isFlipped, setIsFlipped] = useState(false)
   const [flip, setFlip] = useState(new Animated.Value(0))
   const [ct, setCt] = useState<Track>()
+  const [vtimer, setVtimer] = useState(false)
+  const [isTimer, setIsTimer] = useState(false)
   const [lyric, setLyric] = useState<string>("We are working on it.! 💻")
   const playbackState = usePlaybackState()
+  const [value, setValue] = useState<number>(0)
   const [visibleSnake, setVisibleSnake] = useState<boolean>(false)
   const progress = useProgress()
   const flipCard = useCallback(() => {
@@ -73,7 +77,6 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
     let secs = (Math.trunc(seconds) % 60).toString().padStart(2, "0")
     return `${mins}:${secs}`
   }
-  console.log(state.isPlaying)
   useTrackPlayerEvents(service.getEvent(), async (event: any) => {
     // if (playbackState.state == State.Ended) {
     //   dispatch(changeTunifyState())
@@ -83,8 +86,33 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
       service.getLyrics(setLyric)
     }
   })
+  console.log(state.isPlaying)
   return (
     <Modal isVisible={isVisible} style={{margin: 0}}>
+      {vtimer && (
+        <View className="h-48  w-4/5 bg-[#51d095] absolute z-50 m-auto left-12 rounded-3xl flex items-center justify-center">
+          <Slider
+            style={{width: "100%"}}
+            minimumValue={0}
+            maximumValue={60}
+            value={value}
+            minimumTrackTintColor="#181a20"
+            maximumTrackTintColor="white"
+            thumbTintColor="#181a20"
+            onSlidingComplete={e => setValue(Math.floor(e))}
+          />
+          <Text className="text-white text-xl mt-3 font-['500']">{value}</Text>
+          <TouchableOpacity
+            className="mt-8 bg-fuchsia-500 px-16 py-3 rounded-md"
+            onPress={() => [
+              setIsTimer(true),
+              service.timerMusicOff(value, dispatch, setIsTimer),
+              setVtimer(!vtimer),
+            ]}>
+            <Text className="text-white text-lg font-['400']">Set</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       <ScrollView>
         <View style={{flex: 1, backgroundColor: "#181a20"}}>
           <Messanger
@@ -118,10 +146,10 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <View className="relative h-[55%] w-full flex items-center justify-center  ">
+            <View className="relative h-1/2 w-full flex items-center justify-center  ">
               <Animated.View
                 style={[frontAnimatedStyle, {backfaceVisibility: "hidden"}]}
-                className=" w-11/12 h-[85%]  justify-center items-center rounded-3xl  overflow-hidden">
+                className=" w-[85%] h-80   rounded-3xl overflow-hidden">
                 <TrackImage
                   source={{
                     uri: ct?.artwork ? ct.artwork : ct?.cover,
@@ -129,7 +157,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                     priority: TrackImage.priority.high,
                     cache: TrackImage.cacheControl.immutable,
                   }}
-                  className="h-full w-full rounded-3xl"
+                  className="h-full w-full rounded-3xl  "
                 />
               </Animated.View>
               <Animated.View
@@ -137,7 +165,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 className="flex absolute   w-[95%] h-full   justify-center items-center rounded-xl ">
                 {lyric.length > 15 ? (
                   <ScrollView showsVerticalScrollIndicator={false}>
-                    <Text className="text-white text-base min-h-[100px] leading-8 px-5 flex items-center justify-center font-['300']  ">
+                    <Text className="text-white text-base min-h-[100px]  leading-8 px-5 flex items-center justify-center font-['300']  ">
                       {lyric}
                     </Text>
                   </ScrollView>
@@ -146,7 +174,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 )}
               </Animated.View>
             </View>
-            <View className="w-full mt-5 flex items-center justify-center h-auto ">
+            <View className=" w-full mt-5 flex items-center justify-center h-auto ">
               <Text className="text-white text-2xl  font-['600'] mb-1">
                 {ct && ct.title!.length > 30
                   ? ct?.title?.slice(0, 31) + "..."
@@ -163,14 +191,13 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 {ct?.artist}
               </TextTicker>
             </View>
-
             <View className="w-full  mt-5 py-2">
               <Slider
                 minimumValue={0}
                 maximumValue={progress.duration}
                 value={progress.position}
                 minimumTrackTintColor="#ff8216"
-                maximumTrackTintColor="#35373e"
+                maximumTrackTintColor="#d0d0d1"
                 thumbTintColor="#ff8216"
                 onSlidingComplete={e => TrackPlayer.seekTo(e)}
               />
@@ -192,16 +219,18 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
 
             <View className=" h-18  w-full flex items-center justify-evenly flex-row mt-3 px">
               <View className="h-full w-2/5 flex items-center flex-row justify-around pl-2">
-                <Icons.KeyboardDown
-                  name="skip-previous"
-                  color={"white"}
-                  size={35}
+                <TouchableOpacity
                   onPress={() => [
                     TrackPlayer.skipToPrevious(),
                     service.handleBottomCondition(setCt),
                     service.getLyrics(setLyric),
-                  ]}
-                />
+                  ]}>
+                  <Icons.KeyboardDown
+                    name="skip-previous"
+                    color={"white"}
+                    size={35}
+                  />
+                </TouchableOpacity>
                 <TouchableOpacity
                   className="w-14 h-14 rounded-full flex items-center justify-center"
                   onPress={() => service.timerSkip(progress.position, false)}>
@@ -240,16 +269,18 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                     }}
                   />
                 </TouchableOpacity>
-                <Icons.KeyboardDown
-                  name="skip-next"
-                  color={"white"}
-                  size={35}
+                <TouchableOpacity
                   onPress={() => [
                     TrackPlayer.skipToNext(),
                     service.handleBottomCondition(setCt),
                     service.getLyrics(setLyric),
-                  ]}
-                />
+                  ]}>
+                  <Icons.KeyboardDown
+                    name="skip-next"
+                    color={"white"}
+                    size={35}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -268,10 +299,14 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                   style={{width: 28, height: 28, tintColor: "white"}}
                 />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => [setVtimer(!vtimer)]}>
                 <Image
                   source={require("../../assets/images/tes/Timer.png")}
-                  style={{width: 32, height: 32, tintColor: "white"}}
+                  style={{
+                    width: 32,
+                    height: 32,
+                    tintColor: isTimer ? "#ff8216" : "white",
+                  }}
                 />
               </TouchableOpacity>
               <TouchableOpacity
