@@ -91,10 +91,10 @@ export default class TuneifyService
     state: InitialChildStateTypes,
     dispatch: Dispatch<UnknownAction>
   ): Promise<void> => {
-    dispatch(changeTunifyState())
     playbackState.state == State.Playing
       ? await TrackPlayer.pause()
       : await TrackPlayer.play()
+    dispatch(changeTunifyState())
   }
   public handleBottomCondition = async (
     setCurrentTrrack: (track: Track) => void
