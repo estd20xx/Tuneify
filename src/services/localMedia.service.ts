@@ -13,7 +13,7 @@ export default class LocalMediaService implements IlocalMedia {
   ): Promise<boolean> => {
     try {
       const songsOrError = await getAll({
-        limit: 50,
+        limit: 150,
         offset: 0,
         coverQuality: 50,
         minSongDuration: 1000,

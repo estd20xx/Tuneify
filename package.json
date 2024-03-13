@@ -49,6 +49,7 @@
     "react-native-screens": "^3.29.0",
     "react-native-splash-screen": "^3.3.0",
     "react-native-tab-view": "^3.5.2",
+    "react-native-text-ticker": "^1.14.0",
     "react-native-toast-message": "^2.2.0",
     "react-native-track-player": "^4.0.1",
     "react-native-vector-icons": "^10.0.3",

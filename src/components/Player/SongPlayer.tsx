@@ -5,12 +5,11 @@ import {
   ScrollView,
   Image,
   Animated,
-  StatusBar,
 } from "react-native"
 import TrackImage from "react-native-fast-image"
 import React, {useEffect, useState, useCallback, memo} from "react"
 import Modal from "react-native-modal"
-import LinearGradient from "react-native-linear-gradient"
+import TextTicker from "react-native-text-ticker"
 import TrackPlayer, {
   Track,
   usePlaybackState,
@@ -87,8 +86,6 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
   return (
     <Modal isVisible={isVisible} style={{margin: 0}}>
       <ScrollView>
-        {/* <StatusBar backgroundColor={service.getGradient()[0]} /> */}
-        {/* <LinearGradient colors={["#181a20"]} style={{ flex: 1 }}> */}
         <View style={{flex: 1, backgroundColor: "#181a20"}}>
           <Messanger
             message="Added to Favourite."
@@ -121,10 +118,10 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <View className=" relative  h-1/2 w-full flex items-center justify-center  ">
+            <View className="relative h-[55%] w-full flex items-center justify-center  ">
               <Animated.View
                 style={[frontAnimatedStyle, {backfaceVisibility: "hidden"}]}
-                className=" w-[92%] h-[92%]  justify-center items-center rounded-3xl  overflow-hidden">
+                className=" w-11/12 h-[85%]  justify-center items-center rounded-3xl  overflow-hidden">
                 <TrackImage
                   source={{
                     uri: ct?.artwork ? ct.artwork : ct?.cover,
@@ -132,7 +129,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                     priority: TrackImage.priority.high,
                     cache: TrackImage.cacheControl.immutable,
                   }}
-                  className="h-full w-full "
+                  className="h-full w-full rounded-3xl"
                 />
               </Animated.View>
               <Animated.View
@@ -155,11 +152,16 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                   ? ct?.title?.slice(0, 31) + "..."
                   : ct?.title}
               </Text>
-              <Text className="text-white text-lg font-['300']">
-                {ct && ct.artist!.length > 45
-                  ? ct!.artist?.slice(0, 45) + "..."
-                  : ct?.artist}
-              </Text>
+              <TextTicker
+                style={{fontSize: 18, color: "white"}}
+                className="font-['300']"
+                duration={10000}
+                loop
+                bounce
+                repeatSpacer={50}
+                marqueeDelay={1000}>
+                {ct?.artist}
+              </TextTicker>
             </View>
 
             <View className="w-full  mt-5 py-2">
@@ -251,7 +253,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
               </View>
             </View>
 
-            <View className="h-14 w-full mt-8  flex items-center justify-around flex-row">
+            <View className=" h-14 w-full mt-5  flex items-center justify-around flex-row">
               <TouchableOpacity
                 onPress={() => service.repeatMode(state, dispatch)}>
                 <Icons.PlayListIcon
