@@ -86,14 +86,30 @@ export default class TuneifyService
       console.log("Error happens during forward and backward")
     }
   }
+  public timerMusicOff = (
+    period: number,
+    dispatch: Dispatch<UnknownAction>,
+    setIsTimer: (isTimer: boolean) => void
+  ): void => {
+    const trackOff = async () => {
+      try {
+        await TrackPlayer.pause()
+        dispatch(changeTunifyState())
+        setIsTimer(false)
+      } catch (error) {
+        console.log("Error In turning of Music")
+      }
+    }
+    setTimeout(() => {
+      trackOff()
+    }, period * 1000 * 60)
+  }
   public playPauseAction = async (
     playbackState: PlaybackState | {state: undefined},
     state: InitialChildStateTypes,
     dispatch: Dispatch<UnknownAction>
   ): Promise<void> => {
-    playbackState.state == State.Playing
-      ? await TrackPlayer.pause()
-      : await TrackPlayer.play()
+    state.isPlaying ? await TrackPlayer.pause() : await TrackPlayer.play()
     dispatch(changeTunifyState())
   }
   public handleBottomCondition = async (
