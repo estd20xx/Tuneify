@@ -2,6 +2,7 @@ import {NativeStackNavigationProp} from "@react-navigation/native-stack"
 import React from "react"
 import {TrendingAlbumTypes} from "../Interfaces/album.interface"
 import {PlaylistTypes} from "../Interfaces/playlist.interface"
+import {Data} from "../TestTransition/19-React-Native-Shared-Element/src/data/data"
 export interface NavigationStringsTypes {
   splash: string
   onboarding: string
@@ -17,6 +18,11 @@ export interface NavigationStringsTypes {
   trendingSongDetails: string
   charts: string
   search: string
+}
+
+type Props = {
+  item: Data
+  index: number
 }
 export type RootStackParamList = {
   splash: undefined
