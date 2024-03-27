@@ -63,9 +63,16 @@ yarn-error.log
 .metro-health-check*
 .env
 # testing
+
+
+
+
 /coverage
-api/
 # Expo
 .expo
 dist/
 web-build/
+
+
+# --Personal ---
+base/
