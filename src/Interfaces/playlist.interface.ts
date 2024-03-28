@@ -1,3 +1,4 @@
+import {PlaylistResponse} from "../api/interface/module.interface"
 import {ImageType} from "../Types/Types"
 
 export interface PlaylistTypes {
@@ -30,6 +31,6 @@ export interface PlaylistTypesDetails {
   explicitContent: string
 }
 export interface PlaylistDataProps {
-  data: PlaylistTypes[]
+  data: PlaylistResponse[]
   topic: string
 }

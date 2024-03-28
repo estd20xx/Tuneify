@@ -1,16 +1,17 @@
 import {View, Text, FlatList, TouchableOpacity} from "react-native"
 import React, {useCallback} from "react"
-import {ChartsPropsTypes, ChartsTypes} from "../Types/Types"
+import {ChartsPropsTypes} from "../Types/Types"
 import Image from "react-native-fast-image"
+import {ChartsResponse} from "../api/interface/module.interface"
 const Charts: React.FC<ChartsPropsTypes> = ({data, topic}) => {
   const renderItem = useCallback(
-    ({item}: {item: ChartsTypes}) => (
+    ({item}: {item: ChartsResponse}) => (
       <TouchableOpacity>
         <View className=" flex items-center justify-center w-36 ml-2">
           <View className=" h-36 w-36  rounded-3xl overflow-hidden">
             <Image
               source={{
-                uri: item.image[2].link,
+                uri: item.artwork[2].link,
                 headers: {Authorization: "someAuthToken"},
                 priority: Image.priority.normal,
                 cache: Image.cacheControl.immutable,

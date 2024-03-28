@@ -6,26 +6,27 @@ import {Icons} from "../../constants/Icon"
 import {TypedSelectorHook, useAppDispatch} from "../../hooks/store.hook"
 import {addSongList, tuneifySongs} from "../../store/slices/song.slice"
 import TrackPlayer from "react-native-track-player"
-import {
-  TrendingAlbumParamsTypes,
-  TrendingAlbumTypes,
-} from "../../Interfaces/album.interface"
+import {TrendingAlbumParamsTypes} from "../../Interfaces/album.interface"
 import {
   addTrackId,
   addTrackIndex,
   tunifyCurrentTrack,
 } from "../../store/slices/currentTrack.slice"
 import SongSkeleton from "../skeleton/SongSkeleton"
+
+import {ApiAlbumService} from "../../api/service/album.service"
+import {AlbumDetailsResponse} from "../../api/interface/album.interface"
+const apiService = new ApiAlbumService()
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
   const dispatch = useAppDispatch()
   const current = TypedSelectorHook(tunifyCurrentTrack)
   const [data, setData] = useState(route.params.albumData)
   const storeSongs = TypedSelectorHook(tuneifySongs)
-  const [albumSongs, setAlbumSongs] = useState<TrendingAlbumTypes[]>([])
+  const [albumSongs, setAlbumSongs] = useState<AlbumDetailsResponse>()
   const fetchAudio = async () => {
     try {
-      const albumData = await axios.get(`${baseApi}albums?id=${data.id}`)
-      setAlbumSongs(albumData.data.data.songs)
+      const albumData = await apiService.getAlbumSongs(data.id)
+      setAlbumSongs(albumData)
     } catch (error) {
       console.log(error)
     }
@@ -33,12 +34,12 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
   useEffect(() => {
     fetchAudio()
   }, [])
-  useEffect(() => {
-    if (albumSongs.length > 0) {
-      // @ts-ignore
-      dispatch(addSongList(albumSongs))
-    }
-  }, [albumSongs])
+  // useEffect(() => {
+  //   if (albumSongs?.songs.length != 0) {
+  //     // @ts-ignore
+  //     dispatch(addSongList(albumSongs))
+  //   }
+  // }, [albumSongs])
   const InitialiseThisOne = useCallback(
     async (index: number) => {
       console.log(current.trackId)
@@ -65,22 +66,22 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="w-full h-56  flex items-center justify-center">
           <Image
-            source={{uri: data.image[2].link}}
+            source={{uri: data.artwork[2].link}}
             className="h-52 w-52 rounded-md"
           />
         </View>
         <View className="w-full px-3 flex  justify-center">
           <Text className="text-white font-['500'] text-lg tracking-wider">
-            {data.name.length > 15 ? data.name.slice(0, 38) + "..." : data.name}
+            {data.title.length > 15
+              ? data.title.slice(0, 38) + "..."
+              : data.title}
           </Text>
           <TouchableOpacity>
-            <Text className="text-gray-300 text-base font-['400']">
-              {data.artists[0].name}
-            </Text>
+            <Text className="text-gray-300 text-base font-['400']">Random</Text>
           </TouchableOpacity>
         </View>
-        {albumSongs.length > 0 ? (
-          albumSongs.map((currentSong, index) => {
+        {albumSongs?.songs.length != 0 &&
+          albumSongs?.songs.map((currentSong, index) => {
             return (
               <TouchableOpacity
                 key={currentSong.id}
@@ -108,7 +109,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
                             fontSize: 14,
                             fontFamily: "400",
                           }}>
-                          {currentSong.name}
+                          {currentSong.title}
                         </Text>
                         <Text
                           style={{
@@ -117,7 +118,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
                             marginTop: 2,
                             fontFamily: "300",
                           }}>
-                          {currentSong.primaryArtists}
+                          {currentSong.artists}
                         </Text>
                       </View>
                     </View>
@@ -132,13 +133,9 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
                 </View>
               </TouchableOpacity>
             )
-          })
-        ) : (
-          <SongSkeleton />
-        )}
+          })}
       </ScrollView>
     </View>
   )
 }
-
 export default TrendingAlbumDetails

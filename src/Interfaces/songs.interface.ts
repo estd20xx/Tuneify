@@ -1,26 +1,4 @@
-import {DownloadUrlType, ImageType, PrimaryArtistsTypes} from "../Types/Types"
-import {SmallAlbumTypes} from "./album.interface"
-
-export interface TrendingSongTypes {
-  id: string
-  name: string
-  type: string
-  album: SmallAlbumTypes
-  url: string
-  year: string
-  releaseDate: string
-  duration: string
-  label: string
-  primaryArtists: PrimaryArtistsTypes[]
-  featuredArtists: []
-  explicitContent: string
-  language: string
-  image: ImageType[]
-}
-export interface TrendingSongsPropsTypes {
-  data: TrendingSongTypes[]
-  topic: string
-}
+import {DownloadUrlType, ImageType} from "../Types/Types"
 export interface SongsTypes {
   id: string
   name: string

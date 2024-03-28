@@ -1,8 +1,10 @@
 import {NativeStackNavigationProp} from "@react-navigation/native-stack"
 import React from "react"
-import {TrendingAlbumTypes} from "../Interfaces/album.interface"
-import {PlaylistTypes} from "../Interfaces/playlist.interface"
-import {Data} from "../TestTransition/19-React-Native-Shared-Element/src/data/data"
+import {
+  AlbumResponse,
+  ChartsResponse,
+  PlaylistResponse,
+} from "../api/interface/module.interface"
 export interface NavigationStringsTypes {
   splash: string
   onboarding: string
@@ -20,10 +22,6 @@ export interface NavigationStringsTypes {
   search: string
 }
 
-type Props = {
-  item: Data
-  index: number
-}
 export type RootStackParamList = {
   splash: undefined
   onboarding: undefined
@@ -33,8 +31,8 @@ export type RootStackParamList = {
   settings: undefined
   home: undefined
   bottom: undefined
-  TrendingAlbumDetails: {albumData: TrendingAlbumTypes}
-  PlaylistDetails: {playlistData: PlaylistTypes}
+  TrendingAlbumDetails: {albumData: AlbumResponse}
+  PlaylistDetails: {playlistData: PlaylistResponse}
   albumsDetails: undefined
   trendingSongDetails: undefined
   charts: undefined
@@ -72,20 +70,8 @@ export interface ArtistsTypes extends ImageType {
   role: string
 }
 
-export interface ChartsTypes {
-  id: string
-  title: string
-  subtitle: string
-  type: string
-  image: ImageType[]
-  url: string
-  firstname: string
-  lastUpdated: string
-  language: string
-}
-
 export interface ChartsPropsTypes {
-  data: ChartsTypes[]
+  data: ChartsResponse[]
   topic: string
 }
 export interface SmallAlbumTypes {

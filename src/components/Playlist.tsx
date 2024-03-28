@@ -4,15 +4,13 @@ import {RootStackParamList} from "../Types/Types"
 import {useNavigation} from "@react-navigation/core"
 import {NativeStackNavigationProp} from "@react-navigation/native-stack"
 import Image from "react-native-fast-image"
-import {
-  PlaylistDataProps,
-  PlaylistTypes,
-} from "../Interfaces/playlist.interface"
+import {PlaylistDataProps} from "../Interfaces/playlist.interface"
+import {PlaylistResponse} from "../api/interface/module.interface"
 const Playlist: React.FC<PlaylistDataProps> = ({data, topic}) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>()
   const renderItem = useCallback(
-    ({item}: {item: PlaylistTypes}) => (
+    ({item}: {item: PlaylistResponse}) => (
       <TouchableOpacity
         className="   flex items-center justify-center ml-2"
         onPress={() =>
@@ -21,7 +19,7 @@ const Playlist: React.FC<PlaylistDataProps> = ({data, topic}) => {
         <View className=" h-36 w-36  rounded-full overflow-hidden">
           <Image
             source={{
-              uri: item.image[2].link,
+              uri: item.artwork[2].link,
               headers: {Authorization: "someAuthToken"},
               priority: Image.priority.normal,
               cache: Image.cacheControl.immutable,
