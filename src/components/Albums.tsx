@@ -1,16 +1,17 @@
 import {View, Text, FlatList, TouchableOpacity} from "react-native"
 import React, {useCallback} from "react"
 import Image from "react-native-fast-image"
-import {AlbumDataProps, AlbumTypes} from "../Interfaces/album.interface"
+import {AlbumDataProps} from "../Interfaces/album.interface"
+import {AlbumResponse} from "../api/interface/module.interface"
 const Albums: React.FC<AlbumDataProps> = ({data, topic}) => {
   const renderItem = useCallback(
-    ({item}: {item: AlbumTypes}) => (
+    ({item}: {item: AlbumResponse}) => (
       <TouchableOpacity>
         <View className="  flex items-center justify-center w-36 ml-2">
           <View className={` h-36 w-36  rounded-3xl overflow-hidden`}>
             <Image
               source={{
-                uri: item.image[2].link,
+                uri: item.artwork[2].link,
                 headers: {Authorization: "someAuthToken"},
                 priority: Image.priority.normal,
                 cache: Image.cacheControl.immutable,
@@ -20,9 +21,9 @@ const Albums: React.FC<AlbumDataProps> = ({data, topic}) => {
           </View>
           <View className=" w-full h-9 flex items-center  justify-center">
             <Text className="text-white text-xs tracking-wider font-['500'] ">
-              {item.name.length > 10
-                ? item.name.slice(0, 14) + ".."
-                : item.name}
+              {item.title.length > 10
+                ? item.title.slice(0, 14) + ".."
+                : item.title}
             </Text>
           </View>
         </View>

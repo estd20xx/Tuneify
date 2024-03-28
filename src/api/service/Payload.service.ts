@@ -10,7 +10,7 @@ import {
 } from "../utils/utils"
 
 export class PayloadService {
-  public homePayload(homeDataRequest: HomeDataRequest): HomeDataResponse {
+  protected homePayload(homeDataRequest: HomeDataRequest): HomeDataResponse {
     const homeDataPayload: HomeDataResponse = {
       tuneifyTrendingAlbumsResponse: homeDataRequest.tuneifyTrendingAlbums.map(
         current => {
@@ -79,7 +79,9 @@ export class PayloadService {
     }
     return homeDataPayload
   }
-  public albumPayload(albumDetails: AlbumDetailsRequest): AlbumDetailsResponse {
+  protected albumPayload(
+    albumDetails: AlbumDetailsRequest
+  ): AlbumDetailsResponse {
     return {
       id: albumDetails.id,
       title: albumDetails.title,

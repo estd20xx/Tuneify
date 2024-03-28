@@ -1,33 +1,26 @@
-import {
-  ArtistsTypes,
-  CustomPArt,
-  ImageType,
-  PrimaryArtistsTypes,
-} from "../Types/Types"
-import {TrendingSongTypes} from "./songs.interface"
+import {AlbumResponse} from "../api/interface/module.interface"
+import {CustomPArt, ImageType} from "../Types/Types"
 export interface TrendingAlbumPropsTypes {
-  data: TrendingAlbumTypes[]
+  data: AlbumResponse[]
   topic: string
 }
 interface TrendingAlbumData {
   key: string
   name: string
   params: {
-    albumData: TrendingAlbumTypes
+    albumData: AlbumResponse
   }
 }
 export interface TrendingAlbumParamsTypes {
   route: TrendingAlbumData
 }
 export interface AlbumDataProps {
-  data: AlbumTypes[]
+  data: AlbumResponse[]
   topic: string
 }
-export interface Tr {
-  albums: TrendingAlbumTypes[]
-  songs: TrendingSongTypes[]
-}
+
 export interface SeperateAlbumTypes {
+  // do not remove
   id: string
   name: string
   year: string
@@ -45,43 +38,9 @@ export interface SeperateAlbumTypes {
 export interface SeperateAlbumDataPropsTypes {
   data: SeperateAlbumTypes
 }
-export interface TrendingAlbumTypes {
-  id: string
-  name: string
-  type: string
-  year: string
-  releaseDate: string
-  playCount: string
-  language: string
-  explicitContent: string
-  songCount: string
-  url: string
-  primaryArtists: string
-  featuredArtists: []
-  artists: ArtistsTypes[]
-  image: ImageType[]
-}
 export interface SmallAlbumTypes {
   id: string
   name: string
-}
-export interface AlbumTypes
-  extends PrimaryArtistsTypes,
-    ArtistsTypes,
-    ImageType {
-  id: string
-  name: string
-  year: string
-  type: string
-  playCount: string
-  language: string
-  explicitContent: string
-  url: string
-  primaryArtists: PrimaryArtistsTypes[]
-  featuredArtists: []
-  artists: ArtistsTypes[]
-  image: ImageType[]
-  songs: []
 }
 export interface Ialbum {
   readonly getUrl: () => string

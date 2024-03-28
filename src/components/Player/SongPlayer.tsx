@@ -149,7 +149,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
             <View className="relative h-1/2 w-full flex items-center justify-center  ">
               <Animated.View
                 style={[frontAnimatedStyle, {backfaceVisibility: "hidden"}]}
-                className=" w-[85%] h-80   rounded-3xl overflow-hidden">
+                className=" w-[90%]  h-96   rounded-3xl overflow-hidden bg-red-500">
                 <TrackImage
                   source={{
                     uri: ct?.artwork ? ct.artwork : ct?.cover,
@@ -157,7 +157,7 @@ const SongPlayer = ({isVisible, onClose}: {isVisible: any; onClose: any}) => {
                     priority: TrackImage.priority.high,
                     cache: TrackImage.cacheControl.immutable,
                   }}
-                  className="h-full w-full rounded-3xl  "
+                  className="h-full w-full "
                 />
               </Animated.View>
               <Animated.View
