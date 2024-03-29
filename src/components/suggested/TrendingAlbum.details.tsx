@@ -77,7 +77,9 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({route}) => {
               : data.title}
           </Text>
           <TouchableOpacity>
-            <Text className="text-gray-300 text-base font-['400']">Random</Text>
+            <Text className="text-gray-300 text-base font-['400']">
+              {data.type}
+            </Text>
           </TouchableOpacity>
         </View>
         {albumSongs?.songs.length != 0 &&

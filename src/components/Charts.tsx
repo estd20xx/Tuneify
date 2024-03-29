@@ -1,12 +1,19 @@
 import {View, Text, FlatList, TouchableOpacity} from "react-native"
 import React, {useCallback} from "react"
-import {ChartsPropsTypes} from "../Types/Types"
+import {ChartsPropsTypes, RootStackParamList} from "../Types/Types"
 import Image from "react-native-fast-image"
 import {ChartsResponse} from "../api/interface/module.interface"
+import {useNavigation} from "@react-navigation/core"
+import {NativeStackNavigationProp} from "@react-navigation/native-stack"
 const Charts: React.FC<ChartsPropsTypes> = ({data, topic}) => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>()
   const renderItem = useCallback(
     ({item}: {item: ChartsResponse}) => (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("PlaylistDetails", {playlistData: item})
+        }}>
         <View className=" flex items-center justify-center w-36 ml-2">
           <View className=" h-36 w-36  rounded-3xl overflow-hidden">
             <Image

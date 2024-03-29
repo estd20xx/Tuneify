@@ -4,12 +4,12 @@ import axios from "axios"
 import {baseApi} from "../../api/api"
 import {Icons} from "../../constants/Icon"
 import {SongsTypes} from "../../Interfaces/songs.interface"
-import {PlaylistTypes} from "../../Interfaces/playlist.interface"
+import {PlaylistResponse} from "../../api/interface/module.interface"
 interface PlaylistData {
   key: string
   name: string
   params: {
-    playlistData: PlaylistTypes
+    playlistData: PlaylistResponse
   }
 }
 export interface PlaylistDetailsTypes {
@@ -35,7 +35,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({route}) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="w-full h-56  flex items-center justify-center">
           <Image
-            source={{uri: data.image[2].link}}
+            source={{uri: data.artwork[2].link}}
             className="h-52 w-52 rounded-md"
           />
         </View>
@@ -46,9 +46,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({route}) => {
               : data.title}
           </Text>
           <TouchableOpacity>
-            <Text className="text-gray-300 text-base font-['400']">
-              {data.userId}
-            </Text>
+            <Text className="text-gray-300 text-base font-['400']">Random</Text>
           </TouchableOpacity>
         </View>
         {playlistSong.map(currentSong => {

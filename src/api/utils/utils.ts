@@ -9,7 +9,6 @@ export const createDownloadLinks = (encryptedMediaUrl: string): Audio[] => {
     {id: "_160", bitrate: "160kbps"},
     {id: "_320", bitrate: "320kbps"},
   ]
-
   const key = "38346591"
   const iv = "00000000"
 
@@ -29,14 +28,12 @@ export const createDownloadLinks = (encryptedMediaUrl: string): Audio[] => {
     quality: quality.bitrate,
     link: decryptedLink.replace("_96", quality.id),
   }))
-
   return links
 }
 export interface Image {
   quality: string
   link: string
 }
-
 export interface Audio {
   quality: string
   link: string

@@ -3,10 +3,18 @@ import React, {useCallback} from "react"
 import Image from "react-native-fast-image"
 import {AlbumDataProps} from "../Interfaces/album.interface"
 import {AlbumResponse} from "../api/interface/module.interface"
+import {useNavigation} from "@react-navigation/core"
+import {RootStackParamList} from "../Types/Types"
+import {NativeStackNavigationProp} from "@react-navigation/native-stack"
 const Albums: React.FC<AlbumDataProps> = ({data, topic}) => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>()
   const renderItem = useCallback(
     ({item}: {item: AlbumResponse}) => (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("TrendingAlbumDetails", {albumData: item})
+        }>
         <View className="  flex items-center justify-center w-36 ml-2">
           <View className={` h-36 w-36  rounded-3xl overflow-hidden`}>
             <Image
