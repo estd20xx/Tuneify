@@ -1,17 +1,12 @@
 import axios from "axios"
 import {PayloadService} from "./Payload.service"
 import {AlbumDetailsResponse} from "../interface/album.interface"
-
+import {endPoints, baseURL} from "../base/endpoint"
 export class ApiAlbumService extends PayloadService {
   public getAlbumSongs = async (id: string): Promise<AlbumDetailsResponse> => {
-    const data = await axios.get("https://www.jiosaavn.com/api.php", {
+    const data = await axios.get(baseURL, {
       params: {
-        _format: "json",
-        _marker: 0,
-        api_version: 4,
-        ctx: "web6dot0",
-        __call: "content.getAlbumDetails",
-        cc: "in",
+        ...endPoints.albumDetails,
         albumid: id,
       },
     })

@@ -1,7 +1,7 @@
 import {PlaylistResponse} from "../api/interface/module.interface"
 import {ImageType} from "../Types/Types"
 
-export interface PlaylistTypes {
+interface PlaylistTypes {
   id: string
   userId: string
   title: string
