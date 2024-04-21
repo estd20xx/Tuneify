@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity} from "react-native"
+import { View, Text, TouchableOpacity } from "react-native"
 import React from "react"
 import DocumentPicker from "react-native-document-picker"
 const Artists = () => {
@@ -13,7 +13,8 @@ const Artists = () => {
       <Text className="text-white">Artists</Text>
       <TouchableOpacity
         className="bg-purple-500 px-20 py-5 mt-3 rounded-md"
-        onPress={chooseFile}>
+        onPress={chooseFile}
+      >
         <Text className="text-white font-[300] tracking-wider">Choose</Text>
       </TouchableOpacity>
     </View>

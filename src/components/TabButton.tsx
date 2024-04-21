@@ -1,9 +1,9 @@
-import {View, Text, TouchableOpacity, StyleSheet} from "react-native"
-import React, {ElementRef, useEffect, useRef} from "react"
-import {DanimationValue, IanimationValue} from "../constants/animation"
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
+import React, { ElementRef, useEffect, useRef } from "react"
+import { DanimationValue, IanimationValue } from "../constants/animation"
 import * as Animatable from "react-native-animatable"
 const TabButton = (props: any) => {
-  const {item, onPress, accessibilityState} = props
+  const { item, onPress, accessibilityState } = props
   const focused = accessibilityState.selected
   const viewRef = useRef<ElementRef<"view"> | any>(null)
   const textViewRef = useRef<ElementRef<"view"> | any>(null)
@@ -23,14 +23,15 @@ const TabButton = (props: any) => {
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={1}
-      style={[{flex: focused ? 1 : 0.65}]}
-      className="justify-center items-center">
+      style={[{ flex: focused ? 1 : 0.65 }]}
+      className="justify-center items-center"
+    >
       <View>
         <Animatable.View
           ref={viewRef}
           style={[
             StyleSheet.absoluteFillObject,
-            {backgroundColor: item.active, borderRadius: 16},
+            { backgroundColor: item.active, borderRadius: 16 },
           ]}
         />
         <View
@@ -41,8 +42,9 @@ const TabButton = (props: any) => {
               padding: 8,
               borderRadius: 16,
             },
-            {backgroundColor: "rgba(28,28,28,.7)"},
-          ]}>
+            { backgroundColor: "rgba(28,28,28,.7)" },
+          ]}
+        >
           <Animatable.View ref={iconRef} className="">
             {focused ? (
               <item.Active
@@ -64,7 +66,8 @@ const TabButton = (props: any) => {
                 style={{
                   color: "white",
                   paddingHorizontal: 8,
-                }}>
+                }}
+              >
                 {item.name}
               </Text>
             )}

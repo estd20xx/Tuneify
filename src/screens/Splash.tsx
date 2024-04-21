@@ -1,14 +1,14 @@
-import {StatusBar, View} from "react-native"
-import React, {useEffect} from "react"
-import {SplashScreenPropsTypes} from "../Types/Types"
-import {checkLocal, tuneifyOfflines} from "../store/slices/offline.slice"
+import { StatusBar, View } from "react-native"
+import React, { useEffect } from "react"
+import { SplashScreenPropsTypes } from "../Types/Types"
+import { checkLocal, tuneifyOfflines } from "../store/slices/offline.slice"
 import LocalMediaService from "../services/localMedia.service"
 import PermissionService from "../services/permission.service"
-import {TypedSelectorHook, useAppDispatch} from "../hooks/store.hook"
-import {Chase} from "react-native-animated-spinkit"
+import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
+import { Chase } from "react-native-animated-spinkit"
 const permission = new PermissionService()
 const musicService = new LocalMediaService()
-const Splash: React.FC<SplashScreenPropsTypes> = ({navigation}) => {
+const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {
   const dispatch = useAppDispatch()
   const storeData = TypedSelectorHook(tuneifyOfflines)
   const fn = async () => {

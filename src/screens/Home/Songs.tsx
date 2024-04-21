@@ -1,13 +1,13 @@
-import React, {useCallback, useEffect, useState} from "react"
-import {FlatList, View, ViewToken, TouchableOpacity} from "react-native"
-import {useSharedValue} from "react-native-reanimated"
+import React, { useCallback, useEffect, useState } from "react"
+import { FlatList, View, ViewToken, TouchableOpacity } from "react-native"
+import { useSharedValue } from "react-native-reanimated"
 import ListItem from "../../components/ListItem"
 import SongService from "../../services/songs.service"
-import {songsApi} from "../../api/api"
-import {addSongList} from "../../store/slices/song.slice"
+import { songsApi } from "../../api/api"
+import { addSongList } from "../../store/slices/song.slice"
 import TrackPlayer from "react-native-track-player"
-import {TypedSelectorHook, useAppDispatch} from "../../hooks/store.hook"
-import {SongsTypes} from "../../Interfaces/songs.interface"
+import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import { SongsTypes } from "../../Interfaces/songs.interface"
 import {
   addTrackIndex,
   tunifyCurrentTrack,
@@ -32,15 +32,15 @@ const Songs = () => {
       {sng.length > 1 && (
         <FlatList
           data={sng}
-          onViewableItemsChanged={({viewableItems: vItems}) => {
+          onViewableItemsChanged={({ viewableItems: vItems }) => {
             viewableItems.value = vItems
           }}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: 70}}
-          keyExtractor={item => item.id}
+          contentContainerStyle={{ paddingBottom: 70 }}
+          keyExtractor={(item) => item.id}
           initialNumToRender={3}
-          renderItem={items => {
-            const {item, index} = items
+          renderItem={(items) => {
+            const { item, index } = items
             return (
               <TouchableOpacity
                 onPress={async () => {
@@ -48,7 +48,8 @@ const Songs = () => {
                   setCurrentId(item.id)
                   await TrackPlayer.skip(index)
                   await TrackPlayer.play()
-                }}>
+                }}
+              >
                 <ListItem
                   item={item}
                   viewableItems={viewableItems}

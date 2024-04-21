@@ -1,5 +1,5 @@
-import {AlbumResponse} from "../api/interface/module.interface"
-import {CustomPArt, ImageType} from "../Types/Types"
+import { AlbumResponse } from "../api/interface/module.interface"
+import { CustomPArt, ImageType } from "../Types/Types"
 export interface TrendingAlbumPropsTypes {
   data: AlbumResponse[]
   topic: string

@@ -1,16 +1,16 @@
-import {View, Text, TouchableOpacity, StatusBar, Platform} from "react-native"
-import React, {useEffect, useState} from "react"
+import { View, Text, TouchableOpacity, StatusBar, Platform } from "react-native"
+import React, { useEffect, useState } from "react"
 import OnboadringService from "../../services/onboarding.service"
-import {onboardingData} from "../../constants/naviG"
+import { onboardingData } from "../../constants/naviG"
 import * as Animatable from "react-native-animatable"
-import {onBoardImageApi} from "../../api/api"
+import { onBoardImageApi } from "../../api/api"
 import {
   OnBoardingDataTypes,
   OnBoardingPropsTypes,
 } from "../../Interfaces/onboard.interface"
 const service = new OnboadringService(onBoardImageApi)
 const AnimatedButton = Animatable.createAnimatableComponent(TouchableOpacity)
-const Onboading: React.FC<OnBoardingPropsTypes> = ({navigation}) => {
+const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
   const [nre, setNre] = useState<number>(0)
   const [d, setD] = useState<OnBoardingDataTypes>(onboardingData[nre])
   useEffect(() => {
@@ -27,7 +27,7 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({navigation}) => {
       <View className="w-full h-[80%] overflow-hidden">
         <Animatable.Image
           animation="zoomInUp"
-          source={{uri: service.getOnboardImage()}}
+          source={{ uri: service.getOnboardImage() }}
           className="w-full h-full"
         />
       </View>
@@ -36,19 +36,22 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({navigation}) => {
           <Animatable.Text
             animation={"slideInLeft"}
             duration={1200}
-            className="text-white text-4xl tracking-widest  font-[500]">
+            className="text-white text-4xl tracking-widest  font-[500]"
+          >
             {d.first}
           </Animatable.Text>
           <Animatable.Text
             animation={"slideInLeft"}
             duration={1700}
-            className="text-white text-4xl tracking-widest font-[500]">
+            className="text-white text-4xl tracking-widest font-[500]"
+          >
             {d.second}
           </Animatable.Text>
           <Animatable.Text
             animation={"slideInLeft"}
             duration={2200}
-            className="text-white text-4xl tracking-widest font-[500]">
+            className="text-white text-4xl tracking-widest font-[500]"
+          >
             {d.third}
           </Animatable.Text>
         </View>
@@ -56,20 +59,24 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({navigation}) => {
           <View
             className={`${
               nre == 0 ? "w-14" : "w-5"
-            } h-3 rounded-full duration-1000  bg-[#ff8216] ml-1`}></View>
+            } h-3 rounded-full duration-1000  bg-[#ff8216] ml-1`}
+          ></View>
           <View
             className={`${
               nre == 1 ? "w-14" : "w-5"
-            } h-3 rounded-full duration-1000 bg-[#ff8216] ml-1`}></View>
+            } h-3 rounded-full duration-1000 bg-[#ff8216] ml-1`}
+          ></View>
           <View
             className={`${
               nre == 2 ? "w-14" : "w-5"
-            } h-3 rounded-full duration-1000 bg-[#ff8216] ml-1`}></View>
+            } h-3 rounded-full duration-1000 bg-[#ff8216] ml-1`}
+          ></View>
         </View>
         <AnimatedButton
           animation={"slideInUp"}
           className="bg-[#ff8216] absolute bottom-12 w-11/12 flex items-center justify-center py-3 rounded-3xl"
-          onPress={() => service.onboardHandler(setNre, nre, navigation)}>
+          onPress={() => service.onboardHandler(setNre, nre, navigation)}
+        >
           <Text className="text-white text-xl font-[400]">Next</Text>
         </AnimatedButton>
       </View>

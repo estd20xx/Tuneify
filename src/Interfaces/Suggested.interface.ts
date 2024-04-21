@@ -1,7 +1,7 @@
-import {ChartsTypes} from "../Types/Types"
-import {Tr, TrendingAlbumTypes, AlbumTypes} from "./album.interface"
-import {TrendingSongTypes} from "./songs.interface"
-import {PlaylistTypes} from "./playlist.interface"
+import { ChartsTypes } from "../Types/Types"
+import { Tr, TrendingAlbumTypes, AlbumTypes } from "./album.interface"
+import { TrendingSongTypes } from "./songs.interface"
+import { PlaylistTypes } from "./playlist.interface"
 export interface SuggestedDataInterfaceChild {
   albums: AlbumTypes[]
   playlists: PlaylistTypes[]

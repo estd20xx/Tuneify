@@ -1,5 +1,5 @@
-import {Text, TouchableOpacity} from "react-native"
-import React, {useEffect, useState} from "react"
+import { Text, TouchableOpacity } from "react-native"
+import React, { useEffect, useState } from "react"
 import Image from "react-native-fast-image"
 import SongPlayer from "./SongPlayer"
 import {
@@ -9,21 +9,21 @@ import {
   useTrackPlayerEvents,
   PlaybackState,
 } from "react-native-track-player"
-import {View} from "react-native-animatable"
-import {Icons} from "../../constants/Icon"
-import {tuneifySongs} from "../../store/slices/song.slice"
+import { View } from "react-native-animatable"
+import { Icons } from "../../constants/Icon"
+import { tuneifySongs } from "../../store/slices/song.slice"
 import TuneifyService from "../../services/Tuneify.service"
-import {lyricsApi} from "../../api/api"
-import {TypedSelectorHook, useAppDispatch} from "../../hooks/store.hook"
+import { lyricsApi } from "../../api/api"
+import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 const service = new TuneifyService(lyricsApi)
-import {tunifyChild} from "../../store/slices/childState.slice"
+import { tunifyChild } from "../../store/slices/childState.slice"
 const BottomPlayer = () => {
   const dispatch = useAppDispatch()
   const data = TypedSelectorHook(tuneifySongs)
   const state = TypedSelectorHook(tunifyChild)
   const [isVisible, setIsVisible] = useState(false)
   const [cTrack, setCTrack] = useState<Track>()
-  const playbackState: PlaybackState | {state: undefined} = usePlaybackState()
+  const playbackState: PlaybackState | { state: undefined } = usePlaybackState()
   useEffect(() => {
     if (data.songs.length > 0) {
       service.setUpPlayer(data)
@@ -52,18 +52,19 @@ const BottomPlayer = () => {
             }}
             onPress={() => {
               setIsVisible(true)
-            }}>
+            }}
+          >
             <View className="flex flex-row  w-11/12 overflow-hidden">
               <Image
                 source={{
                   uri: cTrack?.artwork ? cTrack?.artwork : cTrack?.cover,
-                  headers: {Authorization: "songs"},
+                  headers: { Authorization: "songs" },
                   priority: Image.priority.high,
                   cache: Image.cacheControl.immutable,
                 }}
-                style={{width: 50, height: 50, borderRadius: 5}}
+                style={{ width: 50, height: 50, borderRadius: 5 }}
               />
-              <View style={{marginLeft: 10}}>
+              <View style={{ marginLeft: 10 }}>
                 <Text className="text-white  mb-1 text-sm font-['500']  tracking-wider">
                   {cTrack.title!.length > 32
                     ? cTrack.title?.slice(0, 32) + "..."
@@ -79,7 +80,8 @@ const BottomPlayer = () => {
             <TouchableOpacity
               onPress={() =>
                 service.playPauseAction(playbackState, state, dispatch)
-              }>
+              }
+            >
               {state.isPlaying ? (
                 <Icons.PlayIcon name="pause" color={"white"} size={30} />
               ) : (

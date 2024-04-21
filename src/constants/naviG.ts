@@ -1,9 +1,9 @@
-import {navigationStrings} from "../NavigationStrings/NavigationStrings"
-import {TabItemTypes} from "../Types/Types"
-import {component} from "./screens"
-import {Icons} from "./Icon"
-import {OnBoardingDataTypes} from "../Interfaces/onboard.interface"
-import {ItemTypes} from "../Interfaces/icons.interface"
+import { navigationStrings } from "../NavigationStrings/NavigationStrings"
+import { TabItemTypes } from "../Types/Types"
+import { component } from "./screens"
+import { Icons } from "./Icon"
+import { OnBoardingDataTypes } from "../Interfaces/onboard.interface"
+import { ItemTypes } from "../Interfaces/icons.interface"
 export const tabBar: TabItemTypes[] = [
   {
     name: "Suggested",

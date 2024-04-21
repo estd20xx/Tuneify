@@ -1,4 +1,4 @@
-import {DownloadUrlType, ImageType} from "../Types/Types"
+import { DownloadUrlType, ImageType } from "../Types/Types"
 export interface SongsTypes {
   id: string
   name: string

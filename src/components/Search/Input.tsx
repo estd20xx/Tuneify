@@ -1,7 +1,7 @@
-import {View, Pressable} from "react-native"
+import { View, Pressable } from "react-native"
 import React from "react"
-import {TextInput} from "react-native-paper"
-import {Icons} from "../../constants/Icon"
+import { TextInput } from "react-native-paper"
+import { Icons } from "../../constants/Icon"
 interface InputComponentProps {
   setSearchQuery: (value: string) => void
   handleSearch: () => void
@@ -21,7 +21,7 @@ const Input: React.FC<InputComponentProps> = ({
         textColor="white"
         value={searchQuery}
         keyboardType="name-phone-pad"
-        onChangeText={e => setSearchQuery(e)}
+        onChangeText={(e) => setSearchQuery(e)}
         returnKeyType="search"
         returnKeyLabel="search"
         onSubmitEditing={handleSearch}

@@ -1,5 +1,5 @@
-import {PermissionsAndroid} from "react-native"
-import {Ipermission} from "../Interfaces/Permission.interface"
+import { PermissionsAndroid } from "react-native"
+import { Ipermission } from "../Interfaces/Permission.interface"
 export default class PermissionService implements Ipermission {
   public askPermission = async (): Promise<boolean> => {
     try {

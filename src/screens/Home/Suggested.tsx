@@ -1,12 +1,12 @@
-import {View, ScrollView, RefreshControl} from "react-native"
-import React, {useEffect, useState, useCallback} from "react"
-import {component} from "../../constants/screens"
+import { View, ScrollView, RefreshControl } from "react-native"
+import React, { useEffect, useState, useCallback } from "react"
+import { component } from "../../constants/screens"
 import SuggestedServices from "../../services/suggested.service"
 const service = new SuggestedServices()
 import Toast from "react-native-toast-message"
 import MainSkeleton from "../../components/skeleton/MainSkeleton"
-import {HomeDataResponse} from "../../api/interface/module.interface"
-import {HomeService} from "../../api/service/home.service"
+import { HomeDataResponse } from "../../api/interface/module.interface"
+import { HomeService } from "../../api/service/home.service"
 const homeService = new HomeService()
 const Suggested = () => {
   const [data, setData] = useState<HomeDataResponse>()
@@ -32,9 +32,8 @@ const Suggested = () => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      refreshControl={
-        <RefreshControl refreshing={ref} onRefresh={onRefresh} />
-      }>
+      refreshControl={<RefreshControl refreshing={ref} onRefresh={onRefresh} />}
+    >
       <View className=" w-full h-auto pb-10">
         {ld ? (
           <MainSkeleton />

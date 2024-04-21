@@ -1,4 +1,4 @@
-import {ImageApi} from "./module.interface"
+import { ImageApi } from "./module.interface"
 
 export interface Audio {
   quality: string

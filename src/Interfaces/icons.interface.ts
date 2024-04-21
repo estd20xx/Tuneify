@@ -1,4 +1,4 @@
-import {Icons} from "../constants/Icon"
+import { Icons } from "../constants/Icon"
 export interface ItemTypes {
   name: string
   activeSize: number
