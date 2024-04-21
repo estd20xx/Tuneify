@@ -1,6 +1,6 @@
-import {createSlice} from "@reduxjs/toolkit"
-import {RootState} from "../store"
-import {InitialChildStateTypes} from "../../Interfaces/tuneifySlice.interface"
+import { createSlice } from "@reduxjs/toolkit"
+import { RootState } from "../store"
+import { InitialChildStateTypes } from "../../Interfaces/tuneifySlice.interface"
 const initialState: InitialChildStateTypes = {
   isPlaying: false,
   isLoading: false,
@@ -18,7 +18,7 @@ const childStateSlice = createSlice({
     },
   },
 })
-export const {changeTunifyState, changeTunifyRepeatMode} =
+export const { changeTunifyState, changeTunifyRepeatMode } =
   childStateSlice.actions
 export const tunifyChild = (state: RootState) =>
   state.persistedReducer.childState

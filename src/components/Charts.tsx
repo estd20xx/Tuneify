@@ -1,25 +1,26 @@
-import {View, Text, FlatList, TouchableOpacity} from "react-native"
-import React, {useCallback} from "react"
-import {ChartsPropsTypes, RootStackParamList} from "../Types/Types"
+import { View, Text, FlatList, TouchableOpacity } from "react-native"
+import React, { useCallback } from "react"
+import { ChartsPropsTypes, RootStackParamList } from "../Types/Types"
 import Image from "react-native-fast-image"
-import {ChartsResponse} from "../api/interface/module.interface"
-import {useNavigation} from "@react-navigation/core"
-import {NativeStackNavigationProp} from "@react-navigation/native-stack"
-const Charts: React.FC<ChartsPropsTypes> = ({data, topic}) => {
+import { ChartsResponse } from "../api/interface/module.interface"
+import { useNavigation } from "@react-navigation/core"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+const Charts: React.FC<ChartsPropsTypes> = ({ data, topic }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>()
   const renderItem = useCallback(
-    ({item}: {item: ChartsResponse}) => (
+    ({ item }: { item: ChartsResponse }) => (
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("PlaylistDetails", {playlistData: item})
-        }}>
+          navigation.navigate("PlaylistDetails", { playlistData: item })
+        }}
+      >
         <View className=" flex items-center justify-center w-36 ml-2">
           <View className=" h-36 w-36  rounded-3xl overflow-hidden">
             <Image
               source={{
                 uri: item.artwork[2].link,
-                headers: {Authorization: "someAuthToken"},
+                headers: { Authorization: "someAuthToken" },
                 priority: Image.priority.normal,
                 cache: Image.cacheControl.immutable,
               }}
@@ -49,7 +50,7 @@ const Charts: React.FC<ChartsPropsTypes> = ({data, topic}) => {
         horizontal
         data={data}
         showsHorizontalScrollIndicator={false}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         initialNumToRender={3}
         maxToRenderPerBatch={4}
         removeClippedSubviews={true}

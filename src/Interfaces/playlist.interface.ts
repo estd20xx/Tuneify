@@ -1,5 +1,5 @@
-import {PlaylistResponse} from "../api/interface/module.interface"
-import {ImageType} from "../Types/Types"
+import { PlaylistResponse } from "../api/interface/module.interface"
+import { ImageType } from "../Types/Types"
 
 interface PlaylistTypes {
   id: string

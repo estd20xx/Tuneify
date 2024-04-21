@@ -1,5 +1,5 @@
 import React from "react"
-import {Snackbar} from "react-native-paper"
+import { Snackbar } from "react-native-paper"
 interface MessageInterface {
   message: string
   isvisible: boolean
@@ -19,7 +19,8 @@ const Messanger: React.FC<MessageInterface> = ({
       duration={300}
       action={{
         label: "Undo",
-      }}>
+      }}
+    >
       {message}
     </Snackbar>
   )

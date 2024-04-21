@@ -1,5 +1,5 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit"
-import {persistReducer, persistStore} from "redux-persist"
+import { combineReducers, configureStore } from "@reduxjs/toolkit"
+import { persistReducer, persistStore } from "redux-persist"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import userSlice from "./slices/user.slice"
 import favouriteSlice from "./slices/favourite.slice"
@@ -25,8 +25,8 @@ const RootReducer = combineReducers({
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({
-  reducer: {persistedReducer},
-  middleware: getDefaultMiddleware =>
+  reducer: { persistedReducer },
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),

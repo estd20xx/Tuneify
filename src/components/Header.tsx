@@ -1,6 +1,6 @@
-import {View, Text, TouchableOpacity} from "react-native"
+import { View, Text, TouchableOpacity } from "react-native"
 import React from "react"
-import {Icons} from "../constants/Icon"
+import { Icons } from "../constants/Icon"
 const Header = () => {
   return (
     <View className=" w-full h-10 flex items-center justify-between flex-row">

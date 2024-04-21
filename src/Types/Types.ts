@@ -1,4 +1,4 @@
-import {NativeStackNavigationProp} from "@react-navigation/native-stack"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import React from "react"
 import {
   AlbumResponse,
@@ -31,8 +31,8 @@ export type RootStackParamList = {
   settings: undefined
   home: undefined
   bottom: undefined
-  TrendingAlbumDetails: {albumData: AlbumResponse}
-  PlaylistDetails: {playlistData: PlaylistResponse}
+  TrendingAlbumDetails: { albumData: AlbumResponse }
+  PlaylistDetails: { playlistData: PlaylistResponse }
   albumsDetails: undefined
   trendingSongDetails: undefined
   charts: undefined

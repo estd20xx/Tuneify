@@ -1,21 +1,21 @@
 import React from "react"
-import {View} from "react-native"
-import {CommonActions} from "@react-navigation/native"
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
-import {BottomNavigation} from "react-native-paper"
-import {TabItems} from "../constants/naviG"
+import { View } from "react-native"
+import { CommonActions } from "@react-navigation/native"
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { BottomNavigation } from "react-native-paper"
+import { TabItems } from "../constants/naviG"
 import BottomPlayer from "../components/Player/BottomPlayer"
-import {ItemTypes} from "../Interfaces/icons.interface"
+import { ItemTypes } from "../Interfaces/icons.interface"
 const Tab = createBottomTabNavigator()
 const BottomTab = () => {
   return (
     <Tab.Navigator
-      screenOptions={{headerShown: false}}
-      tabBar={({navigation, state, descriptors, insets}) => (
+      screenOptions={{ headerShown: false }}
+      tabBar={({ navigation, state, descriptors, insets }) => (
         <View>
           <BottomPlayer />
           <BottomNavigation.Bar
-            theme={{colors: {secondaryContainer: "#2D3250"}}}
+            theme={{ colors: { secondaryContainer: "#2D3250" } }}
             navigationState={state}
             safeAreaInsets={insets}
             shifting={true}
@@ -24,7 +24,7 @@ const BottomTab = () => {
             style={{
               backgroundColor: "#000000",
             }}
-            onTabPress={({route, preventDefault}) => {
+            onTabPress={({ route, preventDefault }) => {
               const event = navigation.emit({
                 type: "tabPress",
                 target: route.key,
@@ -40,19 +40,20 @@ const BottomTab = () => {
                 })
               }
             }}
-            renderIcon={({route, focused, color}) => {
-              const {options} = descriptors[route.key]
+            renderIcon={({ route, focused, color }) => {
+              const { options } = descriptors[route.key]
               if (options.tabBarIcon) {
-                return options.tabBarIcon({focused, color, size: 24})
+                return options.tabBarIcon({ focused, color, size: 24 })
               }
               return null
             }}
-            getLabelText={({route}) => {
+            getLabelText={({ route }) => {
               return route.name
             }}
           />
         </View>
-      )}>
+      )}
+    >
       {TabItems.map((item: ItemTypes) => {
         return (
           <Tab.Screen
@@ -60,7 +61,7 @@ const BottomTab = () => {
             component={item.component}
             key={item.name}
             options={{
-              tabBarIcon: ({color}) => (
+              tabBarIcon: ({ color }) => (
                 <item.Active
                   name={item.activeName}
                   color={color}

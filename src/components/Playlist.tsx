@@ -1,26 +1,27 @@
-import {View, Text, FlatList, TouchableOpacity} from "react-native"
-import React, {useCallback} from "react"
-import {RootStackParamList} from "../Types/Types"
-import {useNavigation} from "@react-navigation/core"
-import {NativeStackNavigationProp} from "@react-navigation/native-stack"
+import { View, Text, FlatList, TouchableOpacity } from "react-native"
+import React, { useCallback } from "react"
+import { RootStackParamList } from "../Types/Types"
+import { useNavigation } from "@react-navigation/core"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import Image from "react-native-fast-image"
-import {PlaylistDataProps} from "../Interfaces/playlist.interface"
-import {PlaylistResponse} from "../api/interface/module.interface"
-const Playlist: React.FC<PlaylistDataProps> = ({data, topic}) => {
+import { PlaylistDataProps } from "../Interfaces/playlist.interface"
+import { PlaylistResponse } from "../api/interface/module.interface"
+const Playlist: React.FC<PlaylistDataProps> = ({ data, topic }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>()
   const renderItem = useCallback(
-    ({item}: {item: PlaylistResponse}) => (
+    ({ item }: { item: PlaylistResponse }) => (
       <TouchableOpacity
         className="   flex items-center justify-center ml-2"
         onPress={() =>
-          navigation.navigate("PlaylistDetails", {playlistData: item})
-        }>
+          navigation.navigate("PlaylistDetails", { playlistData: item })
+        }
+      >
         <View className=" h-36 w-36  rounded-full overflow-hidden">
           <Image
             source={{
               uri: item.artwork[2].link,
-              headers: {Authorization: "someAuthToken"},
+              headers: { Authorization: "someAuthToken" },
               priority: Image.priority.normal,
               cache: Image.cacheControl.immutable,
             }}
@@ -49,7 +50,7 @@ const Playlist: React.FC<PlaylistDataProps> = ({data, topic}) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={data}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         initialNumToRender={3}
         maxToRenderPerBatch={4}
         removeClippedSubviews={true}

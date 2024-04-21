@@ -1,8 +1,8 @@
-import {View, Text, Image, FlatList, TouchableOpacity} from "react-native"
-import {settingsData} from "../constants/Settings"
+import { View, Text, Image, FlatList, TouchableOpacity } from "react-native"
+import { settingsData } from "../constants/Settings"
 import UserImage from "react-native-fast-image"
-import {TypedSelectorHook, useAppDispatch} from "../hooks/store.hook"
-import {tuneifyUser} from "../store/slices/user.slice"
+import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
+import { tuneifyUser } from "../store/slices/user.slice"
 import Toast from "react-native-toast-message"
 import SettingService from "../services/setting.service"
 const settingService = new SettingService()
@@ -19,11 +19,12 @@ const Settings = () => {
       <View className="w-full h-20  overflow-hidden flex items-center flex-row pl-2">
         <TouchableOpacity
           className="-z-30"
-          onPress={() => settingService.changeProfileImage(dispatch)}>
+          onPress={() => settingService.changeProfileImage(dispatch)}
+        >
           <UserImage
             source={{
               uri: settingData.image,
-              headers: {Authorization: "userImage"},
+              headers: { Authorization: "userImage" },
               priority: UserImage.priority.high,
               cache: UserImage.cacheControl.immutable,
             }}
@@ -37,7 +38,7 @@ const Settings = () => {
       <Toast />
       <FlatList
         data={settingsData}
-        renderItem={({item}) => {
+        renderItem={({ item }) => {
           return (
             <TouchableOpacity
               style={{
@@ -50,10 +51,11 @@ const Settings = () => {
                 marginTop: 4,
                 alignSelf: "center",
                 // backgroundColor: "red"
-              }}>
+              }}
+            >
               <Image
                 source={item.leftIcon}
-                style={{tintColor: "#d0d0d1"}}
+                style={{ tintColor: "#d0d0d1" }}
                 className="h-5 w-5"
               />
               <Text className="ml-4 text-gray-300 text-base font-['300'] tracking-widest">

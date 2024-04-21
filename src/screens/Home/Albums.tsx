@@ -1,9 +1,9 @@
-import {View, ScrollView} from "react-native"
-import React, {useEffect, useState} from "react"
+import { View, ScrollView } from "react-native"
+import React, { useEffect, useState } from "react"
 import AlbumService from "../../services/album.service"
-import {albumsApi} from "../../api/api"
-import {component} from "../../constants/screens"
-import {SeperateAlbumTypes} from "../../Interfaces/album.interface"
+import { albumsApi } from "../../api/api"
+import { component } from "../../constants/screens"
+import { SeperateAlbumTypes } from "../../Interfaces/album.interface"
 const service = new AlbumService(albumsApi)
 const Albums = () => {
   const [cAlb, setCAlb] = useState<SeperateAlbumTypes[]>([])
@@ -15,7 +15,7 @@ const Albums = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View className=" w-full h-auto flex flex-row flex-wrap justify-evenly py-3 pb-20">
         {isL
-          ? Array.from({length: 6}, (_, index) => {
+          ? Array.from({ length: 6 }, (_, index) => {
               return <component.CSeperateSkeleton key={index} />
             })
           : cAlb.map((cA: SeperateAlbumTypes) => {

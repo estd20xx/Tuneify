@@ -1,4 +1,4 @@
-import {onBoardingScreen} from "../Types/Types"
+import { onBoardingScreen } from "../Types/Types"
 export interface OnBoardingDataTypes {
   first: string
   second: string

@@ -1,5 +1,5 @@
 import axios from "axios"
-import {ITuneify} from "../Interfaces/tuneifySetUp.interface"
+import { ITuneify } from "../Interfaces/tuneifySetUp.interface"
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
@@ -14,7 +14,7 @@ import {
   changeTunifyRepeatMode,
   changeTunifyState,
 } from "../store/slices/childState.slice"
-import {Dispatch, UnknownAction} from "@reduxjs/toolkit"
+import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
 import {
   InitialChildStateTypes,
   InitialSongStateTypes,
@@ -105,7 +105,7 @@ export default class TuneifyService
     }, period * 1000 * 60)
   }
   public playPauseAction = async (
-    playbackState: PlaybackState | {state: undefined},
+    playbackState: PlaybackState | { state: undefined },
     state: InitialChildStateTypes,
     dispatch: Dispatch<UnknownAction>
   ): Promise<void> => {

@@ -1,6 +1,6 @@
-import {createSlice} from "@reduxjs/toolkit"
-import {RootState} from "../store"
-import {InitialCurrentStateTypes} from "../../Interfaces/tuneifySlice.interface"
+import { createSlice } from "@reduxjs/toolkit"
+import { RootState } from "../store"
+import { InitialCurrentStateTypes } from "../../Interfaces/tuneifySlice.interface"
 
 const initialState: InitialCurrentStateTypes = {
   albumId: "",
@@ -9,11 +9,9 @@ const initialState: InitialCurrentStateTypes = {
 const parentState = createSlice({
   name: "parentDev",
   initialState,
-  reducers: {
-    test(state: InitialCurrentStateTypes) {},
-  },
+  reducers: {},
 })
-export const {test} = parentState.actions
+export const {} = parentState.actions
 export const tunifyParent = (state: RootState) =>
   state.persistedReducer.parentState
 export default parentState.reducer

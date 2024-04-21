@@ -2,7 +2,10 @@ import {
   AlbumDetailsRequest,
   AlbumDetailsResponse,
 } from "../interface/album.interface"
-import {HomeDataRequest, HomeDataResponse} from "../interface/module.interface"
+import {
+  HomeDataRequest,
+  HomeDataResponse,
+} from "../interface/module.interface"
 import {
   createDownloadLinks,
   handleArtists,
@@ -13,7 +16,7 @@ export class PayloadService {
   protected homePayload(homeDataRequest: HomeDataRequest): HomeDataResponse {
     const homeDataPayload: HomeDataResponse = {
       tuneifyTrendingAlbumsResponse: homeDataRequest.tuneifyTrendingAlbums.map(
-        current => {
+        (current) => {
           return {
             id: current.id,
             title: current.title,
@@ -31,7 +34,7 @@ export class PayloadService {
         }
       ),
       tuneifyTopPlaylistsResponse: homeDataRequest.tuneifyTopPlaylists.map(
-        current => {
+        (current) => {
           return {
             id: current.id,
             title: current.title,
@@ -50,7 +53,7 @@ export class PayloadService {
         }
       ),
 
-      tuneifyChartsResponse: homeDataRequest.tuneifyCharts.map(current => {
+      tuneifyChartsResponse: homeDataRequest.tuneifyCharts.map((current) => {
         return {
           id: current.id,
           title: current.title,
@@ -60,7 +63,7 @@ export class PayloadService {
           perma_url: current.perma_url,
         }
       }),
-      tuneifyAlbumsResponse: homeDataRequest.tuneifyAlbums.map(current => {
+      tuneifyAlbumsResponse: homeDataRequest.tuneifyAlbums.map((current) => {
         return {
           id: current.id,
           title: current.title,
@@ -92,7 +95,7 @@ export class PayloadService {
       year: albumDetails.year,
       list_count: albumDetails.list_count,
       list_type: albumDetails.list_type,
-      songs: albumDetails.list.map(current => {
+      songs: albumDetails.list.map((current) => {
         return {
           id: current.id,
           title: current.title,

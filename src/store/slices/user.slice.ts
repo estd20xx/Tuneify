@@ -1,7 +1,7 @@
-import {PayloadAction, createSlice} from "@reduxjs/toolkit"
-import {RootState} from "../store"
-import {InitialUserState} from "../../Interfaces/tuneifySlice.interface"
-import {Image} from "react-native"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { RootState } from "../store"
+import { InitialUserState } from "../../Interfaces/tuneifySlice.interface"
+import { Image } from "react-native"
 const initialState: InitialUserState = {
   userName: "namelessnerd",
   image: Image.resolveAssetSource(require("../../assets/images/developer.jpg"))
@@ -19,6 +19,6 @@ const userSlices = createSlice({
     },
   },
 })
-export const {addUser, changeProfile} = userSlices.actions
+export const { addUser, changeProfile } = userSlices.actions
 export const tuneifyUser = (state: RootState) => state.persistedReducer.user
 export default userSlices.reducer

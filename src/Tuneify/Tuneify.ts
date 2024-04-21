@@ -1,4 +1,4 @@
-import TuneifyPlayer, {Event} from "react-native-track-player"
+import TuneifyPlayer, { Event } from "react-native-track-player"
 module.exports = async function () {
   try {
     TuneifyPlayer.addEventListener(Event.RemotePlay, () => {
@@ -13,7 +13,7 @@ module.exports = async function () {
     TuneifyPlayer.addEventListener(Event.RemotePrevious, () => {
       TuneifyPlayer.skipToPrevious()
     })
-    TuneifyPlayer.addEventListener(Event.RemoteSeek, ({position}) => {
+    TuneifyPlayer.addEventListener(Event.RemoteSeek, ({ position }) => {
       TuneifyPlayer.seekTo(position)
     })
     TuneifyPlayer.addEventListener(Event.RemoteStop, () => {

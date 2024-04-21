@@ -1,6 +1,6 @@
-import {PayloadAction, createSlice} from "@reduxjs/toolkit"
-import {Themes, themes} from "../../constants/colors"
-import {RootState} from "../store"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { Themes, themes } from "../../constants/colors"
+import { RootState } from "../store"
 const initialState: Themes = {
   text: " rgb(253, 231, 245)",
   background: " rgb(29, 2, 21)",
@@ -18,7 +18,7 @@ const themeSlice = createSlice({
     },
   },
 })
-export const {assignTheme} = themeSlice.actions
+export const { assignTheme } = themeSlice.actions
 export const tunifyThemeData = (state: RootState) =>
   state.persistedReducer.theme
 export default themeSlice.reducer

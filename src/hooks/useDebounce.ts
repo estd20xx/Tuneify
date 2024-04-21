@@ -1,4 +1,4 @@
-import {useState, useEffect, useCallback} from "react"
+import { useState, useEffect, useCallback } from "react"
 export const useDebounce = (query: string, milliSeconds: number) => {
   const [debouncedValue, setDebouncedValue] = useState<string>(query)
   const [isloading, setIsloading] = useState<boolean>(false)
@@ -21,5 +21,5 @@ export const useDebounce = (query: string, milliSeconds: number) => {
       clearTimeout(handler)
     }
   }, [query, milliSeconds])
-  return {debouncedValue, isloading}
+  return { debouncedValue, isloading }
 }

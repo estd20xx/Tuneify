@@ -1,7 +1,7 @@
-import React, {useEffect} from "react"
-import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs"
-import {tabBar} from "../constants/naviG"
-import {Platform, StatusBar} from "react-native"
+import React, { useEffect } from "react"
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
+import { tabBar } from "../constants/naviG"
+import { Platform, StatusBar } from "react-native"
 const Tab = createMaterialTopTabNavigator()
 const TabBar = () => {
   useEffect(() => {
@@ -35,8 +35,9 @@ const TabBar = () => {
           marginLeft: -10,
           fontFamily: "600",
         },
-      }}>
-      {tabBar.map(bar => {
+      }}
+    >
+      {tabBar.map((bar) => {
         return (
           <Tab.Screen
             name={bar.name}
