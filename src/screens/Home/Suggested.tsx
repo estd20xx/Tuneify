@@ -3,30 +3,20 @@ import React, { useEffect, useState, useCallback } from "react"
 import { component } from "../../constants/screens"
 import SuggestedServices from "../../services/suggested.service"
 const service = new SuggestedServices()
-import Toast from "react-native-toast-message"
 import MainSkeleton from "../../components/skeleton/MainSkeleton"
-import { HomeDataResponse } from "../../api/interface/module.interface"
-import { HomeService } from "../../api/service/home.service"
-const homeService = new HomeService()
+import { homeService } from "../../store/actions/home.action"
+import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import { homeData } from "../../store/slices/home.slice"
 const Suggested = () => {
-  const [data, setData] = useState<HomeDataResponse>()
-  const [ld, setLd] = useState<boolean>(true)
   const [ref, setRef] = useState(false)
-  const getDa = async () => {
-    try {
-      const data = await homeService.getHomeData()
-      setData(data)
-      setLd(false)
-    } catch (error) {
-      console.log("error frontend")
-    }
-  }
+  const dispatch = useAppDispatch()
+  const data = TypedSelectorHook(homeData)
   useEffect(() => {
-    getDa()
+    dispatch(homeService.getHomeData())
   }, [])
   const onRefresh = useCallback(async () => {
     setRef(true)
-    getDa()
+    dispatch(homeService.getHomeData())
     await service.wait(2000).then(() => setRef(false))
   }, [])
   return (
@@ -35,35 +25,29 @@ const Suggested = () => {
       refreshControl={<RefreshControl refreshing={ref} onRefresh={onRefresh} />}
     >
       <View className=" w-full h-auto pb-10">
-        {ld ? (
+        {data.isLoading && !data.data ? (
           <MainSkeleton />
         ) : (
-          <>
-            {data && (
+          data.data && (
+            <View>
               <component.CTrendingAlbum
-                data={data?.tuneifyTrendingAlbumsResponse}
+                data={data?.data.tuneifyTrendingAlbumsResponse}
                 topic={"Trending Albums"}
               />
-            )}
-            {data && (
               <component.CPlaylist
-                data={data?.tuneifyTopPlaylistsResponse}
+                data={data?.data.tuneifyTopPlaylistsResponse}
                 topic={"Playlists"}
               />
-            )}
-            {data && (
               <component.CAlbums
-                data={data?.tuneifyAlbumsResponse}
+                data={data?.data.tuneifyAlbumsResponse}
                 topic={"Albums"}
               />
-            )}
-            {data && (
               <component.CCharts
-                data={data.tuneifyChartsResponse}
+                data={data.data.tuneifyChartsResponse}
                 topic={"Top Flavour"}
               />
-            )}
-          </>
+            </View>
+          )
         )}
       </View>
     </ScrollView>

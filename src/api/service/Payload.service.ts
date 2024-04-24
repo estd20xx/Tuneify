@@ -11,8 +11,8 @@ import {
   handleArtists,
   handleImageVariation,
 } from "../utils/utils"
-
-export class PayloadService {
+import { ApiService } from "./api.service"
+export class PayloadService extends ApiService {
   protected homePayload(homeDataRequest: HomeDataRequest): HomeDataResponse {
     const homeDataPayload: HomeDataResponse = {
       tuneifyTrendingAlbumsResponse: homeDataRequest.tuneifyTrendingAlbums.map(
@@ -52,7 +52,6 @@ export class PayloadService {
           }
         }
       ),
-
       tuneifyChartsResponse: homeDataRequest.tuneifyCharts.map((current) => {
         return {
           id: current.id,
