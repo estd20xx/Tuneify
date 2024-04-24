@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from "react"
 export const useDebounce = (query: string, milliSeconds: number) => {
   const [debouncedValue, setDebouncedValue] = useState<string>(query)
   const [isloading, setIsloading] = useState<boolean>(false)
-
   const handleSearch = useCallback(async () => {
     setIsloading(true)
     try {

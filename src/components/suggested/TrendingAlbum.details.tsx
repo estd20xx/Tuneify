@@ -12,11 +12,8 @@ import {
   addTrackIndex,
   tunifyCurrentTrack,
 } from "../../store/slices/currentTrack.slice"
-import SongSkeleton from "../skeleton/SongSkeleton"
-
-import { ApiAlbumService } from "../../api/service/album.service"
-import { AlbumDetailsResponse } from "../../api/interface/album.interface"
-const apiService = new ApiAlbumService()
+import { album } from "../../store/actions/album.action"
+import { albumData } from "../../store/slices/album.slice"
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
   route,
 }) => {
@@ -24,17 +21,9 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
   const current = TypedSelectorHook(tunifyCurrentTrack)
   const [data, setData] = useState(route.params.albumData)
   const storeSongs = TypedSelectorHook(tuneifySongs)
-  const [albumSongs, setAlbumSongs] = useState<AlbumDetailsResponse>()
-  const fetchAudio = async () => {
-    try {
-      const albumData = await apiService.getAlbumSongs(data.id)
-      setAlbumSongs(albumData)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const albumSongs = TypedSelectorHook(albumData)
   useEffect(() => {
-    fetchAudio()
+    dispatch(album.getAlbumSongs(route.params.albumData.id))
   }, [])
   // useEffect(() => {
   //   if (albumSongs?.songs.length != 0) {
@@ -84,8 +73,8 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
             </Text>
           </TouchableOpacity>
         </View>
-        {albumSongs?.songs.length != 0 &&
-          albumSongs?.songs.map((currentSong, index) => {
+        {!albumSongs.isLoading &&
+          albumSongs?.data?.songs.map((currentSong, index) => {
             return (
               <TouchableOpacity
                 key={currentSong.id}

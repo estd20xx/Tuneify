@@ -9,8 +9,11 @@ import childStateSlice from "./slices/childState.slice"
 import parentStateSlice from "./slices/parentState.slice"
 import currentTrackSlice from "./slices/currentTrack.slice"
 import themeSlice from "./slices/theme.slice."
+import homeSlice from "./slices/home.slice"
+import albumSlice from "./slices/album.slice"
 const persistConfig = {
   key: "testTuneify",
+  version: 1,
   storage: AsyncStorage,
 }
 const RootReducer = combineReducers({
@@ -22,6 +25,10 @@ const RootReducer = combineReducers({
   parentState: parentStateSlice,
   currentTrack: currentTrackSlice,
   theme: themeSlice,
+
+  // new
+  home: homeSlice,
+  album: albumSlice,
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({
