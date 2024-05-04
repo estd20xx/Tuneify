@@ -6,14 +6,13 @@ import {
 import { IlocalMedia } from "../Interfaces/localMedia.interface"
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
 import { addLocalFiles } from "../store/slices/offline.slice"
-import { Song } from "react-native-get-music-files/lib/typescript/src/NativeTurboSongs"
 export default class LocalMediaService implements IlocalMedia {
   getLocalmedia = async (
     dispatch: Dispatch<UnknownAction>
   ): Promise<boolean> => {
     try {
       const songsOrError = await getAll({
-        limit: 150,
+        limit: Infinity,
         offset: 0,
         coverQuality: 50,
         minSongDuration: 1000,

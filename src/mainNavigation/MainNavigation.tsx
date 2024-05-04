@@ -18,6 +18,7 @@ const MainNavigation = () => {
               component={cn.component}
               options={{
                 headerShown: false,
+
                 animation: "ios",
                 presentation: "card",
               }}
