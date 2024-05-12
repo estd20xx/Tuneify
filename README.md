@@ -20,12 +20,3 @@ Contributions are welcome. Please read our [contributing guidelines](https://git
 2. primary--> for important button or ssections
 3. secondary --> after secondary less important
 4. accent --> for links
-
-
-
-33 Test
-asda asd
-as
-d
-asd
-sdfsdf
