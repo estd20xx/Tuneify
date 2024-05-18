@@ -1,4 +1,4 @@
-import { FlatList, Text, TouchableOpacity, View } from "react-native"
+import { FlatList, Text, TouchableOpacity, View, Image as Img } from "react-native"
 import React, { useCallback, useState } from "react"
 import Input from "../components/Search/Input"
 import { TypedSelectorHook } from "../hooks/store.hook"
@@ -6,6 +6,7 @@ import { tuneifySongs } from "../store/slices/song.slice"
 import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
 import axios from "axios"
 import { useDebounce } from "../hooks/useDebounce"
+import NotFound from "../components/Not-found"
 const Search = () => {
   const { debouncedValue, isloading } = useDebounce("ok", 2)
   const data = TypedSelectorHook(tuneifySongs)
@@ -21,14 +22,14 @@ const Search = () => {
   }
   const renderItem = useCallback(
     ({ item }: { item: StoreSongTypes }) => (
-      <TouchableOpacity className="w-full bg-red-500 h-16  mt-2  flex flex-row items-center">
+      <TouchableOpacity className="w-full bg-red-500 h-16  mt-2  flex flex-row items-center pl-3 rounded-xl">
         <Text>{item.title}</Text>
       </TouchableOpacity>
     ),
     []
   )
   return (
-    <View className="w-full h-screen flex items-center ">
+    <View className="w-full h-screen flex items-center">
       <Input
         setSearchQuery={setSearchQuery}
         handleSearch={handleSearch}
@@ -47,7 +48,7 @@ const Search = () => {
           renderItem={renderItem}
         />
       </View> */}
-    </View>
+    </View >
   )
 }
 export default Search

@@ -1,10 +1,8 @@
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native"
 import React, { useCallback, useEffect, useState } from "react"
-import axios from "axios"
-import { baseApi } from "../../api/api"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import { addSongList, tuneifySongs } from "../../store/slices/song.slice"
+import { tuneifySongs } from "../../store/slices/song.slice"
 import TrackPlayer from "react-native-track-player"
 import { TrendingAlbumParamsTypes } from "../../Interfaces/album.interface"
 import {
@@ -19,7 +17,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
 }) => {
   const dispatch = useAppDispatch()
   const current = TypedSelectorHook(tunifyCurrentTrack)
-  const [data, setData] = useState(route.params.albumData)
+  const [data] = useState(route.params.albumData)
   const storeSongs = TypedSelectorHook(tuneifySongs)
   const albumSongs = TypedSelectorHook(albumData)
   useEffect(() => {

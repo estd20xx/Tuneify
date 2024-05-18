@@ -1,6 +1,5 @@
 import { View } from "react-native"
 import React from "react"
-
 const SongSkeleton = () => {
   return (
     <View className=" h-auto w-full flex items-center">
