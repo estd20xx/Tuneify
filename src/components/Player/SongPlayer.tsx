@@ -25,10 +25,7 @@ import { lyricsApi } from "../../api/api"
 const service = new TuneifyService(lyricsApi)
 import { addUserFavouritesData } from "../../store/slices/favourite.slice"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import {
-  changeTunifyState,
-  tunifyChild,
-} from "../../store/slices/childState.slice"
+import { changeTunifyState, tunifyChild } from "../../store/slices/childState.slice"
 import Messanger from "../message/Message"
 const SongPlayer = ({
   isVisible,
@@ -157,7 +154,7 @@ const SongPlayer = ({
             <View className="relative h-1/2 w-full flex items-center justify-center  ">
               <Animated.View
                 style={[frontAnimatedStyle, { backfaceVisibility: "hidden" }]}
-                className=" w-[90%]  h-96   rounded-3xl overflow-hidden bg-red-500"
+                className=" w-[90%]  h-96   rounded-3xl overflow-hidden"
               >
                 <TrackImage
                   source={{
