@@ -10,6 +10,7 @@ import {
   addTrackIndex,
   tunifyCurrentTrack,
 } from "../../store/slices/currentTrack.slice"
+import NotFound from "../../components/Not-found"
 const Folders = () => {
   const testId = "1212"
   const localFile = TypedSelectorHook(tuneifyOfflines)
@@ -72,18 +73,21 @@ const Folders = () => {
     []
   )
   return (
-    <View className=" w-full h-auto">
-      <FlatList
-        data={localFile.LocalSong}
-        keyExtractor={(item) => item.url}
-        initialNumToRender={3}
-        showsVerticalScrollIndicator={false}
-        maxToRenderPerBatch={4}
-        contentContainerStyle={{ paddingBottom: 80 }}
-        removeClippedSubviews={true}
-        windowSize={10}
-        renderItem={renderItem}
-      />
+    <View className={`w-full ${localFile.LocalSong.length ? "h-auto" : "h-screen flex items-center justify-center"}`}>
+      {localFile.LocalSong.length ?
+        <FlatList
+          data={localFile.LocalSong}
+          keyExtractor={(item) => item.url}
+          initialNumToRender={3}
+          showsVerticalScrollIndicator={false}
+          maxToRenderPerBatch={4}
+          contentContainerStyle={{ paddingBottom: 80 }}
+          removeClippedSubviews={true}
+          windowSize={10}
+          renderItem={renderItem}
+        /> :
+        <NotFound />
+      }
     </View>
   )
 }

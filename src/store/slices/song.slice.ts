@@ -13,22 +13,21 @@ const songSlice = createSlice({
   name: "songDev",
   initialState,
   reducers: {
-    addSongList(
-      state: InitialSongStateTypes,
-      actions: PayloadAction<SongsTypes[]>
-    ) {
+    addSongList(state: InitialSongStateTypes, actions: PayloadAction<SongsTypes[]>) {
       const data = actions.payload.map((cx) => {
-        const t: StoreSongTypes = {
+        const songs: StoreSongTypes = {
           id: cx.id,
           title: cx.name,
           artist: cx.primaryArtists,
           artwork: cx.image[2].link,
           url: cx.downloadUrl[4].link,
         }
-        return t
+        return songs
       })
       state.songs = [...data]
     },
+    addplayListSong(state: InitialSongStateTypes) { },
+    addAlbumSongs(state: InitialSongStateTypes) { }
   },
 })
 

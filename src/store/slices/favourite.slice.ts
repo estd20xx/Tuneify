@@ -5,7 +5,6 @@ import {
 } from "../../Interfaces/tuneifySlice.interface"
 import { Track } from "react-native-track-player"
 import { RootState } from "../store"
-
 const initialState: InitialFavouriteState = {
   favouriteData: [],
 }

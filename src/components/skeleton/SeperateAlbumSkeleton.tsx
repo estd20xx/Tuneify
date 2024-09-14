@@ -12,5 +12,4 @@ const SeperateSkeleton = () => {
     </View>
   )
 }
-
 export default SeperateSkeleton

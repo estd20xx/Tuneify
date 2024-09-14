@@ -5,6 +5,8 @@ import { baseApi } from "../../api/api"
 import { Icons } from "../../constants/Icon"
 import { SongsTypes } from "../../Interfaces/songs.interface"
 import { PlaylistResponse } from "../../api/interface/module.interface"
+import { useAppDispatch } from "../../hooks/store.hook"
+import { playlist } from "../../store/actions/playlist.action"
 interface PlaylistData {
   key: string
   name: string
@@ -16,11 +18,14 @@ export interface PlaylistDetailsTypes {
   route: PlaylistData
 }
 const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
-  console.log("called")
+  console.log(route.params.playlistData.id)
+  console.log("inside playlist details")
   const [data, setData] = useState(route.params.playlistData)
   const [playlistSong, setPlaylistSongs] = useState<SongsTypes[]>([])
+  const dispatch = useAppDispatch()
   const fetchAudio = async () => {
     try {
+      // playlist here
       const PlaylistData = await axios.get(`${baseApi}playlists?id=${data.id}`)
       setPlaylistSongs(PlaylistData.data.data.songs)
     } catch (error) {
@@ -29,6 +34,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
   }
   useEffect(() => {
     fetchAudio()
+    dispatch(playlist.getPlaylistsSongs(data.id))
   }, [])
   return (
     <View className="w-full">
@@ -46,7 +52,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
               : data.title}
           </Text>
           <TouchableOpacity>
-            <Text className="text-gray-300 text-base font-['400']">Random</Text>
+            <Text className="text-gray-300 text-base font-['400']">{data.type}</Text>
           </TouchableOpacity>
         </View>
         {playlistSong.map((currentSong) => {

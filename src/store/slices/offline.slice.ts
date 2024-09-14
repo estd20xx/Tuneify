@@ -16,9 +16,7 @@ const offlineSong = createSlice({
   name: "offlineSongDev",
   initialState,
   reducers: {
-    addLocalFiles(
-      state: InitialLocalState,
-      actions: PayloadAction<LocalFileTypes[]>
+    addLocalFiles(state: InitialLocalState, actions: PayloadAction<LocalFileTypes[]>
     ) {
       const data = actions.payload.map((cx) => {
         const t: LocalFileTypes = {
