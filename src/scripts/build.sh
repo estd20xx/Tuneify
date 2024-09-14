@@ -53,8 +53,3 @@ function wantsExit {
     exit 1
 }
 checkFolderExists "$androiddDir"
-
-
-
-
-

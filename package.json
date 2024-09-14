@@ -15,7 +15,8 @@
     "build:release": "cd android && ./gradlew assembleRelease",
     "build": "./src/scripts/build.sh",
     "push": "./src/scripts/push.sh",
-    "link": "npx react-native-asset"
+    "link": "npx react-native-asset",
+    "prepare": "husky"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.21.0",
@@ -24,7 +25,7 @@
     "@react-navigation/drawer": "^6.6.7",
     "@react-navigation/material-top-tabs": "^6.6.5",
     "@react-navigation/native": "^6.1.9",
-    "@react-navigation/native-stack": "^6.9.17",
+    "@react-navigation/native-stack": "^6.11.0",
     "@reduxjs/toolkit": "^2.2.0",
     "axios": "^1.6.7",
     "depcheck": "^1.4.7",

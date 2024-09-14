@@ -1,21 +1,18 @@
-import { FlatList, Text, TouchableOpacity, View, Image as Img } from "react-native"
+import axios from "axios"
 import React, { useCallback, useState } from "react"
+import { FlatList, Text, TouchableOpacity, View } from "react-native"
 import Input from "../components/Search/Input"
 import { TypedSelectorHook } from "../hooks/store.hook"
-import { tuneifySongs } from "../store/slices/song.slice"
-import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
-import axios from "axios"
 import { useDebounce } from "../hooks/useDebounce"
-import NotFound from "../components/Not-found"
+import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
+import { tuneifySongs } from "../store/slices/song.slice"
 const Search = () => {
   const { debouncedValue, isloading } = useDebounce("ok", 2)
   const data = TypedSelectorHook(tuneifySongs)
-  console.log(data.songs.length)
   const [searchQuery, setSearchQuery] = useState<string>("")
   const handleSearch = async () => {
     try {
-      const data = await axios.get("")
-      console.log(data.data)
+      console.log(searchQuery)
     } catch (error) {
       console.log(error)
     }
@@ -35,10 +32,10 @@ const Search = () => {
         handleSearch={handleSearch}
         searchQuery={searchQuery}
       />
-      {/* <View className="w-full h-full ">
+      <View className="w-full h-full ">
         <FlatList
           data={data.songs}
-          keyExtractor={item => item.url}
+          keyExtractor={(item) => item.url}
           initialNumToRender={3}
           showsVerticalScrollIndicator={false}
           maxToRenderPerBatch={4}
@@ -47,8 +44,8 @@ const Search = () => {
           windowSize={1}
           renderItem={renderItem}
         />
-      </View> */}
-    </View >
+      </View>
+    </View>
   )
 }
 export default Search

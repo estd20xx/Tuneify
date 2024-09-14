@@ -25,7 +25,10 @@ import { lyricsApi } from "../../api/api"
 const service = new TuneifyService(lyricsApi)
 import { addUserFavouritesData } from "../../store/slices/favourite.slice"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import { changeTunifyState, tunifyChild } from "../../store/slices/childState.slice"
+import {
+  changeTunifyState,
+  tunifyChild,
+} from "../../store/slices/childState.slice"
 import Messanger from "../message/Message"
 const SongPlayer = ({
   isVisible,

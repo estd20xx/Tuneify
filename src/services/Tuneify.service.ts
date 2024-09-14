@@ -21,7 +21,8 @@ import {
 } from "../Interfaces/tuneifySlice.interface"
 export default class TuneifyService
   extends SuggestedServices
-  implements ITuneify {
+  implements ITuneify
+{
   constructor(private lyricApi: string) {
     super()
   }

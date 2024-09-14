@@ -52,7 +52,9 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
               : data.title}
           </Text>
           <TouchableOpacity>
-            <Text className="text-gray-300 text-base font-['400']">{data.type}</Text>
+            <Text className="text-gray-300 text-base font-['400']">
+              {data.type}
+            </Text>
           </TouchableOpacity>
         </View>
         {playlistSong.map((currentSong) => {

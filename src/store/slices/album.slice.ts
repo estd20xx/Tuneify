@@ -17,14 +17,29 @@ const albumSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(album.getAlbumSongs.pending, (state: InitialAlbumSongsInterface) => {
-      state.isLoading = true
-    }).addCase(album.getAlbumSongs.fulfilled, (state: InitialAlbumSongsInterface, action: PayloadAction<AlbumDetailsResponse>) => {
-      state.data = action.payload
-      state.isLoading = false
-    }).addCase(album.getAlbumSongs.rejected, (state: InitialAlbumSongsInterface) => {
-      state.isError = true
-    })
+    builder
+      .addCase(
+        album.getAlbumSongs.pending,
+        (state: InitialAlbumSongsInterface) => {
+          state.isLoading = true
+        }
+      )
+      .addCase(
+        album.getAlbumSongs.fulfilled,
+        (
+          state: InitialAlbumSongsInterface,
+          action: PayloadAction<AlbumDetailsResponse>
+        ) => {
+          state.data = action.payload
+          state.isLoading = false
+        }
+      )
+      .addCase(
+        album.getAlbumSongs.rejected,
+        (state: InitialAlbumSongsInterface) => {
+          state.isError = true
+        }
+      )
   },
 })
 export const albumData = (state: RootState) => state.persistedReducer.album

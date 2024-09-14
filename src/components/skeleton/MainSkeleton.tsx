@@ -4,9 +4,9 @@ import { component } from "../../constants/screens"
 const MainSkeleton = () => {
   return (
     <View>
-      {Array.from({ length: 4 }, (_: any, index: number) =>
+      {Array.from({ length: 4 }, (_: any, index: number) => (
         <component.CSuggestedSkeleton key={JSON.stringify(index)} />
-      )}
+      ))}
     </View>
   )
 }

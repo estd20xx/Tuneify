@@ -1,16 +1,16 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native"
 import React, { useCallback } from "react"
-import { tuneifyOfflines } from "../../store/slices/offline.slice"
-import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import { LocalFileTypes } from "../../Interfaces/tuneifySlice.interface"
+import { FlatList, Text, TouchableOpacity, View } from "react-native"
 import Image from "react-native-fast-image"
 import TrackPlayer from "react-native-track-player"
+import NotFound from "../../components/Not-found"
+import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import { LocalFileTypes } from "../../Interfaces/tuneifySlice.interface"
 import {
   addTrackId,
   addTrackIndex,
   tunifyCurrentTrack,
 } from "../../store/slices/currentTrack.slice"
-import NotFound from "../../components/Not-found"
+import { tuneifyOfflines } from "../../store/slices/offline.slice"
 const Folders = () => {
   const testId = "1212"
   const localFile = TypedSelectorHook(tuneifyOfflines)
@@ -73,8 +73,13 @@ const Folders = () => {
     []
   )
   return (
-    <View className={`w-full ${localFile.LocalSong.length ? "h-auto" : "h-screen flex items-center justify-center"}`}>
-      {localFile.LocalSong.length ?
+    <View
+      className={`w-full ${localFile.LocalSong.length
+        ? "h-auto"
+        : "h-screen flex items-center justify-center"
+        }`}
+    >
+      {localFile.LocalSong.length ? (
         <FlatList
           data={localFile.LocalSong}
           keyExtractor={(item) => item.url}
@@ -85,9 +90,10 @@ const Folders = () => {
           removeClippedSubviews={true}
           windowSize={10}
           renderItem={renderItem}
-        /> :
+        />
+      ) : (
         <NotFound />
-      }
+      )}
     </View>
   )
 }
