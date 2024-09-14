@@ -17,14 +17,29 @@ const homeSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(homeService.getHomeData.pending, (state: InitialHomeDataInerface) => {
-      state.isLoading = true
-    }).addCase(homeService.getHomeData.fulfilled, (state: InitialHomeDataInerface, action: PayloadAction<HomeDataResponse>) => {
-      state.data = action.payload
-      state.isLoading = false
-    }).addCase(homeService.getHomeData.rejected, (state: InitialHomeDataInerface) => {
-      state.isError = true
-    })
+    builder
+      .addCase(
+        homeService.getHomeData.pending,
+        (state: InitialHomeDataInerface) => {
+          state.isLoading = true
+        }
+      )
+      .addCase(
+        homeService.getHomeData.fulfilled,
+        (
+          state: InitialHomeDataInerface,
+          action: PayloadAction<HomeDataResponse>
+        ) => {
+          state.data = action.payload
+          state.isLoading = false
+        }
+      )
+      .addCase(
+        homeService.getHomeData.rejected,
+        (state: InitialHomeDataInerface) => {
+          state.isError = true
+        }
+      )
   },
 })
 export const homeData = (state: RootState) => state.persistedReducer.home

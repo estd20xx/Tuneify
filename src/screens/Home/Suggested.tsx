@@ -1,12 +1,12 @@
-import { View, ScrollView, RefreshControl } from "react-native"
-import React, { useEffect, useState, useCallback } from "react"
-import { component } from "../../constants/screens"
-import SuggestedServices from "../../services/suggested.service"
-const service = new SuggestedServices()
+import React, { useCallback, useEffect, useState } from "react"
+import { RefreshControl, ScrollView, View } from "react-native"
 import MainSkeleton from "../../components/skeleton/MainSkeleton"
-import { homeService } from "../../store/actions/home.action"
+import { component } from "../../constants/screens"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import SuggestedServices from "../../services/suggested.service"
+import { homeService } from "../../store/actions/home.action"
 import { homeData } from "../../store/slices/home.slice"
+const service = new SuggestedServices()
 const Suggested = () => {
   const [ref, setRef] = useState(false)
   const dispatch = useAppDispatch()

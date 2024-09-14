@@ -1,10 +1,10 @@
-import { View, Text, Image, FlatList, TouchableOpacity } from "react-native"
-import { settingsData } from "../constants/Settings"
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native"
 import UserImage from "react-native-fast-image"
-import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
-import { tuneifyUser } from "../store/slices/user.slice"
 import Toast from "react-native-toast-message"
+import { settingsData } from "../constants/Settings"
+import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
 import SettingService from "../services/setting.service"
+import { tuneifyUser } from "../store/slices/user.slice"
 const settingService = new SettingService()
 const Settings = () => {
   const settingData = TypedSelectorHook(tuneifyUser)

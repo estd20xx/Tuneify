@@ -1,11 +1,11 @@
+import { createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
 import { endPoints } from "../../api/base/endpoint"
-import { PayloadService } from "../../api/service/Payload.service"
 import {
   HomeDataRequest,
   HomeDataResponse,
 } from "../../api/interface/module.interface"
-import { createAsyncThunk } from "@reduxjs/toolkit"
+import { PayloadService } from "../../api/service/Payload.service"
 class HomeService extends PayloadService {
   public getHomeData = createAsyncThunk(
     "@home",
@@ -14,14 +14,14 @@ class HomeService extends PayloadService {
         params: { ...endPoints.homeData },
         responseType: "json",
       })
+      const { new_trending, top_playlists, charts, new_albums } = data.data
       const HomeData: HomeDataRequest = {
-        tuneifyTrendingAlbums: data.data.new_trending,
-        tuneifyTopPlaylists: data.data.top_playlists,
-        tuneifyCharts: data.data.charts,
-        tuneifyAlbums: data.data.new_albums,
+        tuneifyTrendingAlbums: new_trending,
+        tuneifyTopPlaylists: top_playlists,
+        tuneifyCharts: charts,
+        tuneifyAlbums: new_albums,
       }
-      const finalData = this.homePayload(HomeData)
-      return finalData
+      return this.homePayload(HomeData)
     }
   )
 }

@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { Image } from "react-native"
+import localI from "../../assets/images/new.png"
 import {
   InitialLocalState,
   LocalFileTypes,
 } from "../../Interfaces/tuneifySlice.interface"
 import { RootState } from "../store"
-import localI from "../../assets/images/new.png"
-import { Image } from "react-native"
 const localImage = Image.resolveAssetSource(localI).uri
 
 const initialState: InitialLocalState = {
@@ -16,7 +16,9 @@ const offlineSong = createSlice({
   name: "offlineSongDev",
   initialState,
   reducers: {
-    addLocalFiles(state: InitialLocalState, actions: PayloadAction<LocalFileTypes[]>
+    addLocalFiles(
+      state: InitialLocalState,
+      actions: PayloadAction<LocalFileTypes[]>
     ) {
       const data = actions.payload.map((cx) => {
         const t: LocalFileTypes = {
