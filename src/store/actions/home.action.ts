@@ -14,14 +14,14 @@ class HomeService extends PayloadService {
         params: { ...endPoints.homeData },
         responseType: "json",
       })
-      const { new_trending, top_playlists, charts, new_albums } = data.data
       const HomeData: HomeDataRequest = {
-        tuneifyTrendingAlbums: new_trending,
-        tuneifyTopPlaylists: top_playlists,
-        tuneifyCharts: charts,
-        tuneifyAlbums: new_albums,
+        tuneifyTrendingAlbums: data.data.new_trending,
+        tuneifyTopPlaylists: data.data.top_playlists,
+        tuneifyCharts: data.data.charts,
+        tuneifyAlbums: data.data.new_albums,
       }
-      return this.homePayload(HomeData)
+      const finalData = this.homePayload(HomeData)
+      return finalData
     }
   )
 }

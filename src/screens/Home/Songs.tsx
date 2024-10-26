@@ -1,32 +1,34 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { FlatList, View, ViewToken, TouchableOpacity } from "react-native"
+import React, { useEffect, useState } from "react"
+import { FlatList, TouchableOpacity, View, ViewToken } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
-import ListItem from "../../components/ListItem"
-import SongService from "../../services/songs.service"
-import { songsApi } from "../../api/api"
-import { addSongList } from "../../store/slices/song.slice"
 import TrackPlayer from "react-native-track-player"
+import { songsApi } from "../../api/api"
+import { Song } from "../../api/service/Payload.service"
+import ListItem from "../../components/ListItem"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import { SongsTypes } from "../../Interfaces/songs.interface"
-import {
-  addTrackIndex,
-  tunifyCurrentTrack,
-} from "../../store/slices/currentTrack.slice"
+import SongService from "../../services/songs.service"
+import { songServiceaction } from "../../store/actions/song.action"
+import { testSong } from "../../store/slices/new/song.slice"
+import { addSongList } from "../../store/slices/song.slice"
 const service = new SongService(songsApi)
 const Songs = () => {
   console.log("songs render")
   const viewableItems = useSharedValue<ViewToken[]>([])
   const dispatch = useAppDispatch()
+  const songs = TypedSelectorHook(testSong)
   const [currentId, setCurrentId] = useState<string>("")
-  const [sng, setSng] = useState<SongsTypes[]>([])
+  const [sng, setSng] = useState<Song[]>([])
   useEffect(() => {
-    service.getSongs(setSng)
+    dispatch(songServiceaction.getSongs())
+    // service.getSongs(setSng)
   }, [])
   useEffect(() => {
-    if (sng) {
+    if (songs.data) {
+      setSng(songs.data.songs)
       dispatch(addSongList(sng))
     }
-  }, [sng])
+  }, [songs])
+  console.log(songs.data?.songs[0].link)
   return (
     <View className="bg-[#181a20] w-full h-auto pt-2">
       {sng.length > 1 && (

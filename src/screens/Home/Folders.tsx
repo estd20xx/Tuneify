@@ -60,7 +60,7 @@ const Folders = () => {
                   : "#FFF",
             }}
           >
-            {item.title.length > 45
+            {item.title?.length > 45
               ? item.title.slice(0, 45) + "..."
               : item.title}
           </Text>
@@ -74,10 +74,11 @@ const Folders = () => {
   )
   return (
     <View
-      className={`w-full ${localFile.LocalSong.length
-        ? "h-auto"
-        : "h-screen flex items-center justify-center"
-        }`}
+      className={`w-full ${
+        localFile.LocalSong.length
+          ? "h-auto"
+          : "h-screen flex items-center justify-center"
+      }`}
     >
       {localFile.LocalSong.length ? (
         <FlatList

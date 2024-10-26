@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { RootState } from "../store"
-import { InitialUserState } from "../../Interfaces/tuneifySlice.interface"
 import { Image } from "react-native"
+import { InitialUserState } from "../../Interfaces/tuneifySlice.interface"
+import { RootState } from "../store"
 const initialState: InitialUserState = {
   userName: "namelessnerd",
   image: Image.resolveAssetSource(require("../../assets/images/developer.jpg"))
