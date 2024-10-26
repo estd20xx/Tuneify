@@ -1,15 +1,15 @@
 import React from "react"
-import { View, Text, ViewToken, Image, StyleSheet } from "react-native"
+import { Text, View, ViewToken } from "react-native"
+import CoverImage from "react-native-fast-image"
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
+import { usePlaybackState } from "react-native-track-player"
+import { Song } from "../api/service/Payload.service"
 import { Icons } from "../constants/Icon"
-import { State, usePlaybackState } from "react-native-track-player"
 import { TypedSelectorHook } from "../hooks/store.hook"
 import { tunifyChild } from "../store/slices/childState.slice"
-import CoverImage from "react-native-fast-image"
-import { SongsTypes } from "../Interfaces/songs.interface"
 type ListItemProps = {
   viewableItems: Animated.SharedValue<ViewToken[]>
-  item: SongsTypes
+  item: Song
   id: string
   currentId: string
 }
@@ -70,7 +70,7 @@ const ListItem: React.FC<ListItemProps> = React.memo(
                     fontFamily: "400",
                   }}
                 >
-                  {item.name}
+                  {item.title}
                 </Text>
                 <Text
                   style={{
@@ -80,7 +80,7 @@ const ListItem: React.FC<ListItemProps> = React.memo(
                     fontFamily: "200",
                   }}
                 >
-                  {item.primaryArtists}
+                  {item.artist}
                 </Text>
               </View>
             </View>

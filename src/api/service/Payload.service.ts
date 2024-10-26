@@ -7,11 +7,27 @@ import {
   HomeDataResponse,
 } from "../interface/module.interface"
 import {
+  Audio,
   createDownloadLinks,
   handleArtists,
   handleImageVariation,
+  Image,
 } from "../utils/utils"
 import { ApiService } from "./api.service"
+export interface Song {
+  id: string
+  title: string
+  type: string
+  image: Image[]
+  language: string
+  year: string
+  play_count: string
+  link: Audio[] // more_info.encrp
+  artist: string // more_info.music
+}
+export interface SearchedSongs {
+  songs: Song[]
+}
 export class PayloadService extends ApiService {
   protected homePayload(homeDataRequest: HomeDataRequest): HomeDataResponse {
     const homeDataPayload: HomeDataResponse = {
@@ -106,6 +122,23 @@ export class PayloadService extends ApiService {
           duration: current.more_info.duration,
           artists: handleArtists(current.more_info.artistMap.primary_artists),
           has_lyrics: current.more_info.has_lyrics,
+        }
+      }),
+    }
+  }
+  protected searchedSongPayload = (data: any): SearchedSongs => {
+    return {
+      songs: data?.results?.map((current: any) => {
+        return {
+          id: current?.id,
+          title: current?.title,
+          type: current?.type,
+          image: handleImageVariation(current.image),
+          language: current?.language,
+          year: current?.year,
+          play_count: current?.play_count,
+          link: createDownloadLinks(current?.more_info?.encrypted_media_url),
+          artist: current?.more_info?.music,
         }
       }),
     }

@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { Song } from "../../api/service/Payload.service"
 import {
   InitialSongStateTypes,
   StoreSongTypes,
 } from "../../Interfaces/tuneifySlice.interface"
 import { RootState } from "../store"
-import { SongsTypes } from "../../Interfaces/songs.interface"
 
 const initialState: InitialSongStateTypes = {
   songs: [],
@@ -13,17 +13,14 @@ const songSlice = createSlice({
   name: "songDev",
   initialState,
   reducers: {
-    addSongList(
-      state: InitialSongStateTypes,
-      actions: PayloadAction<SongsTypes[]>
-    ) {
+    addSongList(state: InitialSongStateTypes, actions: PayloadAction<Song[]>) {
       const data = actions.payload.map((cx) => {
         const songs: StoreSongTypes = {
           id: cx.id,
-          title: cx.name,
-          artist: cx.primaryArtists,
+          title: cx.title,
+          artist: cx.artist,
           artwork: cx.image[2].link,
-          url: cx.downloadUrl[4].link,
+          url: cx.link[4].link,
         }
         return songs
       })
