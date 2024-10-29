@@ -14,6 +14,7 @@ Contributions are welcome. Please read our [contributing guidelines](https://git
 # Test Tuneify
 
 
+[link](https://www.realtimecolors.com/?colors=180b15-fcf8fa-ce3bb1-ec83d7-f358d4&fonts=Inter-Inter)
 
 ## Backend for this app is writing
 1. text, background==> background and text color
