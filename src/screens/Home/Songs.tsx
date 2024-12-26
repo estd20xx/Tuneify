@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 import { FlatList, TouchableOpacity, View, ViewToken } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import TrackPlayer from "react-native-track-player"
 import { songsApi } from "../../api/api"
-import { Song } from "../../api/service/Payload.service"
 import ListItem from "../../components/ListItem"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import SongService from "../../services/songs.service"
@@ -17,23 +16,21 @@ const Songs = () => {
   const dispatch = useAppDispatch()
   const songs = TypedSelectorHook(testSong)
   const [currentId, setCurrentId] = useState<string>("")
-  const [sng, setSng] = useState<Song[]>([])
   useEffect(() => {
     dispatch(songServiceaction.getSongs())
     // service.getSongs(setSng)
   }, [])
   useEffect(() => {
-    if (songs.data) {
-      setSng(songs.data.songs)
-      dispatch(addSongList(sng))
+    if (songs.data?.songs) {
+      dispatch(addSongList(songs.data.songs))
     }
   }, [songs])
-  console.log(songs.data?.songs[0].link)
+  console.log(songs.data?.songs[2])
   return (
     <View className="bg-[#181a20] w-full h-auto pt-2">
-      {sng.length > 1 && (
+      {songs.data?.songs && (
         <FlatList
-          data={sng}
+          data={songs.data.songs}
           onViewableItemsChanged={({ viewableItems: vItems }) => {
             viewableItems.value = vItems
           }}
@@ -45,6 +42,7 @@ const Songs = () => {
             const { item, index } = items
             return (
               <TouchableOpacity
+                key={JSON.stringify(index)}
                 onPress={async () => {
                   await TrackPlayer.pause()
                   setCurrentId(item.id)
@@ -66,4 +64,4 @@ const Songs = () => {
     </View>
   )
 }
-export default Songs
+export default memo(Songs)

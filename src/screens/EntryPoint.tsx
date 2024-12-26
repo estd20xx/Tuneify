@@ -1,5 +1,5 @@
-import { View, Text } from "react-native"
-import React from "react"
+import React, { memo } from "react"
+import { Text, View } from "react-native"
 const EntryPoint = () => {
   return (
     <View>
@@ -8,4 +8,4 @@ const EntryPoint = () => {
   )
 }
 
-export default EntryPoint
+export default memo(EntryPoint)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 import { ScrollView, View } from "react-native"
 import { albumsApi } from "../../api/api"
 import { component } from "../../constants/screens"
@@ -26,4 +26,4 @@ const Albums = () => {
   )
 }
 
-export default Albums
+export default memo(Albums)

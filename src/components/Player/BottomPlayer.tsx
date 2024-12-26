@@ -1,22 +1,23 @@
-import { Text, TouchableOpacity } from "react-native"
 import React, { useEffect, useState } from "react"
+import { Text, TouchableOpacity } from "react-native"
+import { View } from "react-native-animatable"
 import Image from "react-native-fast-image"
-import SongPlayer from "./SongPlayer"
 import {
+  PlaybackState,
+  State,
   Track,
   usePlaybackState,
-  State,
   useTrackPlayerEvents,
-  PlaybackState,
 } from "react-native-track-player"
-import { View } from "react-native-animatable"
-import { Icons } from "../../constants/Icon"
-import { tuneifySongs } from "../../store/slices/song.slice"
-import TuneifyService from "../../services/Tuneify.service"
 import { lyricsApi } from "../../api/api"
+import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-const service = new TuneifyService(lyricsApi)
+import TuneifyService from "../../services/Tuneify.service"
 import { tunifyChild } from "../../store/slices/childState.slice"
+import { tuneifySongs } from "../../store/slices/song.slice"
+import Show from "../Show"
+import SongPlayer from "./SongPlayer"
+const service = new TuneifyService(lyricsApi)
 const BottomPlayer = () => {
   const dispatch = useAppDispatch()
   const data = TypedSelectorHook(tuneifySongs)
@@ -37,24 +38,13 @@ const BottomPlayer = () => {
       {cTrack && (
         <View>
           <TouchableOpacity
+            className="absolute h-14 w-full bottom-0 flex flex-row items-center justify-center px-3 bg-[#2D3250] "
             activeOpacity={1}
-            style={{
-              width: "100%",
-              height: 70,
-              position: "absolute",
-              bottom: 0,
-              backgroundColor: "#2D3250",
-              flexDirection: "row",
-              alignItems: "center",
-              paddingLeft: 20,
-              paddingRight: 20,
-              justifyContent: "space-between",
-            }}
             onPress={() => {
               setIsVisible(true)
             }}
           >
-            <View className="flex flex-row  w-11/12 overflow-hidden">
+            <View className="flex flex-row items-center h-full w-11/12 overflow-hidden">
               <Image
                 source={{
                   uri: cTrack?.artwork ? cTrack?.artwork : cTrack?.cover,
@@ -82,19 +72,15 @@ const BottomPlayer = () => {
                 service.playPauseAction(playbackState, state, dispatch)
               }
             >
-              {state.isPlaying ? (
-                <Icons.PlayIcon name="pause" color={"white"} size={30} />
-              ) : (
-                <Icons.PlayIcon name="play" color={"white"} size={30} />
-              )}
+              <Show isVisible={state.isPlaying}>
+                <Icons.PlayIcon name="pause" color={"white"} size={20} />
+              </Show>
+              <Show isVisible={!state.isPlaying}>
+                <Icons.PlayIcon name="play" color={"white"} size={20} />
+              </Show>
             </TouchableOpacity>
           </TouchableOpacity>
-          <SongPlayer
-            isVisible={isVisible}
-            onClose={() => {
-              setIsVisible(false)
-            }}
-          />
+          <SongPlayer isVisible={isVisible} setIsVisible={setIsVisible} />
         </View>
       )}
     </>

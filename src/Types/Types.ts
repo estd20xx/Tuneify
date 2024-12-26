@@ -1,5 +1,5 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import React from "react"
+import React, { MemoExoticComponent } from "react"
 import {
   AlbumResponse,
   ChartsResponse,
@@ -99,5 +99,5 @@ export interface MinNItemTypes {
 }
 export interface TabItemTypes {
   name: string
-  component: () => React.JSX.Element
+  component: MemoExoticComponent<() => React.JSX.Element>
 }

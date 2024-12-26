@@ -1,10 +1,10 @@
+import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
 import {
   SortSongFields,
   SortSongOrder,
   getAll,
 } from "react-native-get-music-files"
 import { IlocalMedia } from "../Interfaces/localMedia.interface"
-import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
 import { addLocalFiles } from "../store/slices/offline.slice"
 export default class LocalMediaService implements IlocalMedia {
   getLocalmedia = async (

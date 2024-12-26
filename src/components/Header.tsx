@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity } from "react-native"
-import React from "react"
+import React, { memo } from "react"
+import { Text, TouchableOpacity, View } from "react-native"
 import { Icons } from "../constants/Icon"
 const Header = () => {
   return (
@@ -18,4 +18,4 @@ const Header = () => {
     </View>
   )
 }
-export default Header
+export default memo(Header)

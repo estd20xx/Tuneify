@@ -1,3 +1,4 @@
+import { MemoExoticComponent } from "react"
 import { Icons } from "../constants/Icon"
 export interface ItemTypes {
   name: string
@@ -7,6 +8,6 @@ export interface ItemTypes {
   inactiveName: string
   Active: typeof Icons.HomeIcon
   Inactive: typeof Icons.HomeIcon
-  component: () => React.JSX.Element
+  component: MemoExoticComponent<() => React.JSX.Element>
   active: string
 }

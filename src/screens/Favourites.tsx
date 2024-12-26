@@ -1,10 +1,10 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native"
-import React from "react"
-import { tuneifyFavourites } from "../store/slices/favourite.slice"
+import React, { memo } from "react"
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import TrackImage from "react-native-fast-image"
 import { UserFavouritesTypes } from "../Interfaces/tuneifySlice.interface"
 import { Icons } from "../constants/Icon"
 import { TypedSelectorHook } from "../hooks/store.hook"
-import TrackImage from "react-native-fast-image"
+import { tuneifyFavourites } from "../store/slices/favourite.slice"
 const Favourites = () => {
   const data = TypedSelectorHook(tuneifyFavourites)
   const facouriteData: UserFavouritesTypes[] = data.favouriteData
@@ -94,4 +94,4 @@ const Favourites = () => {
     </View>
   )
 }
-export default Favourites
+export default memo(Favourites)

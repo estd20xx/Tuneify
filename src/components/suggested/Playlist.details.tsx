@@ -1,11 +1,11 @@
-import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native"
-import React, { useEffect, useState } from "react"
 import axios from "axios"
+import React, { memo, useEffect, useState } from "react"
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { baseApi } from "../../api/api"
-import { Icons } from "../../constants/Icon"
-import { SongsTypes } from "../../Interfaces/songs.interface"
 import { PlaylistResponse } from "../../api/interface/module.interface"
+import { Icons } from "../../constants/Icon"
 import { useAppDispatch } from "../../hooks/store.hook"
+import { SongsTypes } from "../../Interfaces/songs.interface"
 import { playlist } from "../../store/actions/playlist.action"
 interface PlaylistData {
   key: string
@@ -112,4 +112,4 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
     </View>
   )
 }
-export default PlaylistDetails
+export default memo(PlaylistDetails)

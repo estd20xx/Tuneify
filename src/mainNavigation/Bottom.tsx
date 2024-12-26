@@ -1,10 +1,10 @@
-import React from "react"
-import { View } from "react-native"
-import { CommonActions } from "@react-navigation/native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { CommonActions } from "@react-navigation/native"
+import React, { memo } from "react"
+import { View } from "react-native"
 import { BottomNavigation } from "react-native-paper"
-import { TabItems } from "../constants/naviG"
 import BottomPlayer from "../components/Player/BottomPlayer"
+import { TabItems } from "../constants/naviG"
 import { ItemTypes } from "../Interfaces/icons.interface"
 const Tab = createBottomTabNavigator()
 const BottomTab = () => {
@@ -22,6 +22,7 @@ const BottomTab = () => {
             activeColor="#a1a0a3"
             inactiveColor="#a1a0a3"
             style={{
+              height: 50,
               backgroundColor: "#000000",
             }}
             onTabPress={({ route, preventDefault }) => {
@@ -43,13 +44,15 @@ const BottomTab = () => {
             renderIcon={({ route, focused, color }) => {
               const { options } = descriptors[route.key]
               if (options.tabBarIcon) {
-                return options.tabBarIcon({ focused, color, size: 24 })
+                return options.tabBarIcon({ focused, color, size: 20 })
               }
               return null
             }}
-            getLabelText={({ route }) => {
-              return route.name
-            }}
+            /** TODO : to shot label
+        getLabelText={({ route }) => {
+          return route.name
+        }}
+        */
           />
         </View>
       )}
@@ -75,4 +78,4 @@ const BottomTab = () => {
     </Tab.Navigator>
   )
 }
-export default BottomTab
+export default memo(BottomTab)

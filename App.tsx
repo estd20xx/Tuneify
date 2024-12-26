@@ -1,13 +1,12 @@
 import React, { useEffect } from "react"
-import MainNavigation from "./src/mainNavigation/MainNavigation"
 import { StatusBar } from "react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { Provider } from "react-redux"
-import store, { persistor } from "./src/store/store"
-import CodePush from "react-native-code-push"
 import SplashScreen from "react-native-splash-screen"
-import { PersistGate } from "redux-persist/integration/react"
 import Toast from "react-native-toast-message"
+import { Provider } from "react-redux"
+import { PersistGate } from "redux-persist/integration/react"
+import MainNavigation from "./src/mainNavigation/MainNavigation"
+import store, { persistor } from "./src/store/store"
 const App = () => {
   useEffect(() => {
     SplashScreen.hide()

@@ -1,24 +1,23 @@
+import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
 import axios from "axios"
-import { ITuneify } from "../Interfaces/tuneifySetUp.interface"
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
   Event,
   PlaybackState,
   RepeatMode,
-  State,
   Track,
 } from "react-native-track-player"
-import SuggestedServices from "./suggested.service"
-import {
-  changeTunifyRepeatMode,
-  changeTunifyState,
-} from "../store/slices/childState.slice"
-import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
+import { ITuneify } from "../Interfaces/tuneifySetUp.interface"
 import {
   InitialChildStateTypes,
   InitialSongStateTypes,
 } from "../Interfaces/tuneifySlice.interface"
+import {
+  changeTunifyRepeatMode,
+  changeTunifyState,
+} from "../store/slices/childState.slice"
+import SuggestedServices from "./suggested.service"
 export default class TuneifyService
   extends SuggestedServices
   implements ITuneify
@@ -54,6 +53,7 @@ export default class TuneifyService
   ): Promise<void> => {
     try {
       let currentTrack = await TrackPlayer.getActiveTrack()
+      // TODO : need to handle lyrics api
       const data = await axios.get(`${this.lyricApi}${currentTrack?.id}`)
       if (data.data.data) {
         setLyric(data.data.data.lyrics)

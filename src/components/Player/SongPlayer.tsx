@@ -1,45 +1,43 @@
+import Slider from "@react-native-community/slider"
+import React, { memo, useCallback, useEffect, useState } from "react"
 import {
+  Animated,
+  Image,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
-  ScrollView,
-  Image,
-  Animated,
 } from "react-native"
 import TrackImage from "react-native-fast-image"
-import React, { useEffect, useState, useCallback, memo, useRef } from "react"
 import Modal from "react-native-modal"
+import { FAB as Fab } from "react-native-paper"
 import TextTicker from "react-native-text-ticker"
 import TrackPlayer, {
+  State,
   Track,
   usePlaybackState,
   useProgress,
   useTrackPlayerEvents,
-  State,
 } from "react-native-track-player"
-import { FAB as Fab, Button } from "react-native-paper"
-import { Icons } from "../../constants/Icon"
-import Slider from "@react-native-community/slider"
-import TuneifyService from "../../services/Tuneify.service"
 import { lyricsApi } from "../../api/api"
-const service = new TuneifyService(lyricsApi)
-import { addUserFavouritesData } from "../../store/slices/favourite.slice"
+import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import TuneifyService from "../../services/Tuneify.service"
 import {
   changeTunifyState,
   tunifyChild,
 } from "../../store/slices/childState.slice"
+import { addUserFavouritesData } from "../../store/slices/favourite.slice"
 import Messanger from "../message/Message"
-const SongPlayer = ({
-  isVisible,
-  onClose,
-}: {
-  isVisible: any
-  onClose: any
-}) => {
+import Show from "../Show"
+const service = new TuneifyService(lyricsApi)
+interface SongPlayerProps {
+  isVisible: boolean
+  setIsVisible: (cntx: boolean) => void
+}
+const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
   const state = TypedSelectorHook(tunifyChild)
   const dispatch = useAppDispatch()
-
   const [isFlipped, setIsFlipped] = useState(false)
   const [flip, setFlip] = useState(new Animated.Value(0))
   const [ct, setCt] = useState<Track>()
@@ -76,27 +74,20 @@ const SongPlayer = ({
   useEffect(() => {
     service.handleBottomCondition(setCt)
   }, [])
-  const format = (seconds: number) => {
-    let mins = Math.floor(seconds / 60)
-      .toString()
-      .padStart(2, "0")
-    let secs = (Math.trunc(seconds) % 60).toString().padStart(2, "0")
-    return `${mins}:${secs}`
-  }
   useTrackPlayerEvents(service.getEvent(), async (event: any) => {
-    // if (playbackState.state == State.Ended) {
-    //   dispatch(changeTunifyState())
-    // }
+    if (playbackState.state == State.Ended) {
+      dispatch(changeTunifyState())
+    }
     if (event.state == State.Ready) {
+      // TODO : need to handle lyrics api
       service.handleBottomCondition(setCt)
-      service.getLyrics(setLyric)
+      // service.getLyrics(setLyric)
     }
   })
-  console.log(state.isPlaying)
   return (
     <Modal isVisible={isVisible} style={{ margin: 0 }}>
       {vtimer && (
-        <View className="h-48  w-4/5 bg-[#51d095] absolute z-50 m-auto left-12 rounded-3xl flex items-center justify-center">
+        <View className="h-48  w-4/5 bg-red-500  absolute z-50 m-auto left-12 rounded-3xl flex items-center justify-center">
           <Slider
             style={{ width: "100%" }}
             minimumValue={0}
@@ -129,11 +120,7 @@ const SongPlayer = ({
           />
           <View className="w-full h-screen  px-3 ">
             <View className=" h-10 w-full flex items-center justify-between flex-row">
-              <TouchableOpacity
-                onPress={() => {
-                  onClose()
-                }}
-              >
+              <TouchableOpacity onPress={() => setIsVisible(false)}>
                 <Icons.KeyboardDown
                   name="keyboard-arrow-down"
                   size={35}
@@ -173,15 +160,16 @@ const SongPlayer = ({
                 style={[backAnimatedStyle, { backfaceVisibility: "hidden" }]}
                 className="flex absolute   w-[95%] h-full   justify-center items-center rounded-xl "
               >
-                {lyric.length > 15 ? (
+                <Show isVisible={lyric.length > 15}>
                   <ScrollView showsVerticalScrollIndicator={false}>
                     <Text className="text-white text-base min-h-[100px]  leading-8 px-5 flex items-center justify-center font-['300']  ">
                       {lyric}
                     </Text>
                   </ScrollView>
-                ) : (
+                </Show>
+                <Show isVisible={lyric.length < 15}>
                   <Text className="absolute top-52 left-0 ">{lyric}</Text>
-                )}
+                </Show>
               </Animated.View>
             </View>
             <View className=" w-full mt-5 flex items-center justify-center h-auto ">
@@ -191,7 +179,7 @@ const SongPlayer = ({
                   : ct?.title}
               </Text>
               <TextTicker
-                style={{ fontSize: 18, color: "white" }}
+                style={{ fontSize: 15, color: "#bdbdbd" }}
                 className="font-['300']"
                 duration={10000}
                 loop
@@ -221,10 +209,26 @@ const SongPlayer = ({
                 }}
               >
                 <Text style={{ color: "white", fontFamily: "300" }}>
-                  {format(progress.position)}
+                  {JSON.stringify(Math.floor(progress.position / 60)).padStart(
+                    2,
+                    "0"
+                  )}
+                  :
+                  {JSON.stringify(Math.floor(progress.position % 60)).padStart(
+                    2,
+                    "0"
+                  )}
                 </Text>
                 <Text style={{ color: "white", fontFamily: "300" }}>
-                  {format(progress.duration)}
+                  {JSON.stringify(Math.floor(progress.duration / 60)).padStart(
+                    2,
+                    "0"
+                  )}
+                  :
+                  {JSON.stringify(Math.floor(progress.duration / 60)).padStart(
+                    2,
+                    "0"
+                  )}
                 </Text>
               </View>
             </View>

@@ -1,3 +1,4 @@
+import { memo } from "react"
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native"
 import UserImage from "react-native-fast-image"
 import Toast from "react-native-toast-message"
@@ -68,4 +69,4 @@ const Settings = () => {
     </View>
   )
 }
-export default Settings
+export default memo(Settings)

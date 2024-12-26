@@ -1,5 +1,5 @@
-import { View, Text } from "react-native"
-import React from "react"
+import React, { memo } from "react"
+import { Text, View } from "react-native"
 
 const HomePage = () => {
   return (
@@ -9,4 +9,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default memo(HomePage)

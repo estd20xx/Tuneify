@@ -1,9 +1,9 @@
+import { ItemTypes } from "../Interfaces/icons.interface"
+import { OnBoardingDataTypes } from "../Interfaces/onboard.interface"
 import { navigationStrings } from "../NavigationStrings/NavigationStrings"
 import { TabItemTypes } from "../Types/Types"
-import { component } from "./screens"
 import { Icons } from "./Icon"
-import { OnBoardingDataTypes } from "../Interfaces/onboard.interface"
-import { ItemTypes } from "../Interfaces/icons.interface"
+import { component } from "./screens"
 export const tabBar: TabItemTypes[] = [
   {
     name: "Suggested",
@@ -101,7 +101,7 @@ export const onboardingData: OnBoardingDataTypes[] = [
 export const TabItems: ItemTypes[] = [
   {
     name: navigationStrings.home,
-    activeSize: 25,
+    activeSize: 20,
     inactiveSize: 20,
     activeName: "home",
     inactiveName: "home",
@@ -112,7 +112,7 @@ export const TabItems: ItemTypes[] = [
   },
   {
     name: navigationStrings.search,
-    activeSize: 25,
+    activeSize: 20,
     inactiveSize: 20,
     activeName: "search",
     inactiveName: "search",
