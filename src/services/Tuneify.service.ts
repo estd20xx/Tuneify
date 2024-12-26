@@ -6,22 +6,13 @@ import TrackPlayer, {
   Event,
   PlaybackState,
   RepeatMode,
-  Track,
+  Track
 } from "react-native-track-player"
 import { ITuneify } from "../Interfaces/tuneifySetUp.interface"
-import {
-  InitialChildStateTypes,
-  InitialSongStateTypes,
-} from "../Interfaces/tuneifySlice.interface"
-import {
-  changeTunifyRepeatMode,
-  changeTunifyState,
-} from "../store/slices/childState.slice"
+import { InitialChildStateTypes, InitialSongStateTypes } from "../Interfaces/tuneifySlice.interface"
+import { changeTunifyRepeatMode, changeTunifyState } from "../store/slices/childState.slice"
 import SuggestedServices from "./suggested.service"
-export default class TuneifyService
-  extends SuggestedServices
-  implements ITuneify
-{
+export default class TuneifyService extends SuggestedServices implements ITuneify {
   constructor(private lyricApi: string) {
     super()
   }
@@ -35,7 +26,7 @@ export default class TuneifyService
       "#525152",
       "#3d3d3d",
       "#292829",
-      "#141414",
+      "#141414"
     ]
     return colors
   }
@@ -44,13 +35,11 @@ export default class TuneifyService
       Event.PlaybackState,
       Event.PlaybackError,
       Event.PlaybackState,
-      Event.PlaybackError,
+      Event.PlaybackError
     ]
     return events
   }
-  public getLyrics = async (
-    setLyric: (lyric: string) => void
-  ): Promise<void> => {
+  public getLyrics = async (setLyric: (lyric: string) => void): Promise<void> => {
     try {
       let currentTrack = await TrackPlayer.getActiveTrack()
       // TODO : need to handle lyrics api
@@ -79,9 +68,7 @@ export default class TuneifyService
   }
   public timerSkip = async (position: number, forw: boolean): Promise<void> => {
     try {
-      forw
-        ? await TrackPlayer.seekTo(position + 10)
-        : await TrackPlayer.seekTo(position - 10)
+      forw ? await TrackPlayer.seekTo(position + 10) : await TrackPlayer.seekTo(position - 10)
     } catch (error) {
       console.log("Error happens during forward and backward")
     }
@@ -127,19 +114,18 @@ export default class TuneifyService
     try {
       await TrackPlayer.setupPlayer({
         maxCacheSize: 1024 * 10,
-        autoHandleInterruptions: true,
+        autoHandleInterruptions: true
       })
       await TrackPlayer.updateOptions({
         android: {
-          appKilledPlaybackBehavior:
-            AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
+          appKilledPlaybackBehavior: AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification
         },
         capabilities: [
           Capability.Play,
           Capability.Pause,
           Capability.SkipToPrevious,
           Capability.Stop,
-          Capability.SeekTo,
+          Capability.SeekTo
         ],
         notificationCapabilities: [
           Capability.Play,
@@ -147,7 +133,7 @@ export default class TuneifyService
           Capability.Pause,
           Capability.SkipToNext,
           Capability.SkipToPrevious,
-          Capability.SeekTo,
+          Capability.SeekTo
         ],
         compactCapabilities: [
           Capability.Play,
@@ -155,8 +141,8 @@ export default class TuneifyService
           Capability.Pause,
           Capability.SkipToNext,
           Capability.SkipToPrevious,
-          Capability.SeekTo,
-        ],
+          Capability.SeekTo
+        ]
       })
       await TrackPlayer.add(data.songs)
     } catch (error) {

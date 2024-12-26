@@ -7,95 +7,96 @@ import { component } from "./screens"
 export const tabBar: TabItemTypes[] = [
   {
     name: "Suggested",
-    component: component.Suggested,
+    component: component.Suggested
   },
   {
     name: "Songs",
-    component: component.Songs,
+    component: component.Songs
   },
   {
     name: "Artists",
-    component: component.Artists,
+    component: component.Artists
   },
   {
     name: "Albums",
-    component: component.Albums,
+    component: component.Albums
   },
   {
     name: "Folders",
-    component: component.Folders,
-  },
+    component: component.Folders
+  }
 ]
 export const MainNavigationItems: any[] = [
   {
     name: navigationStrings.splash,
-    component: component.Splash,
+    component: component.Splash
   },
   {
     name: navigationStrings.onboarding,
-    component: component.Onboading,
+    component: component.Onboading
   },
   {
     name: navigationStrings.homePage,
-    component: component.HomePage,
+    component: component.HomePage
   },
   {
     name: navigationStrings.home,
-    component: component.Home,
+    // Tab
+    component: component.Home
   },
   {
     name: navigationStrings.favourites,
-    component: component.Favourites,
+    component: component.Favourites
   },
   {
     name: navigationStrings.playlists,
-    component: component.Playlists,
+    component: component.Playlists
   },
   {
     name: navigationStrings.settings,
-    component: component.Settings,
+    component: component.Settings
   },
   {
     name: navigationStrings.bottom,
-    component: component.BottomNavigation,
+    component: component.BottomNavigation
   },
   {
     name: navigationStrings.enrtyPoint,
-    component: component.EntryPoint,
+    component: component.EntryPoint
   },
   {
     name: navigationStrings.TrendingAlbumDetails,
-    component: component.TrendingAlbumDetails,
+    component: component.TrendingAlbumDetails
   },
   {
     name: navigationStrings.albumsDetails,
-    component: component.AlbumDetails,
+    component: component.AlbumDetails
   },
   {
     name: navigationStrings.PlaylistDetails,
-    component: component.PlaylistDetails,
+    component: component.PlaylistDetails
   },
   {
     name: navigationStrings.search,
-    component: component.Search,
-  },
+    component: component.Search
+  }
 ]
 export const onboardingData: OnBoardingDataTypes[] = [
   {
     first: "User friendly mp3",
     second: "music player for",
-    third: "your device",
+    third: "your device"
   },
   {
     first: "We provide a better",
     second: "audio experience",
-    third: "than others",
+    third: "than others"
   },
   {
     first: "Listen to the best",
     second: "audio & music with",
-    third: "Tuneify now!",
-  },
+    third: "Tuneify now!"
+  }
 ]
 
 export const TabItems: ItemTypes[] = [
@@ -108,7 +109,7 @@ export const TabItems: ItemTypes[] = [
     Active: Icons.HomeFocused,
     Inactive: Icons.HomeIcon,
     component: component.Home,
-    active: "#ff8214",
+    active: "#ff8214"
   },
   {
     name: navigationStrings.search,
@@ -119,7 +120,7 @@ export const TabItems: ItemTypes[] = [
     Active: Icons.SortIcon,
     Inactive: Icons.SortIcon,
     component: component.Search,
-    active: "#ff8214",
+    active: "#ff8214"
   },
   {
     name: navigationStrings.favourites,
@@ -130,7 +131,7 @@ export const TabItems: ItemTypes[] = [
     Active: Icons.HomeIcon,
     Inactive: Icons.HomeIcon,
     component: component.Favourites,
-    active: "#ff8214",
+    active: "#ff8214"
   },
   {
     name: navigationStrings.playlists,
@@ -141,7 +142,7 @@ export const TabItems: ItemTypes[] = [
     Active: Icons.PlayListIcon,
     Inactive: Icons.PlayListIcon,
     component: component.Playlists,
-    active: "#ff8214",
+    active: "#ff8214"
   },
   {
     name: navigationStrings.settings,
@@ -152,6 +153,6 @@ export const TabItems: ItemTypes[] = [
     Active: Icons.SettingsIcon,
     Inactive: Icons.SettingsIcon,
     component: component.Settings,
-    active: "#ff8214",
-  },
+    active: "#ff8214"
+  }
 ]

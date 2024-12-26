@@ -1,7 +1,7 @@
-import React, { useEffect } from "react"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import { tabBar } from "../constants/naviG"
+import React, { memo, useEffect } from "react"
 import { Platform, StatusBar } from "react-native"
+import { tabBar } from "../constants/naviG"
 const Tab = createMaterialTopTabNavigator()
 const TabBar = () => {
   useEffect(() => {
@@ -19,34 +19,28 @@ const TabBar = () => {
           backgroundColor: "#ff8216",
           height: 4,
           marginBottom: -2.2,
-          borderRadius: 50,
+          borderRadius: 50
         },
         tabBarStyle: {
           backgroundColor: "#181a20",
           zIndex: 1,
           borderBottomWidth: 1,
-          borderBottomColor: "#a1a0a3",
+          borderBottomColor: "#a1a0a3"
         },
         tabBarItemStyle: {
-          width: 90,
+          width: 90
         },
         tabBarLabelStyle: {
           fontSize: 11,
           marginLeft: -10,
-          fontFamily: "600",
-        },
+          fontFamily: "600"
+        }
       }}
     >
       {tabBar.map((bar) => {
-        return (
-          <Tab.Screen
-            name={bar.name}
-            component={bar.component}
-            key={bar.name}
-          />
-        )
+        return <Tab.Screen name={bar.name} component={bar.component} key={bar.name} />
       })}
     </Tab.Navigator>
   )
 }
-export default TabBar
+export default memo(TabBar)

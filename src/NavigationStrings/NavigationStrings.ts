@@ -13,5 +13,5 @@ export const navigationStrings = {
   albumsDetails: "albumsDetaila",
   trendingSongDetails: "trandingSongDetails",
   charts: "charts",
-  search: "search",
+  search: "search"
 }

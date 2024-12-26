@@ -5,27 +5,30 @@ import { SplashScreenPropsTypes } from "../Types/Types"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
 import LocalMediaService from "../services/localMedia.service"
 import PermissionService from "../services/permission.service"
-import { checkLocal, tuneifyOfflines } from "../store/slices/offline.slice"
+import { accepted, tuneifyOfflines } from "../store/slices/offline.slice"
 const permission = new PermissionService()
 const musicService = new LocalMediaService()
 const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {
   const dispatch = useAppDispatch()
-  const storeData = TypedSelectorHook(tuneifyOfflines)
+  const offline = TypedSelectorHook(tuneifyOfflines)
+  // TODO : need to optimize it
   const fn = async () => {
     try {
       const per = await permission.askPermission()
       if (per) {
         musicService.getLocalmedia(dispatch)
+        dispatch(accepted(true))
+        navigation.navigate("bottom")
+        return
       }
-      dispatch(checkLocal(true))
       navigation.navigate("onboarding")
     } catch (error) {
       console.log(error)
     }
   }
   useEffect(() => {
-    storeData.isUploaded ? navigation.navigate("bottom") : fn()
-  }, [])
+    offline.isAccepted ? navigation.navigate("bottom") : fn()
+  }, [offline])
   return (
     <View className="w-full h-screen flex items-center justify-center bg-black">
       <Chase size={140} color="#ff8216" />

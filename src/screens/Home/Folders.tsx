@@ -1,16 +1,18 @@
 import React, { memo, useCallback } from "react"
-import { FlatList, Text, TouchableOpacity, View } from "react-native"
+import { FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-native"
 import Image from "react-native-fast-image"
 import TrackPlayer from "react-native-track-player"
 import NotFound from "../../components/Not-found"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { LocalFileTypes } from "../../Interfaces/tuneifySlice.interface"
+import LocalMediaService from "../../services/localMedia.service"
 import {
   addTrackId,
   addTrackIndex,
-  tunifyCurrentTrack,
+  tunifyCurrentTrack
 } from "../../store/slices/currentTrack.slice"
 import { tuneifyOfflines } from "../../store/slices/offline.slice"
+const local = new LocalMediaService()
 const Folders = () => {
   const testId = "1212"
   const localFile = TypedSelectorHook(tuneifyOfflines)
@@ -44,7 +46,7 @@ const Folders = () => {
               uri: item.cover,
               headers: { Authorization: "deviceImage" },
               priority: Image.priority.high,
-              cache: Image.cacheControl.immutable,
+              cache: Image.cacheControl.immutable
             }}
             className="h-16 w-16 rounded-md"
           />
@@ -54,19 +56,12 @@ const Folders = () => {
             style={{
               fontSize: 15,
               fontFamily: "500",
-              color:
-                index == current.index && testId == current.trackId
-                  ? "#16FF00"
-                  : "#FFF",
+              color: index == current.index && testId == current.trackId ? "#16FF00" : "#FFF"
             }}
           >
-            {item.title?.length > 45
-              ? item.title.slice(0, 45) + "..."
-              : item.title}
+            {item.title?.length > 45 ? item.title.slice(0, 45) + "..." : item.title}
           </Text>
-          <Text style={{ fontSize: 10, color: "#d0d0d1", fontFamily: "200" }}>
-            {item.artist}
-          </Text>
+          <Text style={{ fontSize: 10, color: "#d0d0d1", fontFamily: "200" }}>{item.artist}</Text>
         </View>
       </TouchableOpacity>
     ),
@@ -75,13 +70,17 @@ const Folders = () => {
   return (
     <View
       className={`w-full ${
-        localFile.LocalSong.length
-          ? "h-auto"
-          : "h-screen flex items-center justify-center"
+        localFile.LocalSong.length ? "h-auto" : "h-screen flex items-center justify-center"
       }`}
     >
       {localFile.LocalSong.length ? (
         <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={localFile.isUploading}
+              onRefresh={() => local.getLocalmedia(dispatch)}
+            />
+          }
           data={localFile.LocalSong}
           keyExtractor={(_, index) => JSON.stringify(index)}
           initialNumToRender={3}

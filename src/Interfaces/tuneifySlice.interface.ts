@@ -19,7 +19,8 @@ export interface InitialFavouriteState {
 }
 export interface InitialLocalState {
   LocalSong: LocalFileTypes[]
-  isUploaded: boolean
+  isUploading: boolean
+  isAccepted: boolean
 }
 export interface InitialCurrentStateTypes {
   albumId: string

@@ -5,11 +5,7 @@ interface MessageInterface {
   isvisible: boolean
   onDismis: (value: boolean) => void
 }
-const Messanger: React.FC<MessageInterface> = ({
-  message,
-  isvisible,
-  onDismis,
-}) => {
+const Messanger: React.FC<MessageInterface> = ({ message, isvisible, onDismis }) => {
   return (
     <Snackbar
       visible={isvisible}
@@ -18,7 +14,7 @@ const Messanger: React.FC<MessageInterface> = ({
       }}
       duration={300}
       action={{
-        label: "Undo",
+        label: "Undo"
       }}
     >
       {message}

@@ -4,8 +4,7 @@ import { InitialUserState } from "../../Interfaces/tuneifySlice.interface"
 import { RootState } from "../store"
 const initialState: InitialUserState = {
   userName: "namelessnerd",
-  image: Image.resolveAssetSource(require("../../assets/images/developer.jpg"))
-    .uri,
+  image: Image.resolveAssetSource(require("../../assets/images/developer.jpg")).uri
 }
 const userSlices = createSlice({
   name: "userDevs",
@@ -16,8 +15,8 @@ const userSlices = createSlice({
     },
     changeProfile(state: InitialUserState, actions: PayloadAction<string>) {
       state.image = actions.payload
-    },
-  },
+    }
+  }
 })
 export const { addUser, changeProfile } = userSlices.actions
 export const tuneifyUser = (state: RootState) => state.persistedReducer.user

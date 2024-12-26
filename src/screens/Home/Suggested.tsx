@@ -1,51 +1,45 @@
-import React, { memo, useCallback, useEffect, useState } from "react"
+import React, { memo, useEffect } from "react"
 import { RefreshControl, ScrollView, View } from "react-native"
 import Show from "../../components/Show"
 import MainSkeleton from "../../components/skeleton/MainSkeleton"
 import { component } from "../../constants/screens"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import SuggestedServices from "../../services/suggested.service"
 import { homeService } from "../../store/actions/home.action"
 import { homeData } from "../../store/slices/home.slice"
-const service = new SuggestedServices()
 const Suggested = () => {
-  const [ref, setRef] = useState(false)
   const dispatch = useAppDispatch()
-  const data = TypedSelectorHook(homeData)
+  const suggested = TypedSelectorHook(homeData)
   useEffect(() => {
     dispatch(homeService.getHomeData())
-  }, [])
-  const onRefresh = useCallback(async () => {
-    setRef(true)
-    dispatch(homeService.getHomeData())
-    await service.wait(2000).then(() => setRef(false))
   }, [])
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      refreshControl={<RefreshControl refreshing={ref} onRefresh={onRefresh} />}
+      refreshControl={
+        <RefreshControl
+          refreshing={suggested.isLoading}
+          onRefresh={() => dispatch(homeService.getHomeData())}
+        />
+      }
     >
       <View className=" w-full h-auto pb-24">
-        <Show isVisible={data.isLoading && data.data == null}>
+        <Show isVisible={suggested.isLoading && suggested.data == null}>
           <MainSkeleton />
         </Show>
-        <Show isVisible={data.data != null}>
-          {data.data && (
+        <Show isVisible={suggested.data != null}>
+          {suggested.data && (
             <View>
               <component.CTrendingAlbum
-                data={data?.data.tuneifyTrendingAlbumsResponse}
+                data={suggested.data?.tuneifyTrendingAlbumsResponse}
                 topic={"Trending Albums"}
               />
               <component.CPlaylist
-                data={data?.data?.tuneifyTopPlaylistsResponse}
+                data={suggested?.data?.tuneifyTopPlaylistsResponse}
                 topic={"Playlists"}
               />
-              <component.CAlbums
-                data={data?.data?.tuneifyAlbumsResponse}
-                topic={"Albums"}
-              />
+              <component.CAlbums data={suggested?.data?.tuneifyAlbumsResponse} topic={"Albums"} />
               <component.CCharts
-                data={data.data?.tuneifyChartsResponse}
+                data={suggested.data?.tuneifyChartsResponse}
                 topic={"Top Flavour"}
               />
             </View>

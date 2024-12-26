@@ -7,7 +7,7 @@ import {
   State,
   Track,
   usePlaybackState,
-  useTrackPlayerEvents,
+  useTrackPlayerEvents
 } from "react-native-track-player"
 import { lyricsApi } from "../../api/api"
 import { Icons } from "../../constants/Icon"
@@ -50,27 +50,21 @@ const BottomPlayer = () => {
                   uri: cTrack?.artwork ? cTrack?.artwork : cTrack?.cover,
                   headers: { Authorization: "songs" },
                   priority: Image.priority.high,
-                  cache: Image.cacheControl.immutable,
+                  cache: Image.cacheControl.immutable
                 }}
                 style={{ width: 50, height: 50, borderRadius: 5 }}
               />
               <View style={{ marginLeft: 10 }}>
                 <Text className="text-white  mb-1 text-sm font-['500']  tracking-wider">
-                  {cTrack.title!.length > 32
-                    ? cTrack.title?.slice(0, 32) + "..."
-                    : cTrack.title}
+                  {cTrack.title!.length > 32 ? cTrack.title?.slice(0, 32) + "..." : cTrack.title}
                 </Text>
                 <Text className="text-gray-200 text-[9px] font-['300']">
-                  {cTrack.artist!.length > 60
-                    ? cTrack.artist?.slice(0, 62) + "..."
-                    : cTrack.artist}
+                  {cTrack.artist!.length > 60 ? cTrack.artist?.slice(0, 62) + "..." : cTrack.artist}
                 </Text>
               </View>
             </View>
             <TouchableOpacity
-              onPress={() =>
-                service.playPauseAction(playbackState, state, dispatch)
-              }
+              onPress={() => service.playPauseAction(playbackState, state, dispatch)}
             >
               <Show isVisible={state.isPlaying}>
                 <Icons.PlayIcon name="pause" color={"white"} size={20} />

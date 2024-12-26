@@ -1,13 +1,6 @@
 import Slider from "@react-native-community/slider"
 import React, { memo, useCallback, useEffect, useState } from "react"
-import {
-  Animated,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native"
+import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import TrackImage from "react-native-fast-image"
 import Modal from "react-native-modal"
 import { FAB as Fab } from "react-native-paper"
@@ -17,16 +10,13 @@ import TrackPlayer, {
   Track,
   usePlaybackState,
   useProgress,
-  useTrackPlayerEvents,
+  useTrackPlayerEvents
 } from "react-native-track-player"
 import { lyricsApi } from "../../api/api"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import TuneifyService from "../../services/Tuneify.service"
-import {
-  changeTunifyState,
-  tunifyChild,
-} from "../../store/slices/childState.slice"
+import { changeTunifyState, tunifyChild } from "../../store/slices/childState.slice"
 import { addUserFavouritesData } from "../../store/slices/favourite.slice"
 import Messanger from "../message/Message"
 import Show from "../Show"
@@ -52,24 +42,24 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
     Animated.timing(flip, {
       toValue: isFlipped ? 0 : 180,
       duration: 500,
-      useNativeDriver: true,
+      useNativeDriver: true
     }).start(() => {
       setIsFlipped(!isFlipped)
     })
   }, [isFlipped])
   const frontInterpolate = flip.interpolate({
     inputRange: [0, 180],
-    outputRange: ["0deg", "180deg"],
+    outputRange: ["0deg", "180deg"]
   })
   const backInterpolate = flip.interpolate({
     inputRange: [0, 180],
-    outputRange: ["180deg", "360deg"],
+    outputRange: ["180deg", "360deg"]
   })
   const frontAnimatedStyle = {
-    transform: [{ rotateY: frontInterpolate }],
+    transform: [{ rotateY: frontInterpolate }]
   }
   const backAnimatedStyle = {
-    transform: [{ rotateY: backInterpolate }],
+    transform: [{ rotateY: backInterpolate }]
   }
   useEffect(() => {
     service.handleBottomCondition(setCt)
@@ -104,7 +94,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             onPress={() => [
               setIsTimer(true),
               service.timerMusicOff(value, dispatch, setIsTimer),
-              setVtimer(!vtimer),
+              setVtimer(!vtimer)
             ]}
           >
             <Text className="text-white text-lg font-['400']">Set</Text>
@@ -121,20 +111,11 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
           <View className="w-full h-screen  px-3 ">
             <View className=" h-10 w-full flex items-center justify-between flex-row">
               <TouchableOpacity onPress={() => setIsVisible(false)}>
-                <Icons.KeyboardDown
-                  name="keyboard-arrow-down"
-                  size={35}
-                  color={"white"}
-                />
+                <Icons.KeyboardDown name="keyboard-arrow-down" size={35} color={"white"} />
               </TouchableOpacity>
               <View className="flex flex-row h-full items-center justify-center">
                 <TouchableOpacity onPress={() => flipCard()}>
-                  <Icons.MoreIcon
-                    name="lyrics"
-                    size={20}
-                    color={"white"}
-                    className="mr-4"
-                  />
+                  <Icons.MoreIcon name="lyrics" size={20} color={"white"} className="mr-4" />
                 </TouchableOpacity>
                 <TouchableOpacity>
                   <Icons.MoreIcon name="more-vert" size={25} color={"white"} />
@@ -151,7 +132,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                     uri: ct?.artwork ? ct.artwork : ct?.cover,
                     headers: { Authorization: "songs" },
                     priority: TrackImage.priority.high,
-                    cache: TrackImage.cacheControl.immutable,
+                    cache: TrackImage.cacheControl.immutable
                   }}
                   className="h-full w-full "
                 />
@@ -174,9 +155,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             </View>
             <View className=" w-full mt-5 flex items-center justify-center h-auto ">
               <Text className="text-white text-2xl  font-['600'] mb-1">
-                {ct && ct.title!.length > 30
-                  ? ct?.title?.slice(0, 31) + "..."
-                  : ct?.title}
+                {ct && ct.title!.length > 30 ? ct?.title?.slice(0, 31) + "..." : ct?.title}
               </Text>
               <TextTicker
                 style={{ fontSize: 15, color: "#bdbdbd" }}
@@ -205,30 +184,16 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                   width: "90%",
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  alignSelf: "center",
+                  alignSelf: "center"
                 }}
               >
                 <Text style={{ color: "white", fontFamily: "300" }}>
-                  {JSON.stringify(Math.floor(progress.position / 60)).padStart(
-                    2,
-                    "0"
-                  )}
-                  :
-                  {JSON.stringify(Math.floor(progress.position % 60)).padStart(
-                    2,
-                    "0"
-                  )}
+                  {JSON.stringify(Math.floor(progress.position / 60)).padStart(2, "0")}:
+                  {JSON.stringify(Math.floor(progress.position % 60)).padStart(2, "0")}
                 </Text>
                 <Text style={{ color: "white", fontFamily: "300" }}>
-                  {JSON.stringify(Math.floor(progress.duration / 60)).padStart(
-                    2,
-                    "0"
-                  )}
-                  :
-                  {JSON.stringify(Math.floor(progress.duration / 60)).padStart(
-                    2,
-                    "0"
-                  )}
+                  {JSON.stringify(Math.floor(progress.duration / 60)).padStart(2, "0")}:
+                  {JSON.stringify(Math.floor(progress.duration / 60)).padStart(2, "0")}
                 </Text>
               </View>
             </View>
@@ -239,14 +204,10 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                   onPress={() => [
                     TrackPlayer.skipToPrevious(),
                     service.handleBottomCondition(setCt),
-                    service.getLyrics(setLyric),
+                    service.getLyrics(setLyric)
                   ]}
                 >
-                  <Icons.KeyboardDown
-                    name="skip-previous"
-                    color={"white"}
-                    size={35}
-                  />
+                  <Icons.KeyboardDown name="skip-previous" color={"white"} size={35} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   className="w-14 h-14 rounded-full flex items-center justify-center"
@@ -258,7 +219,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                       tintColor: "white",
                       height: "60%",
                       width: "60%",
-                      marginRight: 6,
+                      marginRight: 6
                     }}
                   />
                 </TouchableOpacity>
@@ -266,9 +227,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
               <View className=" w-1/5 flex items-center justify-center">
                 <Fab
                   icon={state.isPlaying ? "pause" : "play"}
-                  onPress={() =>
-                    service.playPauseAction(playbackState, state, dispatch)
-                  }
+                  onPress={() => service.playPauseAction(playbackState, state, dispatch)}
                   loading={playbackState.state === State.Loading}
                   style={{ backgroundColor: "#ff8216", borderRadius: 50 }}
                 />
@@ -284,7 +243,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                       tintColor: "white",
                       height: "60%",
                       width: "60%",
-                      marginLeft: 6,
+                      marginLeft: 6
                     }}
                   />
                 </TouchableOpacity>
@@ -292,22 +251,16 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                   onPress={() => [
                     TrackPlayer.skipToNext(),
                     service.handleBottomCondition(setCt),
-                    service.getLyrics(setLyric),
+                    service.getLyrics(setLyric)
                   ]}
                 >
-                  <Icons.KeyboardDown
-                    name="skip-next"
-                    color={"white"}
-                    size={35}
-                  />
+                  <Icons.KeyboardDown name="skip-next" color={"white"} size={35} />
                 </TouchableOpacity>
               </View>
             </View>
 
             <View className=" h-14 w-full mt-5  flex items-center justify-around flex-row">
-              <TouchableOpacity
-                onPress={() => service.repeatMode(state, dispatch)}
-              >
+              <TouchableOpacity onPress={() => service.repeatMode(state, dispatch)}>
                 <Icons.PlayListIcon
                   name={state.repeat ? "repeat" : "repeat-off"}
                   color={state.repeat ? "#ff8216" : "#bababa"}
@@ -326,15 +279,12 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                   style={{
                     width: 32,
                     height: 32,
-                    tintColor: isTimer ? "#ff8216" : "white",
+                    tintColor: isTimer ? "#ff8216" : "white"
                   }}
                 />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => [
-                  dispatch(addUserFavouritesData(ct!)),
-                  setVisibleSnake(true),
-                ]}
+                onPress={() => [dispatch(addUserFavouritesData(ct!)), setVisibleSnake(true)]}
               >
                 <Icons.HomeIcon name="heart-fill" size={23} color={"#ff8216"} />
               </TouchableOpacity>

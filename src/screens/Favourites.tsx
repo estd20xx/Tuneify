@@ -19,18 +19,13 @@ const Favourites = () => {
                 tintColor: "white",
                 width: 30,
                 height: 30,
-                marginRight: 3,
+                marginRight: 3
               }}
             />
             <Text className="text-white text-xl font-[400]">Suffle</Text>
           </TouchableOpacity>
           <TouchableOpacity className="bg-[#35383f] h-11 w-36 rounded-full flex items-center justify-center flex-row">
-            <Icons.PlayIcon
-              name="play"
-              color={"white"}
-              size={20}
-              className="mr-1"
-            />
+            <Icons.PlayIcon name="play" color={"white"} size={20} className="mr-1" />
             <Text className="text-white text-xl font-[400]">Play</Text>
           </TouchableOpacity>
         </View>
@@ -44,7 +39,7 @@ const Favourites = () => {
                 justifyContent: "space-between",
                 paddingLeft: 2,
                 paddingRight: 5,
-                marginTop: 10,
+                marginTop: 10
               }}
               key={item.id + JSON.stringify(index)}
             >
@@ -56,7 +51,7 @@ const Favourites = () => {
                         uri: item?.artwork,
                         headers: { Authorization: "songs" },
                         priority: TrackImage.priority.high,
-                        cache: TrackImage.cacheControl.immutable,
+                        cache: TrackImage.cacheControl.immutable
                       }}
                       style={{ width: 60, height: 60, borderRadius: 5 }}
                     />
@@ -65,7 +60,7 @@ const Favourites = () => {
                         style={{
                           color: "white",
                           fontSize: 15,
-                          fontFamily: "400",
+                          fontFamily: "400"
                         }}
                       >
                         {item.title}
@@ -75,7 +70,7 @@ const Favourites = () => {
                           color: "#d0d0d1",
                           fontSize: 10,
                           marginTop: 1,
-                          fontFamily: "300",
+                          fontFamily: "300"
                         }}
                       >
                         {item.artist}

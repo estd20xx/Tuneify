@@ -7,16 +7,13 @@ export const createDownloadLinks = (encryptedMediaUrl: string): Audio[] => {
     { id: "_48", bitrate: "48kbps" },
     { id: "_96", bitrate: "96kbps" },
     { id: "_160", bitrate: "160kbps" },
-    { id: "_320", bitrate: "320kbps" },
+    { id: "_320", bitrate: "320kbps" }
   ]
   const key = "38346591"
   const iv = "00000000"
 
   const encrypted = util.decode64(encryptedMediaUrl)
-  const decipher = cipher.createDecipher(
-    "DES-ECB",
-    util.createBuffer(key, "utf8")
-  )
+  const decipher = cipher.createDecipher("DES-ECB", util.createBuffer(key, "utf8"))
 
   decipher.start({ iv: util.createBuffer(iv, "utf8") })
   decipher.update(util.createBuffer(encrypted))
@@ -26,7 +23,7 @@ export const createDownloadLinks = (encryptedMediaUrl: string): Audio[] => {
 
   const links = qualities.map((quality) => ({
     quality: quality.bitrate,
-    link: decryptedLink.replace("_96", quality.id),
+    link: decryptedLink.replace("_96", quality.id)
   }))
   return links
 }
@@ -44,7 +41,7 @@ export const handleImageVariation = (link: string): Image[] => {
     quality,
     link: link.includes("150x150")
       ? link.replace("150x150", quality)
-      : link.replace("50x50", quality),
+      : link.replace("50x50", quality)
   }))
   return data
 }

@@ -23,13 +23,13 @@ const BottomTab = () => {
             inactiveColor="#a1a0a3"
             style={{
               height: 50,
-              backgroundColor: "#000000",
+              backgroundColor: "#000000"
             }}
             onTabPress={({ route, preventDefault }) => {
               const event = navigation.emit({
                 type: "tabPress",
                 target: route.key,
-                canPreventDefault: true,
+                canPreventDefault: true
               })
 
               if (event.defaultPrevented) {
@@ -37,7 +37,7 @@ const BottomTab = () => {
               } else {
                 navigation.dispatch({
                   ...CommonActions.navigate(route.name, route.params),
-                  target: state.key,
+                  target: state.key
                 })
               }
             }}
@@ -49,10 +49,10 @@ const BottomTab = () => {
               return null
             }}
             /** TODO : to shot label
-        getLabelText={({ route }) => {
-          return route.name
-        }}
-        */
+      getLabelText={({ route }) => {
+        return route.name
+      }}
+      */
           />
         </View>
       )}
@@ -65,12 +65,8 @@ const BottomTab = () => {
             key={item.name}
             options={{
               tabBarIcon: ({ color }) => (
-                <item.Active
-                  name={item.activeName}
-                  color={color}
-                  size={item.activeSize}
-                />
-              ),
+                <item.Active name={item.activeName} color={color} size={item.activeSize} />
+              )
             }}
           />
         )

@@ -8,8 +8,8 @@ class PersonalizedPlaylistsSongs extends PayloadService {
     const data = await axios.get(baseURL, {
       params: {
         ...endPoints.playlistDetails,
-        listid: id,
-      },
+        listid: id
+      }
     })
     // const finalData = this.albumPayload(data.data)
     // return

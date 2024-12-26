@@ -1,9 +1,5 @@
+import { AlbumResponse, ChartsResponse, PlaylistResponse } from "../api/interface/module.interface"
 import { SongsTypes } from "./songs.interface"
-import {
-  AlbumResponse,
-  ChartsResponse,
-  PlaylistResponse,
-} from "../api/interface/module.interface"
 export interface SuggestedDataInterfaceChild {
   albums: AlbumResponse[]
   playlists: PlaylistResponse[]
@@ -14,7 +10,6 @@ export interface Http {
   data: SuggestedDataInterfaceChild
 }
 export default interface Isuggested {
-  wait: (timeout: number) => Promise<void>
   randomGenerator: (initial: number, final: number) => number
   http: (url: string) => Promise<Http>
   getSuggestedData: (

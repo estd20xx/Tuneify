@@ -15,7 +15,7 @@ import userSlice from "./slices/user.slice"
 const persistConfig = {
   key: "@hainahola",
   version: 1,
-  storage: AsyncStorage,
+  storage: AsyncStorage
 }
 const RootReducer = combineReducers({
   user: userSlice,
@@ -30,15 +30,15 @@ const RootReducer = combineReducers({
   // new
   home: homeSlice,
   album: albumSlice,
-  geet: songSliceNew,
+  geet: songSliceNew
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({
   reducer: { persistedReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+      serializableCheck: false
+    })
 })
 export const persistor = persistStore(store)
 export type RootState = ReturnType<typeof store.getState>

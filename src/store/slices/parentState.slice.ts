@@ -4,14 +4,13 @@ import { InitialCurrentStateTypes } from "../../Interfaces/tuneifySlice.interfac
 
 const initialState: InitialCurrentStateTypes = {
   albumId: "",
-  playListId: "",
+  playListId: ""
 }
 const parentState = createSlice({
   name: "parentDev",
   initialState,
-  reducers: {},
+  reducers: {}
 })
 export const {} = parentState.actions
-export const tunifyParent = (state: RootState) =>
-  state.persistedReducer.parentState
+export const tunifyParent = (state: RootState) => state.persistedReducer.parentState
 export default parentState.reducer
