@@ -2,56 +2,56 @@ export const settingsData = [
   {
     leftIcon: require("../assets/images/setting.png"),
     title: "General Settings",
-    link: "",
+    link: ""
   },
   {
     leftIcon: require("../assets/images/backup-file.png"),
     title: "BackUp",
-    link: "",
+    link: ""
   },
   {
     leftIcon: require("../assets/images/notification.png"),
     title: "Notification",
-    link: "",
+    link: ""
   },
   {
     leftIcon: require("../assets/images/language.png"),
     title: "Language",
-    link: "",
+    link: ""
   },
   {
     leftIcon: require("../assets/images/mode.png"),
     title: "Accent Color",
-    link: "",
+    link: ""
   },
   {
     leftIcon: require("../assets/images/shareApp.png"),
     title: "Share App",
-    link: "",
+    link: ""
   },
   {
     leftIcon: require("../assets/images/log.png"),
     title: "Change Log",
-    link: "",
+    link: ""
   },
   {
     leftIcon: require("../assets/images/privacy.png"),
     title: "Privacy Policy",
-    link: "",
+    link: ""
   },
   {
     leftIcon: require("../assets/images/faq.png"),
     title: "FAQ",
-    link: "",
+    link: ""
   },
   {
     leftIcon: require("../assets/images/info.png"),
     title: "About Tuneify",
-    link: "",
+    link: ""
   },
   {
     leftIcon: require("../assets/images/exit.png"),
     title: "Quit",
-    link: "",
-  },
+    link: ""
+  }
 ]

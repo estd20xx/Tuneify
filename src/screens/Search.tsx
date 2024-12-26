@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useState } from "react"
-import { FlatList, Text, TouchableOpacity, View } from "react-native"
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native"
 import Input from "../components/Search/Input"
 import { TypedSelectorHook } from "../hooks/store.hook"
 import { useDebounce } from "../hooks/useDebounce"
@@ -17,12 +17,23 @@ const Search = () => {
     }
   }
   const renderItem = useCallback(
-    ({ item }: { item: StoreSongTypes }) => (
-      <TouchableOpacity
-        className="w-full bg-red-500
-         h-16  mt-2  flex flex-row items-center pl-3 rounded-xl"
-      >
-        <Text>{item.title}</Text>
+    ({ item, index }: { item: StoreSongTypes; index: number }) => (
+      <TouchableOpacity className="w-full h-16 mt-2 flex flex-row items-center">
+        <View className="h-16 w-20  pl-2">
+          <Image source={{ uri: item.artwork }} className="h-16 w-16 rounded-md" />
+        </View>
+        <View className="w-4/5 ">
+          <Text
+            style={{
+              fontSize: 15,
+              fontFamily: "500",
+              color: "#FFF"
+            }}
+          >
+            {item.title?.length > 45 ? item.title.slice(0, 45) + "..." : item.title}
+          </Text>
+          <Text style={{ fontSize: 10, color: "#d0d0d1", fontFamily: "200" }}>{item.artist}</Text>
+        </View>
       </TouchableOpacity>
     ),
     []

@@ -1,7 +1,4 @@
-import {
-  NavigationContainer as Container,
-  DefaultTheme,
-} from "@react-navigation/native"
+import { NavigationContainer as Container, DefaultTheme } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { MainNavigationItems } from "../constants/naviG"
 const Stack = createNativeStackNavigator()
@@ -19,7 +16,7 @@ const MainNavigation = () => {
               options={{
                 headerShown: false,
                 animation: "ios",
-                presentation: "card",
+                presentation: "card"
               }}
               key={cn.name}
             />

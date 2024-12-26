@@ -1,21 +1,15 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import {
-  InitialFavouriteState,
-  UserFavouritesTypes,
-} from "../../Interfaces/tuneifySlice.interface"
+import { InitialFavouriteState, UserFavouritesTypes } from "../../Interfaces/tuneifySlice.interface"
 import { Track } from "react-native-track-player"
 import { RootState } from "../store"
 const initialState: InitialFavouriteState = {
-  favouriteData: [],
+  favouriteData: []
 }
 const favouriteSlice = createSlice({
   name: "favouriteDev",
   initialState,
   reducers: {
-    addUserFavouritesData(
-      state: InitialFavouriteState,
-      actions: PayloadAction<Track>
-    ) {
+    addUserFavouritesData(state: InitialFavouriteState, actions: PayloadAction<Track>) {
       const data = state.favouriteData.filter((c) => c.id == actions.payload.id)
       if (data.length != 0) return
       const dtx: UserFavouritesTypes = {
@@ -24,13 +18,12 @@ const favouriteSlice = createSlice({
         artist: actions.payload.artist!,
         artwork: actions.payload.artwork!,
         url: actions.payload.url,
-        isLiked: false,
+        isLiked: false
       }
       state.favouriteData.unshift(dtx)
-    },
-  },
+    }
+  }
 })
 export const { addUserFavouritesData } = favouriteSlice.actions
-export const tuneifyFavourites = (state: RootState) =>
-  state.persistedReducer.favourite
+export const tuneifyFavourites = (state: RootState) => state.persistedReducer.favourite
 export default favouriteSlice.reducer

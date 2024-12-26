@@ -9,11 +9,11 @@ class AppNotification {
       autoHide: true,
       swipeable: true,
       text1Style: {
-        color: "#16FF00",
+        color: "#16FF00"
       },
       text2Style: {
-        color: "white",
-      },
+        color: "white"
+      }
     })
   }
   public errorMessage = (title: string, message: string) => {
@@ -25,11 +25,11 @@ class AppNotification {
       autoHide: true,
       swipeable: true,
       text1Style: {
-        color: "#FF004D",
+        color: "#FF004D"
       },
       text2Style: {
-        color: "white",
-      },
+        color: "white"
+      }
     })
   }
 }

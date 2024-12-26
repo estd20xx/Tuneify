@@ -9,12 +9,10 @@ import { albumData } from "../../store/slices/album.slice"
 import {
   addTrackId,
   addTrackIndex,
-  tunifyCurrentTrack,
+  tunifyCurrentTrack
 } from "../../store/slices/currentTrack.slice"
 import { tuneifySongs } from "../../store/slices/song.slice"
-const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
-  route,
-}) => {
+const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => {
   const dispatch = useAppDispatch()
   const current = TypedSelectorHook(tunifyCurrentTrack)
   const [data] = useState(route.params.albumData)
@@ -55,21 +53,14 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
     <View className="w-full">
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="w-full h-56  flex items-center justify-center">
-          <Image
-            source={{ uri: data.artwork[2].link }}
-            className="h-52 w-52 rounded-md"
-          />
+          <Image source={{ uri: data.artwork[2].link }} className="h-52 w-52 rounded-md" />
         </View>
         <View className="w-full px-3 flex  justify-center">
           <Text className="text-white font-['500'] text-lg tracking-wider">
-            {data.title.length > 15
-              ? data.title.slice(0, 38) + "..."
-              : data.title}
+            {data.title.length > 15 ? data.title.slice(0, 38) + "..." : data.title}
           </Text>
           <TouchableOpacity>
-            <Text className="text-gray-300 text-base font-['400']">
-              {data.type}
-            </Text>
+            <Text className="text-gray-300 text-base font-['400']">{data.type}</Text>
           </TouchableOpacity>
         </View>
         {!albumSongs.isLoading &&
@@ -84,15 +75,13 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
                   justifyContent: "space-between",
                   paddingLeft: 2,
                   paddingRight: 5,
-                  marginTop: 10,
+                  marginTop: 10
                 }}
                 onPress={() => InitialiseThisOne(index)}
               >
                 <View className="w-4/5  h-full pl-3 flex flex-row ">
                   <View className="w-full rounded-lg overflow-hidden ">
-                    <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
+                    <View style={{ flexDirection: "row", alignItems: "center" }}>
                       <Image
                         source={{ uri: currentSong.image[2].link }}
                         style={{ width: 60, height: 60, borderRadius: 5 }}
@@ -102,7 +91,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
                           style={{
                             color: "#FFF",
                             fontSize: 14,
-                            fontFamily: "400",
+                            fontFamily: "400"
                           }}
                         >
                           {currentSong.title}
@@ -112,7 +101,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
                             color: "#d0d0d1",
                             fontSize: 10,
                             marginTop: 2,
-                            fontFamily: "300",
+                            fontFamily: "300"
                           }}
                         >
                           {currentSong.artists}
@@ -122,11 +111,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
                   </View>
                 </View>
                 <View className=" w-1/5 h-full flex items-center justify-end flex-row pr-3">
-                  <Icons.MoreIcon
-                    name="more-vert"
-                    size={25}
-                    color={"#bababa"}
-                  />
+                  <Icons.MoreIcon name="more-vert" size={25} color={"#bababa"} />
                 </View>
               </TouchableOpacity>
             )

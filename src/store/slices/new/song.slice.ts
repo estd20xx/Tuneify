@@ -10,7 +10,7 @@ interface InitialWala {
 const initialState: InitialWala = {
   data: null,
   isLoading: false,
-  isError: false,
+  isError: false
 }
 const songSliceNew = createSlice({
   name: "@song",
@@ -19,12 +19,12 @@ const songSliceNew = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(songServiceaction.getSongs.pending, (state: InitialWala) => {
+        state.isError = false
         state.isLoading = true
       })
       .addCase(
         songServiceaction.getSongs.fulfilled,
         (state: InitialWala, action: PayloadAction<SearchedSongs>) => {
-          // console.log(action.payload)
           state.data = action.payload
           state.isLoading = false
         }
@@ -33,7 +33,7 @@ const songSliceNew = createSlice({
         state.isError = true
         state.isLoading = false
       })
-  },
+  }
 })
 export const testSong = (state: RootState) => state.persistedReducer.geet
 export default songSliceNew.reducer

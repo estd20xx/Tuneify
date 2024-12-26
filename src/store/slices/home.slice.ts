@@ -10,7 +10,7 @@ interface InitialHomeDataInerface {
 const initialState: InitialHomeDataInerface = {
   data: null,
   isLoading: false,
-  isError: false,
+  isError: false
 }
 const homeSlice = createSlice({
   name: "@home",
@@ -18,29 +18,22 @@ const homeSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(
-        homeService.getHomeData.pending,
-        (state: InitialHomeDataInerface) => {
-          state.isLoading = true
-        }
-      )
+      .addCase(homeService.getHomeData.pending, (state: InitialHomeDataInerface) => {
+        state.isLoading = true
+      })
       .addCase(
         homeService.getHomeData.fulfilled,
-        (
-          state: InitialHomeDataInerface,
-          action: PayloadAction<HomeDataResponse>
-        ) => {
+        (state: InitialHomeDataInerface, action: PayloadAction<HomeDataResponse>) => {
           state.data = action.payload
           state.isLoading = false
         }
       )
-      .addCase(
-        homeService.getHomeData.rejected,
-        (state: InitialHomeDataInerface) => {
-          state.isError = true
-        }
-      )
-  },
+      .addCase(homeService.getHomeData.rejected, (state: InitialHomeDataInerface) => {
+        console.log("errrof api")
+        state.isError = true
+        state.isLoading = false
+      })
+  }
 })
 export const homeData = (state: RootState) => state.persistedReducer.home
 export default homeSlice.reducer

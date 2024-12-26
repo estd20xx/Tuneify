@@ -1,13 +1,14 @@
-import HomeIcon from "react-native-vector-icons/Octicons"
-import HomeFocused from "react-native-vector-icons/Foundation"
-import PlayListIcon from "react-native-vector-icons/MaterialCommunityIcons"
-import SettingsIcon from "react-native-vector-icons/Ionicons"
-import SortIcon from "react-native-vector-icons/FontAwesome"
-import PlayIcon from "react-native-vector-icons/Ionicons"
-import MoreIcon from "react-native-vector-icons/MaterialIcons"
-import AppleMusic from "react-native-vector-icons/FontAwesome6"
 import SearchIcon from "react-native-vector-icons/Feather"
-import KeyboardDown from "react-native-vector-icons/MaterialIcons"
+import SortIcon from "react-native-vector-icons/FontAwesome"
+import AppleMusic from "react-native-vector-icons/FontAwesome6"
+import HomeFocused from "react-native-vector-icons/Foundation"
+import { default as PlayIcon, default as SettingsIcon } from "react-native-vector-icons/Ionicons"
+import PlayListIcon from "react-native-vector-icons/MaterialCommunityIcons"
+import {
+  default as KeyboardDown,
+  default as MoreIcon
+} from "react-native-vector-icons/MaterialIcons"
+import HomeIcon from "react-native-vector-icons/Octicons"
 export const Icons = {
   HomeIcon,
   HomeFocused,
@@ -18,5 +19,5 @@ export const Icons = {
   MoreIcon,
   AppleMusic,
   SearchIcon,
-  KeyboardDown,
+  KeyboardDown
 }

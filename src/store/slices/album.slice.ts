@@ -10,7 +10,7 @@ interface InitialAlbumSongsInterface {
 const initialState: InitialAlbumSongsInterface = {
   data: null,
   isLoading: false,
-  isError: false,
+  isError: false
 }
 const albumSlice = createSlice({
   name: "@album",
@@ -18,29 +18,20 @@ const albumSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(
-        album.getAlbumSongs.pending,
-        (state: InitialAlbumSongsInterface) => {
-          state.isLoading = true
-        }
-      )
+      .addCase(album.getAlbumSongs.pending, (state: InitialAlbumSongsInterface) => {
+        state.isLoading = true
+      })
       .addCase(
         album.getAlbumSongs.fulfilled,
-        (
-          state: InitialAlbumSongsInterface,
-          action: PayloadAction<AlbumDetailsResponse>
-        ) => {
+        (state: InitialAlbumSongsInterface, action: PayloadAction<AlbumDetailsResponse>) => {
           state.data = action.payload
           state.isLoading = false
         }
       )
-      .addCase(
-        album.getAlbumSongs.rejected,
-        (state: InitialAlbumSongsInterface) => {
-          state.isError = true
-        }
-      )
-  },
+      .addCase(album.getAlbumSongs.rejected, (state: InitialAlbumSongsInterface) => {
+        state.isError = true
+      })
+  }
 })
 export const albumData = (state: RootState) => state.persistedReducer.album
 export default albumSlice.reducer

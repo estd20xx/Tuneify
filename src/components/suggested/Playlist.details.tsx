@@ -40,21 +40,14 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
     <View className="w-full">
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="w-full h-56  flex items-center justify-center">
-          <Image
-            source={{ uri: data.artwork[2].link }}
-            className="h-52 w-52 rounded-md"
-          />
+          <Image source={{ uri: data.artwork[2].link }} className="h-52 w-52 rounded-md" />
         </View>
         <View className="w-full px-3 flex  justify-center">
           <Text className="text-white  text-lg tracking-wider font-['500']">
-            {data.title.length > 15
-              ? data.title.slice(0, 38) + "..."
-              : data.title}
+            {data.title.length > 15 ? data.title.slice(0, 38) + "..." : data.title}
           </Text>
           <TouchableOpacity>
-            <Text className="text-gray-300 text-base font-['400']">
-              {data.type}
-            </Text>
+            <Text className="text-gray-300 text-base font-['400']">{data.type}</Text>
           </TouchableOpacity>
         </View>
         {playlistSong.map((currentSong) => {
@@ -68,7 +61,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
                 justifyContent: "space-between",
                 paddingLeft: 2,
                 paddingRight: 5,
-                marginTop: 10,
+                marginTop: 10
               }}
             >
               <View className="w-4/5  h-full pl-3 flex flex-row ">
@@ -83,7 +76,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
                         style={{
                           color: "white",
                           fontSize: 14,
-                          fontFamily: "400",
+                          fontFamily: "400"
                         }}
                       >
                         {currentSong.name}
@@ -93,7 +86,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
                           color: "#d0d0d1",
                           fontSize: 10,
                           marginTop: 2,
-                          fontFamily: "300",
+                          fontFamily: "300"
                         }}
                       >
                         {currentSong.primaryArtists}

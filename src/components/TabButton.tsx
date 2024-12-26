@@ -31,7 +31,7 @@ const TabButton = (props: any) => {
           ref={viewRef}
           style={[
             StyleSheet.absoluteFillObject,
-            { backgroundColor: item.active, borderRadius: 16 },
+            { backgroundColor: item.active, borderRadius: 16 }
           ]}
         />
         <View
@@ -40,9 +40,9 @@ const TabButton = (props: any) => {
               flexDirection: "row",
               alignItems: "center",
               padding: 8,
-              borderRadius: 16,
+              borderRadius: 16
             },
-            { backgroundColor: "rgba(28,28,28,.7)" },
+            { backgroundColor: "rgba(28,28,28,.7)" }
           ]}
         >
           <Animatable.View ref={iconRef} className="">
@@ -65,7 +65,7 @@ const TabButton = (props: any) => {
               <Text
                 style={{
                   color: "white",
-                  paddingHorizontal: 8,
+                  paddingHorizontal: 8
                 }}
               >
                 {item.name}

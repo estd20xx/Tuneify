@@ -1,8 +1,8 @@
-import { View, Image as Img } from "react-native"
 import React from "react"
+import { Image as Img, View } from "react-native"
+import Image from "react-native-fast-image"
 import notFoundImage from "../assets/images/not-found.png"
 const notFound = Img.resolveAssetSource(notFoundImage).uri
-import Image from "react-native-fast-image"
 const NotFound = () => {
   return (
     <View className=" h-1/2 w-full flex items-center p-20 ">
@@ -11,7 +11,7 @@ const NotFound = () => {
           uri: notFound,
           headers: { Authorization: "not found" },
           priority: Image.priority.high,
-          cache: Image.cacheControl.immutable,
+          cache: Image.cacheControl.immutable
         }}
         className="h-full w-full"
       />

@@ -54,5 +54,5 @@ export const component = {
   TrendingAlbumDetails,
   AlbumDetails,
   PlaylistDetails,
-  Search,
+  Search
 }

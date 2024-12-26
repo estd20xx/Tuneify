@@ -7,15 +7,12 @@ import { AlbumDataProps } from "../Interfaces/album.interface"
 import { RootStackParamList } from "../Types/Types"
 import { AlbumResponse } from "../api/interface/module.interface"
 const Albums: React.FC<AlbumDataProps> = ({ data, topic }) => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
   const renderItem = useCallback(
     ({ item }: { item: AlbumResponse }) => (
       <TouchableOpacity
         className="w-28 flex items-center justify-center"
-        onPress={() =>
-          navigation.navigate("TrendingAlbumDetails", { albumData: item })
-        }
+        onPress={() => navigation.navigate("TrendingAlbumDetails", { albumData: item })}
       >
         <View className={` h-24 w-24 rounded-3xl overflow-hidden`}>
           <Image
@@ -23,16 +20,14 @@ const Albums: React.FC<AlbumDataProps> = ({ data, topic }) => {
               uri: item.artwork[2].link,
               headers: { Authorization: "someAuthToken" },
               priority: Image.priority.normal,
-              cache: Image.cacheControl.immutable,
+              cache: Image.cacheControl.immutable
             }}
             className="w-full h-full object-fill"
           />
         </View>
         <View className=" w-full h-9 flex items-center  justify-center">
           <Text className="text-white text-xs tracking-wider font-['500'] ">
-            {item.title.length > 10
-              ? item.title.slice(0, 14) + ".."
-              : item.title}
+            {item.title.length > 10 ? item.title.slice(0, 14) + ".." : item.title}
           </Text>
         </View>
       </TouchableOpacity>
@@ -42,9 +37,7 @@ const Albums: React.FC<AlbumDataProps> = ({ data, topic }) => {
   return (
     <View className="w-full h-44  ">
       <View className="w-full pl-3 h-10 flex items-center flex-row  mb-3">
-        <Text className="text-lg text-white font-['500'] tracking-widest">
-          {topic}
-        </Text>
+        <Text className="text-lg text-white font-['500'] tracking-widest">{topic}</Text>
       </View>
       <FlatList
         horizontal

@@ -1,13 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { Song } from "../../api/service/Payload.service"
-import {
-  InitialSongStateTypes,
-  StoreSongTypes,
-} from "../../Interfaces/tuneifySlice.interface"
+import { InitialSongStateTypes, StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { RootState } from "../store"
 
 const initialState: InitialSongStateTypes = {
-  songs: [],
+  songs: []
 }
 const songSlice = createSlice({
   name: "songDev",
@@ -20,18 +17,17 @@ const songSlice = createSlice({
           title: cx.title,
           artist: cx.artist,
           artwork: cx.image[2].link,
-          url: cx.link[4].link,
+          url: cx.link[4].link
         }
         return songs
       })
       state.songs = [...data]
     },
     addplayListSong(state: InitialSongStateTypes) {},
-    addAlbumSongs(state: InitialSongStateTypes) {},
-  },
+    addAlbumSongs(state: InitialSongStateTypes) {}
+  }
 })
 
 export const { addSongList } = songSlice.actions
-export const tuneifySongs = (state: RootState) =>
-  state.persistedReducer.storeSong
+export const tuneifySongs = (state: RootState) => state.persistedReducer.storeSong
 export default songSlice.reducer
