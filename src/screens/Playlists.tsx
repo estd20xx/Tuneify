@@ -1,5 +1,5 @@
-import { View, Text } from "react-native"
-import React from "react"
+import React, { memo } from "react"
+import { Text, View } from "react-native"
 
 const Playlists = () => {
   return (
@@ -9,4 +9,4 @@ const Playlists = () => {
   )
 }
 
-export default Playlists
+export default memo(Playlists)

@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/core"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import React, { useCallback } from "react"
+import React, { memo, useCallback } from "react"
 import { FlatList, Text, TouchableOpacity, View } from "react-native"
-import Image from "react-native-fast-image"
+import FastImage from "react-native-fast-image"
 import { TrendingAlbumPropsTypes } from "../Interfaces/album.interface"
 import { RootStackParamList } from "../Types/Types"
 import { AlbumResponse } from "../api/interface/module.interface"
@@ -12,20 +12,21 @@ const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({ data, topic }) => {
   const renderItem = useCallback(
     ({ item }: { item: AlbumResponse }) => (
       <TouchableOpacity
-        className={`flex items-center justify-center ml-2 `}
+        key={item.id}
+        className={`w-28 flex items-center justify-center `}
         onPress={() =>
           navigation.navigate("TrendingAlbumDetails", { albumData: item })
         }
       >
-        <View className=" h-36 w-36  rounded-3xl overflow-hidden">
-          <Image
+        <View className=" h-24 w-24  rounded-3xl overflow-hidden">
+          <FastImage
             source={{
               uri: item.artwork[2].link,
               headers: { Authorization: "someAuthToken" },
-              priority: Image.priority.normal,
-              cache: Image.cacheControl.immutable,
+              priority: FastImage.priority.normal,
+              cache: FastImage.cacheControl.immutable,
             }}
-            className="w-full h-full"
+            className="w-full h-full object-fill"
           />
         </View>
         <View className=" w-full h-9 flex items-center justify-center ">
@@ -40,7 +41,7 @@ const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({ data, topic }) => {
     []
   )
   return (
-    <View className="w-full h-56  mt-3">
+    <View className="w-full h-44  mt-3">
       <View className="w-full pl-3 h-7 flex items-center flex-row  mb-3">
         <Text className="text-lg font-['500'] text-white  tracking-widest">
           {topic}
@@ -60,5 +61,4 @@ const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({ data, topic }) => {
     </View>
   )
 }
-
-export default TrendingAlbum
+export default memo(TrendingAlbum)

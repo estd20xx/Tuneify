@@ -1,5 +1,5 @@
+import React, { memo } from "react"
 import { View } from "react-native"
-import React from "react"
 const SuggestedSkeleton = () => {
   return (
     <View className=" h-auto w-full">
@@ -19,4 +19,4 @@ const SuggestedSkeleton = () => {
     </View>
   )
 }
-export default SuggestedSkeleton
+export default memo(SuggestedSkeleton)

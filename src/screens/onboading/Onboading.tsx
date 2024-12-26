@@ -1,13 +1,13 @@
-import { View, Text, TouchableOpacity, StatusBar, Platform } from "react-native"
-import React, { useEffect, useState } from "react"
-import OnboadringService from "../../services/onboarding.service"
-import { onboardingData } from "../../constants/naviG"
+import React, { memo, useEffect, useState } from "react"
+import { Platform, StatusBar, Text, TouchableOpacity, View } from "react-native"
 import * as Animatable from "react-native-animatable"
 import { onBoardImageApi } from "../../api/api"
+import { onboardingData } from "../../constants/naviG"
 import {
   OnBoardingDataTypes,
   OnBoardingPropsTypes,
 } from "../../Interfaces/onboard.interface"
+import OnboadringService from "../../services/onboarding.service"
 const service = new OnboadringService(onBoardImageApi)
 const AnimatedButton = Animatable.createAnimatableComponent(TouchableOpacity)
 const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
@@ -83,4 +83,4 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
     </View>
   )
 }
-export default Onboading
+export default memo(Onboading)

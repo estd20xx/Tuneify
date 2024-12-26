@@ -8,10 +8,10 @@ if [ $# -eq 0 ]; then
 fi
 function checkCommandStatus {
     if [ $? -eq 0 ]; then
-    echo -e "\n $1 executed successfully"
-else
-    echo -e "\n $1 error"
-fi
+        echo -e "\n $1 executed successfully"
+    else
+        echo -e "\n $1 error"
+    fi
 }
 function projectPrettify {
     echo -e "\n Prettifying project\n"
@@ -29,7 +29,7 @@ function addingToGitStage {
     echo "'$1'"
     git commit -m "'$1'"
     checkCommandStatus "git commit"
-
+    
 }
 
 

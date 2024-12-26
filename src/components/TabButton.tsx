@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import React, { ElementRef, useEffect, useRef } from "react"
-import { DanimationValue, IanimationValue } from "../constants/animation"
+import React, { ElementRef, memo, useEffect, useRef } from "react"
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import * as Animatable from "react-native-animatable"
+import { DanimationValue, IanimationValue } from "../constants/animation"
 const TabButton = (props: any) => {
   const { item, onPress, accessibilityState } = props
   const focused = accessibilityState.selected
@@ -78,4 +78,4 @@ const TabButton = (props: any) => {
   )
 }
 
-export default TabButton
+export default memo(TabButton)

@@ -1,17 +1,17 @@
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { memo, useCallback, useEffect, useState } from "react"
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import TrackPlayer from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import { tuneifySongs } from "../../store/slices/song.slice"
-import TrackPlayer from "react-native-track-player"
 import { TrendingAlbumParamsTypes } from "../../Interfaces/album.interface"
+import { album } from "../../store/actions/album.action"
+import { albumData } from "../../store/slices/album.slice"
 import {
   addTrackId,
   addTrackIndex,
   tunifyCurrentTrack,
 } from "../../store/slices/currentTrack.slice"
-import { album } from "../../store/actions/album.action"
-import { albumData } from "../../store/slices/album.slice"
+import { tuneifySongs } from "../../store/slices/song.slice"
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
   route,
 }) => {
@@ -29,6 +29,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
   //     dispatch(addSongList(albumSongs))
   //   }
   // }, [albumSongs])
+  console.log("trending albm details")
   const InitialiseThisOne = useCallback(
     async (index: number) => {
       console.log(current.trackId)
@@ -134,4 +135,4 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
     </View>
   )
 }
-export default TrendingAlbumDetails
+export default memo(TrendingAlbumDetails)

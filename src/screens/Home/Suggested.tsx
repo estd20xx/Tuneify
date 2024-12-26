@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { memo, useCallback, useEffect, useState } from "react"
 import { RefreshControl, ScrollView, View } from "react-native"
+import Show from "../../components/Show"
 import MainSkeleton from "../../components/skeleton/MainSkeleton"
 import { component } from "../../constants/screens"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
@@ -24,33 +25,34 @@ const Suggested = () => {
       showsVerticalScrollIndicator={false}
       refreshControl={<RefreshControl refreshing={ref} onRefresh={onRefresh} />}
     >
-      <View className=" w-full h-auto pb-10">
-        {data.isLoading && !data.data ? (
+      <View className=" w-full h-auto pb-24">
+        <Show isVisible={data.isLoading && data.data == null}>
           <MainSkeleton />
-        ) : (
-          data.data && (
+        </Show>
+        <Show isVisible={data.data != null}>
+          {data.data && (
             <View>
               <component.CTrendingAlbum
                 data={data?.data.tuneifyTrendingAlbumsResponse}
                 topic={"Trending Albums"}
               />
               <component.CPlaylist
-                data={data?.data.tuneifyTopPlaylistsResponse}
+                data={data?.data?.tuneifyTopPlaylistsResponse}
                 topic={"Playlists"}
               />
               <component.CAlbums
-                data={data?.data.tuneifyAlbumsResponse}
+                data={data?.data?.tuneifyAlbumsResponse}
                 topic={"Albums"}
               />
               <component.CCharts
-                data={data.data.tuneifyChartsResponse}
+                data={data.data?.tuneifyChartsResponse}
                 topic={"Top Flavour"}
               />
             </View>
-          )
-        )}
+          )}
+        </Show>
       </View>
     </ScrollView>
   )
 }
-export default Suggested
+export default memo(Suggested)

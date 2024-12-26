@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React, { memo, useCallback } from "react"
 import { FlatList, Text, TouchableOpacity, View } from "react-native"
 import Image from "react-native-fast-image"
 import TrackPlayer from "react-native-track-player"
@@ -83,7 +83,7 @@ const Folders = () => {
       {localFile.LocalSong.length ? (
         <FlatList
           data={localFile.LocalSong}
-          keyExtractor={(item) => item.url}
+          keyExtractor={(_, index) => JSON.stringify(index)}
           initialNumToRender={3}
           showsVerticalScrollIndicator={false}
           maxToRenderPerBatch={4}
@@ -98,4 +98,4 @@ const Folders = () => {
     </View>
   )
 }
-export default Folders
+export default memo(Folders)

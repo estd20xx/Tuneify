@@ -15,8 +15,7 @@
     "build:release": "cd android && ./gradlew assembleRelease",
     "build": "./src/scripts/build.sh",
     "push": "./src/scripts/push.sh",
-    "link": "npx react-native-asset",
-    "prepare": "husky"
+    "link": "npx react-native-asset"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.21.0",

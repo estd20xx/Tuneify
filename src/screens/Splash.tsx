@@ -1,11 +1,11 @@
-import { StatusBar, View } from "react-native"
-import React, { useEffect } from "react"
+import React, { memo, useEffect } from "react"
+import { View } from "react-native"
+import { Chase } from "react-native-animated-spinkit"
 import { SplashScreenPropsTypes } from "../Types/Types"
-import { checkLocal, tuneifyOfflines } from "../store/slices/offline.slice"
+import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
 import LocalMediaService from "../services/localMedia.service"
 import PermissionService from "../services/permission.service"
-import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
-import { Chase } from "react-native-animated-spinkit"
+import { checkLocal, tuneifyOfflines } from "../store/slices/offline.slice"
 const permission = new PermissionService()
 const musicService = new LocalMediaService()
 const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {
@@ -32,4 +32,4 @@ const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {
     </View>
   )
 }
-export default Splash
+export default memo(Splash)

@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity } from "react-native"
-import React from "react"
+import React, { memo } from "react"
+import { Text, TouchableOpacity, View } from "react-native"
 import DocumentPicker from "react-native-document-picker"
 const Artists = () => {
   const chooseFile = async () => {
@@ -20,4 +20,4 @@ const Artists = () => {
     </View>
   )
 }
-export default Artists
+export default memo(Artists)

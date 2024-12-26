@@ -1,5 +1,4 @@
-import axios from "axios"
-import React, { useCallback, useState } from "react"
+import React, { memo, useCallback, useState } from "react"
 import { FlatList, Text, TouchableOpacity, View } from "react-native"
 import Input from "../components/Search/Input"
 import { TypedSelectorHook } from "../hooks/store.hook"
@@ -19,7 +18,10 @@ const Search = () => {
   }
   const renderItem = useCallback(
     ({ item }: { item: StoreSongTypes }) => (
-      <TouchableOpacity className="w-full bg-red-500 h-16  mt-2  flex flex-row items-center pl-3 rounded-xl">
+      <TouchableOpacity
+        className="w-full bg-red-500
+         h-16  mt-2  flex flex-row items-center pl-3 rounded-xl"
+      >
         <Text>{item.title}</Text>
       </TouchableOpacity>
     ),
@@ -48,4 +50,4 @@ const Search = () => {
     </View>
   )
 }
-export default Search
+export default memo(Search)
