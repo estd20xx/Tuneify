@@ -36,10 +36,6 @@ export const MainNavigationItems: any[] = [
     component: component.Onboading
   },
   {
-    name: navigationStrings.homePage,
-    component: component.HomePage
-  },
-  {
     name: navigationStrings.home,
     // Tab
     component: component.Home
@@ -59,10 +55,6 @@ export const MainNavigationItems: any[] = [
   {
     name: navigationStrings.bottom,
     component: component.BottomNavigation
-  },
-  {
-    name: navigationStrings.enrtyPoint,
-    component: component.EntryPoint
   },
   {
     name: navigationStrings.TrendingAlbumDetails,

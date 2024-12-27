@@ -4,6 +4,7 @@ import { useSharedValue } from "react-native-reanimated"
 import TrackPlayer from "react-native-track-player"
 import { songsApi } from "../../api/api"
 import ListItem from "../../components/ListItem"
+import Show from "../../components/Show"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import SongService from "../../services/songs.service"
 import { songServiceaction } from "../../store/actions/song.action"
@@ -28,9 +29,9 @@ const Songs = () => {
   console.log(songs.data?.songs[2])
   return (
     <View className="bg-[#181a20] w-full h-auto pt-2">
-      {songs.data?.songs && (
+      <Show isVisible={songs?.data?.songs?.length != undefined || songs?.data?.songs?.length != 0}>
         <FlatList
-          data={songs.data.songs}
+          data={songs.data?.songs}
           onViewableItemsChanged={({ viewableItems: vItems }) => {
             viewableItems.value = vItems
           }}
@@ -60,7 +61,7 @@ const Songs = () => {
             )
           }}
         />
-      )}
+      </Show>
     </View>
   )
 }

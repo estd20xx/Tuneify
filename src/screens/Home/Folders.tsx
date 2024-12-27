@@ -3,6 +3,7 @@ import { FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-na
 import Image from "react-native-fast-image"
 import TrackPlayer from "react-native-track-player"
 import NotFound from "../../components/Not-found"
+import Show from "../../components/Show"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { LocalFileTypes } from "../../Interfaces/tuneifySlice.interface"
 import LocalMediaService from "../../services/localMedia.service"
@@ -73,7 +74,7 @@ const Folders = () => {
         localFile.LocalSong.length ? "h-auto" : "h-screen flex items-center justify-center"
       }`}
     >
-      {localFile.LocalSong.length ? (
+      <Show isVisible={localFile.LocalSong.length > 0}>
         <FlatList
           refreshControl={
             <RefreshControl
@@ -91,9 +92,10 @@ const Folders = () => {
           windowSize={10}
           renderItem={renderItem}
         />
-      ) : (
+      </Show>
+      <Show isVisible={localFile.LocalSong.length == 0}>
         <NotFound />
-      )}
+      </Show>
     </View>
   )
 }

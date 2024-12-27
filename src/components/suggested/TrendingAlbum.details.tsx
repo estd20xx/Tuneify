@@ -12,6 +12,7 @@ import {
   tunifyCurrentTrack
 } from "../../store/slices/currentTrack.slice"
 import { tuneifySongs } from "../../store/slices/song.slice"
+import Show from "../Show"
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => {
   const dispatch = useAppDispatch()
   const current = TypedSelectorHook(tunifyCurrentTrack)
@@ -63,8 +64,8 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
             <Text className="text-gray-300 text-base font-['400']">{data.type}</Text>
           </TouchableOpacity>
         </View>
-        {!albumSongs.isLoading &&
-          albumSongs?.data?.songs.map((currentSong, index) => {
+        <Show isVisible={!albumSongs.isLoading && albumSongs?.data != null}>
+          {albumSongs?.data?.songs.map((currentSong, index) => {
             return (
               <TouchableOpacity
                 key={currentSong.id}
@@ -116,6 +117,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
               </TouchableOpacity>
             )
           })}
+        </Show>
       </ScrollView>
     </View>
   )
