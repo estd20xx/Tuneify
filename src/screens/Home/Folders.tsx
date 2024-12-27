@@ -70,9 +70,9 @@ const Folders = () => {
   )
   return (
     <View
-      className={`w-full ${localFile.LocalSong.length ? "h-auto" :
-        "h-screen flex items-center justify-center"
-        }`}
+      className={`w-full ${
+        localFile.LocalSong.length ? "h-auto" : "h-screen flex items-center justify-center"
+      }`}
     >
       <Show isVisible={localFile.LocalSong.length > 0}>
         <FlatList

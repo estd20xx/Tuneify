@@ -6,7 +6,7 @@ const Artists = () => {
     try {
       const data = await DocumentPicker.pickSingle()
       console.log(data)
-    } catch (error) { }
+    } catch (error) {}
   }
   return (
     <View className="h-screen flex items-center justify-center">
