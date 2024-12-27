@@ -1,13 +1,13 @@
+import React, { memo } from "react"
 import { View } from "react-native"
-import React from "react"
-import { component } from "../../constants/screens"
+import SuggestedSkeleton from "./SuggestedSkeleton"
 const MainSkeleton = () => {
   return (
     <View>
       {Array.from({ length: 4 }, (_: any, index: number) => (
-        <component.CSuggestedSkeleton key={JSON.stringify(index)} />
+        <SuggestedSkeleton key={JSON.stringify(index)} />
       ))}
     </View>
   )
 }
-export default MainSkeleton
+export default memo(MainSkeleton)

@@ -75,8 +75,12 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
     }
   })
   return (
-    <Modal isVisible={isVisible} style={{ margin: 0 }}>
-      {vtimer && (
+    <Modal
+      isVisible={isVisible}
+      style={{ margin: 0 }}
+      onBackButtonPress={() => setIsVisible(false)}
+    >
+      <Show isVisible={vtimer}>
         <View className="h-48  w-4/5 bg-red-500  absolute z-50 m-auto left-12 rounded-3xl flex items-center justify-center">
           <Slider
             style={{ width: "100%" }}
@@ -100,7 +104,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             <Text className="text-white text-lg font-['400']">Set</Text>
           </TouchableOpacity>
         </View>
-      )}
+      </Show>
       <ScrollView>
         <View style={{ flex: 1, backgroundColor: "#181a20" }}>
           <Messanger

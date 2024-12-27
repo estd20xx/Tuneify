@@ -16,11 +16,11 @@ const Albums = () => {
       <View className=" w-full h-auto flex flex-row flex-wrap justify-evenly py-3 pb-20">
         {isL
           ? Array.from({ length: 6 }, (_, index) => {
-              return <component.CSeperateSkeleton key={JSON.stringify(index)} />
-            })
+            return <component.CSeperateSkeleton key={JSON.stringify(index)} />
+          })
           : cAlb.map((cA: SeperateAlbumTypes) => {
-              return <component.CSeperateAlbum data={cA} key={cA.id} />
-            })}
+            return <component.CSeperateAlbum data={cA} key={cA.id} />
+          })}
       </View>
     </ScrollView>
   )

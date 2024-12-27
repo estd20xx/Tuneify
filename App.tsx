@@ -15,7 +15,7 @@ const App = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar backgroundColor={"#181a20"} />
       <Provider store={store}>
-        <PersistGate persistor={persistor}>
+        <PersistGate persistor={persistor} loading={null}>
           <Toast />
           <MainNavigation />
         </PersistGate>
@@ -24,6 +24,3 @@ const App = () => {
   )
 }
 export default App
-// export default CodePush({
-//   updateDialog: true,
-// })(App);
