@@ -26,7 +26,6 @@ const Songs = () => {
       dispatch(addSongList(songs.data.songs))
     }
   }, [songs])
-  console.log(songs.data?.songs[2])
   return (
     <View className="bg-[#181a20] w-full h-auto pt-2">
       <Show isVisible={songs?.data?.songs?.length != undefined || songs?.data?.songs?.length != 0}>
