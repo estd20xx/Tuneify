@@ -11,7 +11,7 @@ class PersonalizedSongs extends PayloadService {
         ctx: "web6dot0",
         __call: "search.getResults",
         p: 1,
-        q: "about you", // search songs
+        q: "Mera Mann", // search songs
         n: 20
       }
     })

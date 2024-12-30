@@ -8,7 +8,7 @@ interface InputComponentProps {
 }
 const Input: React.FC<InputComponentProps> = ({ setSearchQuery, handleSearch, searchQuery }) => {
   return (
-    <View className=" h-10 w-[95%] rounded-md overflow-hidden  flex-row bg-slate-700 ">
+    <View className=" h-11 w-[95%] rounded-md overflow-hidden  flex-row bg-slate-700 ">
       <TextInput
         className="w-[88%] text-white pl-3"
         placeholder="Search"

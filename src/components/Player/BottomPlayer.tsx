@@ -16,7 +16,7 @@ import TuneifyService from "../../services/Tuneify.service"
 import { tunifyChild } from "../../store/slices/childState.slice"
 import { tuneifySongs } from "../../store/slices/song.slice"
 import Show from "../Show"
-import SongPlayer from "./SongPlayer"
+import TestPlayer from "./TestPlayer"
 const service = new TuneifyService(lyricsApi)
 const BottomPlayer = () => {
   const dispatch = useAppDispatch()
@@ -74,7 +74,8 @@ const BottomPlayer = () => {
               </Show>
             </TouchableOpacity>
           </TouchableOpacity>
-          <SongPlayer isVisible={isVisible} setIsVisible={setIsVisible} />
+          <TestPlayer isVisible={isVisible} setIsVisible={setIsVisible} />
+          {/* <SongPlayer isVisible={isVisible} setIsVisible={setIsVisible} /> */}
         </View>
       )}
     </>

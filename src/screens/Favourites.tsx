@@ -12,21 +12,21 @@ const Favourites = () => {
     <View className="w-full h-screen flex items-center justify-center pb-36">
       <ScrollView>
         <View className="w-full h-20  flex flex-row items-center justify-evenly">
-          <TouchableOpacity className="bg-[#ff8216] h-11 w-32 rounded-full flex items-center justify-center flex-row">
+          <TouchableOpacity className="bg-[#ff8216] h-8 px-10 rounded-full flex items-center justify-center flex-row">
             <Image
               source={require("../assets/images/suffle.png")}
               style={{
                 tintColor: "white",
-                width: 30,
-                height: 30,
+                width: 20,
+                height: 20,
                 marginRight: 3
               }}
             />
-            <Text className="text-white text-xl font-[400]">Suffle</Text>
+            <Text className="text-white text-base font-[400]">Suffle</Text>
           </TouchableOpacity>
-          <TouchableOpacity className="bg-[#35383f] h-11 w-36 rounded-full flex items-center justify-center flex-row">
+          <TouchableOpacity className="bg-[#35383f] h-8 px-10 rounded-full flex items-center justify-center flex-row">
             <Icons.PlayIcon name="play" color={"white"} size={20} className="mr-1" />
-            <Text className="text-white text-xl font-[400]">Play</Text>
+            <Text className="text-white text-base font-[400]">Play</Text>
           </TouchableOpacity>
         </View>
         {facouriteData.map((item, index) => {
