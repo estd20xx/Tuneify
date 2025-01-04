@@ -7082,11 +7082,6 @@ react-native-image-colors@^2.4.0:
   dependencies:
     node-vibrant "3.1.6"
 
-react-native-linear-gradient@^2.8.3:
-  version "2.8.3"
-  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz#9a116649f86d74747304ee13db325e20b21e564f"
-  integrity sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==
-
 react-native-modal@^13.0.1:
   version "13.0.1"
   resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-13.0.1.tgz#691f1e646abb96fa82c1788bf18a16d585da37cd"
@@ -7164,10 +7159,10 @@ react-native-toast-message@^2.2.0:
   resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-2.2.0.tgz#c53a4746b15616858a7d61c4386b92cbe9fbf911"
   integrity sha512-AFti8VzUk6JvyGAlLm9/BknTNDXrrhqnUk7ak/pM7uCTxDPveAu2ekszU0on6vnUPFnG04H/QfYE2IlETqeaWw==
 
-react-native-track-player@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-track-player/-/react-native-track-player-4.0.1.tgz#df80c27290db610f92dc73d89ecae8e354acb28d"
-  integrity sha512-DpqKL4TQS0kGlHwEtmMrL++mdgWb+uc75eQiP3vfYSlgvAJjbXbkL9h+cofndSuq4TTCp8jclAK+hZKqtMw6+A==
+react-native-track-player@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-track-player/-/react-native-track-player-4.1.1.tgz#96f8688f270c5a01bc597b6331843b191402502b"
+  integrity sha512-E5N/eK/+HtAVJUAzXpm1cWz8ROheV9jb0TI6h2bM+333U+DWibTTnT2T1122FkCoXLXIYavtm2FR2if+5jH8cA==
 
 react-native-vector-icons@^10.0.3:
   version "10.0.3"

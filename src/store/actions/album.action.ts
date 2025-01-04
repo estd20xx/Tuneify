@@ -1,8 +1,8 @@
+import { createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
 import { baseURL, endPoints } from "../../api/base/endpoint"
 import { AlbumDetailsResponse } from "../../api/interface/album.interface"
 import { PayloadService } from "../../api/service/Payload.service"
-import { createAsyncThunk } from "@reduxjs/toolkit"
 class PersonalizedAlbumSongs extends PayloadService {
   public getAlbumSongs = createAsyncThunk(
     "album",

@@ -1,26 +1,42 @@
-import React, { memo, useCallback, useState } from "react"
+import React, { memo, useCallback, useEffect, useState } from "react"
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native"
+import { Song } from "../api/service/Payload.service"
 import Input from "../components/Search/Input"
-import { TypedSelectorHook } from "../hooks/store.hook"
-import { useDebounce } from "../hooks/useDebounce"
-import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
-import { tuneifySongs } from "../store/slices/song.slice"
+import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
+import { personalizedSearchedSong } from "../store/actions/searchedSong.action"
+import { searchedSongData } from "../store/slices/new/searchedSong.slice"
+export interface SearchedSongQueryParams {
+  p: number
+  q: string
+  n: number
+}
 const Search = () => {
-  const { debouncedValue, isloading } = useDebounce("ok", 2)
-  const data = TypedSelectorHook(tuneifySongs)
-  const [searchQuery, setSearchQuery] = useState<string>("")
-  const handleSearch = async () => {
-    try {
-      console.log(searchQuery)
-    } catch (error) {
-      console.log(error)
+  const dispatch = useAppDispatch()
+  const searchedData = TypedSelectorHook(searchedSongData)
+  const [searchQuery, setSearchQuery] = useState<SearchedSongQueryParams>({
+    p: 1,
+    q: "",
+    n: 50
+  })
+  const handleSearch = async (query: SearchedSongQueryParams) => {
+    if (query.q.length < 2) {
+      return
     }
+    dispatch(personalizedSearchedSong.getSearchedSongDetails(query))
   }
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      handleSearch(searchQuery)
+    }, 1000)
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [searchQuery])
   const renderItem = useCallback(
-    ({ item, index }: { item: StoreSongTypes; index: number }) => (
+    ({ item }: { item: Song; index: number }) => (
       <TouchableOpacity className="w-full h-16 mt-2 flex flex-row items-center">
         <View className="h-16 w-20  pl-2">
-          <Image source={{ uri: item.artwork }} className="h-16 w-16 rounded-md" />
+          <Image source={{ uri: item.image[1].link }} className="h-16 w-16 rounded-md" />
         </View>
         <View className="w-4/5 ">
           <Text
@@ -47,8 +63,8 @@ const Search = () => {
       />
       <View className="w-full h-full ">
         <FlatList
-          data={data.songs}
-          keyExtractor={(item) => item.url}
+          data={searchedData.data?.songs}
+          keyExtractor={(item) => item.id}
           initialNumToRender={3}
           showsVerticalScrollIndicator={false}
           maxToRenderPerBatch={4}
