@@ -1,5 +1,5 @@
 {
-  "name": "Tuneify",
+  "name": "tuneify",
   "version": "1.0.1",
   "private": true,
   "scripts": {
@@ -40,7 +40,6 @@
     "react-native-gesture-handler": "^2.15.0",
     "react-native-get-music-files": "^2.2.4",
     "react-native-image-colors": "^2.4.0",
-    "react-native-linear-gradient": "^2.8.3",
     "react-native-modal": "^13.0.1",
     "react-native-pager-view": "^6.2.3",
     "react-native-paper": "^5.12.3",
@@ -51,7 +50,7 @@
     "react-native-tab-view": "^3.5.2",
     "react-native-text-ticker": "^1.14.0",
     "react-native-toast-message": "^2.2.0",
-    "react-native-track-player": "^4.0.1",
+    "react-native-track-player": "^4.1.1",
     "react-native-vector-icons": "^10.0.3",
     "react-redux": "^9.1.0",
     "redux-persist": "^6.0.0"

@@ -1,6 +1,5 @@
 import React, { memo, useEffect, useState } from "react"
 import { ScrollView } from "react-native"
-import { Text } from "react-native-paper"
 import { albumsApi } from "../../api/api"
 import { SeperateAlbumTypes } from "../../Interfaces/album.interface"
 import AlbumService from "../../services/album.service"
@@ -11,11 +10,7 @@ const Albums = () => {
   useEffect(() => {
     service.getAlbums(setCAlb, setIsL)
   }, [])
-  return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <Text>-</Text>
-    </ScrollView>
-  )
+  return <ScrollView showsVerticalScrollIndicator={false}></ScrollView>
 }
 
 export default memo(Albums)

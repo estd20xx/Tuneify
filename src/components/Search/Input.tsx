@@ -1,10 +1,11 @@
 import React from "react"
 import { Pressable, TextInput, View } from "react-native"
 import { Icons } from "../../constants/Icon"
+import { SearchedSongQueryParams } from "../../screens/Search"
 interface InputComponentProps {
-  setSearchQuery: (value: string) => void
-  handleSearch: () => void
-  searchQuery: string
+  setSearchQuery: (update: (prev: SearchedSongQueryParams) => SearchedSongQueryParams) => void
+  handleSearch: (state: SearchedSongQueryParams) => void
+  searchQuery: SearchedSongQueryParams
 }
 const Input: React.FC<InputComponentProps> = ({ setSearchQuery, handleSearch, searchQuery }) => {
   return (
@@ -13,15 +14,20 @@ const Input: React.FC<InputComponentProps> = ({ setSearchQuery, handleSearch, se
         className="w-[88%] text-white pl-3"
         placeholder="Search"
         placeholderTextColor={"white"}
-        value={searchQuery}
+        value={searchQuery.q}
         keyboardType="name-phone-pad"
-        onChangeText={(e) => setSearchQuery(e)}
+        onChangeText={(e) => setSearchQuery((prev: SearchedSongQueryParams) => ({ ...prev, q: e }))}
         returnKeyType="search"
         returnKeyLabel="search"
-        onSubmitEditing={handleSearch}
+        onSubmitEditing={() => handleSearch(searchQuery)}
       />
       <Pressable className="h-full  w-10 flex items-center justify-center">
-        <Icons.PlayIcon name="close" size={20} color={"white"} onPress={() => setSearchQuery("")} />
+        <Icons.PlayIcon
+          name="close"
+          size={20}
+          color={"white"}
+          onPress={() => setSearchQuery((prev: SearchedSongQueryParams) => ({ ...prev, q: "" }))}
+        />
       </Pressable>
     </View>
   )
