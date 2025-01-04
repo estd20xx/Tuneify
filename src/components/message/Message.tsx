@@ -8,6 +8,9 @@ interface MessageInterface {
 const Messanger: React.FC<MessageInterface> = ({ message, isvisible, onDismis }) => {
   return (
     <Snackbar
+      style={{
+        zIndex: 999
+      }}
       visible={isvisible}
       onDismiss={() => {
         onDismis(false)

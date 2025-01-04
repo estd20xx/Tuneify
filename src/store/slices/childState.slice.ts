@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { RootState } from "../store"
 import { InitialChildStateTypes } from "../../Interfaces/tuneifySlice.interface"
+import { RootState } from "../store"
 const initialState: InitialChildStateTypes = {
   isPlaying: false,
   isLoading: false,
