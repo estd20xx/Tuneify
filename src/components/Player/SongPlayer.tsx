@@ -262,7 +262,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                 </TouchableOpacity>
               </View>
             </View>
-
             <View className=" h-14 w-full mt-5  flex items-center justify-around flex-row">
               <TouchableOpacity onPress={() => service.repeatMode(state, dispatch)}>
                 <Icons.PlayListIcon
