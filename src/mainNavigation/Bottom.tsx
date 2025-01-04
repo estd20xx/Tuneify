@@ -50,7 +50,7 @@ const BottomTab = () => {
             }}
             /** TODO : to shot label
 getLabelText={({ route }) => {
-  return route.name
+return route.name
 }}
 */
           />

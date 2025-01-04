@@ -16,7 +16,7 @@ import TuneifyService from "../../services/Tuneify.service"
 import { tunifyChild } from "../../store/slices/childState.slice"
 import { tuneifySongs } from "../../store/slices/song.slice"
 import Show from "../Show"
-import TestPlayer from "./TestPlayer"
+import SongPlayer from "./SongPlayer"
 const service = new TuneifyService(lyricsApi)
 const BottomPlayer = () => {
   const dispatch = useAppDispatch()
@@ -31,6 +31,7 @@ const BottomPlayer = () => {
     }
   }, [data])
   useTrackPlayerEvents(service.getEvent(), (event: any) => {
+    console.log("calling")
     event.state == State.Ready && service.handleBottomCondition(setCTrack)
   })
   return (
@@ -38,7 +39,7 @@ const BottomPlayer = () => {
       {cTrack && (
         <View>
           <TouchableOpacity
-            className="absolute h-14 w-full bottom-0 flex flex-row items-center justify-center px-3 bg-[#2D3250] "
+            className="absolute h-14 w-full bottom-0 flex flex-row items-center justify-center px-3 bg-[#2D3250]"
             activeOpacity={1}
             onPress={() => {
               setIsVisible(true)
@@ -74,8 +75,8 @@ const BottomPlayer = () => {
               </Show>
             </TouchableOpacity>
           </TouchableOpacity>
-          <TestPlayer isVisible={isVisible} setIsVisible={setIsVisible} />
-          {/* <SongPlayer isVisible={isVisible} setIsVisible={setIsVisible} /> */}
+          {/* <TestPlayer isVisible={isVisible} setIsVisible={setIsVisible} /> */}
+          <SongPlayer isVisible={isVisible} setIsVisible={setIsVisible} />
         </View>
       )}
     </>
