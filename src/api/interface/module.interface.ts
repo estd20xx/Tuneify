@@ -1,10 +1,8 @@
 import { Audio, Image } from "../utils/utils"
-
 export interface ImageApi {
   quality: string
   link: string
 }
-
 interface CommonHeader {
   id: string
   title: string
@@ -32,7 +30,6 @@ interface CommonArtist {
   type: string
   perma_url: string
 }
-
 interface RequestPlaylistArtist extends CommonArtist {
   image: string
 }

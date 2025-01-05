@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import axios from "axios"
-import { baseURL, endPoints } from "../../api/base/endpoint"
+import { endPoints } from "../../api/base/endpoint"
 import { PlayListRequest, PlaylistResponseOnce } from "../../api/interface/module.interface"
 import { PayloadService } from "../../api/service/Payload.service"
+import { caller } from "../../lib/axios"
 class PersonalizedPlaylistsSongs extends PayloadService {
   public getPlaylistsSongs = createAsyncThunk(
     "paylist",
     async (id: string): Promise<PlaylistResponseOnce> => {
-      const data = await axios.get<PlayListRequest>(baseURL, {
+      const data = await caller.Interceptor().get<PlayListRequest>("", {
         params: {
           ...endPoints.playlistDetails,
           listid: id

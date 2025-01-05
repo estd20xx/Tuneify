@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from "react"
 import { FlatList, Image, Keyboard, Text, TouchableOpacity, View } from "react-native"
-import { Chase } from "react-native-animated-spinkit"
+import { Bounce } from "react-native-animated-spinkit"
 import { Song } from "../api/service/Payload.service"
 import Input from "../components/Search/Input"
 import Show from "../components/Show"
@@ -63,7 +63,6 @@ const Search = () => {
     ),
     []
   )
-  console.log("Rendering:", performance.now())
   return (
     <View className="w-full h-screen flex items-center">
       <Input
@@ -72,8 +71,8 @@ const Search = () => {
         searchQuery={searchQuery}
       />
       <Show isVisible={searchedData.isLoading}>
-        <View className="w-full h-screen flex items-center justify-center bg-black">
-          <Chase size={140} color="#ff8216" />
+        <View className="w-full h-1/2 flex items-center justify-center bg-black">
+          <Bounce size={140} color="#ff8216" />
         </View>
       </Show>
       <View className="w-full h-full ">
@@ -90,6 +89,11 @@ const Search = () => {
           removeClippedSubviews={true}
           windowSize={10}
           renderItem={renderItem}
+          ListEmptyComponent={
+            <View className="w-full h-14 flex items-center justify-center">
+              <Text className="text-gray-500 text-lg">No songs found</Text>
+            </View>
+          }
         />
       </View>
     </View>

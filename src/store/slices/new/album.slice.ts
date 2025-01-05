@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { AlbumDetailsResponse } from "../../api/interface/album.interface"
-import { album } from "../actions/album.action"
-import { RootState } from "../store"
+import { AlbumDetailsResponse } from "../../../api/interface/album.interface"
+import { album } from "../../actions/album.action"
+import { RootState } from "../../store"
 interface InitialAlbumSongsInterface {
   data: AlbumDetailsResponse | null
   isLoading: boolean

@@ -1,12 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import { persistReducer, persistStore } from "redux-persist"
-import albumSlice from "./slices/album.slice"
-import childStateSlice from "./slices/childState.slice"
 import currentTrackSlice from "./slices/currentTrack.slice"
 import favouriteSlice from "./slices/favourite.slice"
 import homeSlice from "./slices/home.slice"
+import albumSlice from "./slices/new/album.slice"
+import childStateSlice from "./slices/new/childState.slice"
 import playlistDetailsSlice from "./slices/new/playlistDetails.slice"
+import PlayerQueue from "./slices/new/Queue.slice"
 import searchedSongsSlice from "./slices/new/searchedSong.slice"
 import songSliceNew from "./slices/new/song.slice"
 import offlineSlice from "./slices/offline.slice"
@@ -34,7 +35,8 @@ const RootReducer = combineReducers({
   album: albumSlice,
   playlist: playlistDetailsSlice,
   geet: songSliceNew,
-  searchedSong: searchedSongsSlice
+  searchedSong: searchedSongsSlice,
+  playerQueue: PlayerQueue
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({
