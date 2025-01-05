@@ -15,8 +15,7 @@ class PersonalizedSongs extends PayloadService {
         n: 20
       }
     })
-    const finalData = this.searchedSongPayload(response.data)
-    return finalData
+    return this.searchedSongPayload(response.data)
   })
 }
 export const songServiceaction = new PersonalizedSongs()

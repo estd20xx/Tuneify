@@ -1,5 +1,10 @@
 import { AlbumDetailsRequest, AlbumDetailsResponse } from "../interface/album.interface"
-import { HomeDataRequest, HomeDataResponse } from "../interface/module.interface"
+import {
+  HomeDataRequest,
+  HomeDataResponse,
+  PlayListRequest,
+  PlaylistResponseOnce
+} from "../interface/module.interface"
 import {
   Audio,
   createDownloadLinks,
@@ -110,6 +115,59 @@ export class PayloadService extends ApiService {
           duration: current.more_info.duration,
           artists: handleArtists(current.more_info.artistMap.primary_artists),
           has_lyrics: current.more_info.has_lyrics
+        }
+      })
+    }
+  }
+  protected playlistPayload = (playListData: PlayListRequest): PlaylistResponseOnce => {
+    return {
+      id: playListData.id,
+      title: playListData.title,
+      type: playListData.type,
+      image: handleImageVariation(playListData?.image),
+      year: playListData.year,
+      subtitle: playListData.subtitle,
+      header_desc: playListData.header_desc,
+      perma_url: playListData.perma_url,
+      language: playListData.language,
+      play_count: playListData.play_count,
+      explicit_content: playListData.explicit_content,
+      list_count: playListData.list_count,
+      list_type: playListData.list_type,
+      list: playListData.list.map((current) => {
+        return {
+          id: current.id,
+          title: current.title,
+          type: current.type,
+          image: handleImageVariation(current.image),
+          year: current.year,
+          subtitle: playListData.subtitle,
+          header_desc: playListData.header_desc,
+          perma_url: playListData.perma_url,
+          language: playListData.language,
+          play_count: playListData.play_count,
+          explicit_content: playListData.explicit_content,
+          list_count: playListData.list_count,
+          list_type: playListData.list_type,
+          more_info: {
+            music: current.more_info.music,
+            album_id: current.more_info.album_id,
+            album: current.more_info.album,
+            label: current.more_info.label,
+            origin: current.more_info.origin,
+            songLink: createDownloadLinks(current.more_info.encrypted_media_url),
+            duration: current.more_info.duration,
+            artists: current?.more_info?.artists?.map((currentArtist) => {
+              return {
+                id: currentArtist.id,
+                name: currentArtist.name,
+                image: handleImageVariation(currentArtist.image),
+                type: currentArtist.type,
+                perma_url: currentArtist.perma_url,
+                role: currentArtist.role
+              }
+            })
+          }
         }
       })
     }

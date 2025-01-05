@@ -74,6 +74,10 @@ const Folders = () => {
         localFile.LocalSong.length ? "h-auto" : "h-screen flex items-center justify-center"
       }`}
     >
+      <RefreshControl
+        refreshing={localFile.isUploading}
+        onRefresh={() => local.getLocalmedia(dispatch)}
+      />
       <Show isVisible={localFile.LocalSong.length > 0}>
         <FlatList
           refreshControl={

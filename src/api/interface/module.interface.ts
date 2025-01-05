@@ -1,7 +1,80 @@
+import { Audio, Image } from "../utils/utils"
+
 export interface ImageApi {
   quality: string
   link: string
 }
+
+interface CommonHeader {
+  id: string
+  title: string
+  subtitle: string
+  header_desc: string
+  type: string
+  perma_url: string
+  language: string
+  year: string
+  play_count: string
+  explicit_content: string
+  list_count: string
+  list_type: string
+}
+interface ResponseHeader extends CommonHeader {
+  image: Image[]
+}
+interface RequestHeader extends CommonHeader {
+  image: string // make array
+}
+interface CommonArtist {
+  id: string
+  name: string
+  role: string
+  type: string
+  perma_url: string
+}
+
+interface RequestPlaylistArtist extends CommonArtist {
+  image: string
+}
+interface ResponsePlaylistArtist extends CommonArtist {
+  image: Image[]
+}
+
+export interface PlayListRequest extends RequestHeader {
+  list: PlayListReSongList[]
+}
+export interface PlaylistResponseOnce extends ResponseHeader {
+  list: PlayListSongList[]
+}
+interface PlayListReSongList extends RequestHeader {
+  more_info: {
+    music: string
+    album_id: string
+    album: string
+    label: string
+    origin: string
+    encrypted_media_url: string
+    encrypted_cache_url: string
+    encrypted_drm_cache_url: string
+    encrypted_drm_media_url: string
+    duration: string
+    artists: RequestPlaylistArtist[]
+  }
+}
+interface PlayListSongList extends ResponseHeader {
+  more_info: {
+    music: string
+    album_id: string
+    album: string
+    label: string
+    origin: string
+    songLink: Audio[]
+    duration: string
+    artists: ResponsePlaylistArtist[]
+  }
+}
+
+///////////////////
 export interface TrendingAlbumRequest {
   //AlbumRequest
   id: string
