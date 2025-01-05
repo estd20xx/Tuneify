@@ -13,8 +13,7 @@ class PersonalizedAlbumSongs extends PayloadService {
           albumid: id
         }
       })
-      const finalData = this.albumPayload(data.data)
-      return finalData
+      return this.albumPayload(data.data)
     }
   )
 }

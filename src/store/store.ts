@@ -6,6 +6,7 @@ import childStateSlice from "./slices/childState.slice"
 import currentTrackSlice from "./slices/currentTrack.slice"
 import favouriteSlice from "./slices/favourite.slice"
 import homeSlice from "./slices/home.slice"
+import playlistDetailsSlice from "./slices/new/playlistDetails.slice"
 import searchedSongsSlice from "./slices/new/searchedSong.slice"
 import songSliceNew from "./slices/new/song.slice"
 import offlineSlice from "./slices/offline.slice"
@@ -31,6 +32,7 @@ const RootReducer = combineReducers({
   // new
   home: homeSlice,
   album: albumSlice,
+  playlist: playlistDetailsSlice,
   geet: songSliceNew,
   searchedSong: searchedSongsSlice
 })

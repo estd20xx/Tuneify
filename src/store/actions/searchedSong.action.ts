@@ -13,8 +13,7 @@ class PersonalizedSearchSongDetails extends PayloadService {
           ...props
         }
       })
-      const finalData = this.searchedSongPayload(data.data)
-      return finalData
+      return this.searchedSongPayload(data.data)
     }
   )
 }

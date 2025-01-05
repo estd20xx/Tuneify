@@ -1,12 +1,10 @@
-import axios from "axios"
 import React, { memo, useEffect, useState } from "react"
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import { baseApi } from "../../api/api"
 import { PlaylistResponse } from "../../api/interface/module.interface"
 import { Icons } from "../../constants/Icon"
-import { useAppDispatch } from "../../hooks/store.hook"
-import { SongsTypes } from "../../Interfaces/songs.interface"
-import { playlist } from "../../store/actions/playlist.action"
+import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import { playlistDetails } from "../../store/actions/playlist.action"
+import { playListDetailsStore } from "../../store/slices/new/playlistDetails.slice"
 interface PlaylistData {
   key: string
   name: string
@@ -18,23 +16,11 @@ export interface PlaylistDetailsTypes {
   route: PlaylistData
 }
 const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
-  console.log(route.params.playlistData.id)
-  console.log("inside playlist details")
   const [data, setData] = useState(route.params.playlistData)
-  const [playlistSong, setPlaylistSongs] = useState<SongsTypes[]>([])
   const dispatch = useAppDispatch()
-  const fetchAudio = async () => {
-    try {
-      // playlist here
-      const PlaylistData = await axios.get(`${baseApi}playlists?id=${data.id}`)
-      setPlaylistSongs(PlaylistData.data.data.songs)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const playlistStore = TypedSelectorHook(playListDetailsStore)
   useEffect(() => {
-    fetchAudio()
-    dispatch(playlist.getPlaylistsSongs(data.id))
+    dispatch(playlistDetails.getPlaylistsSongs(data.id))
   }, [])
   return (
     <View className="w-full">
@@ -50,7 +36,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
             <Text className="text-gray-300 text-base font-['400']">{data.type}</Text>
           </TouchableOpacity>
         </View>
-        {playlistSong.map((currentSong) => {
+        {playlistStore.data?.list.map((currentSong) => {
           return (
             <TouchableOpacity
               key={currentSong.id}
@@ -68,7 +54,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
                 <View className="w-full rounded-lg overflow-hidden ">
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Image
-                      source={{ uri: currentSong.image[2].link }}
+                      source={{ uri: currentSong.image[1].link }}
                       style={{ width: 60, height: 60, borderRadius: 5 }}
                     />
                     <View style={{ marginLeft: 10 }}>
@@ -79,7 +65,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
                           fontFamily: "400"
                         }}
                       >
-                        {currentSong.name}
+                        {currentSong.title}
                       </Text>
                       <Text
                         style={{
@@ -89,7 +75,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
                           fontFamily: "300"
                         }}
                       >
-                        {currentSong.primaryArtists}
+                        {currentSong.more_info.music}
                       </Text>
                     </View>
                   </View>

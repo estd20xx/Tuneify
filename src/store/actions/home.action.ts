@@ -16,8 +16,7 @@ class HomeService extends PayloadService {
         tuneifyCharts: data.data.charts,
         tuneifyAlbums: data.data.new_albums
       }
-      const finalData = this.homePayload(HomeData)
-      return finalData
+      return this.homePayload(HomeData)
     } catch (err: any) {
       return Async.rejectWithValue(err?.message)
     }
