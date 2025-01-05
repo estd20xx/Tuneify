@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import axios from "axios"
 import { PayloadService, SearchedSongs } from "../../api/service/Payload.service"
+import { Interceptors } from "../../lib/axios"
 class PersonalizedSongs extends PayloadService {
   public getSongs = createAsyncThunk("nayawalaGeet", async (): Promise<SearchedSongs> => {
-    const response = await axios.get("https://www.jiosaavn.com/api.php", {
+    const response = await Interceptors.get("", {
       params: {
         _format: "json",
         _marker: 0,

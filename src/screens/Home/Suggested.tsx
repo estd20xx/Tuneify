@@ -5,7 +5,7 @@ import MainSkeleton from "../../components/skeleton/MainSkeleton"
 import { component } from "../../constants/screens"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { homeService } from "../../store/actions/home.action"
-import { homeData } from "../../store/slices/home.slice"
+import { homeData } from "../../store/slices/new/home.slice"
 const Suggested = () => {
   const dispatch = useAppDispatch()
   const suggested = TypedSelectorHook(homeData)

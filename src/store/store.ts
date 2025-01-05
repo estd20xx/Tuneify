@@ -1,42 +1,36 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import { persistReducer, persistStore } from "redux-persist"
-import currentTrackSlice from "./slices/currentTrack.slice"
-import favouriteSlice from "./slices/favourite.slice"
-import homeSlice from "./slices/home.slice"
 import albumSlice from "./slices/new/album.slice"
 import childStateSlice from "./slices/new/childState.slice"
+import favouriteSlice from "./slices/new/favourite.slice"
+import homeSlice from "./slices/new/home.slice"
+import offlineSlice from "./slices/new/offline.slice"
 import playlistDetailsSlice from "./slices/new/playlistDetails.slice"
 import PlayerQueue from "./slices/new/Queue.slice"
 import searchedSongsSlice from "./slices/new/searchedSong.slice"
 import songSliceNew from "./slices/new/song.slice"
-import offlineSlice from "./slices/offline.slice"
-import parentStateSlice from "./slices/parentState.slice"
 import songSlice from "./slices/song.slice"
-import themeSlice from "./slices/theme.slice."
 import userSlice from "./slices/user.slice"
 const persistConfig = {
-  key: "@hainahola",
+  key: "@hainaholaa",
   version: 1,
   storage: AsyncStorage
+  // whitelist: ["home", "offline"]
 }
 const RootReducer = combineReducers({
   user: userSlice,
-  favourite: favouriteSlice,
-  offline: offlineSlice,
   storeSong: songSlice,
   childState: childStateSlice,
-  parentState: parentStateSlice,
-  currentTrack: currentTrackSlice,
-  theme: themeSlice,
-
   // new
   home: homeSlice,
   album: albumSlice,
   playlist: playlistDetailsSlice,
   geet: songSliceNew,
   searchedSong: searchedSongsSlice,
-  playerQueue: PlayerQueue
+  playerQueue: PlayerQueue,
+  offline: offlineSlice,
+  favourite: favouriteSlice
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({

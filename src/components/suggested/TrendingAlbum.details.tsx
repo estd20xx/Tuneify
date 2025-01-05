@@ -4,15 +4,11 @@ import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { TrendingAlbumParamsTypes } from "../../Interfaces/album.interface"
 import { album } from "../../store/actions/album.action"
-import { tunifyCurrentTrack } from "../../store/slices/currentTrack.slice"
 import { albumData } from "../../store/slices/new/album.slice"
-import { tuneifySongs } from "../../store/slices/song.slice"
 import Show from "../Show"
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => {
   const dispatch = useAppDispatch()
-  const current = TypedSelectorHook(tunifyCurrentTrack)
   const [data] = useState(route.params.albumData)
-  const storeSongs = TypedSelectorHook(tuneifySongs)
   const albumSongs = TypedSelectorHook(albumData)
   useEffect(() => {
     dispatch(album.getAlbumSongs(route.params.albumData.id))

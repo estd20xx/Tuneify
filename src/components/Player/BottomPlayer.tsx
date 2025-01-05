@@ -74,7 +74,6 @@ const BottomPlayer = () => {
               </Show>
             </TouchableOpacity>
           </TouchableOpacity>
-          {/* <TestPlayer isVisible={isVisible} setIsVisible={setIsVisible} /> */}
           <SongPlayer isVisible={isVisible} setIsVisible={setIsVisible} />
         </View>
       )}

@@ -4,7 +4,7 @@ import TrackImage from "react-native-fast-image"
 import { UserFavouritesTypes } from "../Interfaces/tuneifySlice.interface"
 import { Icons } from "../constants/Icon"
 import { TypedSelectorHook } from "../hooks/store.hook"
-import { tuneifyFavourites } from "../store/slices/favourite.slice"
+import { tuneifyFavourites } from "../store/slices/new/favourite.slice"
 const Favourites = () => {
   const data = TypedSelectorHook(tuneifyFavourites)
   const facouriteData: UserFavouritesTypes[] = data.favouriteData

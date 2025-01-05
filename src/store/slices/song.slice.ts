@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { Song } from "../../api/service/Payload.service"
 import { InitialSongStateTypes, StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { RootState } from "../store"
-
 const initialState: InitialSongStateTypes = {
   songs: []
 }

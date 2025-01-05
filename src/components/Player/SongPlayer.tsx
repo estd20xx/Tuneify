@@ -16,8 +16,8 @@ import { lyricsApi } from "../../api/api"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import TuneifyService from "../../services/Tuneify.service"
-import { addUserFavouritesData } from "../../store/slices/favourite.slice"
 import { changeTunifyState, tunifyChild } from "../../store/slices/new/childState.slice"
+import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/new/favourite.slice"
 import Messanger from "../message/Message"
 import Show from "../Show"
 const service = new TuneifyService(lyricsApi)
@@ -27,6 +27,7 @@ interface SongPlayerProps {
 }
 const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
   const state = TypedSelectorHook(tunifyChild)
+  const favourite = TypedSelectorHook(tuneifyFavourites)
   const dispatch = useAppDispatch()
   const [isFlipped, setIsFlipped] = useState(false)
   const [flip, setFlip] = useState(new Animated.Value(0))
@@ -74,6 +75,11 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       // service.getLyrics(setLyric)
     }
   })
+  const checkFavAvailable = (id: string): boolean => {
+    const data = favourite.favouriteData.filter((c) => c.id == id)
+    if (data.length > 0) return true
+    return false
+  }
   return (
     <Modal
       isVisible={isVisible}

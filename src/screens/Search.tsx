@@ -25,6 +25,7 @@ const Search = () => {
     if (query.q.length < 2) {
       return
     }
+    console.log("clicked : " + searchedData.isLoading)
     dispatch(personalizedSearchedSong.getSearchedSongDetails(query))
   }
   useEffect(() => {
@@ -35,7 +36,6 @@ const Search = () => {
       clearTimeout(handler)
     }
   }, [searchQuery])
-
   useEffect(() => {
     if (searchedData.data?.songs?.length) {
       flatListRef.current?.scrollToOffset({ animated: true, offset: 0 })
@@ -65,37 +65,35 @@ const Search = () => {
   )
   return (
     <View className="w-full h-screen flex items-center">
-      <Input
-        setSearchQuery={setSearchQuery}
-        handleSearch={handleSearch}
-        searchQuery={searchQuery}
-      />
+      <Input setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
       <Show isVisible={searchedData.isLoading}>
-        <View className="w-full h-1/2 flex items-center justify-center bg-black">
+        <View className="w-full h-screen flex items-center justify-center bg-black">
           <Bounce size={140} color="#ff8216" />
         </View>
       </Show>
-      <View className="w-full h-full ">
-        <FlatList
-          ref={flatListRef}
-          data={searchedData.data?.songs}
-          keyExtractor={(item) => item.id}
-          initialNumToRender={3}
-          onScrollBeginDrag={Keyboard.dismiss}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-          maxToRenderPerBatch={9}
-          contentContainerStyle={{ paddingTop: 10 }}
-          removeClippedSubviews={true}
-          windowSize={10}
-          renderItem={renderItem}
-          ListEmptyComponent={
-            <View className="w-full h-14 flex items-center justify-center">
-              <Text className="text-gray-500 text-lg">No songs found</Text>
-            </View>
-          }
-        />
-      </View>
+      <Show isVisible={!searchedData.isLoading}>
+        <View className="w-full h-full ">
+          <FlatList
+            ref={flatListRef}
+            data={searchedData.data?.songs}
+            keyExtractor={(item) => item.id}
+            initialNumToRender={3}
+            onScrollBeginDrag={Keyboard.dismiss}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+            maxToRenderPerBatch={9}
+            contentContainerStyle={{ paddingTop: 10 }}
+            removeClippedSubviews={true}
+            windowSize={10}
+            renderItem={renderItem}
+            ListEmptyComponent={
+              <View className="w-full h-14 flex items-center justify-center">
+                <Text className="text-gray-500 text-lg">No songs found</Text>
+              </View>
+            }
+          />
+        </View>
+      </Show>
     </View>
   )
 }
