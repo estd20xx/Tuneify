@@ -10,7 +10,7 @@ const userSlices = createSlice({
   name: "userDevs",
   initialState,
   reducers: {
-    addUser(state: InitialUserState, actions: PayloadAction<string>) {
+    changeUserName(state: InitialUserState, actions: PayloadAction<string>) {
       state.userName = actions.payload
     },
     changeProfile(state: InitialUserState, actions: PayloadAction<string>) {
@@ -18,6 +18,6 @@ const userSlices = createSlice({
     }
   }
 })
-export const { addUser, changeProfile } = userSlices.actions
+export const { changeUserName, changeProfile } = userSlices.actions
 export const tuneifyUser = (state: RootState) => state.persistedReducer.user
 export default userSlices.reducer

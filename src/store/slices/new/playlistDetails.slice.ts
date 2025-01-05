@@ -21,6 +21,7 @@ const playlistDetailsSlice = createSlice({
       .addCase(playlistDetails.getPlaylistsSongs.pending, (state: InitialPlayListDetails) => {
         state.isLoading = true
         state.isError = false
+        // state.data = null
       })
       .addCase(
         playlistDetails.getPlaylistsSongs.fulfilled,

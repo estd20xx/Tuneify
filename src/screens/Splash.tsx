@@ -5,7 +5,7 @@ import { SplashScreenPropsTypes } from "../Types/Types"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
 import LocalMediaService from "../services/localMedia.service"
 import PermissionService from "../services/permission.service"
-import { accepted, tuneifyOfflines } from "../store/slices/offline.slice"
+import { accepted, tuneifyOfflines } from "../store/slices/new/offline.slice"
 const permission = new PermissionService()
 const musicService = new LocalMediaService()
 const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {

@@ -1,5 +1,5 @@
 import { memo } from "react"
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native"
+import { BackHandler, FlatList, Image, Text, TouchableOpacity, View } from "react-native"
 import UserImage from "react-native-fast-image"
 import Toast from "react-native-toast-message"
 import { settingsData } from "../constants/Settings"
@@ -49,6 +49,7 @@ const Settings = () => {
                 alignSelf: "center"
                 // backgroundColor: "red"
               }}
+              onPress={() => item.title == "Quit" && BackHandler.exitApp()}
             >
               <Image source={item.leftIcon} style={{ tintColor: "#d0d0d1" }} className="h-5 w-5" />
               <Text className="ml-4 text-gray-300 text-base font-['300'] tracking-widest">

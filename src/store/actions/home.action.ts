@@ -2,11 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import { endPoints } from "../../api/base/endpoint"
 import { HomeDataRequest } from "../../api/interface/module.interface"
 import { PayloadService } from "../../api/service/Payload.service"
-import { caller } from "../../lib/axios"
+import { Interceptors } from "../../lib/axios"
 class HomeService extends PayloadService {
   public getHomeData = createAsyncThunk("@home", async (_, Async): Promise<any> => {
     try {
-      const data = await caller.Interceptor().get("", {
+      const data = await Interceptors.get("", {
         params: { ...endPoints.homeData },
         responseType: "json"
       })

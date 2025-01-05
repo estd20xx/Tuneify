@@ -1,9 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { Image } from "react-native"
-import localI from "../../assets/images/new.png"
-import { InitialLocalState, LocalFileTypes } from "../../Interfaces/tuneifySlice.interface"
-import { RootState } from "../store"
-const localImage = Image.resolveAssetSource(localI).uri
+import { InitialLocalState, LocalFileTypes } from "../../../Interfaces/tuneifySlice.interface"
+import tempImage from "../../../assets/images/new.png"
+import { RootState } from "../../store"
+const localImage = Image.resolveAssetSource(tempImage).uri
 
 const initialState: InitialLocalState = {
   LocalSong: [],

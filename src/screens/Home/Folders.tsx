@@ -1,46 +1,20 @@
 import React, { memo, useCallback } from "react"
 import { FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-native"
 import Image from "react-native-fast-image"
-import TrackPlayer from "react-native-track-player"
 import NotFound from "../../components/Not-found"
 import Show from "../../components/Show"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { LocalFileTypes } from "../../Interfaces/tuneifySlice.interface"
 import LocalMediaService from "../../services/localMedia.service"
-import {
-  addTrackId,
-  addTrackIndex,
-  tunifyCurrentTrack
-} from "../../store/slices/currentTrack.slice"
-import { tuneifyOfflines } from "../../store/slices/offline.slice"
+import { tuneifyOfflines } from "../../store/slices/new/offline.slice"
 const local = new LocalMediaService()
 const Folders = () => {
   const testId = "1212"
   const localFile = TypedSelectorHook(tuneifyOfflines)
   const dispatch = useAppDispatch()
-  const current = TypedSelectorHook(tunifyCurrentTrack)
-  const InitialiseThisOne = async (index: number) => {
-    try {
-      if (current.trackId == testId) {
-        await TrackPlayer.skip(index)
-        dispatch(addTrackIndex(index))
-      } else {
-        await TrackPlayer.reset()
-        await TrackPlayer.setQueue(localFile.LocalSong)
-        await TrackPlayer.skip(index)
-        await TrackPlayer.play()
-        dispatch(addTrackId(testId), addTrackIndex(index))
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
   const renderItem = useCallback(
     ({ item, index }: { item: LocalFileTypes; index: number }) => (
-      <TouchableOpacity
-        className="w-full h-16  mt-2  flex flex-row items-center"
-        onPress={() => InitialiseThisOne(index)}
-      >
+      <TouchableOpacity className="w-full h-16  mt-2  flex flex-row items-center">
         <View className="h-16 w-20  pl-2">
           <Image
             source={{
@@ -57,7 +31,8 @@ const Folders = () => {
             style={{
               fontSize: 15,
               fontFamily: "500",
-              color: index == current.index && testId == current.trackId ? "#16FF00" : "#FFF"
+              color: "#FFF"
+              // color: index == current.index && testId == current.trackId ? "#16FF00" : "#FFF"
             }}
           >
             {item.title?.length > 45 ? item.title.slice(0, 45) + "..." : item.title}
