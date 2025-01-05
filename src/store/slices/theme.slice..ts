@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { Themes, themes } from "../../constants/colors"
 import { RootState } from "../store"
 const initialState: Themes = {
-  text: " rgb(253, 231, 245)",
+  text: "rgb(253,231,245)",
   background: " rgb(29, 2, 21)",
   primary: " rgb(244, 118, 208)",
   secondary: " rgb(160, 82, 13)",

@@ -4,7 +4,7 @@ import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
 import { Song } from "../api/service/Payload.service"
 import { Icons } from "../constants/Icon"
 import { TypedSelectorHook } from "../hooks/store.hook"
-import { tunifyChild } from "../store/slices/childState.slice"
+import { tunifyChild } from "../store/slices/new/childState.slice"
 type ListItemProps = {
   viewableItems: Animated.SharedValue<ViewToken[]>
   item: Song

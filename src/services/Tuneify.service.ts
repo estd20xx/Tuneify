@@ -10,7 +10,7 @@ import TrackPlayer, {
 } from "react-native-track-player"
 import { ITuneify } from "../Interfaces/tuneifySetUp.interface"
 import { InitialChildStateTypes, InitialSongStateTypes } from "../Interfaces/tuneifySlice.interface"
-import { changeTunifyRepeatMode, changeTunifyState } from "../store/slices/childState.slice"
+import { changeTunifyRepeatMode, changeTunifyState } from "../store/slices/new/childState.slice"
 import SuggestedServices from "./suggested.service"
 export default class TuneifyService extends SuggestedServices implements ITuneify {
   constructor(private lyricApi: string) {

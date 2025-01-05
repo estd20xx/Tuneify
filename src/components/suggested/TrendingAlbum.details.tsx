@@ -1,16 +1,11 @@
-import React, { memo, useCallback, useEffect, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import TrackPlayer from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { TrendingAlbumParamsTypes } from "../../Interfaces/album.interface"
 import { album } from "../../store/actions/album.action"
-import { albumData } from "../../store/slices/album.slice"
-import {
-  addTrackId,
-  addTrackIndex,
-  tunifyCurrentTrack
-} from "../../store/slices/currentTrack.slice"
+import { tunifyCurrentTrack } from "../../store/slices/currentTrack.slice"
+import { albumData } from "../../store/slices/new/album.slice"
 import { tuneifySongs } from "../../store/slices/song.slice"
 import Show from "../Show"
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => {
@@ -22,34 +17,9 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
   useEffect(() => {
     dispatch(album.getAlbumSongs(route.params.albumData.id))
   }, [])
-  // useEffect(() => {
-  //   if (albumSongs?.songs.length != 0) {
-  //     // @ts-ignore
-  //     dispatch(addSongList(albumSongs))
-  //   }
-  // }, [albumSongs])
   console.log("trending albm details")
-  const InitialiseThisOne = useCallback(
-    async (index: number) => {
-      console.log(current.trackId)
-      console.log(data.id)
-      try {
-        if (current.trackId == data.id) {
-          await TrackPlayer.skip(index)
-          dispatch(addTrackIndex(index))
-        } else {
-          await TrackPlayer.reset()
-          await TrackPlayer.setQueue(storeSongs.songs)
-          await TrackPlayer.skip(index)
-          await TrackPlayer.play()
-          dispatch(addTrackId(data.id), addTrackIndex(index))
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    [storeSongs.songs, current.trackId]
-  )
+
+  const chnageQueueState = (index: number) => {}
   return (
     <View className="w-full">
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -78,7 +48,6 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
                   paddingRight: 5,
                   marginTop: 10
                 }}
-                onPress={() => InitialiseThisOne(index)}
               >
                 <View className="w-4/5  h-full pl-3 flex flex-row ">
                   <View className="w-full rounded-lg overflow-hidden ">

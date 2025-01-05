@@ -1,6 +1,6 @@
-import { baseURL } from "../base/endpoint"
+import { baseApi } from "../base/constrants"
 export class ApiService {
   protected getApi = (): string => {
-    return baseURL
+    return baseApi
   }
 }
