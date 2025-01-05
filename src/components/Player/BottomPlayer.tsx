@@ -31,7 +31,6 @@ const BottomPlayer = () => {
     }
   }, [data])
   useTrackPlayerEvents(service.getEvent(), (event: any) => {
-    console.log("calling")
     event.state == State.Ready && service.handleBottomCondition(setCTrack)
   })
   return (

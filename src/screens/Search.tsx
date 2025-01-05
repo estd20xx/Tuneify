@@ -1,7 +1,9 @@
-import React, { memo, useCallback, useEffect, useState } from "react"
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native"
+import React, { memo, useCallback, useEffect, useRef, useState } from "react"
+import { FlatList, Image, Keyboard, Text, TouchableOpacity, View } from "react-native"
+import { Chase } from "react-native-animated-spinkit"
 import { Song } from "../api/service/Payload.service"
 import Input from "../components/Search/Input"
+import Show from "../components/Show"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
 import { personalizedSearchedSong } from "../store/actions/searchedSong.action"
 import { searchedSongData } from "../store/slices/new/searchedSong.slice"
@@ -13,6 +15,7 @@ export interface SearchedSongQueryParams {
 const Search = () => {
   const dispatch = useAppDispatch()
   const searchedData = TypedSelectorHook(searchedSongData)
+  const flatListRef = useRef<FlatList>(null)
   const [searchQuery, setSearchQuery] = useState<SearchedSongQueryParams>({
     p: 1,
     q: "",
@@ -32,6 +35,12 @@ const Search = () => {
       clearTimeout(handler)
     }
   }, [searchQuery])
+
+  useEffect(() => {
+    if (searchedData.data?.songs?.length) {
+      flatListRef.current?.scrollToOffset({ animated: true, offset: 0 })
+    }
+  }, [searchedData.data])
   const renderItem = useCallback(
     ({ item }: { item: Song; index: number }) => (
       <TouchableOpacity className="w-full h-16 mt-2 flex flex-row items-center">
@@ -54,6 +63,7 @@ const Search = () => {
     ),
     []
   )
+  console.log("Rendering:", performance.now())
   return (
     <View className="w-full h-screen flex items-center">
       <Input
@@ -61,16 +71,24 @@ const Search = () => {
         handleSearch={handleSearch}
         searchQuery={searchQuery}
       />
+      <Show isVisible={searchedData.isLoading}>
+        <View className="w-full h-screen flex items-center justify-center bg-black">
+          <Chase size={140} color="#ff8216" />
+        </View>
+      </Show>
       <View className="w-full h-full ">
         <FlatList
+          ref={flatListRef}
           data={searchedData.data?.songs}
           keyExtractor={(item) => item.id}
           initialNumToRender={3}
+          onScrollBeginDrag={Keyboard.dismiss}
+          keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
-          maxToRenderPerBatch={4}
+          maxToRenderPerBatch={9}
           contentContainerStyle={{ paddingTop: 10 }}
           removeClippedSubviews={true}
-          windowSize={1}
+          windowSize={10}
           renderItem={renderItem}
         />
       </View>
