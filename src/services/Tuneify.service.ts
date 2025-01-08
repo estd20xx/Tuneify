@@ -9,26 +9,12 @@ import TrackPlayer, {
   Track
 } from "react-native-track-player"
 import { ITuneify } from "../Interfaces/tuneifySetUp.interface"
-import { InitialChildStateTypes, InitialSongStateTypes } from "../Interfaces/tuneifySlice.interface"
-import { changeTunifyRepeatMode, changeTunifyState } from "../store/slices/new/childState.slice"
+import { InitialSongStateTypes } from "../Interfaces/tuneifySlice.interface"
+import { changeTunifyState, InitialCentralQueue, songRepeat } from "../store/slices/new/Queue.slice"
 import SuggestedServices from "./suggested.service"
 export default class TuneifyService extends SuggestedServices implements ITuneify {
   constructor(private lyricApi: string) {
     super()
-  }
-  public getGradient = (): string[] => {
-    const colors = [
-      "#b8b7b8",
-      "#a4a3a4",
-      "#8f8e8f",
-      "#7b7a7b",
-      "#666666",
-      "#525152",
-      "#3d3d3d",
-      "#292829",
-      "#141414"
-    ]
-    return colors
   }
   public getEvent = (): Event[] => {
     const events: Event[] = [
@@ -54,14 +40,14 @@ export default class TuneifyService extends SuggestedServices implements ITuneif
     }
   }
   public repeatMode = async (
-    state: InitialChildStateTypes,
+    state: InitialCentralQueue,
     dispatch: Dispatch<UnknownAction>
   ): Promise<void> => {
     try {
-      state.repeat
+      state.isRepeat
         ? TrackPlayer.setRepeatMode(RepeatMode.Queue)
         : TrackPlayer.setRepeatMode(RepeatMode.Off)
-      dispatch(changeTunifyRepeatMode())
+      dispatch(songRepeat())
     } catch (error) {
       console.log(error)
     }
@@ -93,10 +79,10 @@ export default class TuneifyService extends SuggestedServices implements ITuneif
   }
   public playPauseAction = async (
     playbackState: PlaybackState | { state: undefined },
-    state: InitialChildStateTypes,
+    state: InitialCentralQueue,
     dispatch: Dispatch<UnknownAction>
   ): Promise<void> => {
-    state.isPlaying ? await TrackPlayer.pause() : await TrackPlayer.play()
+    state.data?.isPlaying ? await TrackPlayer.pause() : await TrackPlayer.play()
     dispatch(changeTunifyState())
   }
   public handleBottomCondition = async (
@@ -142,7 +128,13 @@ export default class TuneifyService extends SuggestedServices implements ITuneif
           Capability.SkipToNext,
           Capability.SkipToPrevious,
           Capability.SeekTo
-        ]
+        ],
+        playIcon: require("../assets/images/playing.png"),
+        pauseIcon: require("../assets/images/privacy.png"),
+        stopIcon: require("../assets/images/forward.png"),
+        previousIcon: require("../assets/images/mode.png"),
+        nextIcon: require("../assets/images/suffle.png"),
+        icon: require("../assets/images/setting.png")
       })
       await TrackPlayer.add(data.songs)
     } catch (error) {
