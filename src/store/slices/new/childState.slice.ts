@@ -3,7 +3,7 @@ import { InitialChildStateTypes } from "../../../Interfaces/tuneifySlice.interfa
 import { RootState } from "../../store"
 const initialState: InitialChildStateTypes = {
   isPlaying: false,
-  isLoading: false,
+  isSetupped: false,
   repeat: false
 }
 const childStateSlice = createSlice({
@@ -15,9 +15,12 @@ const childStateSlice = createSlice({
     },
     changeTunifyRepeatMode(state: InitialChildStateTypes) {
       state.repeat = !state.repeat
+    },
+    changeApplicationSetup(state: InitialChildStateTypes) {
+      state.isSetupped = true
     }
   }
 })
-export const { changeTunifyRepeatMode } = childStateSlice.actions
+export const { changeTunifyRepeatMode, changeApplicationSetup } = childStateSlice.actions
 export const tunifyChild = (state: RootState) => state.persistedReducer.childState
 export default childStateSlice.reducer

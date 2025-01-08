@@ -1,11 +1,7 @@
-import axios from "axios"
 import { Isongs, SongsTypes } from "../Interfaces/songs.interface"
+// TODO : handle specific song click
 export default class SongService implements Isongs {
   constructor(public songApi: string) {}
-  getUrl = (): string => {
-    console.log(this.songApi)
-    return this.songApi
-  }
   getSongs = async (setSng: (songs: SongsTypes[]) => void): Promise<void> => {
     try {
       // const result = await axios.get(this.getUrl())

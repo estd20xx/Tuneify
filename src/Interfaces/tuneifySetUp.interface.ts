@@ -1,9 +1,8 @@
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
-import { Event, PlaybackState, Track } from "react-native-track-player"
+import { PlaybackState } from "react-native-track-player"
 import { InitialCentralQueue } from "../store/slices/new/Queue.slice"
 import { StoreSongTypes } from "./tuneifySlice.interface"
-export interface ITuneify {
-  getLyrics: (setlyrics: (lyric: string) => void) => Promise<void>
+export interface ApplicationInterface {
   repeatMode: (state: InitialCentralQueue, dispatch: Dispatch<UnknownAction>) => Promise<void>
   timerMusicOff: (
     period: number,
@@ -16,7 +15,5 @@ export interface ITuneify {
     state: InitialCentralQueue,
     dispatch: Dispatch<UnknownAction>
   ) => Promise<void>
-  getEvent: () => Event[]
   setUpPlayer: (data: Array<StoreSongTypes>) => void
-  handleBottomCondition: (setCurrentTrack: (track: Track) => void) => Promise<void>
 }

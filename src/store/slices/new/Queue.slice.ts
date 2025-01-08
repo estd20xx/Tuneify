@@ -25,7 +25,7 @@ const initialState: InitialCentralQueue = {
   isError: false
 }
 const PlayerQueue = createSlice({
-  name: "@player",
+  name: "player",
   initialState,
   reducers: {
     updateQueue(state: InitialCentralQueue, actions: PayloadAction<SpecificQueue>) {

@@ -1,50 +1,76 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useEffect } from "react"
 import { FlatList, TouchableOpacity, View, ViewToken } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import TrackPlayer from "react-native-track-player"
-import { songsApi } from "../../api/api"
-import { Song } from "../../api/service/Payload.service"
 import ListItem from "../../components/ListItem"
 import Show from "../../components/Show"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
-import SongService from "../../services/songs.service"
+import { sanitize } from "../../services/sanitizer.service"
 import { songServiceaction } from "../../store/actions/song.action"
-import { SpecificQueue, updateQueue } from "../../store/slices/new/Queue.slice"
+import {
+  centralQueue,
+  SpecificQueue,
+  updateQueue,
+  updateSongQueue
+} from "../../store/slices/new/Queue.slice"
 import { testSong } from "../../store/slices/new/song.slice"
-const pageId = "songs"
-const service = new SongService(songsApi)
+const screenId = "songs"
 const Songs = () => {
-  console.log("songs render")
   const viewableItems = useSharedValue<ViewToken[]>([])
   const dispatch = useAppDispatch()
   const songs = TypedSelectorHook(testSong)
-  const [currentId, setCurrentId] = useState<string>("")
-  const sanitizePlayerData = (songsList: Array<Song>) => {
-    const data = songsList.map((cx) => {
-      const songs: StoreSongTypes = {
-        id: cx.id,
-        title: cx.title,
-        artist: cx.artist,
-        artwork: cx.image[2].link,
-        url: cx.link[2].link
+  const applicationQueue = TypedSelectorHook(centralQueue)
+  const chnageQueueState = async (index: number) => {
+    try {
+      if (applicationQueue.data?.id != screenId) {
+        if (songs.data) {
+          const previousSongs = songs.data?.songs.slice(0, index)
+          const currentSong = songs.data?.songs.slice(index, index + 1)
+          const nextSongs = songs.data?.songs.slice(index + 1)
+          await TrackPlayer.reset()
+          await TrackPlayer.add(sanitize.songs(currentSong))
+          await TrackPlayer.add(sanitize.songs(nextSongs))
+          await TrackPlayer.add(sanitize.songs(previousSongs))
+          await TrackPlayer.play()
+          const newQueue: SpecificQueue = {
+            id: screenId,
+            currentSongIndex: 0,
+            isPlaying: true,
+            currentSongId: "",
+            songs: [
+              ...sanitize.songs(currentSong),
+              ...sanitize.songs(nextSongs),
+              ...sanitize.songs(previousSongs)
+            ]
+          }
+          dispatch(updateQueue(newQueue))
+        }
+        return
       }
-      return songs
-    })
-    return data
+      if (applicationQueue.data?.songs) {
+        const clickedSong = applicationQueue.data.songs[index]
+        await TrackPlayer.pause()
+        dispatch(updateSongQueue({ index, id: clickedSong.id }))
+        await TrackPlayer.skip(index)
+        await TrackPlayer.play()
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
   useEffect(() => {
-    dispatch(songServiceaction.getSongs())
-    // service.getSongs(setSng)
+    if (!applicationQueue.data?.songs) {
+      dispatch(songServiceaction.getSongs())
+    }
   }, [])
   useEffect(() => {
     if (songs.data?.songs) {
       const newQueue: SpecificQueue = {
-        id: pageId,
+        id: screenId,
         isPlaying: false,
         currentSongIndex: 0,
         currentSongId: "",
-        songs: [...sanitizePlayerData(songs.data.songs)]
+        songs: [...sanitize.songs(songs.data.songs)]
       }
       dispatch(updateQueue(newQueue))
     }
@@ -64,20 +90,11 @@ const Songs = () => {
           renderItem={(items) => {
             const { item, index } = items
             return (
-              <TouchableOpacity
-                key={JSON.stringify(index)}
-                onPress={async () => {
-                  await TrackPlayer.pause()
-                  setCurrentId(item.id)
-                  await TrackPlayer.skip(index)
-                  await TrackPlayer.play()
-                }}
-              >
+              <TouchableOpacity key={JSON.stringify(index)} onPress={() => chnageQueueState(index)}>
                 <ListItem
                   item={item}
                   viewableItems={viewableItems}
-                  currentId={currentId}
-                  id={item.id}
+                  id={applicationQueue.data?.currentSongId ?? "random"}
                 />
               </TouchableOpacity>
             )
