@@ -9,7 +9,7 @@ import TrackPlayer, {
   Track
 } from "react-native-track-player"
 import { ITuneify } from "../Interfaces/tuneifySetUp.interface"
-import { InitialSongStateTypes } from "../Interfaces/tuneifySlice.interface"
+import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
 import { changeTunifyState, InitialCentralQueue, songRepeat } from "../store/slices/new/Queue.slice"
 import SuggestedServices from "./suggested.service"
 export default class TuneifyService extends SuggestedServices implements ITuneify {
@@ -96,7 +96,7 @@ export default class TuneifyService extends SuggestedServices implements ITuneif
     }
   }
 
-  public setUpPlayer = async (data: InitialSongStateTypes) => {
+  public setUpPlayer = async (songs: Array<StoreSongTypes>) => {
     try {
       await TrackPlayer.setupPlayer({
         maxCacheSize: 1024 * 10,
@@ -136,7 +136,7 @@ export default class TuneifyService extends SuggestedServices implements ITuneif
         nextIcon: require("../assets/images/suffle.png"),
         icon: require("../assets/images/setting.png")
       })
-      await TrackPlayer.add(data.songs)
+      await TrackPlayer.add(songs)
     } catch (error) {
       console.log(error)
     }

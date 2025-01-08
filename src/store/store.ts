@@ -10,7 +10,6 @@ import playlistDetailsSlice from "./slices/new/playlistDetails.slice"
 import PlayerQueue from "./slices/new/Queue.slice"
 import searchedSongsSlice from "./slices/new/searchedSong.slice"
 import songSliceNew from "./slices/new/song.slice"
-import songSlice from "./slices/song.slice"
 import userSlice from "./slices/user.slice"
 const persistConfig = {
   key: "@hainaholaa",
@@ -20,7 +19,6 @@ const persistConfig = {
 }
 const RootReducer = combineReducers({
   user: userSlice,
-  storeSong: songSlice,
   childState: childStateSlice,
   // new
   home: homeSlice,

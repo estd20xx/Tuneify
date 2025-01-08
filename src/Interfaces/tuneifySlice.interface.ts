@@ -26,9 +26,9 @@ export interface InitialCurrentStateTypes {
   albumId: string
   playListId: string
 }
-export interface InitialSongStateTypes {
-  songs: StoreSongTypes[]
-}
+// export interface InitialSongStateTypes {
+//   songs: StoreSongTypes[]
+// }
 export interface InitialUserState {
   userName: string
   image: string

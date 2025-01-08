@@ -7,7 +7,6 @@ import { FAB as Fab } from "react-native-paper"
 import TextTicker from "react-native-text-ticker"
 import TrackPlayer, {
   State,
-  Track,
   usePlaybackState,
   useProgress,
   useTrackPlayerEvents
@@ -15,6 +14,7 @@ import TrackPlayer, {
 import { lyricsApi } from "../../api/api"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import TuneifyService from "../../services/Tuneify.service"
 import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/new/favourite.slice"
 import { centralQueue, changeTunifyState } from "../../store/slices/new/Queue.slice"
@@ -31,9 +31,9 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
   const dispatch = useAppDispatch()
   const [isFlipped, setIsFlipped] = useState(false)
   const [flip, setFlip] = useState(new Animated.Value(0))
-  const [ct, setCt] = useState<Track>()
   const [vtimer, setVtimer] = useState(false)
   const [isTimer, setIsTimer] = useState(false)
+  const [currentTrack, setCurrentTrack] = useState<StoreSongTypes>()
   const [lyric, setLyric] = useState<string>("We are working on it.! 💻")
   const playbackState = usePlaybackState()
   const [value, setValue] = useState<number>(0)
@@ -63,16 +63,13 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
     transform: [{ rotateY: backInterpolate }]
   }
   useEffect(() => {
-    service.handleBottomCondition(setCt)
-  }, [])
+    if (applicationQueue.data?.songs) {
+      setCurrentTrack(applicationQueue.data.songs[applicationQueue.data.currentSongIndex])
+    }
+  }, [applicationQueue])
   useTrackPlayerEvents(service.getEvent(), async (event: any) => {
     if (playbackState.state == State.Ended) {
       dispatch(changeTunifyState())
-    }
-    if (event.state == State.Ready) {
-      // TODO : need to handle lyrics api
-      service.handleBottomCondition(setCt)
-      // service.getLyrics(setLyric)
     }
   })
 
@@ -89,10 +86,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
         (applicationQueue.data?.currentSongIndex + applicationQueue.data.songs.length - 1) %
         applicationQueue.data.songs.length
     }
-
-    // updateSongQueue
-    // (prevIndex + 1) % Music.length // next
-    // (prevIndex + Music.length - 1) % Music.length //previous
   }
 
   const checkFavAvailable = (id: string): boolean => {
@@ -159,7 +152,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
               >
                 <TrackImage
                   source={{
-                    uri: ct?.artwork ? ct.artwork : ct?.cover,
+                    uri: currentTrack?.artwork,
                     headers: { Authorization: "songs" },
                     priority: TrackImage.priority.high,
                     cache: TrackImage.cacheControl.immutable
@@ -185,7 +178,9 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             </View>
             <View className=" w-full mt-5 flex items-center justify-center h-auto ">
               <Text className="text-white text-2xl  font-['600'] mb-1">
-                {ct && ct.title!.length > 30 ? ct?.title?.slice(0, 31) + "..." : ct?.title}
+                {currentTrack && currentTrack.title!.length > 30
+                  ? currentTrack?.title?.slice(0, 31) + "..."
+                  : currentTrack?.title}
               </Text>
               <TextTicker
                 style={{ fontSize: 15, color: "#bdbdbd" }}
@@ -196,7 +191,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                 repeatSpacer={50}
                 marqueeDelay={1000}
               >
-                {ct?.artist}
+                {currentTrack?.artist}
               </TextTicker>
             </View>
             <View className="w-full  mt-5 py-2">
@@ -315,7 +310,10 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                 />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => [dispatch(addUserFavouritesData(ct!)), setVisibleSnake(true)]}
+                onPress={() => [
+                  dispatch(addUserFavouritesData(currentTrack!)),
+                  setVisibleSnake(true)
+                ]}
               >
                 <Icons.HomeIcon name="heart-fill" size={23} color={"#ff8216"} />
               </TouchableOpacity>
