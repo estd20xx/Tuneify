@@ -13,7 +13,7 @@ import { lyricsApi } from "../../api/api"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import TuneifyService from "../../services/Tuneify.service"
-import { tunifyChild } from "../../store/slices/new/childState.slice"
+import { centralQueue } from "../../store/slices/new/Queue.slice"
 import { tuneifySongs } from "../../store/slices/song.slice"
 import Show from "../Show"
 import SongPlayer from "./SongPlayer"
@@ -21,10 +21,11 @@ const service = new TuneifyService(lyricsApi)
 const BottomPlayer = () => {
   const dispatch = useAppDispatch()
   const data = TypedSelectorHook(tuneifySongs)
-  const state = TypedSelectorHook(tunifyChild)
+  const state = TypedSelectorHook(centralQueue)
   const [isVisible, setIsVisible] = useState(false)
   const [cTrack, setCTrack] = useState<Track>()
   const playbackState: PlaybackState | { state: undefined } = usePlaybackState()
+  const applicationQueue = TypedSelectorHook(centralQueue)
   useEffect(() => {
     if (data.songs.length > 0) {
       service.setUpPlayer(data)
@@ -66,10 +67,10 @@ const BottomPlayer = () => {
             <TouchableOpacity
               onPress={() => service.playPauseAction(playbackState, state, dispatch)}
             >
-              <Show isVisible={state.isPlaying}>
+              <Show isVisible={state.data?.isPlaying ?? false}>
                 <Icons.PlayIcon name="pause" color={"white"} size={20} />
               </Show>
-              <Show isVisible={!state.isPlaying}>
+              <Show isVisible={!state.data?.isPlaying}>
                 <Icons.PlayIcon name="play" color={"white"} size={20} />
               </Show>
             </TouchableOpacity>

@@ -3,13 +3,16 @@ import { FlatList, TouchableOpacity, View, ViewToken } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import TrackPlayer from "react-native-track-player"
 import { songsApi } from "../../api/api"
+import { Song } from "../../api/service/Payload.service"
 import ListItem from "../../components/ListItem"
 import Show from "../../components/Show"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import SongService from "../../services/songs.service"
 import { songServiceaction } from "../../store/actions/song.action"
+import { SpecificQueue, updateQueue } from "../../store/slices/new/Queue.slice"
 import { testSong } from "../../store/slices/new/song.slice"
-import { addSongList } from "../../store/slices/song.slice"
+const pageId = "songs"
 const service = new SongService(songsApi)
 const Songs = () => {
   console.log("songs render")
@@ -17,13 +20,33 @@ const Songs = () => {
   const dispatch = useAppDispatch()
   const songs = TypedSelectorHook(testSong)
   const [currentId, setCurrentId] = useState<string>("")
+  const sanitizePlayerData = (songsList: Array<Song>) => {
+    const data = songsList.map((cx) => {
+      const songs: StoreSongTypes = {
+        id: cx.id,
+        title: cx.title,
+        artist: cx.artist,
+        artwork: cx.image[2].link,
+        url: cx.link[2].link
+      }
+      return songs
+    })
+    return data
+  }
   useEffect(() => {
     dispatch(songServiceaction.getSongs())
     // service.getSongs(setSng)
   }, [])
   useEffect(() => {
     if (songs.data?.songs) {
-      dispatch(addSongList(songs.data.songs))
+      const newQueue: SpecificQueue = {
+        id: pageId,
+        isPlaying: false,
+        currentSongIndex: 0,
+        currentSongId: "",
+        songs: [...sanitizePlayerData(songs.data.songs)]
+      }
+      dispatch(updateQueue(newQueue))
     }
   }, [songs])
   return (

@@ -109,3 +109,18 @@ export interface AlbumDetailsResponse {
     has_lyrics: string
   }[]
 }
+
+//// New here dont refactor below this line ---
+
+export type TrendingAlbumSons = {
+  id: string
+  title: string
+  subtitle: string
+  image: ImageApi[]
+  year: string
+  play_count: string
+  songLink: Audio[]
+  duration: string
+  artists: string
+  has_lyrics: string
+}

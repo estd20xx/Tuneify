@@ -16,8 +16,8 @@ import { lyricsApi } from "../../api/api"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import TuneifyService from "../../services/Tuneify.service"
-import { changeTunifyState, tunifyChild } from "../../store/slices/new/childState.slice"
 import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/new/favourite.slice"
+import { centralQueue, changeTunifyState } from "../../store/slices/new/Queue.slice"
 import Messanger from "../message/Message"
 import Show from "../Show"
 const service = new TuneifyService(lyricsApi)
@@ -26,8 +26,8 @@ interface SongPlayerProps {
   setIsVisible: (cntx: boolean) => void
 }
 const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
-  const state = TypedSelectorHook(tunifyChild)
   const favourite = TypedSelectorHook(tuneifyFavourites)
+  const applicationQueue = TypedSelectorHook(centralQueue)
   const dispatch = useAppDispatch()
   const [isFlipped, setIsFlipped] = useState(false)
   const [flip, setFlip] = useState(new Animated.Value(0))
@@ -75,6 +75,26 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       // service.getLyrics(setLyric)
     }
   })
+
+  const nextAndPrevious = (isNext: boolean) => {
+    let index: number = 0
+    if (applicationQueue.data) {
+      if (isNext) {
+        index = (applicationQueue.data?.currentSongIndex + 1) % applicationQueue.data.songs.length
+        // update index
+        return
+      }
+      // update index
+      index =
+        (applicationQueue.data?.currentSongIndex + applicationQueue.data.songs.length - 1) %
+        applicationQueue.data.songs.length
+    }
+
+    // updateSongQueue
+    // (prevIndex + 1) % Music.length // next
+    // (prevIndex + Music.length - 1) % Music.length //previous
+  }
+
   const checkFavAvailable = (id: string): boolean => {
     const data = favourite.favouriteData.filter((c) => c.id == id)
     if (data.length > 0) return true
@@ -211,11 +231,12 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             <View className=" h-18  w-full flex items-center justify-evenly flex-row mt-3 px">
               <View className="h-full w-2/5 flex items-center flex-row justify-around pl-2">
                 <TouchableOpacity
-                  onPress={() => [
-                    TrackPlayer.skipToPrevious(),
-                    service.handleBottomCondition(setCt),
-                    service.getLyrics(setLyric)
-                  ]}
+                  onPress={() => nextAndPrevious(false)}
+                  // onPress={() => [
+                  //   TrackPlayer.skipToPrevious(),
+                  //   service.handleBottomCondition(setCt),
+                  //   // service.getLyrics(setLyric)
+                  // ]}
                 >
                   <Icons.KeyboardDown name="skip-previous" color={"white"} size={35} />
                 </TouchableOpacity>
@@ -236,8 +257,8 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
               </View>
               <View className=" w-1/5 flex items-center justify-center">
                 <Fab
-                  icon={state.isPlaying ? "pause" : "play"}
-                  onPress={() => service.playPauseAction(playbackState, state, dispatch)}
+                  icon={applicationQueue.data?.isPlaying ? "pause" : "play"}
+                  onPress={() => service.playPauseAction(playbackState, applicationQueue, dispatch)}
                   loading={playbackState.state === State.Loading}
                   style={{ backgroundColor: "#ff8216", borderRadius: 50 }}
                 />
@@ -258,21 +279,22 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => [
-                    TrackPlayer.skipToNext(),
-                    service.handleBottomCondition(setCt),
-                    service.getLyrics(setLyric)
-                  ]}
+                  onPress={() => nextAndPrevious(true)}
+                  // onPress={() => [
+                  //   TrackPlayer.skipToNext(),
+                  //   service.handleBottomCondition(setCt),
+                  //   service.getLyrics(setLyric)
+                  // ]}
                 >
                   <Icons.KeyboardDown name="skip-next" color={"white"} size={35} />
                 </TouchableOpacity>
               </View>
             </View>
             <View className=" h-14 w-full mt-5  flex items-center justify-around flex-row">
-              <TouchableOpacity onPress={() => service.repeatMode(state, dispatch)}>
+              <TouchableOpacity onPress={() => service.repeatMode(applicationQueue, dispatch)}>
                 <Icons.PlayListIcon
-                  name={state.repeat ? "repeat" : "repeat-off"}
-                  color={state.repeat ? "#ff8216" : "#bababa"}
+                  name={applicationQueue.isRepeat ? "repeat" : "repeat-off"}
+                  color={applicationQueue.isRepeat ? "#ff8216" : "#bababa"}
                   size={28}
                 />
               </TouchableOpacity>

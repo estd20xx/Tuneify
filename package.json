@@ -1,6 +1,6 @@
 {
   "name": "tuneify",
-  "version": "1.0.1",
+  "version": "1.0.11",
   "private": true,
   "scripts": {
     "android": "react-native run-android",

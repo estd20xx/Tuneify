@@ -1,21 +1,80 @@
 import React, { memo, useEffect, useState } from "react"
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import TrackPlayer from "react-native-track-player"
+import { TrendingAlbumSons } from "../../api/interface/album.interface"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { TrendingAlbumParamsTypes } from "../../Interfaces/album.interface"
+import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { album } from "../../store/actions/album.action"
 import { albumData } from "../../store/slices/new/album.slice"
+import {
+  centralQueue,
+  SpecificQueue,
+  updateQueue,
+  updateSongQueue
+} from "../../store/slices/new/Queue.slice"
 import Show from "../Show"
+const pageId = "trendingAblum"
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => {
   const dispatch = useAppDispatch()
   const [data] = useState(route.params.albumData)
   const albumSongs = TypedSelectorHook(albumData)
+  const applicationQueue = TypedSelectorHook(centralQueue)
   useEffect(() => {
     dispatch(album.getAlbumSongs(route.params.albumData.id))
   }, [])
   console.log("trending albm details")
-
-  const chnageQueueState = (index: number) => {}
+  const sanitizePlayerData = (songsList: Array<TrendingAlbumSons>) => {
+    const data = songsList.map((cx) => {
+      const songs: StoreSongTypes = {
+        id: cx.id,
+        title: cx.title,
+        artist: cx.artists,
+        artwork: cx.image[2].link,
+        url: cx.songLink[2].link
+      }
+      return songs
+    })
+    return data
+  }
+  const chnageQueueState = async (index: number) => {
+    try {
+      if (applicationQueue.data?.id != pageId) {
+        if (albumSongs.data?.songs) {
+          const previousSongs: TrendingAlbumSons[] = albumSongs.data?.songs.slice(0, index)
+          const currentSong: TrendingAlbumSons[] = albumSongs.data?.songs.slice(index, index + 1)
+          const nextSongs: TrendingAlbumSons[] = albumSongs.data?.songs.slice(index + 1)
+          const refactoredPrev = sanitizePlayerData(previousSongs)
+          const refactoredCurrent = sanitizePlayerData(currentSong)
+          const refactoredNext = sanitizePlayerData(nextSongs)
+          await TrackPlayer.reset()
+          await TrackPlayer.add(refactoredPrev)
+          await TrackPlayer.add(refactoredCurrent)
+          await TrackPlayer.add(refactoredNext)
+          await TrackPlayer.play()
+          const newQueue: SpecificQueue = {
+            id: pageId,
+            currentSongIndex: 0,
+            isPlaying: true,
+            currentSongId: "",
+            songs: [...refactoredPrev, ...refactoredCurrent, ...refactoredNext]
+          }
+          dispatch(updateQueue(newQueue))
+        }
+        return
+      }
+      if (albumSongs.data?.songs) {
+        const clickedSong = albumSongs.data.songs[index]
+        await TrackPlayer.pause()
+        dispatch(updateSongQueue({ index, id: clickedSong.id }))
+        await TrackPlayer.skip(index)
+        await TrackPlayer.play()
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <View className="w-full">
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -44,6 +103,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
                   paddingRight: 5,
                   marginTop: 10
                 }}
+                onPress={() => chnageQueueState(index)}
               >
                 <View className="w-4/5  h-full pl-3 flex flex-row ">
                   <View className="w-full rounded-lg overflow-hidden ">
