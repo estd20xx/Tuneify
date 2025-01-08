@@ -24,6 +24,5 @@ export interface SongsTypes {
   downloadUrl: DownloadUrlType[]
 }
 export interface Isongs {
-  readonly getUrl: () => string
   getSongs: (setSng: (songs: SongsTypes[]) => void) => Promise<void>
 }

@@ -1,7 +1,12 @@
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
+import { Image } from "react-native"
 import { SortSongFields, SortSongOrder, getAll } from "react-native-get-music-files"
+import uuid from "react-native-uuid"
+import tempImage from "../assets/images/new.png"
 import { IlocalMedia } from "../Interfaces/localMedia.interface"
+import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
 import { addLocalFiles } from "../store/slices/new/offline.slice"
+const localImage = Image.resolveAssetSource(tempImage).uri
 export default class LocalMediaService implements IlocalMedia {
   getLocalmedia = async (dispatch: Dispatch<UnknownAction>): Promise<boolean> => {
     try {
@@ -12,7 +17,18 @@ export default class LocalMediaService implements IlocalMedia {
         sortBy: SortSongFields.TITLE,
         sortOrder: SortSongOrder.DESC
       })
-      const data: any[] = [...songsOrError]
+      let data: StoreSongTypes[] = new Array<StoreSongTypes>()
+      if (songsOrError instanceof Object) {
+        data = songsOrError.map((cx) => {
+          return {
+            id: uuid.v4(),
+            title: cx.title,
+            artist: cx.artist,
+            artwork: cx.cover ? cx.cover : localImage,
+            url: cx.url
+          } as StoreSongTypes
+        })
+      }
       dispatch(addLocalFiles(data))
       return true
     } catch (error) {

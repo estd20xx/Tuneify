@@ -12,10 +12,10 @@ import searchedSongsSlice from "./slices/new/searchedSong.slice"
 import songSliceNew from "./slices/new/song.slice"
 import userSlice from "./slices/user.slice"
 const persistConfig = {
-  key: "@hainaholaa",
+  key: "@hainaholaaa",
   version: 1,
-  storage: AsyncStorage
-  // whitelist: ["home", "offline"]
+  storage: AsyncStorage,
+  whitelist: ["home", "offline", "playerQueue", "geet"]
 }
 const RootReducer = combineReducers({
   user: userSlice,

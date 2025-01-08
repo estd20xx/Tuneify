@@ -2,33 +2,33 @@ import React, { useEffect, useState } from "react"
 import { Text, TouchableOpacity } from "react-native"
 import { View } from "react-native-animatable"
 import Image from "react-native-fast-image"
-import { PlaybackState, Track, usePlaybackState } from "react-native-track-player"
-import { lyricsApi } from "../../api/api"
+import { PlaybackState, usePlaybackState } from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
-import TuneifyService from "../../services/Tuneify.service"
+import { applicationService } from "../../services/Tuneify.service"
+import { changeApplicationSetup, tunifyChild } from "../../store/slices/new/childState.slice"
 import { centralQueue } from "../../store/slices/new/Queue.slice"
 import Show from "../Show"
 import SongPlayer from "./SongPlayer"
-const service = new TuneifyService(lyricsApi)
 const BottomPlayer = () => {
   const dispatch = useAppDispatch()
   const [isVisible, setIsVisible] = useState(false)
-  const [cTrack, setCTrack] = useState<Track>()
   const [currentTrack, setCurrentTrack] = useState<StoreSongTypes>()
   const playbackState: PlaybackState | { state: undefined } = usePlaybackState()
   const applicationQueue = TypedSelectorHook(centralQueue)
+  const playerState = TypedSelectorHook(tunifyChild)
   useEffect(() => {
-    if (applicationQueue.data?.songs) {
-      service.setUpPlayer(applicationQueue.data?.songs)
+    if (applicationQueue.data?.songs && !playerState.isSetupped) {
+      applicationService.setUpPlayer(applicationQueue.data?.songs)
+      dispatch(changeApplicationSetup())
     }
   }, [applicationQueue.data])
   useEffect(() => {
     if (applicationQueue.data?.songs) {
       setCurrentTrack(applicationQueue.data.songs[applicationQueue.data.currentSongIndex])
     }
-  }, [applicationQueue])
+  }, [applicationQueue.data])
   return (
     <>
       {currentTrack && (
@@ -43,7 +43,7 @@ const BottomPlayer = () => {
             <View className="flex flex-row items-center h-full w-11/12 overflow-hidden">
               <Image
                 source={{
-                  uri: currentTrack?.artwork ? cTrack?.artwork : cTrack?.cover,
+                  uri: currentTrack.artwork,
                   headers: { Authorization: "songs" },
                   priority: Image.priority.high,
                   cache: Image.cacheControl.immutable
@@ -52,7 +52,7 @@ const BottomPlayer = () => {
               />
               <View style={{ marginLeft: 10 }}>
                 <Text className="text-white  mb-1 text-sm font-['500']  tracking-wider">
-                  {currentTrack?.title!.length > 32
+                  {currentTrack.title.length > 32
                     ? currentTrack.title?.slice(0, 32) + "..."
                     : currentTrack.title}
                 </Text>
@@ -64,7 +64,9 @@ const BottomPlayer = () => {
               </View>
             </View>
             <TouchableOpacity
-              onPress={() => service.playPauseAction(playbackState, applicationQueue, dispatch)}
+              onPress={() =>
+                applicationService.playPauseAction(playbackState, applicationQueue, dispatch)
+              }
             >
               <Show isVisible={applicationQueue.data?.isPlaying ?? false}>
                 <Icons.PlayIcon name="pause" color={"white"} size={20} />

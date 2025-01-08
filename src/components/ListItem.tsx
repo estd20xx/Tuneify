@@ -3,16 +3,12 @@ import { Image, Text, View, ViewToken } from "react-native"
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
 import { Song } from "../api/service/Payload.service"
 import { Icons } from "../constants/Icon"
-import { TypedSelectorHook } from "../hooks/store.hook"
-import { tunifyChild } from "../store/slices/new/childState.slice"
 type ListItemProps = {
   viewableItems: Animated.SharedValue<ViewToken[]>
   item: Song
   id: string
-  currentId: string
 }
-const ListItem: React.FC<ListItemProps> = React.memo(({ item, viewableItems, id, currentId }) => {
-  const state = TypedSelectorHook(tunifyChild)
+const ListItem: React.FC<ListItemProps> = React.memo(({ item, viewableItems, id }) => {
   const rStyle = useAnimatedStyle(() => {
     const isVisible = Boolean(
       viewableItems.value
@@ -48,13 +44,13 @@ const ListItem: React.FC<ListItemProps> = React.memo(({ item, viewableItems, id,
         <View className="w-full rounded-lg overflow-hidden ">
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Image
-              source={{ uri: item.image[1].link }}
+              source={{ uri: item.image[2].link }}
               style={{ width: 60, height: 60, borderRadius: 5 }}
             />
             <View style={{ marginLeft: 10 }}>
               <Text
                 style={{
-                  color: id == currentId && state.isPlaying ? "#16FF00" : "white",
+                  color: id == item.id ? "#16FF00" : "white",
                   fontSize: 16,
                   fontFamily: "400"
                 }}

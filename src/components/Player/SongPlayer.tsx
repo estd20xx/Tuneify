@@ -5,22 +5,15 @@ import TrackImage from "react-native-fast-image"
 import Modal from "react-native-modal"
 import { FAB as Fab } from "react-native-paper"
 import TextTicker from "react-native-text-ticker"
-import TrackPlayer, {
-  State,
-  usePlaybackState,
-  useProgress,
-  useTrackPlayerEvents
-} from "react-native-track-player"
-import { lyricsApi } from "../../api/api"
+import TrackPlayer, { State, usePlaybackState, useProgress } from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
-import TuneifyService from "../../services/Tuneify.service"
+import { applicationService } from "../../services/Tuneify.service"
 import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/new/favourite.slice"
-import { centralQueue, changeTunifyState } from "../../store/slices/new/Queue.slice"
+import { centralQueue } from "../../store/slices/new/Queue.slice"
 import Messanger from "../message/Message"
 import Show from "../Show"
-const service = new TuneifyService(lyricsApi)
 interface SongPlayerProps {
   isVisible: boolean
   setIsVisible: (cntx: boolean) => void
@@ -67,12 +60,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       setCurrentTrack(applicationQueue.data.songs[applicationQueue.data.currentSongIndex])
     }
   }, [applicationQueue])
-  useTrackPlayerEvents(service.getEvent(), async (event: any) => {
-    if (playbackState.state == State.Ended) {
-      dispatch(changeTunifyState())
-    }
-  })
-
   const nextAndPrevious = (isNext: boolean) => {
     let index: number = 0
     if (applicationQueue.data) {
@@ -116,7 +103,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             className="mt-8 bg-fuchsia-500 px-16 py-3 rounded-md"
             onPress={() => [
               setIsTimer(true),
-              service.timerMusicOff(value, dispatch, setIsTimer),
+              applicationService.timerMusicOff(value, dispatch, setIsTimer),
               setVtimer(!vtimer)
             ]}
           >
@@ -225,19 +212,12 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
 
             <View className=" h-18  w-full flex items-center justify-evenly flex-row mt-3 px">
               <View className="h-full w-2/5 flex items-center flex-row justify-around pl-2">
-                <TouchableOpacity
-                  onPress={() => nextAndPrevious(false)}
-                  // onPress={() => [
-                  //   TrackPlayer.skipToPrevious(),
-                  //   service.handleBottomCondition(setCt),
-                  //   // service.getLyrics(setLyric)
-                  // ]}
-                >
+                <TouchableOpacity onPress={() => nextAndPrevious(false)}>
                   <Icons.KeyboardDown name="skip-previous" color={"white"} size={35} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   className="w-14 h-14 rounded-full flex items-center justify-center"
-                  onPress={() => service.timerSkip(progress.position, false)}
+                  onPress={() => applicationService.timerSkip(progress.position, false)}
                 >
                   <Image
                     source={require("../../assets/images/tes/icons8-replay-10-64.png")}
@@ -253,7 +233,9 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
               <View className=" w-1/5 flex items-center justify-center">
                 <Fab
                   icon={applicationQueue.data?.isPlaying ? "pause" : "play"}
-                  onPress={() => service.playPauseAction(playbackState, applicationQueue, dispatch)}
+                  onPress={() =>
+                    applicationService.playPauseAction(playbackState, applicationQueue, dispatch)
+                  }
                   loading={playbackState.state === State.Loading}
                   style={{ backgroundColor: "#ff8216", borderRadius: 50 }}
                 />
@@ -261,7 +243,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
               <View className=" h-full w-2/5 flex items-center flex-row justify-around pr-2 ">
                 <TouchableOpacity
                   className="w-14 h-14 rounded-full flex items-center justify-center"
-                  onPress={() => service.timerSkip(progress.position, true)}
+                  onPress={() => applicationService.timerSkip(progress.position, true)}
                 >
                   <Image
                     source={require("../../assets/images/tes/icons8-forward-10-64.png")}
@@ -273,20 +255,15 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                     }}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => nextAndPrevious(true)}
-                  // onPress={() => [
-                  //   TrackPlayer.skipToNext(),
-                  //   service.handleBottomCondition(setCt),
-                  //   service.getLyrics(setLyric)
-                  // ]}
-                >
+                <TouchableOpacity onPress={() => nextAndPrevious(true)}>
                   <Icons.KeyboardDown name="skip-next" color={"white"} size={35} />
                 </TouchableOpacity>
               </View>
             </View>
             <View className=" h-14 w-full mt-5  flex items-center justify-around flex-row">
-              <TouchableOpacity onPress={() => service.repeatMode(applicationQueue, dispatch)}>
+              <TouchableOpacity
+                onPress={() => applicationService.repeatMode(applicationQueue, dispatch)}
+              >
                 <Icons.PlayListIcon
                   name={applicationQueue.isRepeat ? "repeat" : "repeat-off"}
                   color={applicationQueue.isRepeat ? "#ff8216" : "#bababa"}

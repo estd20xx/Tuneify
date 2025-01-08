@@ -11,14 +11,14 @@ export interface InitialCurrentTrackStateTypes {
 }
 export interface InitialChildStateTypes {
   isPlaying: boolean
-  isLoading: boolean
+  isSetupped: boolean
   repeat: boolean
 }
 export interface InitialFavouriteState {
   favouriteData: UserFavouritesTypes[]
 }
 export interface InitialLocalState {
-  LocalSong: LocalFileTypes[]
+  LocalSong: StoreSongTypes[]
   isUploading: boolean
   isAccepted: boolean
 }
@@ -41,17 +41,17 @@ export interface UserFavouritesTypes {
   url: string
   isLiked: boolean
 }
-export interface LocalFileTypes {
-  album: string
-  artist: string
-  cover: string
-  duration: number
-  title: string
-  url: string
-}
+// export interface LocalFileTypes {
+//   album: string
+//   artist: string
+//   cover: string
+//   duration: number
+//   title: string
+//   url: string
+// }
 export interface InitialStateTypes {
   storeSong: StoreSongTypes[]
-  localFile: LocalFileTypes[]
+  localFile: StoreSongTypes[]
   favouritesData: UserFavouritesTypes[]
   isUploaded: boolean
   isCurrentTrack: number

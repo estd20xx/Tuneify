@@ -1,11 +1,10 @@
 import React, { memo, useEffect, useState } from "react"
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import TrackPlayer from "react-native-track-player"
-import { TrendingAlbumSons } from "../../api/interface/album.interface"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { TrendingAlbumParamsTypes } from "../../Interfaces/album.interface"
-import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
+import { sanitize } from "../../services/sanitizer.service"
 import { album } from "../../store/actions/album.action"
 import { albumData } from "../../store/slices/new/album.slice"
 import {
@@ -15,7 +14,7 @@ import {
   updateSongQueue
 } from "../../store/slices/new/Queue.slice"
 import Show from "../Show"
-const pageId = "trendingAblum"
+const screenId = "trendingAblum"
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => {
   const dispatch = useAppDispatch()
   const [data] = useState(route.params.albumData)
@@ -24,40 +23,25 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
   useEffect(() => {
     dispatch(album.getAlbumSongs(route.params.albumData.id))
   }, [])
-  console.log("trending albm details")
-  const sanitizePlayerData = (songsList: Array<TrendingAlbumSons>) => {
-    const data = songsList.map((cx) => {
-      const songs: StoreSongTypes = {
-        id: cx.id,
-        title: cx.title,
-        artist: cx.artists,
-        artwork: cx.image[2].link,
-        url: cx.songLink[2].link
-      }
-      return songs
-    })
-    return data
-  }
   const chnageQueueState = async (index: number) => {
     try {
-      if (applicationQueue.data?.id != pageId) {
+      if (applicationQueue.data?.id != screenId + data.id) {
         if (albumSongs.data?.songs) {
-          const previousSongs: TrendingAlbumSons[] = albumSongs.data?.songs.slice(0, index)
-          const currentSong: TrendingAlbumSons[] = albumSongs.data?.songs.slice(index, index + 1)
-          const nextSongs: TrendingAlbumSons[] = albumSongs.data?.songs.slice(index + 1)
-          const refactoredPrev = sanitizePlayerData(previousSongs)
-          const refactoredCurrent = sanitizePlayerData(currentSong)
-          const refactoredNext = sanitizePlayerData(nextSongs)
+          const refactoredPrev = sanitize.albumDetails(albumSongs.data.songs.slice(0, index))
+          const refactoredCurrent = sanitize.albumDetails(
+            albumSongs.data?.songs.slice(index, index + 1)
+          )
+          const refactoredNext = sanitize.albumDetails(albumSongs.data?.songs.slice(index + 1))
           await TrackPlayer.reset()
-          await TrackPlayer.add(refactoredPrev)
           await TrackPlayer.add(refactoredCurrent)
           await TrackPlayer.add(refactoredNext)
+          await TrackPlayer.add(refactoredPrev)
           await TrackPlayer.play()
           const newQueue: SpecificQueue = {
-            id: pageId,
-            currentSongIndex: 0,
+            id: screenId + data.id,
+            currentSongIndex: index,
             isPlaying: true,
-            currentSongId: "",
+            currentSongId: refactoredCurrent[0].id,
             songs: [...refactoredPrev, ...refactoredCurrent, ...refactoredNext]
           }
           dispatch(updateQueue(newQueue))
@@ -115,7 +99,10 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
                       <View style={{ marginLeft: 10 }}>
                         <Text
                           style={{
-                            color: "#FFF",
+                            color:
+                              currentSong.id == applicationQueue.data?.currentSongId
+                                ? "#16FF00"
+                                : "white",
                             fontSize: 14,
                             fontFamily: "400"
                           }}

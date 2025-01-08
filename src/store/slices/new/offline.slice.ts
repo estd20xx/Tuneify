@@ -1,10 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { Image } from "react-native"
-import { InitialLocalState, LocalFileTypes } from "../../../Interfaces/tuneifySlice.interface"
-import tempImage from "../../../assets/images/new.png"
+import { InitialLocalState, StoreSongTypes } from "../../../Interfaces/tuneifySlice.interface"
 import { RootState } from "../../store"
-const localImage = Image.resolveAssetSource(tempImage).uri
-
 const initialState: InitialLocalState = {
   LocalSong: [],
   isUploading: false,
@@ -14,20 +10,9 @@ const offlineSong = createSlice({
   name: "offlineSongDev",
   initialState,
   reducers: {
-    addLocalFiles(state: InitialLocalState, actions: PayloadAction<LocalFileTypes[]>) {
+    addLocalFiles(state: InitialLocalState, actions: PayloadAction<StoreSongTypes[]>) {
       state.isUploading = true
-      state.LocalSong = [
-        ...actions.payload.map((cx) => {
-          return {
-            title: cx.title,
-            album: cx.album,
-            artist: cx.artist,
-            cover: cx.cover ? cx.cover : localImage,
-            duration: cx.duration,
-            url: cx.url
-          }
-        })
-      ]
+      Object.assign(state.LocalSong, actions.payload)
       state.isUploading = false
     },
     accepted(state: InitialLocalState, actions: PayloadAction<boolean>) {
