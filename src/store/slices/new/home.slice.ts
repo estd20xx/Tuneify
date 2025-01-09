@@ -20,6 +20,7 @@ const homeSlice = createSlice({
     builder
       .addCase(homeService.getHomeData.pending, (state: InitialHomeDataInerface) => {
         state.isLoading = true
+        state.isError = false
       })
       .addCase(
         homeService.getHomeData.fulfilled,
@@ -28,11 +29,14 @@ const homeSlice = createSlice({
           state.isLoading = false
         }
       )
-      .addCase(homeService.getHomeData.rejected, (state: InitialHomeDataInerface) => {
-        console.log("errrof api")
-        state.isError = true
-        state.isLoading = false
-      })
+      .addCase(
+        homeService.getHomeData.rejected,
+        (state: InitialHomeDataInerface, actions: PayloadAction<any>) => {
+          state.isError = true
+          state.isLoading = false
+          state.data = null
+        }
+      )
   }
 })
 export const homeData = (state: RootState) => state.persistedReducer.home

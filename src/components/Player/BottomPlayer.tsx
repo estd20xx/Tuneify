@@ -82,5 +82,4 @@ const BottomPlayer = () => {
     </>
   )
 }
-
 export default BottomPlayer

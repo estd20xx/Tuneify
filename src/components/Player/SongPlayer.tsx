@@ -11,7 +11,7 @@ import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { applicationService } from "../../services/Tuneify.service"
 import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/new/favourite.slice"
-import { centralQueue } from "../../store/slices/new/Queue.slice"
+import { centralQueue, updateSongQueue } from "../../store/slices/new/Queue.slice"
 import Messanger from "../message/Message"
 import Show from "../Show"
 interface SongPlayerProps {
@@ -60,18 +60,21 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       setCurrentTrack(applicationQueue.data.songs[applicationQueue.data.currentSongIndex])
     }
   }, [applicationQueue])
-  const nextAndPrevious = (isNext: boolean) => {
+  const nextAndPrevious = async (isNext: boolean) => {
     let index: number = 0
     if (applicationQueue.data) {
       if (isNext) {
         index = (applicationQueue.data?.currentSongIndex + 1) % applicationQueue.data.songs.length
-        // update index
+        dispatch(updateSongQueue({ index, id: applicationQueue.data.songs[index].id }))
+        await TrackPlayer.skip(index)
         return
       }
       // update index
       index =
         (applicationQueue.data?.currentSongIndex + applicationQueue.data.songs.length - 1) %
         applicationQueue.data.songs.length
+      dispatch(updateSongQueue({ index, id: applicationQueue.data.songs[index].id }))
+      await TrackPlayer.skip(index)
     }
   }
 
@@ -292,7 +295,11 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                   setVisibleSnake(true)
                 ]}
               >
-                <Icons.HomeIcon name="heart-fill" size={23} color={"#ff8216"} />
+                <Icons.HomeIcon
+                  name="heart-fill"
+                  size={23}
+                  color={checkFavAvailable(currentTrack?.id || "") != true ? "gray" : "#ff8216"}
+                />
               </TouchableOpacity>
             </View>
           </View>

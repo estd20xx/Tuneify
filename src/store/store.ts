@@ -15,7 +15,7 @@ const persistConfig = {
   key: "@hainaholaaa",
   version: 1,
   storage: AsyncStorage,
-  whitelist: ["home", "offline", "playerQueue", "geet"]
+  whitelist: ["home", "offline", "playerQueue", "geet", "favourite", "user"]
 }
 const RootReducer = combineReducers({
   user: userSlice,
