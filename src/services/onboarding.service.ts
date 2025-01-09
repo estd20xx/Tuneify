@@ -1,6 +1,6 @@
-import { Ionboard } from "../Interfaces/onboard.interface"
+import { OnboardingInterface } from "../Interfaces/onboard.interface"
 import { onBoardingScreen } from "../Types/Types"
-export default class OnboadringService implements Ionboard {
+export default class OnboadringService implements OnboardingInterface {
   constructor(private api: string) {}
   public getOnboardImage = (): string => {
     return this.api

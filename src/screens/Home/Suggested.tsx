@@ -1,11 +1,11 @@
 import React, { memo, useEffect } from "react"
 import { RefreshControl, ScrollView, View } from "react-native"
-import Show from "../../components/Show"
+import Show from "../../components/Common/Show"
 import MainSkeleton from "../../components/skeleton/MainSkeleton"
 import { component } from "../../constants/screens"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { homeService } from "../../store/actions/home.action"
-import { homeData } from "../../store/slices/new/home.slice"
+import { homeData } from "../../store/slices/home.slice"
 const Suggested = () => {
   const dispatch = useAppDispatch()
   const suggested = TypedSelectorHook(homeData)
@@ -29,6 +29,10 @@ const Suggested = () => {
         <Show isVisible={suggested.data != null}>
           {suggested.data && (
             <View>
+              <component.CCharts
+                data={suggested.data?.tuneifyChartsResponse}
+                topic={"Top Flavour"}
+              />
               <component.CTrendingAlbum
                 data={suggested.data?.tuneifyTrendingAlbumsResponse}
                 topic={"Trending Albums"}
@@ -38,10 +42,6 @@ const Suggested = () => {
                 topic={"Playlists"}
               />
               <component.CAlbums data={suggested?.data?.tuneifyAlbumsResponse} topic={"Albums"} />
-              <component.CCharts
-                data={suggested.data?.tuneifyChartsResponse}
-                topic={"Top Flavour"}
-              />
             </View>
           )}
         </Show>

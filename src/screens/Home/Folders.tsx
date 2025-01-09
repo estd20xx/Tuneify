@@ -2,17 +2,17 @@ import React, { memo } from "react"
 import { FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-native"
 import Image from "react-native-fast-image"
 import TrackPlayer from "react-native-track-player"
-import NotFound from "../../components/Not-found"
-import Show from "../../components/Show"
+import Show from "../../components/Common/Show"
+import NotFound from "../../components/offline/Not-found"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import LocalMediaService from "../../services/localMedia.service"
-import { tuneifyOfflines } from "../../store/slices/new/offline.slice"
 import {
   centralQueue,
   SpecificQueue,
   updateQueue,
   updateSongQueue
-} from "../../store/slices/new/Queue.slice"
+} from "../../store/slices/Queue.slice"
+import { tuneifyOfflines } from "../../store/slices/offline.slice"
 const local = new LocalMediaService()
 const screenId = "offlineSongs"
 const Folders = () => {
@@ -59,10 +59,10 @@ const Folders = () => {
         localFile.LocalSong.length ? "h-auto" : "h-screen flex items-center justify-center"
       }`}
     >
-      <RefreshControl
+      {/* <RefreshControl
         refreshing={localFile.isUploading}
         onRefresh={() => local.getLocalmedia(dispatch)}
-      />
+      /> */}
       <Show isVisible={localFile.LocalSong.length > 0}>
         <FlatList
           refreshControl={

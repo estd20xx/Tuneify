@@ -1,3 +1,3 @@
-export interface Ipermission {
+export interface PermissionInterface {
   askPermission: () => Promise<boolean>
 }

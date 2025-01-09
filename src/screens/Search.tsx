@@ -2,11 +2,11 @@ import React, { memo, useCallback, useEffect, useRef, useState } from "react"
 import { FlatList, Image, Keyboard, Text, TouchableOpacity, View } from "react-native"
 import { Bounce } from "react-native-animated-spinkit"
 import { Song } from "../api/service/Payload.service"
+import Show from "../components/Common/Show"
 import Input from "../components/Search/Input"
-import Show from "../components/Show"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
 import { personalizedSearchedSong } from "../store/actions/searchedSong.action"
-import { searchedSongData } from "../store/slices/new/searchedSong.slice"
+import { searchedSongData } from "../store/slices/searchedSong.slice"
 export interface SearchedSongQueryParams {
   p: number
   q: string

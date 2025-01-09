@@ -1,8 +1,8 @@
 import React from "react"
 import { Image, Text, View, ViewToken } from "react-native"
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
-import { Song } from "../api/service/Payload.service"
-import { Icons } from "../constants/Icon"
+import { Song } from "../../api/service/Payload.service"
+import { Icons } from "../../constants/Icon"
 type ListItemProps = {
   viewableItems: Animated.SharedValue<ViewToken[]>
   item: Song

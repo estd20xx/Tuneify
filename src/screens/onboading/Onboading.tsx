@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from "react"
 import { Platform, StatusBar, Text, TouchableOpacity, View } from "react-native"
 import * as Animatable from "react-native-animatable"
-import { onBoardImageApi } from "../../api/api"
+import { onBoardImageApi } from "../../api/base/constrants"
 import { onboardingData } from "../../constants/naviG"
 import { OnBoardingDataTypes, OnBoardingPropsTypes } from "../../Interfaces/onboard.interface"
 import OnboadringService from "../../services/onboarding.service"
@@ -56,22 +56,22 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
           <View
             className={`${
               nre == 0 ? "w-14" : "w-5"
-            } h-3 rounded-full duration-1000  bg-[#ff8216] ml-1`}
+            } h-3 rounded-full duration-1000  bg-themeOrange ml-1`}
           ></View>
           <View
             className={`${
               nre == 1 ? "w-14" : "w-5"
-            } h-3 rounded-full duration-1000 bg-[#ff8216] ml-1`}
+            } h-3 rounded-full duration-1000 bg-themeOrange ml-1`}
           ></View>
           <View
             className={`${
               nre == 2 ? "w-14" : "w-5"
-            } h-3 rounded-full duration-1000 bg-[#ff8216] ml-1`}
+            } h-3 rounded-full duration-1000 bg-themeOrange ml-1`}
           ></View>
         </View>
         <AnimatedButton
           animation={"slideInUp"}
-          className="bg-[#ff8216] absolute bottom-12 w-11/12 flex items-center justify-center py-3 rounded-3xl"
+          className="bg-themeOrange absolute bottom-12 w-11/12 flex items-center justify-center py-3 rounded-3xl"
           onPress={() => service.onboardHandler(setNre, nre, navigation)}
         >
           <Text className="text-white text-xl font-[400]">Next</Text>

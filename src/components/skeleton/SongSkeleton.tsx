@@ -9,7 +9,7 @@ const SongSkeleton = () => {
             className="w-[98%]
              rounded-md h-16 mt-2 flex flex-row items-center bg-gray-700"
             key={_}
-          ></View>
+          />
         )
       })}
     </View>

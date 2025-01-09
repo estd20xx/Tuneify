@@ -23,6 +23,6 @@ export interface SongsTypes {
   image: ImageType[]
   downloadUrl: DownloadUrlType[]
 }
-export interface Isongs {
+export interface SongInterface {
   getSongs: (setSng: (songs: SongsTypes[]) => void) => Promise<void>
 }

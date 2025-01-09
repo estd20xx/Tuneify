@@ -3,9 +3,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import React, { memo, useCallback } from "react"
 import { FlatList, Text, TouchableOpacity, View } from "react-native"
 import Image from "react-native-fast-image"
-import { AlbumDataProps } from "../Interfaces/album.interface"
-import { RootStackParamList } from "../Types/Types"
-import { AlbumResponse } from "../api/interface/module.interface"
+import { AlbumDataProps } from "../../Interfaces/album.interface"
+import { RootStackParamList } from "../../Types/Types"
+import { AlbumResponse } from "../../api/interface/module.interface"
 const Albums: React.FC<AlbumDataProps> = ({ data, topic }) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
   const renderItem = useCallback(

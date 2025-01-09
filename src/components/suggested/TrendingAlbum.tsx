@@ -3,9 +3,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import React, { memo, useCallback } from "react"
 import { FlatList, Text, TouchableOpacity, View } from "react-native"
 import FastImage from "react-native-fast-image"
-import { TrendingAlbumPropsTypes } from "../Interfaces/album.interface"
-import { RootStackParamList } from "../Types/Types"
-import { AlbumResponse } from "../api/interface/module.interface"
+import { TrendingAlbumPropsTypes } from "../../Interfaces/album.interface"
+import { RootStackParamList } from "../../Types/Types"
+import { AlbumResponse } from "../../api/interface/module.interface"
 const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({ data, topic }) => {
   console.log("called album")
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()

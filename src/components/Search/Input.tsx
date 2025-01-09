@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react"
 import { Keyboard, Pressable, TextInput, View } from "react-native"
 import { Icons } from "../../constants/Icon"
 import { SearchedSongQueryParams } from "../../screens/Search"
@@ -6,6 +6,7 @@ interface InputComponentProps {
   setSearchQuery: (update: (prev: SearchedSongQueryParams) => SearchedSongQueryParams) => void
   searchQuery: SearchedSongQueryParams
 }
+
 const Input: React.FC<InputComponentProps> = ({ setSearchQuery, searchQuery }) => {
   return (
     <View className=" h-11 w-[95%] rounded-md overflow-hidden  flex-row bg-slate-700 ">
@@ -32,4 +33,4 @@ const Input: React.FC<InputComponentProps> = ({ setSearchQuery, searchQuery }) =
   )
 }
 
-export default Input
+export default memo(Input)

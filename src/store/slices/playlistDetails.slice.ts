@@ -1,7 +1,7 @@
 import { ActionReducerMapBuilder, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { PlaylistResponseOnce } from "../../../api/interface/module.interface"
-import { playlistDetails } from "../../actions/playlist.action"
-import { RootState } from "../../store"
+import { PlaylistResponseOnce } from "../../api/interface/module.interface"
+import { playlistDetails } from "../actions/playlist.action"
+import { RootState } from "../store"
 interface InitialPlayListDetails {
   data: PlaylistResponseOnce | null
   isLoading: boolean

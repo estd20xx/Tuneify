@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { SearchedSongs } from "../../../api/service/Payload.service"
-import { songServiceaction } from "../../actions/song.action"
-import { RootState } from "../../store"
+import { SearchedSongs } from "../../api/service/Payload.service"
+import { songServiceaction } from "../actions/song.action"
+import { RootState } from "../store"
 interface InitialWala {
   data: SearchedSongs | null
   isLoading: boolean

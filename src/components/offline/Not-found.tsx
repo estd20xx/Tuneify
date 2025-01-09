@@ -1,7 +1,7 @@
 import React from "react"
 import { Image as Img, View } from "react-native"
 import Image from "react-native-fast-image"
-import notFoundImage from "../assets/images/not-found.png"
+import notFoundImage from "../../assets/images/not-found.png"
 const notFound = Img.resolveAssetSource(notFoundImage).uri
 const NotFound = () => {
   return (

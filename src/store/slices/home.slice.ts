@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { HomeDataResponse } from "../../../api/interface/module.interface"
-import { homeService } from "../../actions/home.action"
-import { RootState } from "../../store"
+import { HomeDataResponse } from "../../api/interface/module.interface"
+import { homeService } from "../actions/home.action"
+import { RootState } from "../store"
+
 interface InitialHomeDataInerface {
   data: HomeDataResponse | null
   isLoading: boolean

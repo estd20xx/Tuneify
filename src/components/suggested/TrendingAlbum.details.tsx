@@ -7,15 +7,15 @@ import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { TrendingAlbumParamsTypes } from "../../Interfaces/album.interface"
 import { sanitize } from "../../services/sanitizer.service"
 import { album } from "../../store/actions/album.action"
-import { albumData } from "../../store/slices/new/album.slice"
+import { albumData } from "../../store/slices/album.slice"
 import {
   centralQueue,
   SpecificQueue,
   updateQueue,
   updateSongQueue
-} from "../../store/slices/new/Queue.slice"
+} from "../../store/slices/Queue.slice"
+import Show from "../Common/Show"
 import Header from "../DetailsScreen/Header"
-import Show from "../Show"
 const screenId = "trendingAblum"
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => {
   const dispatch = useAppDispatch()
@@ -61,7 +61,6 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
       console.log(error)
     }
   }
-  console.log(albumSongs.isError)
   return (
     <View className="w-full">
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -98,7 +97,11 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
                     <View className="w-full rounded-lg overflow-hidden ">
                       <View style={{ flexDirection: "row", alignItems: "center" }}>
                         <FastImage
-                          source={{ uri: item.image[1].link }}
+                          source={{
+                            uri: item.image[1].link,
+                            priority: FastImage.priority.high,
+                            cache: FastImage.cacheControl.immutable
+                          }}
                           style={{ width: 60, height: 60, borderRadius: 5 }}
                         />
                         <View style={{ marginLeft: 10 }}>
