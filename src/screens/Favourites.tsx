@@ -4,7 +4,8 @@ import TrackImage from "react-native-fast-image"
 import { UserFavouritesTypes } from "../Interfaces/tuneifySlice.interface"
 import { Icons } from "../constants/Icon"
 import { TypedSelectorHook } from "../hooks/store.hook"
-import { tuneifyFavourites } from "../store/slices/new/favourite.slice"
+import { tuneifyFavourites } from "../store/slices/favourite.slice"
+const screenId = "favourites"
 const Favourites = () => {
   const data = TypedSelectorHook(tuneifyFavourites)
   const facouriteData: UserFavouritesTypes[] = data.favouriteData
@@ -12,7 +13,7 @@ const Favourites = () => {
     <View className="w-full h-screen flex items-center justify-center pb-36">
       <ScrollView>
         <View className="w-full h-20  flex flex-row items-center justify-evenly">
-          <TouchableOpacity className="bg-[#ff8216] h-8 px-10 rounded-full flex items-center justify-center flex-row">
+          <TouchableOpacity className="bg-themeOrange h-8 px-10 rounded-full flex items-center justify-center flex-row">
             <Image
               source={require("../assets/images/suffle.png")}
               style={{

@@ -2,8 +2,8 @@ import React, { memo, useEffect } from "react"
 import { FlatList, TouchableOpacity, View, ViewToken } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import TrackPlayer from "react-native-track-player"
-import ListItem from "../../components/ListItem"
-import Show from "../../components/Show"
+import Show from "../../components/Common/Show"
+import ListItem from "../../components/Song/ListItem"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { sanitize } from "../../services/sanitizer.service"
 import { songServiceaction } from "../../store/actions/song.action"
@@ -12,8 +12,8 @@ import {
   SpecificQueue,
   updateQueue,
   updateSongQueue
-} from "../../store/slices/new/Queue.slice"
-import { testSong } from "../../store/slices/new/song.slice"
+} from "../../store/slices/Queue.slice"
+import { testSong } from "../../store/slices/song.slice"
 const screenId = "songs"
 const Songs = () => {
   const viewableItems = useSharedValue<ViewToken[]>([])

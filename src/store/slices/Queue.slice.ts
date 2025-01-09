@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { StoreSongTypes } from "../../../Interfaces/tuneifySlice.interface"
-import { RootState } from "../../store"
+import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
+import { RootState } from "../store"
 interface updateSongQueueInterface {
   id: string
   index: number

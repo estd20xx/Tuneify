@@ -1,12 +1,10 @@
 import React, { memo } from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
-
 interface Props {
   title: string
   artwork: string
   type: string
 }
-
 const Header: React.FC<Props> = ({ title, artwork, type }) => {
   return (
     <>
@@ -24,5 +22,4 @@ const Header: React.FC<Props> = ({ title, artwork, type }) => {
     </>
   )
 }
-
 export default memo(Header)

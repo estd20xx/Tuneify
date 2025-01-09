@@ -8,5 +8,4 @@ const TrendingSong = () => {
     </View>
   )
 }
-
 export default memo(TrendingSong)

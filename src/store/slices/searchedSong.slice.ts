@@ -1,7 +1,7 @@
 import { ActionReducerMapBuilder, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { SearchedSongs } from "../../../api/service/Payload.service"
-import { personalizedSearchedSong } from "../../actions/searchedSong.action"
-import { RootState } from "../../store"
+import { SearchedSongs } from "../../api/service/Payload.service"
+import { personalizedSearchedSong } from "../actions/searchedSong.action"
+import { RootState } from "../store"
 interface InitialSearchedSong {
   data: SearchedSongs | null
   isLoading: boolean

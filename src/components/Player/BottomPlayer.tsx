@@ -7,9 +7,9 @@ import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { applicationService } from "../../services/Tuneify.service"
-import { changeApplicationSetup, tunifyChild } from "../../store/slices/new/childState.slice"
-import { centralQueue } from "../../store/slices/new/Queue.slice"
-import Show from "../Show"
+import { changeApplicationSetup, tunifyChild } from "../../store/slices/childState.slice"
+import { centralQueue } from "../../store/slices/Queue.slice"
+import Show from "../Common/Show"
 import SongPlayer from "./SongPlayer"
 const BottomPlayer = () => {
   const dispatch = useAppDispatch()

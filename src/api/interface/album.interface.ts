@@ -1,5 +1,4 @@
 import { ImageApi } from "./module.interface"
-
 export interface Audio {
   quality: string
   link: string

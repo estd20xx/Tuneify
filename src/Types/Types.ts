@@ -17,7 +17,6 @@ export interface NavigationStringsTypes {
   charts: string
   search: string
 }
-
 export type RootStackParamList = {
   splash: undefined
   onboarding: undefined

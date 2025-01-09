@@ -61,10 +61,6 @@ export const MainNavigationItems: any[] = [
     component: component.TrendingAlbumDetails
   },
   {
-    name: navigationStrings.albumsDetails,
-    component: component.AlbumDetails
-  },
-  {
     name: navigationStrings.PlaylistDetails,
     component: component.PlaylistDetails
   },

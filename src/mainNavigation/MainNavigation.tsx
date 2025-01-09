@@ -15,8 +15,8 @@ const MainNavigation = () => {
               component={cn.component}
               options={{
                 headerShown: false,
-                animation: "ios",
-                presentation: "card"
+                animation: "fade_from_bottom",
+                presentation: "fullScreenModal"
               }}
               key={cn.name}
             />

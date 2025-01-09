@@ -1,14 +1,19 @@
 import { cipher, util } from "node-forge"
+import { qualities } from "../base/constrants"
 import { Artists } from "../interface/module.interface"
+
+export interface Image {
+  quality: string
+  link: string
+}
+export interface Audio {
+  quality: string
+  link: string
+}
+
 export const createDownloadLinks = (encryptedMediaUrl: string): Audio[] => {
   // if (!encryptedMediaUrl) return false
-  const qualities = [
-    { id: "_12", bitrate: "12kbps" },
-    { id: "_48", bitrate: "48kbps" },
-    { id: "_96", bitrate: "96kbps" },
-    { id: "_160", bitrate: "160kbps" },
-    { id: "_320", bitrate: "320kbps" }
-  ]
+
   const key = "38346591"
   const iv = "00000000"
 
@@ -27,14 +32,7 @@ export const createDownloadLinks = (encryptedMediaUrl: string): Audio[] => {
   }))
   return links
 }
-export interface Image {
-  quality: string
-  link: string
-}
-export interface Audio {
-  quality: string
-  link: string
-}
+
 export const handleImageVariation = (link: string): Image[] => {
   const qualities = ["50x50", "150x150", "500x500"]
   const data = qualities.map((quality) => ({
@@ -45,6 +43,7 @@ export const handleImageVariation = (link: string): Image[] => {
   }))
   return data
 }
+
 export const handleArtists = (artists: Artists[]): string => {
   let artis = ""
   artists.map((curret) => {

@@ -5,9 +5,9 @@ import TrackPlayer, {
   PlaybackState,
   RepeatMode
 } from "react-native-track-player"
-import { ApplicationInterface } from "../Interfaces/tuneifySetUp.interface"
+import { ApplicationInterface } from "../Interfaces/application.interface"
 import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
-import { changeTunifyState, InitialCentralQueue, songRepeat } from "../store/slices/new/Queue.slice"
+import { changeTunifyState, InitialCentralQueue, songRepeat } from "../store/slices/Queue.slice"
 class ApplicationService implements ApplicationInterface {
   public repeatMode = async (
     state: InitialCentralQueue,

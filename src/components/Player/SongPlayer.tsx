@@ -2,6 +2,7 @@ import Slider from "@react-native-community/slider"
 import React, { memo, useCallback, useEffect, useState } from "react"
 import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import TrackImage from "react-native-fast-image"
+import fs from "react-native-fs"
 import Modal from "react-native-modal"
 import { FAB as Fab } from "react-native-paper"
 import TextTicker from "react-native-text-ticker"
@@ -10,10 +11,10 @@ import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { applicationService } from "../../services/Tuneify.service"
-import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/new/favourite.slice"
-import { centralQueue, updateSongQueue } from "../../store/slices/new/Queue.slice"
+import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/favourite.slice"
+import { centralQueue, updateSongQueue } from "../../store/slices/Queue.slice"
+import Show from "../Common/Show"
 import Messanger from "../message/Message"
-import Show from "../Show"
 interface SongPlayerProps {
   isVisible: boolean
   setIsVisible: (cntx: boolean) => void
@@ -31,7 +32,9 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
   const playbackState = usePlaybackState()
   const [value, setValue] = useState<number>(0)
   const [visibleSnake, setVisibleSnake] = useState<boolean>(false)
+  const [downloadProgress, setDownloadProgress] = useState<number>(0)
   const progress = useProgress()
+
   const flipCard = useCallback(() => {
     Animated.timing(flip, {
       toValue: isFlipped ? 0 : 180,
@@ -41,25 +44,31 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       setIsFlipped(!isFlipped)
     })
   }, [isFlipped])
+
   const frontInterpolate = flip.interpolate({
     inputRange: [0, 180],
     outputRange: ["0deg", "180deg"]
   })
+
   const backInterpolate = flip.interpolate({
     inputRange: [0, 180],
     outputRange: ["180deg", "360deg"]
   })
+
   const frontAnimatedStyle = {
     transform: [{ rotateY: frontInterpolate }]
   }
+
   const backAnimatedStyle = {
     transform: [{ rotateY: backInterpolate }]
   }
+
   useEffect(() => {
     if (applicationQueue.data?.songs) {
       setCurrentTrack(applicationQueue.data.songs[applicationQueue.data.currentSongIndex])
     }
   }, [applicationQueue])
+
   const nextAndPrevious = async (isNext: boolean) => {
     let index: number = 0
     if (applicationQueue.data) {
@@ -69,7 +78,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
         await TrackPlayer.skip(index)
         return
       }
-      // update index
       index =
         (applicationQueue.data?.currentSongIndex + applicationQueue.data.songs.length - 1) %
         applicationQueue.data.songs.length
@@ -80,8 +88,28 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
 
   const checkFavAvailable = (id: string): boolean => {
     const data = favourite.favouriteData.filter((c) => c.id == id)
-    if (data.length > 0) return true
-    return false
+    if (data.length > 0) return false
+    return true
+  }
+  const downloadSong = async (c: StoreSongTypes) => {
+    try {
+      const downloadDest = `${fs.DownloadDirectoryPath}/${c.title.replaceAll(" ", "-")}.mp3`
+      fs.downloadFile({
+        fromUrl: c.url,
+        toFile: downloadDest,
+        progress: (p: fs.DownloadProgressCallbackResult) => {
+          setDownloadProgress(Math.floor((p.bytesWritten / p.contentLength) * 100))
+        }
+      })
+        .promise.then((res) => {
+          console.log("File downloaded:", res)
+        })
+        .catch((err) => {
+          console.log(err.message)
+        })
+    } catch (error) {
+      console.log("Eroor downloading song...")
+    }
   }
   return (
     <Modal
@@ -289,6 +317,10 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                   }}
                 />
               </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => downloadSong(currentTrack!)}>
+                <Icons.MoreIcon name="download" size={23} color={"green"} />
+              </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => [
                   dispatch(addUserFavouritesData(currentTrack!)),
@@ -298,7 +330,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                 <Icons.HomeIcon
                   name="heart-fill"
                   size={23}
-                  color={checkFavAvailable(currentTrack?.id || "") != true ? "gray" : "#ff8216"}
+                  color={checkFavAvailable(currentTrack?.id || "") ? "gray" : "#ff8216"}
                 />
               </TouchableOpacity>
             </View>

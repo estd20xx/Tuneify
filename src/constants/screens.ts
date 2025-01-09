@@ -1,14 +1,12 @@
-import CAlbums from "../components/Albums"
-import CCharts from "../components/Charts"
-import CPlaylist from "../components/Playlist"
 import CSeperateAlbum from "../components/SeperateAlbum"
 import CSeperateSkeleton from "../components/skeleton/SeperateAlbumSkeleton"
 import CSuggestedSkeleton from "../components/skeleton/SuggestedSkeleton"
-import AlbumDetails from "../components/suggested/Album.details"
-import PlaylistDetails from "../components/suggested/Playlist.details"
-import TrendingAlbumDetails from "../components/suggested/TrendingAlbum.details"
-
-import CTrendingAlbum from "../components/TrendingAlbum"
+import CAlbums from "../components/Suggested/Albums"
+import CCharts from "../components/Suggested/Charts"
+import CPlaylist from "../components/Suggested/Playlist"
+import PlaylistDetails from "../components/Suggested/Playlist.details"
+import CTrendingAlbum from "../components/Suggested/TrendingAlbum"
+import TrendingAlbumDetails from "../components/Suggested/TrendingAlbum.details"
 import CTrendingSong from "../components/TrendingSong"
 import BottomNavigation from "../mainNavigation/Bottom"
 import Favourites from "../screens/Favourites"
@@ -45,7 +43,6 @@ export const component = {
   CSeperateAlbum,
   CSeperateSkeleton,
   TrendingAlbumDetails,
-  AlbumDetails,
   PlaylistDetails,
   Search
 }

@@ -1,5 +1,4 @@
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
-
-export interface IlocalMedia {
+export interface LocalMediaInterface {
   getLocalmedia: (dispatch: Dispatch<UnknownAction>) => Promise<boolean>
 }

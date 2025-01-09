@@ -7,7 +7,7 @@ export interface OnBoardingDataTypes {
 export interface OnBoardingPropsTypes {
   navigation: onBoardingScreen
 }
-export interface Ionboard {
+export interface OnboardingInterface {
   getOnboardImage: () => string
   onboardHandler: (
     setnre: (newNre: number) => void,

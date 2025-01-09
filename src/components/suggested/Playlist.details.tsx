@@ -5,9 +5,10 @@ import { PlaylistResponse } from "../../api/interface/module.interface"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { playlistDetails } from "../../store/actions/playlist.action"
-import { playListDetailsStore } from "../../store/slices/new/playlistDetails.slice"
+
+import { playListDetailsStore } from "../../store/slices/playlistDetails.slice"
+import Show from "../Common/Show"
 import Header from "../DetailsScreen/Header"
-import Show from "../Show"
 interface PlaylistData {
   key: string
   name: string

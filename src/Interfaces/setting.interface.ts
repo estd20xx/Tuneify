@@ -1,5 +1,5 @@
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
 
-export interface ISetting {
+export interface SettingInterface {
   changeProfileImage: (dispatch: Dispatch<UnknownAction>) => Promise<void>
 }
