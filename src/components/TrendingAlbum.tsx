@@ -14,7 +14,7 @@ const TrendingAlbum: React.FC<TrendingAlbumPropsTypes> = ({ data, topic }) => {
       <TouchableOpacity
         key={item.id}
         className={`w-28 flex items-center justify-center `}
-        onPress={() => navigation.navigate("TrendingAlbumDetails", { albumData: item })}
+        onPress={() => navigation.push("TrendingAlbumDetails", { albumData: item })}
       >
         <View className=" h-24 w-24  rounded-3xl overflow-hidden">
           <FastImage

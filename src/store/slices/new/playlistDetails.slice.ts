@@ -21,7 +21,6 @@ const playlistDetailsSlice = createSlice({
       .addCase(playlistDetails.getPlaylistsSongs.pending, (state: InitialPlayListDetails) => {
         state.isLoading = true
         state.isError = false
-        // state.data = null
       })
       .addCase(
         playlistDetails.getPlaylistsSongs.fulfilled,
@@ -30,10 +29,14 @@ const playlistDetailsSlice = createSlice({
           state.isLoading = false
         }
       )
-      .addCase(playlistDetails.getPlaylistsSongs.rejected, (state: InitialPlayListDetails) => {
-        state.isLoading = false
-        state.isError = true
-      })
+      .addCase(
+        playlistDetails.getPlaylistsSongs.rejected,
+        (state: InitialPlayListDetails, actions: PayloadAction<any>) => {
+          state.isLoading = false
+          state.isError = true
+          state.data = null
+        }
+      )
   }
 })
 export const {} = playlistDetailsSlice.actions

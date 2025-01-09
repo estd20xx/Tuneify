@@ -34,9 +34,10 @@ const searchedSongsSlice = createSlice({
       )
       .addCase(
         personalizedSearchedSong.getSearchedSongDetails.rejected,
-        (state: InitialSearchedSong) => {
+        (state: InitialSearchedSong, actions: PayloadAction<any>) => {
           state.isLoading = false
           state.isError = true
+          state.data = null
         }
       )
   }

@@ -1,5 +1,6 @@
 import React, { memo, useEffect, useState } from "react"
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import FastImage from "react-native-fast-image"
 import TrackPlayer from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
@@ -13,6 +14,7 @@ import {
   updateQueue,
   updateSongQueue
 } from "../../store/slices/new/Queue.slice"
+import Header from "../DetailsScreen/Header"
 import Show from "../Show"
 const screenId = "trendingAblum"
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => {
@@ -59,76 +61,80 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
       console.log(error)
     }
   }
+  console.log(albumSongs.isError)
   return (
     <View className="w-full">
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View className="w-full h-56  flex items-center justify-center">
-          <Image source={{ uri: data.artwork[2].link }} className="h-52 w-52 rounded-md" />
-        </View>
-        <View className="w-full px-3 flex  justify-center">
-          <Text className="text-white font-['500'] text-lg tracking-wider">
-            {data.title.length > 15 ? data.title.slice(0, 38) + "..." : data.title}
-          </Text>
-          <TouchableOpacity>
-            <Text className="text-gray-300 text-base font-['400']">{data.type}</Text>
-          </TouchableOpacity>
-        </View>
+        <Header title={data.title} artwork={data.artwork[2].link} type={data.type} />
+        <Show isVisible={albumSongs.isLoading}>
+          <ActivityIndicator />
+        </Show>
         <Show isVisible={!albumSongs.isLoading && albumSongs?.data != null}>
-          {albumSongs?.data?.songs.map((currentSong, index) => {
-            return (
-              <TouchableOpacity
-                key={currentSong.id}
-                style={{
-                  width: "100%",
-                  height: 60,
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingLeft: 2,
-                  paddingRight: 5,
-                  marginTop: 10
-                }}
-                onPress={() => chnageQueueState(index)}
-              >
-                <View className="w-4/5  h-full pl-3 flex flex-row ">
-                  <View className="w-full rounded-lg overflow-hidden ">
-                    <View style={{ flexDirection: "row", alignItems: "center" }}>
-                      <Image
-                        source={{ uri: currentSong.image[2].link }}
-                        style={{ width: 60, height: 60, borderRadius: 5 }}
-                      />
-                      <View style={{ marginLeft: 10 }}>
-                        <Text
-                          style={{
-                            color:
-                              currentSong.id == applicationQueue.data?.currentSongId
-                                ? "#16FF00"
-                                : "white",
-                            fontSize: 14,
-                            fontFamily: "400"
-                          }}
-                        >
-                          {currentSong.title}
-                        </Text>
-                        <Text
-                          style={{
-                            color: "#d0d0d1",
-                            fontSize: 10,
-                            marginTop: 2,
-                            fontFamily: "300"
-                          }}
-                        >
-                          {currentSong.artists}
-                        </Text>
+          <FlatList
+            data={albumSongs.data?.songs}
+            keyExtractor={(item) => item.id}
+            initialNumToRender={3}
+            showsVerticalScrollIndicator={false}
+            maxToRenderPerBatch={4}
+            contentContainerStyle={{ paddingBottom: 80 }}
+            removeClippedSubviews={true}
+            windowSize={10}
+            scrollEnabled={false}
+            renderItem={({ item, index }) => {
+              return (
+                <TouchableOpacity
+                  style={{
+                    width: "100%",
+                    height: 60,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    paddingLeft: 2,
+                    paddingRight: 5,
+                    marginTop: 10
+                  }}
+                  onPress={() => chnageQueueState(index)}
+                >
+                  <View className="w-4/5  h-full pl-3 flex flex-row ">
+                    <View className="w-full rounded-lg overflow-hidden ">
+                      <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <FastImage
+                          source={{ uri: item.image[1].link }}
+                          style={{ width: 60, height: 60, borderRadius: 5 }}
+                        />
+                        <View style={{ marginLeft: 10 }}>
+                          <Text
+                            style={{
+                              color:
+                                item.id == applicationQueue.data?.currentSongId
+                                  ? "#16FF00"
+                                  : "white",
+                              fontSize: 14,
+                              fontFamily: "400"
+                            }}
+                          >
+                            {item.title}
+                          </Text>
+                          <Text
+                            style={{
+                              color: "#d0d0d1",
+                              fontSize: 10,
+                              marginTop: 2,
+                              fontFamily: "300"
+                            }}
+                          >
+                            {item.artists}
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
-                </View>
-                <View className=" w-1/5 h-full flex items-center justify-end flex-row pr-3">
-                  <Icons.MoreIcon name="more-vert" size={25} color={"#bababa"} />
-                </View>
-              </TouchableOpacity>
-            )
-          })}
+                  <View className=" w-1/5 h-full flex items-center justify-end flex-row pr-3">
+                    <Icons.MoreIcon name="more-vert" size={25} color={"#bababa"} />
+                  </View>
+                </TouchableOpacity>
+              )
+            }}
+          />
         </Show>
       </ScrollView>
     </View>

@@ -72,7 +72,7 @@ const Folders = () => {
             />
           }
           data={localFile.LocalSong}
-          keyExtractor={(_, index) => JSON.stringify(index)}
+          keyExtractor={(item, index) => item.id}
           initialNumToRender={3}
           showsVerticalScrollIndicator={false}
           maxToRenderPerBatch={4}

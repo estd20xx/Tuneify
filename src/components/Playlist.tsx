@@ -11,7 +11,6 @@ const Playlist: React.FC<PlaylistDataProps> = ({ data, topic }) => {
   const renderItem = useCallback(
     ({ item }: { item: PlaylistResponse }) => (
       <TouchableOpacity
-        key={item.id}
         className=" w-28 flex items-center justify-center  "
         onPress={() => navigation.navigate("PlaylistDetails", { playlistData: item })}
       >

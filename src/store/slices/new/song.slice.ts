@@ -29,10 +29,13 @@ const songSliceNew = createSlice({
           state.isLoading = false
         }
       )
-      .addCase(songServiceaction.getSongs.rejected, (state: InitialWala) => {
-        state.isError = true
-        state.isLoading = false
-      })
+      .addCase(
+        songServiceaction.getSongs.rejected,
+        (state: InitialWala, actions: PayloadAction<any>) => {
+          state.isError = true
+          state.isLoading = false
+        }
+      )
   }
 })
 export const testSong = (state: RootState) => state.persistedReducer.geet
