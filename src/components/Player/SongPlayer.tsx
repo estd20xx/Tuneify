@@ -14,7 +14,6 @@ import { applicationService } from "../../services/Tuneify.service"
 import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/favourite.slice"
 import { centralQueue, updateSongQueue } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
-import Messanger from "../message/Message"
 interface SongPlayerProps {
   isVisible: boolean
   setIsVisible: (cntx: boolean) => void
@@ -34,7 +33,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
   const [visibleSnake, setVisibleSnake] = useState<boolean>(false)
   const [downloadProgress, setDownloadProgress] = useState<number>(0)
   const progress = useProgress()
-
   const flipCard = useCallback(() => {
     Animated.timing(flip, {
       toValue: isFlipped ? 0 : 180,
@@ -44,31 +42,25 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       setIsFlipped(!isFlipped)
     })
   }, [isFlipped])
-
   const frontInterpolate = flip.interpolate({
     inputRange: [0, 180],
     outputRange: ["0deg", "180deg"]
   })
-
   const backInterpolate = flip.interpolate({
     inputRange: [0, 180],
     outputRange: ["180deg", "360deg"]
   })
-
   const frontAnimatedStyle = {
     transform: [{ rotateY: frontInterpolate }]
   }
-
   const backAnimatedStyle = {
     transform: [{ rotateY: backInterpolate }]
   }
-
   useEffect(() => {
     if (applicationQueue.data?.songs) {
       setCurrentTrack(applicationQueue.data.songs[applicationQueue.data.currentSongIndex])
     }
   }, [applicationQueue])
-
   const nextAndPrevious = async (isNext: boolean) => {
     let index: number = 0
     if (applicationQueue.data) {
@@ -144,11 +136,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       </Show>
       <ScrollView>
         <View style={{ flex: 1, backgroundColor: "#181a20" }}>
-          <Messanger
-            message="Added to Favourite."
-            onDismis={() => setVisibleSnake(false)}
-            isvisible={visibleSnake}
-          />
           <View className="w-full h-screen  px-3 ">
             <View className=" h-10 w-full flex items-center justify-between flex-row">
               <TouchableOpacity onPress={() => setIsVisible(false)}>
@@ -195,11 +182,16 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
               </Animated.View>
             </View>
             <View className=" w-full mt-5 flex items-center justify-center h-auto ">
-              <Text className="text-white text-2xl  font-['600'] mb-1">
-                {currentTrack && currentTrack.title!.length > 30
-                  ? currentTrack?.title?.slice(0, 31) + "..."
-                  : currentTrack?.title}
-              </Text>
+              <TextTicker
+                duration={20000}
+                loop
+                repeatSpacer={50}
+                marqueeDelay={3000}
+                animationType="scroll"
+                className="text-gray-300 text-xl  font-['600'] mb-1"
+              >
+                {currentTrack?.title}
+              </TextTicker>
               <TextTicker
                 style={{ fontSize: 15, color: "#bdbdbd" }}
                 className="font-['300']"
@@ -321,12 +313,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
               <TouchableOpacity onPress={() => downloadSong(currentTrack!)}>
                 <Icons.MoreIcon name="download" size={23} color={"green"} />
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => [
-                  dispatch(addUserFavouritesData(currentTrack!)),
-                  setVisibleSnake(true)
-                ]}
-              >
+              <TouchableOpacity onPress={() => [dispatch(addUserFavouritesData(currentTrack!))]}>
                 <Icons.HomeIcon
                   name="heart-fill"
                   size={23}

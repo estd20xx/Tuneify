@@ -1,39 +1,11 @@
 import { useNavigation } from "@react-navigation/core"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import React, { useCallback } from "react"
+import React, { memo } from "react"
 import { FlatList, Text, TouchableOpacity, View } from "react-native"
 import Image from "react-native-fast-image"
-import { ChartsResponse } from "../../api/interface/module.interface"
 import { ChartsPropsTypes, RootStackParamList } from "../../Types/Types"
 const Charts: React.FC<ChartsPropsTypes> = ({ data, topic }) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
-  const renderItem = useCallback(
-    ({ item }: { item: ChartsResponse }) => (
-      <TouchableOpacity
-        className="w-28 flex items-center justify-center"
-        //@ts-ignore
-        onPress={() => navigation.navigate("PlaylistDetails", { playlistData: item })}
-      >
-        <View className=" h-24 w-24  rounded-3xl  overflow-hidden">
-          <Image
-            source={{
-              uri: item.artwork[2].link,
-              headers: { Authorization: "someAuthToken" },
-              priority: Image.priority.high,
-              cache: Image.cacheControl.immutable
-            }}
-            className="w-full h-full"
-          />
-        </View>
-        <View className=" w-full h-9 flex items-center justify-center">
-          <Text className="text-white text-xs tracking-wider font-['500'] ">
-            {item.title.length > 10 ? item.title.slice(0, 14) + ".." : item.title}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    ),
-    []
-  )
   return (
     <View className="w-full h-44  ">
       <View className="w-full pl-3 h-10 flex items-center flex-row  mb-3">
@@ -48,9 +20,33 @@ const Charts: React.FC<ChartsPropsTypes> = ({ data, topic }) => {
         maxToRenderPerBatch={4}
         removeClippedSubviews={true}
         windowSize={4}
-        renderItem={renderItem}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity
+              className="w-28 flex items-center justify-center"
+              //@ts-ignore
+              onPress={() => navigation.navigate("PlaylistDetails", { playlistData: item })}
+            >
+              <View className=" h-24 w-24  rounded-3xl  overflow-hidden">
+                <Image
+                  source={{
+                    uri: item.artwork[2].link,
+                    priority: Image.priority.normal,
+                    cache: Image.cacheControl.cacheOnly
+                  }}
+                  className="w-full h-full"
+                />
+              </View>
+              <View className=" w-full h-9 flex items-center justify-center">
+                <Text className="text-white text-xs tracking-wider font-['500'] ">
+                  {item.title.length > 10 ? item.title.slice(0, 14) + ".." : item.title}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )
+        }}
       />
     </View>
   )
 }
-export default Charts
+export default memo(Charts)

@@ -1,6 +1,12 @@
 import React, { memo } from "react"
-import { ScrollView } from "react-native"
+import { Text, View } from "react-native"
+
 const Albums = () => {
-  return <ScrollView showsVerticalScrollIndicator={false}></ScrollView>
+  return (
+    <View>
+      <Text>Albums</Text>
+    </View>
+  )
 }
+
 export default memo(Albums)
