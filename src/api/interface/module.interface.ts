@@ -58,7 +58,7 @@ interface PlayListReSongList extends RequestHeader {
     artists: RequestPlaylistArtist[]
   }
 }
-interface PlayListSongList extends ResponseHeader {
+export interface PlayListSongList extends ResponseHeader {
   more_info: {
     music: string
     album_id: string
