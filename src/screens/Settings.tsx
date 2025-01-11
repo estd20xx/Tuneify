@@ -23,7 +23,6 @@ const Settings = () => {
           <UserImage
             source={{
               uri: settingData.image,
-              headers: { Authorization: "userImage" },
               priority: UserImage.priority.high,
               cache: UserImage.cacheControl.immutable
             }}

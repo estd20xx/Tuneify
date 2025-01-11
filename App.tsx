@@ -2,7 +2,6 @@ import React, { useEffect } from "react"
 import { StatusBar } from "react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import SplashScreen from "react-native-splash-screen"
-import Toast from "react-native-toast-message"
 import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
 import MainNavigation from "./src/mainNavigation/MainNavigation"
@@ -16,7 +15,6 @@ const App = () => {
       <StatusBar backgroundColor={"#181a20"} />
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={null}>
-          <Toast />
           <MainNavigation />
         </PersistGate>
       </Provider>

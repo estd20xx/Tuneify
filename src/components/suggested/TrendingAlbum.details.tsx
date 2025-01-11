@@ -95,14 +95,23 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
                 >
                   <View className="w-4/5  h-full pl-3 flex flex-row ">
                     <View className="w-full rounded-lg overflow-hidden ">
-                      <View style={{ flexDirection: "row", alignItems: "center" }}>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center"
+                        }}
+                      >
                         <FastImage
                           source={{
                             uri: item.image[1].link,
                             priority: FastImage.priority.high,
                             cache: FastImage.cacheControl.immutable
                           }}
-                          style={{ width: 60, height: 60, borderRadius: 5 }}
+                          style={{
+                            width: 60,
+                            height: 60,
+                            borderRadius: 5
+                          }}
                         />
                         <View style={{ marginLeft: 10 }}>
                           <Text

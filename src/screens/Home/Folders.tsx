@@ -102,7 +102,13 @@ const Folders = () => {
                   >
                     {item.title?.length > 45 ? item.title.slice(0, 45) + "..." : item.title}
                   </Text>
-                  <Text style={{ fontSize: 10, color: "#d0d0d1", fontFamily: "200" }}>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      color: "#d0d0d1",
+                      fontFamily: "200"
+                    }}
+                  >
                     {item.artist}
                   </Text>
                 </View>

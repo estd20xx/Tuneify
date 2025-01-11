@@ -27,7 +27,7 @@ function addingToGitStage {
     git add .
     checkCommandStatus "Git add"
     echo "'$1'"
-    git commit -m "'$1'"
+    git commit -m "$1"
     checkCommandStatus "git commit"
     
 }
