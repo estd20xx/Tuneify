@@ -5,6 +5,7 @@ import TrackImage from "react-native-fast-image"
 import fs from "react-native-fs"
 import Modal from "react-native-modal"
 import { FAB as Fab } from "react-native-paper"
+import GestureRecognizer from "react-native-swipe-gestures"
 import TextTicker from "react-native-text-ticker"
 import TrackPlayer, { State, usePlaybackState, useProgress } from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
@@ -104,37 +105,38 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
     }
   }
   return (
-    <Modal
-      isVisible={isVisible}
-      style={{ margin: 0 }}
-      onBackButtonPress={() => setIsVisible(false)}
-    >
-      <Show isVisible={vtimer}>
-        <View className="h-48  w-4/5 bg-red-500  absolute z-50 m-auto left-12 rounded-3xl flex items-center justify-center">
-          <Slider
-            style={{ width: "100%" }}
-            minimumValue={0}
-            maximumValue={60}
-            value={value}
-            minimumTrackTintColor="#181a20"
-            maximumTrackTintColor="white"
-            thumbTintColor="#181a20"
-            onSlidingComplete={(e) => setValue(Math.floor(e))}
-          />
-          <Text className="text-white text-xl mt-3 font-['500']">{value}</Text>
-          <TouchableOpacity
-            className="mt-8 bg-fuchsia-500 px-16 py-3 rounded-md"
-            onPress={() => [
-              setIsTimer(true),
-              applicationService.timerMusicOff(value, dispatch, setIsTimer),
-              setVtimer(!vtimer)
-            ]}
-          >
-            <Text className="text-white text-lg font-['400']">Set</Text>
-          </TouchableOpacity>
-        </View>
-      </Show>
-      <ScrollView>
+    <GestureRecognizer onSwipeDown={() => setIsVisible(false)} style={{ flex: 1 }}>
+      <Modal
+        isVisible={isVisible}
+        style={{ margin: 0 }}
+        onBackButtonPress={() => setIsVisible(false)}
+      >
+        <Show isVisible={vtimer}>
+          <View className="h-48  w-4/5 bg-red-500  absolute z-50 m-auto left-12 rounded-3xl flex items-center justify-center">
+            <Slider
+              style={{ width: "100%" }}
+              minimumValue={0}
+              maximumValue={60}
+              value={value}
+              minimumTrackTintColor="#181a20"
+              maximumTrackTintColor="white"
+              thumbTintColor="#181a20"
+              onSlidingComplete={(e) => setValue(Math.floor(e))}
+            />
+            <Text className="text-white text-xl mt-3 font-['500']">{value}</Text>
+            <TouchableOpacity
+              className="mt-8 bg-fuchsia-500 px-16 py-3 rounded-md"
+              onPress={() => [
+                setIsTimer(true),
+                applicationService.timerMusicOff(value, dispatch, setIsTimer),
+                setVtimer(!vtimer)
+              ]}
+            >
+              <Text className="text-white text-lg font-['400']">Set</Text>
+            </TouchableOpacity>
+          </View>
+        </Show>
+
         <View style={{ flex: 1, backgroundColor: "#181a20" }}>
           <View className="w-full h-screen  px-3 ">
             <View className=" h-10 w-full flex items-center justify-between flex-row">
@@ -323,8 +325,8 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             </View>
           </View>
         </View>
-      </ScrollView>
-    </Modal>
+      </Modal>
+    </GestureRecognizer>
   )
 }
 export default memo(SongPlayer)

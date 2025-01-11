@@ -29,7 +29,6 @@ class ApplicationService implements ApplicationInterface {
       console.log("Error happens during forward and backward")
     }
   }
-
   public timerMusicOff = (
     period: number,
     dispatch: Dispatch<UnknownAction>,

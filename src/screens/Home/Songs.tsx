@@ -47,8 +47,8 @@ const Songs = () => {
         }
         return
       }
-      if (applicationQueue.data?.songs) {
-        const clickedSong = applicationQueue.data.songs[index]
+      if (songs.data?.songs) {
+        const clickedSong = songs.data.songs[index]
         dispatch(updateSongQueue({ index, id: clickedSong.id }))
         await TrackPlayer.skip(index)
         await TrackPlayer.play()
