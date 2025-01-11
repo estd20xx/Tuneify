@@ -1,7 +1,6 @@
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
 import { Image } from "react-native"
 import fs from "react-native-fs"
-import uuid from "react-native-uuid"
 import tempImage from "../assets/images/new.png"
 import { LocalMediaInterface } from "../Interfaces/localMedia.interface"
 import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
@@ -40,9 +39,9 @@ export default class LocalMediaService implements LocalMediaInterface {
       const externalStoragePath = fs.ExternalStorageDirectoryPath
       const musicFiles = await this.getMusicFilesRecursively(externalStoragePath)
       let data: StoreSongTypes[] = new Array<StoreSongTypes>()
-      data = musicFiles.map((cx) => {
+      data = musicFiles.map((cx, index) => {
         return {
-          id: uuid.v4(),
+          id: String(index) + cx.name[0] + "l",
           title: cx.name,
           artist: "<namelessnerd>",
           artwork: localImage,
