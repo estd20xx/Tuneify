@@ -6,6 +6,7 @@ import childStateSlice from "./slices/childState.slice"
 import favouriteSlice from "./slices/favourite.slice"
 import homeSlice from "./slices/home.slice"
 import offlineSlice from "./slices/offline.slice"
+import offlinePlaylist from "./slices/offlinePlaylist.slice"
 import playlistDetailsSlice from "./slices/playlistDetails.slice"
 import PlayerQueue from "./slices/Queue.slice"
 import searchedSongsSlice from "./slices/searchedSong.slice"
@@ -15,7 +16,7 @@ const persistConfig = {
   key: "@hainaholaaa",
   version: 1,
   storage: AsyncStorage,
-  whitelist: ["home", "offline", "playerQueue", "geet", "favourite", "user"]
+  whitelist: ["home", "offline", "playerQueue", "geet", "favourite", "user", "customePlaylist"]
 }
 const RootReducer = combineReducers({
   user: userSlice,
@@ -28,7 +29,8 @@ const RootReducer = combineReducers({
   searchedSong: searchedSongsSlice,
   playerQueue: PlayerQueue,
   offline: offlineSlice,
-  favourite: favouriteSlice
+  favourite: favouriteSlice,
+  customePlaylist: offlinePlaylist
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({

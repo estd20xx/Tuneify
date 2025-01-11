@@ -51,7 +51,6 @@
     "react-native-text-ticker": "^1.14.0",
     "react-native-toast-message": "^2.2.0",
     "react-native-track-player": "^4.1.1",
-    "react-native-uuid": "^2.0.3",
     "react-native-vector-icons": "^10.0.3",
     "react-redux": "^9.1.0",
     "redux-persist": "^6.0.0"

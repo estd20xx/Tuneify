@@ -6,6 +6,7 @@ import { LocalMediaInterface } from "../Interfaces/localMedia.interface"
 import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
 import { addLocalFiles } from "../store/slices/offline.slice"
 const localImage = Image.resolveAssetSource(tempImage).uri
+
 export default class LocalMediaService implements LocalMediaInterface {
   public getMusicFilesRecursively = async (dirPath: string) => {
     interface MusicInterface {
