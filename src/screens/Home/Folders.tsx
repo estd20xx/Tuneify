@@ -35,7 +35,7 @@ const Folders = () => {
             id: screenId,
             currentSongIndex: 0,
             isPlaying: true,
-            currentSongId: "",
+            currentSongId: currentSong[0].id,
             songs: [...currentSong, ...nextSongs, ...previousSongs]
           }
           dispatch(updateQueue(newQueue))
