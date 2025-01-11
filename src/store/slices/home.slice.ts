@@ -35,7 +35,6 @@ const homeSlice = createSlice({
         (state: InitialHomeDataInerface, actions: PayloadAction<any>) => {
           state.isError = true
           state.isLoading = false
-          state.data = null
         }
       )
   }

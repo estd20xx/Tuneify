@@ -11,7 +11,13 @@ const favouriteSlice = createSlice({
   reducers: {
     addUserFavouritesData(state: InitialFavouriteState, actions: PayloadAction<Track>) {
       const data = state.favouriteData.filter((c) => c.id == actions.payload.id)
-      if (data.length != 0) return
+      if (data.length != 0) {
+        state.favouriteData.splice(
+          state.favouriteData.indexOf(data[0]),
+          state.favouriteData.indexOf(data[0]) + 1
+        )
+        return
+      }
       const dtx: StoreSongTypes = {
         id: actions.payload.id,
         title: actions.payload.title!,

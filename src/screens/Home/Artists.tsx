@@ -1,22 +1,11 @@
-import React, { memo } from "react"
-import { Text, TouchableOpacity, View } from "react-native"
-import fs from "react-native-fs"
+import { memo } from "react"
+import { Image, Text, TouchableOpacity, View } from "react-native"
+import tempImage from "../../assets/images/new.png"
+import { useAppDispatch } from "../../hooks/store.hook"
+const localImage = Image.resolveAssetSource(tempImage).uri
+
 const Artists = () => {
-  const chooseFile = async (path?: string) => {
-    try {
-      const result = await fs.readDir(fs.DownloadDirectoryPath)
-      const audioFiles = result.filter(
-        (file) =>
-          file.isFile() &&
-          (file.name.endsWith(".mp3") || file.name.endsWith(".wav") || file.name.endsWith(".flac"))
-      )
-      audioFiles.map((current) => {
-        console.log(current)
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const dispatch = useAppDispatch()
 
   return (
     <View className="h-screen flex items-center justify-center">
