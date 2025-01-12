@@ -1,3 +1,5 @@
 1. code clean up
 2. central Queue Management
 3. search for the existing ui.
+4. Suffle and play functionality in favourites screen
+5. work in  lyrics sections
