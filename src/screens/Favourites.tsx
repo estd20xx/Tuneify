@@ -1,14 +1,12 @@
 import React, { memo } from "react"
 import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import TrackImage from "react-native-fast-image"
-import { UserFavouritesTypes } from "../Interfaces/tuneifySlice.interface"
 import { Icons } from "../constants/Icon"
 import { TypedSelectorHook } from "../hooks/store.hook"
 import { tuneifyFavourites } from "../store/slices/favourite.slice"
 const screenId = "favourites"
 const Favourites = () => {
   const data = TypedSelectorHook(tuneifyFavourites)
-  const facouriteData: UserFavouritesTypes[] = data.favouriteData
   return (
     <View className="w-full h-screen flex items-center justify-center pb-20 ">
       <ScrollView>
@@ -31,7 +29,7 @@ const Favourites = () => {
           </TouchableOpacity>
         </View>
         <FlatList
-          data={facouriteData}
+          data={data.favouriteData}
           keyExtractor={(item) => item.id}
           initialNumToRender={3}
           showsVerticalScrollIndicator={false}
