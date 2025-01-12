@@ -21,19 +21,21 @@ const Search = () => {
     q: "",
     n: 50
   })
-  const handleSearch = async (query: SearchedSongQueryParams) => {
-    if (query.q.length < 2) {
+  useEffect(() => {
+    if (searchQuery.q.length <= 2) {
       return
     }
-    console.log("clicked : " + searchedData.isLoading)
-    dispatch(personalizedSearchedSong.getSearchedSongDetails(query))
-  }
-  useEffect(() => {
+
+    const controller: AbortController = new AbortController()
+    const signal: AbortSignal = controller.signal
+
     const handler = setTimeout(() => {
-      handleSearch(searchQuery)
+      dispatch(personalizedSearchedSong.getSearchedSongDetails({ query: searchQuery, signal }))
     }, 1000)
+
     return () => {
       clearTimeout(handler)
+      controller.abort()
     }
   }, [searchQuery])
   useEffect(() => {
@@ -80,11 +82,15 @@ const Search = () => {
             initialNumToRender={3}
             onScrollBeginDrag={Keyboard.dismiss}
             keyboardShouldPersistTaps="handled"
-            showsVerticalScrollIndicator={false}
+            // showsVerticalScrollIndicator={false}
             maxToRenderPerBatch={9}
             contentContainerStyle={{ paddingTop: 10 }}
             removeClippedSubviews={true}
             windowSize={10}
+            onEndReachedThreshold={0.5}
+            onEndReached={() => {
+              console.log("end reached ")
+            }}
             renderItem={renderItem}
             ListEmptyComponent={
               <View className="w-full h-14 flex items-center justify-center">

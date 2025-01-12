@@ -2,6 +2,7 @@ import React, { memo } from "react"
 import { Keyboard, Pressable, TextInput, View } from "react-native"
 import { Icons } from "../../constants/Icon"
 import { SearchedSongQueryParams } from "../../screens/Search"
+import Show from "../Common/Show"
 interface InputComponentProps {
   setSearchQuery: (update: (prev: SearchedSongQueryParams) => SearchedSongQueryParams) => void
   searchQuery: SearchedSongQueryParams
@@ -21,14 +22,16 @@ const Input: React.FC<InputComponentProps> = ({ setSearchQuery, searchQuery }) =
         returnKeyLabel="search"
         onSubmitEditing={() => Keyboard.dismiss()}
       />
-      <Pressable className="h-full  w-10 flex items-center justify-center">
-        <Icons.PlayIcon
-          name="close"
-          size={20}
-          color={"white"}
-          onPress={() => setSearchQuery((prev: SearchedSongQueryParams) => ({ ...prev, q: "" }))}
-        />
-      </Pressable>
+      <Show isVisible={searchQuery.q.length > 2}>
+        <Pressable className="h-full  w-10 flex items-center justify-center">
+          <Icons.PlayIcon
+            name="close"
+            size={20}
+            color={"white"}
+            onPress={() => setSearchQuery((prev: SearchedSongQueryParams) => ({ ...prev, q: "" }))}
+          />
+        </Pressable>
+      </Show>
     </View>
   )
 }
