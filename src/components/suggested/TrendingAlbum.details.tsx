@@ -1,6 +1,13 @@
 import React, { memo, useEffect, useState } from "react"
-import { ActivityIndicator, FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import FastImage from "react-native-fast-image"
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native"
 import TrackPlayer from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
@@ -101,11 +108,9 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
                           alignItems: "center"
                         }}
                       >
-                        <FastImage
+                        <Image
                           source={{
-                            uri: item.image[1].link,
-                            priority: FastImage.priority.high,
-                            cache: FastImage.cacheControl.immutable
+                            uri: item.image[1].link
                           }}
                           style={{
                             width: 60,

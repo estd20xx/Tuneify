@@ -6,7 +6,6 @@ import { LocalMediaInterface } from "../Interfaces/localMedia.interface"
 import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
 import { addLocalFiles } from "../store/slices/offline.slice"
 const localImage = Image.resolveAssetSource(tempImage).uri
-
 class LocalMediaService implements LocalMediaInterface {
   private getMusicFilesRecursively = async (dirPath: string) => {
     interface MusicInterface {
@@ -42,7 +41,7 @@ class LocalMediaService implements LocalMediaInterface {
       let data: StoreSongTypes[] = new Array<StoreSongTypes>()
       data = musicFiles.map((cx, index) => {
         return {
-          id: String(index) + cx.name[0] + "l",
+          id: index + cx.name[0] + "l",
           title: cx.name,
           artist: "<namelessnerd>",
           artwork: localImage,
@@ -50,7 +49,6 @@ class LocalMediaService implements LocalMediaInterface {
         } as StoreSongTypes
       })
       data.sort((a, b) => a.title.localeCompare(b.title))
-      console.log(data)
       dispatch(addLocalFiles(data))
       return true
     } catch (error) {

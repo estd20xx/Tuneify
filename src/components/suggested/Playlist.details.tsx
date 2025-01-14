@@ -1,6 +1,13 @@
 import React, { memo, useEffect, useState } from "react"
-import { ActivityIndicator, FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import FastImage from "react-native-fast-image"
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native"
 import { PlaylistResponse } from "../../api/interface/module.interface"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
@@ -37,7 +44,6 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
     try {
       if (applicationQueue.data?.id != screenId) {
         if (playlistStore.data?.list) {
-          console.log("inside")
           const previousSongs = playlistStore.data?.list.slice(0, index)
           const currentSong = playlistStore.data?.list.slice(index, index + 1)
           const nextSongs = playlistStore.data?.list.slice(index + 1)
@@ -115,10 +121,9 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
                           alignItems: "center"
                         }}
                       >
-                        <FastImage
+                        <Image
                           source={{
-                            uri: item.image[1].link,
-                            priority: FastImage.priority.high
+                            uri: item.image[1].link
                           }}
                           style={{
                             width: 60,

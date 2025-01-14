@@ -39,6 +39,7 @@ const Favourites = () => {
           scrollEnabled={false}
           windowSize={10}
           renderItem={({ item }) => {
+            console.log(item.id + " " + item.title)
             return (
               <TouchableOpacity
                 style={{
@@ -51,7 +52,7 @@ const Favourites = () => {
                   marginTop: 10
                 }}
               >
-                <View className="w-4/5  h-full pl-3 flex flex-row ">
+                <View className="w-[90%]  h-full pl-3 flex flex-row ">
                   <View className="w-full rounded-lg overflow-hidden ">
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
                       <TrackImage
@@ -66,11 +67,11 @@ const Favourites = () => {
                         <Text
                           style={{
                             color: "white",
-                            fontSize: 15,
+                            fontSize: 14,
                             fontFamily: "400"
                           }}
                         >
-                          {item.title}
+                          {item.title.slice(0, 40)}
                         </Text>
                         <Text
                           style={{
@@ -86,7 +87,7 @@ const Favourites = () => {
                     </View>
                   </View>
                 </View>
-                <View className=" w-1/5 h-full flex items-center justify-end flex-row pr-3">
+                <View className="w-[10%] h-full flex items-center justify-end flex-row pr-3">
                   <Icons.MoreIcon name="more-vert" size={25} color={"#bababa"} />
                 </View>
               </TouchableOpacity>

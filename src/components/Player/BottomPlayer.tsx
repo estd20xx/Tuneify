@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
-import { Text, TouchableOpacity } from "react-native"
+import { Image, Text, TouchableOpacity } from "react-native"
 import { View } from "react-native-animatable"
-import Image from "react-native-fast-image"
+import TextTicker from "react-native-text-ticker"
 import { PlaybackState, usePlaybackState } from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
@@ -43,19 +43,21 @@ const BottomPlayer = () => {
             <View className="flex flex-row items-center h-full w-11/12 overflow-hidden">
               <Image
                 source={{
-                  uri: currentTrack.artwork,
-                  headers: { Authorization: "songs" },
-                  priority: Image.priority.high,
-                  cache: Image.cacheControl.immutable
+                  uri: currentTrack.artwork
                 }}
                 style={{ width: 50, height: 50, borderRadius: 5 }}
               />
               <View style={{ marginLeft: 10 }}>
-                <Text className="text-white  mb-1 text-sm font-['500']  tracking-wider">
-                  {currentTrack.title.length > 32
-                    ? currentTrack.title?.slice(0, 32) + "..."
-                    : currentTrack.title}
-                </Text>
+                <TextTicker
+                  duration={20000}
+                  loop
+                  repeatSpacer={50}
+                  marqueeDelay={3000}
+                  animationType="scroll"
+                  className="text-white mb-1 text-sm font-['500']  tracking-wider"
+                >
+                  {currentTrack.title}
+                </TextTicker>
                 <Text className="text-gray-200 text-[9px] font-['300']">
                   {currentTrack.artist!.length > 60
                     ? currentTrack.artist?.slice(0, 62) + "..."

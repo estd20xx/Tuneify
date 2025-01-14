@@ -9,7 +9,7 @@ const SeperateAlbumData: React.FC<SeperateAlbumDataPropsTypes> = ({ data }) => {
       </View>
       <View className=" flex h-24 pl-1 pt-2 ">
         <Text className="text-xl text-white font-['500'] tracking-wider">
-          {data.name.length > 15 ? data.name.slice(0, 15) + ".." : data.name}
+          {data.name.slice(0, 15)}
         </Text>
         <Text className="text-gray-500 text-lg font-['300']">{data.primaryArtists[0].name}</Text>
         <Text className="text-sm text-[#a1a0a3] font-['200']">{data.songCount}</Text>
