@@ -17,7 +17,7 @@ const Folders = () => {
   const localFile = TypedSelectorHook(tuneifyOfflines)
   const dispatch = useAppDispatch()
   const applicationQueue = TypedSelectorHook(centralQueue)
-  const chnageQueueState = async (index: number) => {
+  const chnageQueueState = async (index: number, id: string) => {
     try {
       if (applicationQueue.data?.id != screenId) {
         if (applicationQueue.data?.songs) {
@@ -33,7 +33,7 @@ const Folders = () => {
             id: screenId,
             currentSongIndex: 0,
             isPlaying: true,
-            currentSongId: currentSong[0].id,
+            currentSongId: id,
             songs: [...currentSong, ...nextSongs, ...previousSongs]
           }
           dispatch(updateQueue(newQueue))
@@ -41,9 +41,8 @@ const Folders = () => {
         return
       }
       if (applicationQueue.data?.songs) {
-        const clickedSong = applicationQueue.data.songs[index]
         await TrackPlayer.pause()
-        dispatch(updateSongQueue({ index, id: clickedSong.id }))
+        dispatch(updateSongQueue({ index, id: id }))
         await TrackPlayer.skip(index)
         await TrackPlayer.play()
       }
@@ -74,28 +73,24 @@ const Folders = () => {
           removeClippedSubviews={true}
           windowSize={10}
           renderItem={({ item, index }) => {
+            console.log(item.id)
             return (
               <TouchableOpacity
                 className="w-full h-16 mt-2 flex flex-row items-center"
-                onPress={() => chnageQueueState(index)}
+                onPress={() => chnageQueueState(index, item.id)}
               >
                 <View className="h-16 w-20  pl-2">
-                  <Image
-                    source={{
-                      uri: item.artwork
-                    }}
-                    className="h-16 w-16 rounded-md"
-                  />
+                  <Image source={{ uri: item.artwork }} className="h-16 w-16 rounded-md" />
                 </View>
                 <View className="w-4/5 ">
                   <Text
                     style={{
-                      fontSize: 15,
+                      fontSize: 14,
                       fontFamily: "500",
                       color: applicationQueue.data?.currentSongId == item.id ? "#16FF00" : "#FFF"
                     }}
                   >
-                    {item.title?.length > 45 ? item.title.slice(0, 45) + "..." : item.title}
+                    {item.title.slice(0, 40)}
                   </Text>
                   <Text
                     style={{
@@ -113,7 +108,7 @@ const Folders = () => {
         />
       </Show>
       <Show isVisible={localFile.LocalSong.length == 0}>
-        <NotFound />
+        <NotFound dispatch={dispatch} />
       </Show>
     </View>
   )
