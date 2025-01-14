@@ -7,8 +7,8 @@ import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
 import { addLocalFiles } from "../store/slices/offline.slice"
 const localImage = Image.resolveAssetSource(tempImage).uri
 
-export default class LocalMediaService implements LocalMediaInterface {
-  public getMusicFilesRecursively = async (dirPath: string) => {
+class LocalMediaService implements LocalMediaInterface {
+  private getMusicFilesRecursively = async (dirPath: string) => {
     interface MusicInterface {
       name: string
       path: string
@@ -22,7 +22,7 @@ export default class LocalMediaService implements LocalMediaInterface {
         }
         if (item.isFile() && item.name.match(/\.(mp3|m4a|wav|aac)$/i)) {
           musicFiles.push({
-            name: item.name,
+            name: item.name.replaceAll(".mp3", "").replaceAll(".m4a", "").replaceAll(".MP3", ""),
             path: item.path
           })
         } else if (item.isDirectory()) {
@@ -50,10 +50,14 @@ export default class LocalMediaService implements LocalMediaInterface {
         } as StoreSongTypes
       })
       data.sort((a, b) => a.title.localeCompare(b.title))
+      console.log(data)
       dispatch(addLocalFiles(data))
       return true
     } catch (error) {
+      console.log(error)
       return false
     }
   }
 }
+
+export const musicService = new LocalMediaService()

@@ -29,45 +29,39 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
         />
       </View>
       <View className="w-full h-[45%] bg-[#181a20] absolute bottom-0 rounded-t-[50px] pt-10 flex items-center">
-        <View className="w-full  h-auto py-2 flex items-center justify-center mt-3 ">
-          <Animatable.Text
-            animation={"slideInLeft"}
-            duration={1200}
-            className="text-white text-4xl tracking-widest  font-[500]"
-          >
-            {d.first}
-          </Animatable.Text>
-          <Animatable.Text
-            animation={"slideInLeft"}
-            duration={1700}
-            className="text-white text-4xl tracking-widest font-[500]"
-          >
-            {d.second}
-          </Animatable.Text>
-          <Animatable.Text
-            animation={"slideInLeft"}
-            duration={2200}
-            className="text-white text-4xl tracking-widest font-[500]"
-          >
-            {d.third}
-          </Animatable.Text>
-        </View>
+        {onboardingData.map((c, index) => {
+          return (
+            <View key={c.first}>
+              {nre == index && (
+                <View className="w-full  h-auto py-2 flex items-center justify-center mt-3 ">
+                  {Object.values(c).map((selected, i) => {
+                    return (
+                      <Animatable.Text
+                        key={selected}
+                        animation={"slideInLeft"}
+                        duration={1000 * i}
+                        className="text-white text-4xl tracking-widest  font-[500]"
+                      >
+                        {selected}
+                      </Animatable.Text>
+                    )
+                  })}
+                </View>
+              )}
+            </View>
+          )
+        })}
         <View className="w-1/2 h-5  mt-5 flex flex-row items-center justify-center">
-          <View
-            className={`${
-              nre == 0 ? "w-14" : "w-5"
-            } h-3 rounded-full duration-1000  bg-themeOrange ml-1`}
-          ></View>
-          <View
-            className={`${
-              nre == 1 ? "w-14" : "w-5"
-            } h-3 rounded-full duration-1000 bg-themeOrange ml-1`}
-          ></View>
-          <View
-            className={`${
-              nre == 2 ? "w-14" : "w-5"
-            } h-3 rounded-full duration-1000 bg-themeOrange ml-1`}
-          ></View>
+          {onboardingData.map((current, index) => {
+            return (
+              <View
+                key={current.first}
+                className={`${
+                  nre == index ? "w-14" : "w-5"
+                } h-2 rounded-full duration-1000  bg-themeOrange ml-1`}
+              />
+            )
+          })}
         </View>
         <AnimatedButton
           animation={"slideInUp"}
