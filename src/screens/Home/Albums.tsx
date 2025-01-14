@@ -1,6 +1,5 @@
-import React, { memo } from "react"
+import React from "react"
 import { Text, View } from "react-native"
-
 const Albums = () => {
   return (
     <View>
@@ -8,5 +7,4 @@ const Albums = () => {
     </View>
   )
 }
-
-export default memo(Albums)
+export default Albums

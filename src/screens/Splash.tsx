@@ -3,11 +3,10 @@ import { View } from "react-native"
 import { Chase } from "react-native-animated-spinkit"
 import { SplashScreenPropsTypes } from "../Types/Types"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
-import LocalMediaService from "../services/localMedia.service"
+import { musicService } from "../services/localMedia.service"
 import PermissionService from "../services/permission.service"
 import { accepted, tuneifyOfflines } from "../store/slices/offline.slice"
 const permission = new PermissionService()
-const musicService = new LocalMediaService()
 const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {
   const dispatch = useAppDispatch()
   const offline = TypedSelectorHook(tuneifyOfflines)
@@ -16,9 +15,9 @@ const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {
     try {
       const per = await permission.askPermission()
       if (per) {
-        musicService.getLocalmedia(dispatch)
+        await musicService.getLocalmedia(dispatch)
+        navigation.navigate("onboarding")
         dispatch(accepted(true))
-        navigation.navigate("bottom")
         return
       }
       navigation.navigate("onboarding")

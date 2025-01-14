@@ -1,11 +1,10 @@
 import React, { memo } from "react"
-import { FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-native"
-import Image from "react-native-fast-image"
+import { FlatList, Image, RefreshControl, Text, TouchableOpacity, View } from "react-native"
 import TrackPlayer from "react-native-track-player"
 import Show from "../../components/Common/Show"
 import NotFound from "../../components/offline/Not-found"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import LocalMediaService from "../../services/localMedia.service"
+import { musicService } from "../../services/localMedia.service"
 import {
   centralQueue,
   SpecificQueue,
@@ -13,7 +12,6 @@ import {
   updateSongQueue
 } from "../../store/slices/Queue.slice"
 import { tuneifyOfflines } from "../../store/slices/offline.slice"
-const local = new LocalMediaService()
 const screenId = "offlineSongs"
 const Folders = () => {
   const localFile = TypedSelectorHook(tuneifyOfflines)
@@ -64,7 +62,7 @@ const Folders = () => {
           refreshControl={
             <RefreshControl
               refreshing={localFile.isUploading}
-              onRefresh={() => local.getLocalmedia(dispatch)}
+              onRefresh={() => musicService.getLocalmedia(dispatch)}
             />
           }
           data={localFile.LocalSong}
@@ -84,10 +82,7 @@ const Folders = () => {
                 <View className="h-16 w-20  pl-2">
                   <Image
                     source={{
-                      uri: item.artwork,
-                      headers: { Authorization: "deviceImage" },
-                      priority: Image.priority.high,
-                      cache: Image.cacheControl.immutable
+                      uri: item.artwork
                     }}
                     className="h-16 w-16 rounded-md"
                   />

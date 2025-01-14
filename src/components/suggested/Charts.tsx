@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/core"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import React, { memo } from "react"
-import { FlatList, Text, TouchableOpacity, View } from "react-native"
-import Image from "react-native-fast-image"
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native"
 import { ChartsPropsTypes, RootStackParamList } from "../../Types/Types"
 const Charts: React.FC<ChartsPropsTypes> = ({ data, topic }) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
@@ -30,9 +29,7 @@ const Charts: React.FC<ChartsPropsTypes> = ({ data, topic }) => {
               <View className=" h-24 w-24  rounded-3xl  overflow-hidden">
                 <Image
                   source={{
-                    uri: item.artwork[2].link,
-                    priority: Image.priority.normal,
-                    cache: Image.cacheControl.cacheOnly
+                    uri: item.artwork[2].link
                   }}
                   className="w-full h-full"
                 />
