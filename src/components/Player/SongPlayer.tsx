@@ -6,12 +6,20 @@ import fs from "react-native-fs"
 import Modal from "react-native-modal"
 import { FAB as Fab } from "react-native-paper"
 import TextTicker from "react-native-text-ticker"
-import TrackPlayer, { State, usePlaybackState, useProgress } from "react-native-track-player"
+import TrackPlayer, {
+  Event,
+  State,
+  usePlaybackState,
+  useProgress,
+  useTrackPlayerEvents
+} from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { applicationService } from "../../services/Tuneify.service"
+import { getSongsLyrics } from "../../store/actions/lyrics.action"
 import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/favourite.slice"
+import { storedLyrics } from "../../store/slices/lyrics.slice"
 import { centralQueue, updateSongQueue } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
 interface SongPlayerProps {
@@ -21,16 +29,15 @@ interface SongPlayerProps {
 const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
   const favourite = TypedSelectorHook(tuneifyFavourites)
   const applicationQueue = TypedSelectorHook(centralQueue)
+  const lyrics = TypedSelectorHook(storedLyrics)
   const dispatch = useAppDispatch()
   const [isFlipped, setIsFlipped] = useState(false)
   const [flip, setFlip] = useState(new Animated.Value(0))
   const [vtimer, setVtimer] = useState(false)
   const [isTimer, setIsTimer] = useState(false)
   const [currentTrack, setCurrentTrack] = useState<StoreSongTypes>()
-  const [lyric, setLyric] = useState<string>("We are working on it.! 💻")
   const playbackState = usePlaybackState()
   const [value, setValue] = useState<number>(0)
-  const [visibleSnake, setVisibleSnake] = useState<boolean>(false)
   const [downloadProgress, setDownloadProgress] = useState<number>(0)
   const progress = useProgress()
   const flipCard = useCallback(() => {
@@ -77,7 +84,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       await TrackPlayer.skip(index)
     }
   }
-
   const checkFavAvailable = (currentId: string): boolean => {
     const data = favourite.favouriteData.filter((liked) => liked.id == currentId)
     if (data.length > 0) return false
@@ -103,6 +109,19 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       console.log("Eroor downloading song...")
     }
   }
+  useTrackPlayerEvents(
+    [Event.PlaybackState, Event.PlaybackError, Event.PlaybackState, Event.PlaybackError],
+    async (event: any) => {
+      if (event.state == State.Loading) {
+        const trackIndex = await TrackPlayer.getActiveTrackIndex()
+        dispatch(
+          updateSongQueue({ index: trackIndex!, id: applicationQueue.data!.songs[trackIndex!].id })
+        )
+        if (applicationQueue.data?.id != "offlineSongs")
+          dispatch(getSongsLyrics(applicationQueue.data!.songs[trackIndex!].id))
+      }
+    }
+  )
   return (
     <Modal
       isVisible={isVisible}
@@ -167,17 +186,17 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             </Animated.View>
             <Animated.View
               style={[backAnimatedStyle, { backfaceVisibility: "hidden" }]}
-              className="flex absolute   w-[95%] h-full   justify-center items-center rounded-xl "
+              className="flex absolute   w-[95%] h-full   justify-center items-center rounded-xl  "
             >
-              <Show isVisible={lyric.length > 15}>
+              <Show isVisible={lyrics.data.lyrics?.length > 15}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                  <Text className="text-white text-base min-h-[100px]  leading-8 px-5 flex items-center justify-center font-['300']  ">
-                    {lyric}
+                  <Text className="text-white text-base min-h-[100px]  leading-8 flex items-center justify-center font-['300']  ">
+                    {lyrics.data.lyrics?.replaceAll("<br>", "\n")}
                   </Text>
                 </ScrollView>
               </Show>
-              <Show isVisible={lyric.length < 15}>
-                <Text className="absolute top-52 left-0 ">{lyric}</Text>
+              <Show isVisible={lyrics.data.lyrics?.length < 15}>
+                <Text className="absolute top-52 left-0 ">{lyrics.data.lyrics}</Text>
               </Show>
             </Animated.View>
           </View>
@@ -255,7 +274,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             </View>
             <View className=" w-1/5 flex items-center justify-center">
               <Fab
-                icon={applicationQueue.data?.isPlaying ? "pause" : "play"}
+                icon={playbackState.state == State.Playing ? "pause" : "play"}
                 onPress={() =>
                   applicationService.playPauseAction(playbackState, applicationQueue, dispatch)
                 }

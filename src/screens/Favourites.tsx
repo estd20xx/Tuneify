@@ -39,7 +39,6 @@ const Favourites = () => {
           scrollEnabled={false}
           windowSize={10}
           renderItem={({ item }) => {
-            console.log(item.id + " " + item.title)
             return (
               <TouchableOpacity
                 style={{

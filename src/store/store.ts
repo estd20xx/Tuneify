@@ -5,6 +5,7 @@ import albumSlice from "./slices/album.slice"
 import childStateSlice from "./slices/childState.slice"
 import favouriteSlice from "./slices/favourite.slice"
 import homeSlice from "./slices/home.slice"
+import lyricsSlice from "./slices/lyrics.slice"
 import offlineSlice from "./slices/offline.slice"
 import offlinePlaylist from "./slices/offlinePlaylist.slice"
 import playlistDetailsSlice from "./slices/playlistDetails.slice"
@@ -30,7 +31,8 @@ const RootReducer = combineReducers({
   playerQueue: PlayerQueue,
   offline: offlineSlice,
   favourite: favouriteSlice,
-  customePlaylist: offlinePlaylist
+  customePlaylist: offlinePlaylist,
+  lyrics: lyricsSlice
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({
