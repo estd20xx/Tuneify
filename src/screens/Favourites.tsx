@@ -1,6 +1,5 @@
 import React, { memo } from "react"
 import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import TrackImage from "react-native-fast-image"
 import { Icons } from "../constants/Icon"
 import { TypedSelectorHook } from "../hooks/store.hook"
 import { tuneifyFavourites } from "../store/slices/favourite.slice"
@@ -54,12 +53,8 @@ const Favourites = () => {
                 <View className="w-[90%]  h-full pl-3 flex flex-row ">
                   <View className="w-full rounded-lg overflow-hidden ">
                     <View style={{ flexDirection: "row", alignItems: "center" }}>
-                      <TrackImage
-                        source={{
-                          uri: item?.artwork,
-                          priority: TrackImage.priority.high,
-                          cache: TrackImage.cacheControl.cacheOnly
-                        }}
+                      <Image
+                        source={{ uri: item?.artwork }}
                         style={{ width: 60, height: 60, borderRadius: 5 }}
                       />
                       <View style={{ marginLeft: 10 }}>

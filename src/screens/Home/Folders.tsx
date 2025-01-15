@@ -65,7 +65,7 @@ const Folders = () => {
             />
           }
           data={localFile.LocalSong}
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={(item) => item.id}
           initialNumToRender={3}
           showsVerticalScrollIndicator={false}
           maxToRenderPerBatch={4}

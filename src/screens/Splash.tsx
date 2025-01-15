@@ -27,7 +27,7 @@ const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {
   }
   useEffect(() => {
     offline.isAccepted ? navigation.navigate("bottom") : fn()
-  }, [offline])
+  }, [])
   return (
     <View className="w-full h-screen flex items-center justify-center bg-black">
       <Chase size={140} color="#ff8216" />
