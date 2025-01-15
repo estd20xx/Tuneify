@@ -73,7 +73,6 @@ const Folders = () => {
           removeClippedSubviews={true}
           windowSize={10}
           renderItem={({ item, index }) => {
-            console.log(item.id)
             return (
               <TouchableOpacity
                 className="w-full h-16 mt-2 flex flex-row items-center"
