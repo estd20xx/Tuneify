@@ -2,7 +2,6 @@ import Slider from "@react-native-community/slider"
 import React, { memo, useCallback, useEffect, useState } from "react"
 import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import TrackImage from "react-native-fast-image"
-import fs from "react-native-fs"
 import Modal from "react-native-modal"
 import { FAB as Fab } from "react-native-paper"
 import TextTicker from "react-native-text-ticker"
@@ -16,6 +15,7 @@ import TrackPlayer, {
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
+import { ApplicationCore } from "../../native/MusicFiles"
 import { applicationService } from "../../services/Tuneify.service"
 import { getSongsLyrics } from "../../store/actions/lyrics.action"
 import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/favourite.slice"
@@ -85,26 +85,14 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
     }
   }
   const checkFavAvailable = (currentId: string): boolean => {
-    const data = favourite.favouriteData.filter((liked) => liked.id == currentId)
+    const data = favourite.favouriteData.filter((liked: any) => liked.id == currentId)
     if (data.length > 0) return false
     return true
   }
   const downloadSong = async (c: StoreSongTypes) => {
     try {
-      const downloadDest = `${fs.DownloadDirectoryPath}/${c.title.replaceAll(" ", "-")}.mp3`
-      fs.downloadFile({
-        fromUrl: c.url,
-        toFile: downloadDest,
-        progress: (p: fs.DownloadProgressCallbackResult) => {
-          setDownloadProgress(Math.floor((p.bytesWritten / p.contentLength) * 100))
-        }
-      })
-        .promise.then((res) => {
-          console.log("File downloaded:", res)
-        })
-        .catch((err) => {
-          console.log(err.message)
-        })
+      const download = await ApplicationCore.downloadMusic(c.title, c.url)
+      console.log(download)
     } catch (error) {
       console.log("Eroor downloading song...")
     }
@@ -122,6 +110,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       }
     }
   )
+
   return (
     <Modal
       isVisible={isVisible}
