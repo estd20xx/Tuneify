@@ -5,7 +5,6 @@ import TextTicker from "react-native-text-ticker"
 import { PlaybackState, usePlaybackState } from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { applicationService } from "../../services/Tuneify.service"
 import { changeApplicationSetup, tunifyChild } from "../../store/slices/childState.slice"
 import { centralQueue } from "../../store/slices/Queue.slice"
@@ -14,24 +13,18 @@ import SongPlayer from "./SongPlayer"
 const BottomPlayer = () => {
   const dispatch = useAppDispatch()
   const [isVisible, setIsVisible] = useState(false)
-  const [currentTrack, setCurrentTrack] = useState<StoreSongTypes>()
   const playbackState: PlaybackState | { state: undefined } = usePlaybackState()
   const applicationQueue = TypedSelectorHook(centralQueue)
   const playerState = TypedSelectorHook(tunifyChild)
   useEffect(() => {
-    if (applicationQueue.data?.songs && !playerState.isSetupped) {
-      applicationService.setUpPlayer(applicationQueue.data?.songs)
+    if (!playerState.isSetupped) {
+      applicationService.setUpPlayer()
       dispatch(changeApplicationSetup())
-    }
-  }, [applicationQueue.data])
-  useEffect(() => {
-    if (applicationQueue.data?.songs) {
-      setCurrentTrack(applicationQueue.data.songs[applicationQueue.data.currentSongIndex])
     }
   }, [applicationQueue.data])
   return (
     <>
-      {currentTrack && (
+      {applicationQueue.data.song && (
         <View>
           <TouchableOpacity
             className="absolute h-14 w-full bottom-0 flex flex-row items-center justify-center px-3 bg-[#2D3250]"
@@ -43,7 +36,7 @@ const BottomPlayer = () => {
             <View className="flex flex-row items-center h-full w-11/12 overflow-hidden">
               <Image
                 source={{
-                  uri: currentTrack.artwork
+                  uri: applicationQueue.data.song.artwork
                 }}
                 style={{ width: 50, height: 50, borderRadius: 5 }}
               />
@@ -56,12 +49,10 @@ const BottomPlayer = () => {
                   animationType="scroll"
                   className="text-white mb-1 text-sm font-['500']  tracking-wider"
                 >
-                  {currentTrack.title}
+                  {applicationQueue.data.song.title}
                 </TextTicker>
                 <Text className="text-gray-200 text-[9px] font-['300']">
-                  {currentTrack.artist!.length > 60
-                    ? currentTrack.artist?.slice(0, 62) + "..."
-                    : currentTrack.artist}
+                  {applicationQueue.data.song.artist.slice(0, 62)}
                 </Text>
               </View>
             </View>

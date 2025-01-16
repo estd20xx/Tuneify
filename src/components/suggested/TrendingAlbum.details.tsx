@@ -9,18 +9,14 @@ import {
   View
 } from "react-native"
 import TrackPlayer from "react-native-track-player"
+import { TrendingAlbumSons } from "../../api/interface/album.interface"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { TrendingAlbumParamsTypes } from "../../Interfaces/album.interface"
 import { sanitize } from "../../services/sanitizer.service"
 import { album } from "../../store/actions/album.action"
 import { albumData } from "../../store/slices/album.slice"
-import {
-  centralQueue,
-  SpecificQueue,
-  updateQueue,
-  updateSongQueue
-} from "../../store/slices/Queue.slice"
+import { centralQueue, SpecificQueue, updateQueue } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
 import Header from "../DetailsScreen/Header"
 const screenId = "trendingAblum"
@@ -32,38 +28,25 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
   useEffect(() => {
     dispatch(album.getAlbumSongs(route.params.albumData.id))
   }, [])
-  const chnageQueueState = async (index: number) => {
+  const chnageQueueState = async (index: number, song: TrendingAlbumSons) => {
     try {
-      if (applicationQueue.data?.id != screenId + data.id) {
-        if (albumSongs.data?.songs) {
-          const refactoredPrev = sanitize.albumDetails(albumSongs.data.songs.slice(0, index))
-          const refactoredCurrent = sanitize.albumDetails(
-            albumSongs.data?.songs.slice(index, index + 1)
-          )
-          const refactoredNext = sanitize.albumDetails(albumSongs.data?.songs.slice(index + 1))
+      if (albumSongs.data?.songs) {
+        console.log(applicationQueue.data.screenId)
+        if (applicationQueue.data.screenId != screenId.concat(data.id)) {
           await TrackPlayer.reset()
-          await TrackPlayer.add(refactoredCurrent)
-          await TrackPlayer.add(refactoredNext)
-          await TrackPlayer.add(refactoredPrev)
+          await TrackPlayer.add(sanitize.albumDetails(albumSongs.data.songs))
+          await TrackPlayer.skip(index)
           await TrackPlayer.play()
           const newQueue: SpecificQueue = {
-            id: screenId + data.id,
-            currentSongIndex: index,
+            screenId: screenId.concat(data.id),
             isPlaying: true,
-            currentSongId: refactoredCurrent[0].id,
-            songs: [...refactoredPrev, ...refactoredCurrent, ...refactoredNext]
+            song: sanitize.albumDetails([song])[0]
           }
           dispatch(updateQueue(newQueue))
+          return
         }
-        return
       }
-      if (albumSongs.data?.songs) {
-        const clickedSong = albumSongs.data.songs[index]
-        await TrackPlayer.pause()
-        dispatch(updateSongQueue({ index, id: clickedSong.id }))
-        await TrackPlayer.skip(index)
-        await TrackPlayer.play()
-      }
+      await TrackPlayer.skip(index)
     } catch (error) {
       console.log(error)
     }
@@ -98,7 +81,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
                     paddingRight: 5,
                     marginTop: 10
                   }}
-                  onPress={() => chnageQueueState(index)}
+                  onPress={() => chnageQueueState(index, item)}
                 >
                   <View className="w-4/5  h-full pl-3 flex flex-row ">
                     <View className="w-full rounded-lg overflow-hidden ">
@@ -122,9 +105,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
                           <Text
                             style={{
                               color:
-                                item.id == applicationQueue.data?.currentSongId
-                                  ? "#16FF00"
-                                  : "white",
+                                item.id == applicationQueue.data.song?.id ? "#16FF00" : "white",
                               fontSize: 14,
                               fontFamily: "400"
                             }}

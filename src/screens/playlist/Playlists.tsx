@@ -14,10 +14,10 @@ const Playlists = () => {
   const [userin, setUserin] = useState<string>("")
   const applicationQueue = TypedSelectorHook(centralQueue)
   const createNewPlaylist = () => {
-    if (applicationQueue.data?.songs) {
+    if (applicationQueue.data.song) {
       const d: ChildPlaylistInterface = {
         name: userin,
-        songs: [applicationQueue.data?.songs[0]]
+        songs: [applicationQueue.data.song]
       }
       dispatch(newPlaylist([d]))
     }
