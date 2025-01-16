@@ -1,2 +1,2 @@
 import { NativeModules } from "react-native"
-export const { MusicFiles } = NativeModules
+export const { ApplicationCore } = NativeModules

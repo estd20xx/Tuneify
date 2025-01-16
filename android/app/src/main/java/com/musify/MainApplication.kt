@@ -12,7 +12,7 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.flipper.ReactNativeFlipper
 import com.facebook.soloader.SoLoader
-import com.musify.local.MusicFilesPackage
+import com.musify.packages.MusicFilesPackage
 
 class MainApplication : Application(), ReactApplication {
 
