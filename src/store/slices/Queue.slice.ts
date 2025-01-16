@@ -1,25 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { RootState } from "../store"
-interface updateSongQueueInterface {
-  id: string
-  index: number
-}
 export interface SpecificQueue {
-  id: string
-  currentSongIndex: number
-  currentSongId: string
+  screenId: string
+  song: StoreSongTypes
   isPlaying: boolean
-  songs: StoreSongTypes[]
 }
 export interface InitialCentralQueue {
-  data: SpecificQueue | null
+  data: SpecificQueue
   isRepeat: boolean
   isLoading: boolean
   isError: boolean
 }
 const initialState: InitialCentralQueue = {
-  data: null,
+  data: {} as SpecificQueue,
   isLoading: false,
   isRepeat: false,
   isError: false
@@ -31,16 +25,11 @@ const PlayerQueue = createSlice({
     updateQueue(state: InitialCentralQueue, actions: PayloadAction<SpecificQueue>) {
       state.data = actions.payload
     },
-    updateSongQueue(state: InitialCentralQueue, actions: PayloadAction<updateSongQueueInterface>) {
-      if (state.data) {
-        state.data.currentSongId = actions.payload.id
-        state.data.currentSongIndex = actions.payload.index
-      }
+    updateSongQueue(state: InitialCentralQueue, actions: PayloadAction<StoreSongTypes>) {
+      state.data.song = actions.payload
     },
     changeTunifyState(state: InitialCentralQueue) {
-      if (state.data) {
-        state.data.isPlaying = !state.data?.isPlaying
-      }
+      state.data.isPlaying = !state.data?.isPlaying
     },
     songRepeat(state: InitialCentralQueue) {
       state.isRepeat = !state.isRepeat

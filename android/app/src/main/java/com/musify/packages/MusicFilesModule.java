@@ -41,9 +41,9 @@ public class MusicFilesModule extends ReactContextBaseJavaModule {
         promise.resolve("promise");
 }
     @ReactMethod
-    public void downloadMusic(String name,String url, Promise promise){
+    public void downloadMusic(String url, Promise promise){
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC,name.concat(".mp3"));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_MUSIC,"appleBall.mp3");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
         downloadManager = (DownloadManager)reactContext.getSystemService(Context.DOWNLOAD_SERVICE);
 

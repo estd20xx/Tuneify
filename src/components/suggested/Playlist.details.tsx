@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View
 } from "react-native"
-import { PlaylistResponse } from "../../api/interface/module.interface"
+import { PlaylistResponse, PlayListSongList } from "../../api/interface/module.interface"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { playlistDetails } from "../../store/actions/playlist.action"
@@ -16,12 +16,7 @@ import { playlistDetails } from "../../store/actions/playlist.action"
 import TrackPlayer from "react-native-track-player"
 import { sanitize } from "../../services/sanitizer.service"
 import { playListDetailsStore } from "../../store/slices/playlistDetails.slice"
-import {
-  centralQueue,
-  SpecificQueue,
-  updateQueue,
-  updateSongQueue
-} from "../../store/slices/Queue.slice"
+import { centralQueue, SpecificQueue, updateQueue } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
 import Header from "../DetailsScreen/Header"
 interface PlaylistData {
@@ -40,38 +35,24 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
   const dispatch = useAppDispatch()
   const playlistStore = TypedSelectorHook(playListDetailsStore)
   const applicationQueue = TypedSelectorHook(centralQueue)
-  const chnageQueueState = async (index: number) => {
+  const chnageQueueState = async (index: number, song: PlayListSongList) => {
     try {
-      if (applicationQueue.data?.id != screenId) {
-        if (playlistStore.data?.list) {
-          const previousSongs = playlistStore.data?.list.slice(0, index)
-          const currentSong = playlistStore.data?.list.slice(index, index + 1)
-          const nextSongs = playlistStore.data?.list.slice(index + 1)
+      if (playlistStore.data?.list) {
+        if (applicationQueue.data.screenId != screenId.concat(playlistStore.data.id)) {
           await TrackPlayer.reset()
-          await TrackPlayer.add(sanitize.playList(currentSong))
-          await TrackPlayer.add(sanitize.playList(nextSongs))
-          await TrackPlayer.add(sanitize.playList(previousSongs))
+          await TrackPlayer.add(sanitize.playList(playlistStore.data.list))
+          await TrackPlayer.skip(index)
           await TrackPlayer.play()
           const newQueue: SpecificQueue = {
-            id: screenId + playlistStore.data.id,
-            currentSongIndex: 0,
+            screenId: screenId + playlistStore.data.id,
             isPlaying: true,
-            currentSongId: currentSong[0].id,
-            songs: [
-              ...sanitize.playList(currentSong),
-              ...sanitize.playList(nextSongs),
-              ...sanitize.playList(previousSongs)
-            ]
+            song: sanitize.playList([song])[0]
           }
           dispatch(updateQueue(newQueue))
+          return
         }
-        return
       }
-      if (playlistStore.data?.list) {
-        const clickedSong = playlistStore.data.list[index]
-        dispatch(updateSongQueue({ index, id: clickedSong.id }))
-        await TrackPlayer.skip(index)
-      }
+      await TrackPlayer.skip(index)
     } catch (error) {
       console.log(error)
     }
@@ -111,7 +92,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
                     paddingRight: 5,
                     marginTop: 10
                   }}
-                  onPress={() => chnageQueueState(index)}
+                  onPress={() => chnageQueueState(index, item)}
                 >
                   <View className="w-4/5  h-full pl-3 flex flex-row ">
                     <View className="w-full rounded-lg overflow-hidden ">
@@ -135,9 +116,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
                           <Text
                             style={{
                               color:
-                                item.id == applicationQueue.data?.currentSongId
-                                  ? "#16FF00"
-                                  : "white",
+                                item.id == applicationQueue.data.song?.id ? "#16FF00" : "white",
                               fontSize: 14,
                               fontFamily: "400"
                             }}

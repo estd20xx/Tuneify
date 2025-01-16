@@ -12,10 +12,10 @@ import TrackPlayer, {
   useProgress,
   useTrackPlayerEvents
 } from "react-native-track-player"
+import { screens } from "../../api/base/constrants"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
-import { ApplicationCore } from "../../native/MusicFiles"
 import { applicationService } from "../../services/Tuneify.service"
 import { getSongsLyrics } from "../../store/actions/lyrics.action"
 import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/favourite.slice"
@@ -64,25 +64,12 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
     transform: [{ rotateY: backInterpolate }]
   }
   useEffect(() => {
-    if (applicationQueue.data?.songs) {
-      setCurrentTrack(applicationQueue.data.songs[applicationQueue.data.currentSongIndex])
+    if (applicationQueue.data.song) {
+      setCurrentTrack(applicationQueue.data.song)
     }
   }, [applicationQueue])
   const nextAndPrevious = async (isNext: boolean) => {
-    let index: number = 0
-    if (applicationQueue.data) {
-      if (isNext) {
-        index = (applicationQueue.data?.currentSongIndex + 1) % applicationQueue.data.songs.length
-        dispatch(updateSongQueue({ index, id: applicationQueue.data.songs[index].id }))
-        await TrackPlayer.skip(index)
-        return
-      }
-      index =
-        (applicationQueue.data?.currentSongIndex + applicationQueue.data.songs.length - 1) %
-        applicationQueue.data.songs.length
-      dispatch(updateSongQueue({ index, id: applicationQueue.data.songs[index].id }))
-      await TrackPlayer.skip(index)
-    }
+    isNext ? await TrackPlayer.skipToNext() : await TrackPlayer.skipToPrevious()
   }
   const checkFavAvailable = (currentId: string): boolean => {
     const data = favourite.favouriteData.filter((liked: any) => liked.id == currentId)
@@ -91,8 +78,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
   }
   const downloadSong = async (c: StoreSongTypes) => {
     try {
-      const download = await ApplicationCore.downloadMusic(c.title, c.url)
-      console.log(download)
     } catch (error) {
       console.log("Eroor downloading song...")
     }
@@ -101,16 +86,14 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
     [Event.PlaybackState, Event.PlaybackError, Event.PlaybackState, Event.PlaybackError],
     async (event: any) => {
       if (event.state == State.Loading) {
-        const trackIndex = await TrackPlayer.getActiveTrackIndex()
-        dispatch(
-          updateSongQueue({ index: trackIndex!, id: applicationQueue.data!.songs[trackIndex!].id })
-        )
-        if (applicationQueue.data?.id != "offlineSongs")
-          dispatch(getSongsLyrics(applicationQueue.data!.songs[trackIndex!].id))
+        const activeTrack = await TrackPlayer.getActiveTrack()
+        setCurrentTrack(activeTrack as StoreSongTypes)
+        dispatch(updateSongQueue(activeTrack as StoreSongTypes))
+        if (applicationQueue.data?.screenId != screens.offline)
+          dispatch(getSongsLyrics(activeTrack?.id))
       }
     }
   )
-
   return (
     <Modal
       isVisible={isVisible}
