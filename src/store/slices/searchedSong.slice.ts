@@ -40,13 +40,17 @@ const searchedSongsSlice = createSlice({
           state.isError = true
           state.data = null
         }
-      ).addCase(searchSongPagination.getSearchedSongDetails.fulfilled, (state: InitialSearchedSong, actions: PayloadAction<SearchedSongs>) => {
-        if (state.data?.songs) {
-          state.data.songs.push(...actions.payload.songs)
+      )
+      .addCase(
+        searchSongPagination.getSearchedSongDetails.fulfilled,
+        (state: InitialSearchedSong, actions: PayloadAction<SearchedSongs>) => {
+          if (state.data?.songs) {
+            state.data.songs.push(...actions.payload.songs)
+          }
         }
-      })
+      )
   }
 })
-export const { } = searchedSongsSlice.actions
+export const {} = searchedSongsSlice.actions
 export const searchedSongData = (state: RootState) => state.persistedReducer.searchedSong
 export default searchedSongsSlice.reducer

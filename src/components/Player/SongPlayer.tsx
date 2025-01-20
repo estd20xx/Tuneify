@@ -38,6 +38,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
   const playbackState = usePlaybackState()
   const [value, setValue] = useState<number>(0)
   const [downloadProgress, setDownloadProgress] = useState<number>(0)
+  const [isShuffle, setIsShuffle] = useState<boolean>(false)
   const progress = useProgress()
   const flipCard = useCallback(() => {
     Animated.timing(flip, {
@@ -68,6 +69,13 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
     }
   }, [applicationQueue])
   const nextAndPrevious = async (isNext: boolean) => {
+    if (isShuffle) {
+      const index = (await TrackPlayer.getQueue()).length
+      const random = Math.floor(Math.random() * index)
+      await TrackPlayer.skip(random)
+      return
+    }
+    console.log("comming down")
     isNext ? await TrackPlayer.skipToNext() : await TrackPlayer.skipToPrevious()
   }
   const checkFavAvailable = (currentId: string): boolean => {
@@ -188,6 +196,8 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
           playbackState={playbackState}
           applicationQueue={applicationQueue}
           dispatch={dispatch}
+          isShuffle={isShuffle}
+          setIsShuffle={setIsShuffle}
         />
 
         <View className=" h-14 w-full mt-5  flex items-center justify-around flex-row">
@@ -208,7 +218,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => downloadSong(currentTrack!)}>
-            <Icons.MoreIcon name="download" size={23} color={"green"} />
+            <Icons.MoreIcon name="download" size={23} color={"#ff8216"} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => [dispatch(addUserFavouritesData(currentTrack!))]}>
             <Icons.HomeIcon

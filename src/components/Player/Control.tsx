@@ -10,6 +10,7 @@ import { InitialCentralQueue } from "../../store/slices/Queue.slice"
 interface ControlersProps {
   nextAndPrevious: (is: boolean) => void
   isRepeat: boolean
+  isShuffle: boolean
   playbackState:
     | PlaybackState
     | {
@@ -17,19 +18,22 @@ interface ControlersProps {
       }
   applicationQueue: InitialCentralQueue
   dispatch: Dispatch<UnknownAction>
+  setIsShuffle: (isShuffle: boolean) => void
 }
 const Control: React.FC<ControlersProps> = ({
   nextAndPrevious,
   isRepeat,
+  isShuffle,
   playbackState,
   applicationQueue,
+  setIsShuffle,
   dispatch
 }) => {
   return (
     <View className="h-18  w-full flex items-center justify-evenly flex-row mt-3">
       <View className="h-full flex items-center flex-row justify-around pl-2 w-[20%]">
-        <TouchableOpacity>
-          <Shuffle size={24} className="text-green-500" />
+        <TouchableOpacity onPress={() => setIsShuffle(!isShuffle)}>
+          <Shuffle size={24} className={`${isShuffle ? "text-[#ff8216]" : "text-[#bababa]"}`} />
         </TouchableOpacity>
       </View>
       <View className="h-full w-[60%] flex items-center justify-evenly flex-row">
