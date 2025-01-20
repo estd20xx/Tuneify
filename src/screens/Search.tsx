@@ -31,7 +31,9 @@ const Search = () => {
     const controller: AbortController = new AbortController()
     const signal: AbortSignal = controller.signal
     const handler = setTimeout(() => {
-      dispatch(personalizedSearchedSong.getSearchedSongDetails({ query: searchQuery, signal }))
+      dispatch(
+        personalizedSearchedSong.getSearchedSongDetails({ query: { ...searchQuery, p: 1 }, signal })
+      )
     }, 1000)
 
     return () => {

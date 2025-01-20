@@ -13,27 +13,27 @@ function checkFolderExists {
     echo "|           checking if folder exists            |"
     echo "+================================================+"
     if [ ! -d "$1" ]; then
-    echo "Error: Directory '$1' does not exist."
-    wantsExit
-fi
+        echo "Error: Directory '$1' does not exist."
+        wantsExit
+    fi
     echo -e "\nchecking folder $1 Done"
     makeAndroidBuild
 }
 
 function showApks {
-files=("$releaseDirectory"/*)
-
-if [ ${#files[@]} -eq 0 ]; then
-    echo -e "\n\nNo files found in directory '$releaseDirectory'."
+    files=("$releaseDirectory"/*)
+    
+    if [ ${#files[@]} -eq 0 ]; then
+        echo -e "\n\nNo files found in directory '$releaseDirectory'."
+        wantsExit
+    fi
+    
+    echo -e "\n\n Files in directory '$releaseDirectory':"
+    for file in "${files[@]}"; do
+        formatFiles
+        echo "| $file"
+    done
     wantsExit
-fi
-
-echo -e "\n\n Files in directory '$releaseDirectory':"
-for file in "${files[@]}"; do
-    formatFiles
-    echo "| $file"
-done
-wantsExit
 }
 function projectPrettify {
     echo -e "\n Prettifying project\n"

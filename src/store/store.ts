@@ -22,7 +22,6 @@ const persistConfig = {
 const RootReducer = combineReducers({
   user: userSlice,
   childState: childStateSlice,
-  // new
   home: homeSlice,
   album: albumSlice,
   playlist: playlistDetailsSlice,
