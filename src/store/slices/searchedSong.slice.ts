@@ -1,6 +1,7 @@
 import { ActionReducerMapBuilder, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { SearchedSongs } from "../../api/service/Payload.service"
 import { personalizedSearchedSong } from "../actions/searchedSong.action"
+import { searchSongPagination } from "../actions/searchPagination.action"
 import { RootState } from "../store"
 interface InitialSearchedSong {
   data: SearchedSongs | null
@@ -39,9 +40,13 @@ const searchedSongsSlice = createSlice({
           state.isError = true
           state.data = null
         }
-      )
+      ).addCase(searchSongPagination.getSearchedSongDetails.fulfilled, (state: InitialSearchedSong, actions: PayloadAction<SearchedSongs>) => {
+        if (state.data?.songs) {
+          state.data.songs.push(...actions.payload.songs)
+        }
+      })
   }
 })
-export const {} = searchedSongsSlice.actions
+export const { } = searchedSongsSlice.actions
 export const searchedSongData = (state: RootState) => state.persistedReducer.searchedSong
 export default searchedSongsSlice.reducer
