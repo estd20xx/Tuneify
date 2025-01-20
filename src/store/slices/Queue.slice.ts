@@ -9,6 +9,7 @@ export interface SpecificQueue {
 export interface InitialCentralQueue {
   data: SpecificQueue
   isRepeat: boolean
+  isSuffle: boolean
   isLoading: boolean
   isError: boolean
 }
@@ -16,6 +17,7 @@ const initialState: InitialCentralQueue = {
   data: {} as SpecificQueue,
   isLoading: false,
   isRepeat: false,
+  isSuffle: false,
   isError: false
 }
 const PlayerQueue = createSlice({

@@ -16,8 +16,8 @@ const Search = () => {
   const dispatch = useAppDispatch()
   const searchedData = TypedSelectorHook(searchedSongData)
   const flatListRef = useRef<FlatList>(null)
-  const [isFetchingMore, setIsFetchingMore] = useState(false);
-  const [isInitialSearch, setIsInitialSearch] = useState(true);
+  const [isFetchingMore, setIsFetchingMore] = useState(false)
+  const [isInitialSearch, setIsInitialSearch] = useState(true)
   const [searchQuery, setSearchQuery] = useState<SearchedSongQueryParams>({
     p: 1,
     q: "",
@@ -27,7 +27,7 @@ const Search = () => {
     if (searchQuery.q.length <= 2) {
       return
     }
-    setIsInitialSearch(true);
+    setIsInitialSearch(true)
     const controller: AbortController = new AbortController()
     const signal: AbortSignal = controller.signal
     const handler = setTimeout(() => {
@@ -41,27 +41,25 @@ const Search = () => {
   }, [searchQuery.q])
 
   const handleLoadMore = () => {
-    if (isFetchingMore || searchedData.isLoading) return;
+    if (isFetchingMore || searchedData.isLoading) return
 
-    setIsFetchingMore(true);
+    setIsFetchingMore(true)
 
     const nextQuery = {
       ...searchQuery,
-      p: searchQuery.p + 1,
-    };
+      p: searchQuery.p + 1
+    }
 
-    dispatch(
-      searchSongPagination.getSearchedSongDetails({ query: nextQuery })
-    ).finally(() => {
-      setSearchQuery(nextQuery);
-      setIsFetchingMore(false);
-    });
-  };
+    dispatch(searchSongPagination.getSearchedSongDetails({ query: nextQuery })).finally(() => {
+      setSearchQuery(nextQuery)
+      setIsFetchingMore(false)
+    })
+  }
 
   useEffect(() => {
     if (searchedData.data?.songs?.length && isInitialSearch) {
       flatListRef.current?.scrollToOffset({ animated: true, offset: 0 })
-      setIsInitialSearch(false);
+      setIsInitialSearch(false)
     }
   }, [searchedData.data])
   return (
