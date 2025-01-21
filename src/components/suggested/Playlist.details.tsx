@@ -14,6 +14,7 @@ import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { playlistDetails } from "../../store/actions/playlist.action"
 
 import TrackPlayer from "react-native-track-player"
+import { screens } from "../../api/base/constrants"
 import { sanitize } from "../../services/sanitizer.service"
 import { playListDetailsStore } from "../../store/slices/playlistDetails.slice"
 import { centralQueue, SpecificQueue, updateQueue } from "../../store/slices/Queue.slice"
@@ -29,7 +30,6 @@ interface PlaylistData {
 export interface PlaylistDetailsTypes {
   route: PlaylistData
 }
-const screenId = "playlist"
 const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
   const [data] = useState(route.params.playlistData)
   const dispatch = useAppDispatch()
@@ -38,13 +38,13 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
   const chnageQueueState = async (index: number, song: PlayListSongList) => {
     try {
       if (playlistStore.data?.list) {
-        if (applicationQueue.data.screenId != screenId.concat(playlistStore.data.id)) {
+        if (applicationQueue.data.screenId != screens.playlistScreenId.concat(playlistStore.data.id)) {
           await TrackPlayer.reset()
           await TrackPlayer.add(sanitize.playList(playlistStore.data.list))
           await TrackPlayer.skip(index)
           await TrackPlayer.play()
           const newQueue: SpecificQueue = {
-            screenId: screenId + playlistStore.data.id,
+            screenId: screens.playlistScreenId + playlistStore.data.id,
             isPlaying: true,
             song: sanitize.playList([song])[0]
           }

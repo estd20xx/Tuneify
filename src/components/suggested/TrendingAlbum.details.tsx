@@ -9,6 +9,7 @@ import {
   View
 } from "react-native"
 import TrackPlayer from "react-native-track-player"
+import { screens } from "../../api/base/constrants"
 import { TrendingAlbumSons } from "../../api/interface/album.interface"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
@@ -19,7 +20,6 @@ import { albumData } from "../../store/slices/album.slice"
 import { centralQueue, SpecificQueue, updateQueue } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
 import Header from "../DetailsScreen/Header"
-const screenId = "trendingAblum"
 const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => {
   const dispatch = useAppDispatch()
   const [data] = useState(route.params.albumData)
@@ -31,14 +31,13 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
   const chnageQueueState = async (index: number, song: TrendingAlbumSons) => {
     try {
       if (albumSongs.data?.songs) {
-        console.log(applicationQueue.data.screenId)
-        if (applicationQueue.data.screenId != screenId.concat(data.id)) {
+        if (applicationQueue.data.screenId != screens.albumScreenId.concat(data.id)) {
           await TrackPlayer.reset()
           await TrackPlayer.add(sanitize.albumDetails(albumSongs.data.songs))
           await TrackPlayer.skip(index)
           await TrackPlayer.play()
           const newQueue: SpecificQueue = {
-            screenId: screenId.concat(data.id),
+            screenId: screens.albumScreenId.concat(data.id),
             isPlaying: true,
             song: sanitize.albumDetails([song])[0]
           }

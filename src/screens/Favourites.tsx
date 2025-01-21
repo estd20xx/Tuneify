@@ -1,16 +1,53 @@
 import React, { memo } from "react"
 import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import TrackPlayer from "react-native-track-player"
+import { screens } from "../api/base/constrants"
 import { Icons } from "../constants/Icon"
-import { TypedSelectorHook } from "../hooks/store.hook"
+import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
+import { UserFavouritesTypes } from "../Interfaces/tuneifySlice.interface"
 import { tuneifyFavourites } from "../store/slices/favourite.slice"
-const screenId = "favourites"
+import { centralQueue, SpecificQueue, updateQueue } from "../store/slices/Queue.slice"
 const Favourites = () => {
   const data = TypedSelectorHook(tuneifyFavourites)
+  const applicationQueue = TypedSelectorHook(centralQueue)
+  const dispatch = useAppDispatch()
+  const chnageQueueState = async (index: number, song: UserFavouritesTypes) => {
+    try {
+      if (data.favouriteData) {
+        if (applicationQueue.data.screenId != screens.favouriteScreenId) {
+          await TrackPlayer.reset()
+          await TrackPlayer.add(data.favouriteData)
+          await TrackPlayer.skip(index)
+          await TrackPlayer.play()
+          const newQueue: SpecificQueue = {
+            screenId: screens.favouriteScreenId,
+            isPlaying: true,
+            song: song
+          }
+          dispatch(updateQueue(newQueue))
+          return
+        }
+      }
+      await TrackPlayer.skip(index)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const shuffleHandler = async () => {
+    const randomIndex = Math.floor(Math.random() * data.favouriteData.length)
+    chnageQueueState(randomIndex, data.favouriteData[randomIndex])
+  }
+  const simplePlayHandler = () => {
+    chnageQueueState(0, data.favouriteData[0])
+  }
   return (
     <View className="w-full h-screen flex items-center justify-center pb-20 ">
       <ScrollView>
         <View className="w-full  h-20  flex flex-row items-center justify-evenly">
-          <TouchableOpacity className="bg-themeOrange h-8 px-10 rounded-full flex items-center justify-center flex-row">
+          <TouchableOpacity
+            className="bg-themeOrange h-8 px-10 rounded-full flex items-center justify-center flex-row"
+            onPress={shuffleHandler}
+          >
             <Image
               source={require("../assets/images/suffle.png")}
               style={{
@@ -22,7 +59,10 @@ const Favourites = () => {
             />
             <Text className="text-white text-base font-[400]">Suffle</Text>
           </TouchableOpacity>
-          <TouchableOpacity className="bg-[#35383f] h-8 px-10 rounded-full flex items-center justify-center flex-row">
+          <TouchableOpacity
+            className="bg-[#35383f] h-8 px-10 rounded-full flex items-center justify-center flex-row"
+            onPress={simplePlayHandler}
+          >
             <Icons.PlayIcon name="play" color={"white"} size={20} className="mr-1" />
             <Text className="text-white text-base font-[400]">Play</Text>
           </TouchableOpacity>
@@ -37,7 +77,7 @@ const Favourites = () => {
           removeClippedSubviews={true}
           scrollEnabled={false}
           windowSize={10}
-          renderItem={({ item }) => {
+          renderItem={({ item, index }) => {
             return (
               <TouchableOpacity
                 style={{
@@ -47,8 +87,9 @@ const Favourites = () => {
                   justifyContent: "space-between",
                   paddingLeft: 2,
                   paddingRight: 5,
-                  marginTop: 10
+                  marginTop: 10,
                 }}
+                onPress={() => chnageQueueState(index, item)}
               >
                 <View className="w-[90%]  h-full pl-3 flex flex-row ">
                   <View className="w-full rounded-lg overflow-hidden ">
@@ -60,7 +101,7 @@ const Favourites = () => {
                       <View style={{ marginLeft: 10 }}>
                         <Text
                           style={{
-                            color: "white",
+                            color: item.id == applicationQueue.data.song?.id ? "#16FF00" : "white",
                             fontSize: 14,
                             fontFamily: "400"
                           }}

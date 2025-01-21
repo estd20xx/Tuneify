@@ -20,13 +20,13 @@ const Songs = () => {
     try {
       if (songs.data?.songs) {
         console.log(applicationQueue.data.screenId)
-        if (applicationQueue.data.screenId != screens.songs) {
+        if (applicationQueue.data.screenId != screens.songsScreenId) {
           await TrackPlayer.reset()
           await TrackPlayer.add(sanitize.songs(songs.data.songs))
           await TrackPlayer.skip(index)
           await TrackPlayer.play()
           const newQueue: SpecificQueue = {
-            screenId: screens.songs,
+            screenId: screens.songsScreenId,
             isPlaying: true,
             song: sanitize.songs([song])[0]
           }
