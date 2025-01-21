@@ -125,7 +125,8 @@ const Search = () => {
             onEndReached={handleLoadMore}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity className="w-full h-16 mt-2 flex flex-row items-center"
+                <TouchableOpacity
+                  className="w-full h-16 mt-2 flex flex-row items-center"
                   onPress={() => chnageQueueState(item)}
                 >
                   <View className="h-16 w-20  pl-2">
