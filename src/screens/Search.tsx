@@ -1,11 +1,16 @@
 import React, { memo, useEffect, useRef, useState } from "react"
 import { FlatList, Image, Keyboard, Text, TouchableOpacity, View } from "react-native"
 import { Bounce } from "react-native-animated-spinkit"
+import TrackPlayer from "react-native-track-player"
+import { screens } from "../api/base/constrants"
+import { Song } from "../api/service/Payload.service"
 import Show from "../components/Common/Show"
 import Input from "../components/Search/Input"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
+import { sanitize } from "../services/sanitizer.service"
 import { personalizedSearchedSong } from "../store/actions/searchedSong.action"
 import { searchSongPagination } from "../store/actions/searchPagination.action"
+import { centralQueue, SpecificQueue, updateQueue } from "../store/slices/Queue.slice"
 import { searchedSongData } from "../store/slices/searchedSong.slice"
 export interface SearchedSongQueryParams {
   p: number
@@ -18,11 +23,34 @@ const Search = () => {
   const flatListRef = useRef<FlatList>(null)
   const [isFetchingMore, setIsFetchingMore] = useState(false)
   const [isInitialSearch, setIsInitialSearch] = useState(true)
+  const applicationQueue = TypedSelectorHook(centralQueue)
   const [searchQuery, setSearchQuery] = useState<SearchedSongQueryParams>({
     p: 1,
     q: "",
     n: 50
   })
+  const chnageQueueState = async (song: Song) => {
+    try {
+      if (searchedData.data?.songs) {
+        if (applicationQueue.data.screenId != screens.searchScreenId) {
+          await TrackPlayer.reset()
+          await TrackPlayer.add(sanitize.songs([song]))
+          await TrackPlayer.play()
+          const newQueue: SpecificQueue = {
+            screenId: screens.searchScreenId,
+            isPlaying: true,
+            song: sanitize.songs([song])[0]
+          }
+          dispatch(updateQueue(newQueue))
+          return
+        }
+      }
+      await TrackPlayer.add(sanitize.songs([song]))
+      await TrackPlayer.skipToNext()
+    } catch (error) {
+      console.log(error)
+    }
+  }
   useEffect(() => {
     if (searchQuery.q.length <= 2) {
       return
@@ -35,7 +63,6 @@ const Search = () => {
         personalizedSearchedSong.getSearchedSongDetails({ query: { ...searchQuery, p: 1 }, signal })
       )
     }, 1000)
-
     return () => {
       clearTimeout(handler)
       controller.abort()
@@ -98,7 +125,9 @@ const Search = () => {
             onEndReached={handleLoadMore}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity className="w-full h-16 mt-2 flex flex-row items-center">
+                <TouchableOpacity className="w-full h-16 mt-2 flex flex-row items-center"
+                  onPress={() => chnageQueueState(item)}
+                >
                   <View className="h-16 w-20  pl-2">
                     <Image source={{ uri: item.image[1].link }} className="h-16 w-16 rounded-md" />
                   </View>
@@ -107,7 +136,7 @@ const Search = () => {
                       style={{
                         fontSize: 15,
                         fontFamily: "500",
-                        color: "#FFF"
+                        color: item.id == applicationQueue.data.song?.id ? "#16FF00" : "white"
                       }}
                     >
                       {item.title?.length > 45 ? item.title.slice(0, 45) + "..." : item.title}
