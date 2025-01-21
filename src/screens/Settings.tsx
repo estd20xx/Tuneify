@@ -46,7 +46,6 @@ const Settings = () => {
                 paddingRight: 5,
                 marginTop: 4,
                 alignSelf: "center"
-                // backgroundColor: "red"
               }}
               onPress={() => item.title == "Quit" && BackHandler.exitApp()}
             >
