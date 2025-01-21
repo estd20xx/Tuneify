@@ -38,7 +38,9 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
   const chnageQueueState = async (index: number, song: PlayListSongList) => {
     try {
       if (playlistStore.data?.list) {
-        if (applicationQueue.data.screenId != screens.playlistScreenId.concat(playlistStore.data.id)) {
+        if (
+          applicationQueue.data.screenId != screens.playlistScreenId.concat(playlistStore.data.id)
+        ) {
           await TrackPlayer.reset()
           await TrackPlayer.add(sanitize.playList(playlistStore.data.list))
           await TrackPlayer.skip(index)

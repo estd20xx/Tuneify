@@ -53,10 +53,8 @@ const Favourites = () => {
         removeClippedSubviews={true}
         windowSize={10}
         ListHeaderComponent={
-          <FavouriteHeader
-            shuffleHandler={shuffleHandler}
-            simplePlayHandler={simplePlayHandler}
-          />}
+          <FavouriteHeader shuffleHandler={shuffleHandler} simplePlayHandler={simplePlayHandler} />
+        }
         renderItem={({ item, index }) => {
           return (
             <TouchableOpacity
@@ -67,7 +65,7 @@ const Favourites = () => {
                 justifyContent: "space-between",
                 paddingLeft: 2,
                 paddingRight: 5,
-                marginTop: 10,
+                marginTop: 10
               }}
               onPress={() => chnageQueueState(index, item)}
             >
@@ -109,7 +107,7 @@ const Favourites = () => {
           )
         }}
       />
-    </View >
+    </View>
   )
 }
 export default memo(Favourites)

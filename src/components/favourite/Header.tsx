@@ -1,30 +1,30 @@
-import { Shuffle } from 'lucide-react-native'
-import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
-import { Icons } from '../../constants/Icon'
+import { Shuffle } from "lucide-react-native"
+import React from "react"
+import { Text, TouchableOpacity, View } from "react-native"
+import { Icons } from "../../constants/Icon"
 interface Props {
-    shuffleHandler: () => void
-    simplePlayHandler: () => void
+  shuffleHandler: () => void
+  simplePlayHandler: () => void
 }
 const FavouriteHeader: React.FC<Props> = ({ shuffleHandler, simplePlayHandler }) => {
-    return (
-        <View className="w-full  h-20  flex flex-row items-center justify-evenly">
-            <TouchableOpacity
-                className="bg-themeOrange h-8 px-10 rounded-full flex items-center justify-center flex-row"
-                onPress={shuffleHandler}
-            >
-                <Shuffle size={15} color={"#fff"} className="mr-1" />
-                <Text className="text-white text-base font-[400]">Suffle</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                className="bg-[#35383f] h-8 px-10 rounded-full flex items-center justify-center flex-row"
-                onPress={simplePlayHandler}
-            >
-                <Icons.PlayIcon name="play" color={"white"} size={20} className="mr-1" />
-                <Text className="text-white text-base font-[400]">Play</Text>
-            </TouchableOpacity>
-        </View>
-    )
+  return (
+    <View className="w-full  h-20  flex flex-row items-center justify-evenly">
+      <TouchableOpacity
+        className="bg-themeOrange h-8 px-10 rounded-full flex items-center justify-center flex-row"
+        onPress={shuffleHandler}
+      >
+        <Shuffle size={15} color={"#fff"} className="mr-1" />
+        <Text className="text-white text-base font-[400]">Suffle</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        className="bg-[#35383f] h-8 px-10 rounded-full flex items-center justify-center flex-row"
+        onPress={simplePlayHandler}
+      >
+        <Icons.PlayIcon name="play" color={"white"} size={20} className="mr-1" />
+        <Text className="text-white text-base font-[400]">Play</Text>
+      </TouchableOpacity>
+    </View>
+  )
 }
 
 export default FavouriteHeader

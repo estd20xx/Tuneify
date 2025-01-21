@@ -51,6 +51,6 @@ const searchedSongsSlice = createSlice({
       )
   }
 })
-export const { } = searchedSongsSlice.actions
+export const {} = searchedSongsSlice.actions
 export const searchedSongData = (state: RootState) => state.persistedReducer.searchedSong
 export default searchedSongsSlice.reducer
