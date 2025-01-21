@@ -1,4 +1,3 @@
-import Slider from "@react-native-community/slider"
 import React, { memo, useCallback, useEffect, useState } from "react"
 import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import Modal from "react-native-modal"
@@ -19,6 +18,8 @@ import { storedLyrics } from "../../store/slices/lyrics.slice"
 import { centralQueue, updateSongQueue } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
 import Control from "./Control"
+import PlayerHeader from "./PlayerHeader"
+import PlayerInfo from "./PlayerInfo"
 import SongInfo from "./SongInfo"
 import TimerPopUp from "./TimerPopUp"
 interface SongPlayerProps {
@@ -37,7 +38,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
   const [currentTrack, setCurrentTrack] = useState<StoreSongTypes>()
   const playbackState = usePlaybackState()
   const [value, setValue] = useState<number>(0)
-  const [downloadProgress, setDownloadProgress] = useState<number>(0)
   const [isShuffle, setIsShuffle] = useState<boolean>(false)
   const progress = useProgress()
   const flipCard = useCallback(() => {
@@ -115,22 +115,11 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
         setVtimer={setVtimer}
         dispatch={dispatch}
       />
-      {/* #181a20 */}
       <View className="w-full h-screen px-3 bg-[#181a20]">
-        <View className="h-10 w-full flex items-center justify-between flex-row">
-          <TouchableOpacity onPress={() => setIsVisible(false)}>
-            <Icons.KeyboardDown name="keyboard-arrow-down" size={35} color={"white"} />
-          </TouchableOpacity>
-          <View className="flex flex-row h-full items-center justify-center">
-            <TouchableOpacity onPress={() => flipCard()}>
-              <Icons.MoreIcon name="lyrics" size={20} color={"white"} className="mr-4" />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Icons.MoreIcon name="more-vert" size={25} color={"white"} />
-            </TouchableOpacity>
-          </View>
-        </View>
-
+        <PlayerHeader
+          setIsVisible={setIsVisible}
+          flipCard={flipCard}
+        />
         <View className="relative h-1/2 w-full mt-6 flex items-center justify-center">
           <Animated.View
             style={[frontAnimatedStyle, { backfaceVisibility: "hidden" }]}
@@ -161,34 +150,9 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
           </Animated.View>
         </View>
         <SongInfo currentTrack={currentTrack} />
-        <View className="w-full  mt-5 py-2">
-          <Slider
-            minimumValue={0}
-            maximumValue={progress.duration}
-            value={progress.position}
-            minimumTrackTintColor="#ff8216"
-            maximumTrackTintColor="#d0d0d1"
-            thumbTintColor="#ff8216"
-            onSlidingComplete={(e) => TrackPlayer.seekTo(e)}
-          />
-          <View
-            style={{
-              width: "90%",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignSelf: "center"
-            }}
-          >
-            <Text style={{ color: "white", fontFamily: "300" }}>
-              {JSON.stringify(Math.floor(progress.position / 60)).padStart(2, "0")}:
-              {JSON.stringify(Math.floor(progress.position % 60)).padStart(2, "0")}
-            </Text>
-            <Text style={{ color: "white", fontFamily: "300" }}>
-              {JSON.stringify(Math.floor(progress.duration / 60)).padStart(2, "0")}:
-              {JSON.stringify(Math.floor(progress.duration / 60)).padStart(2, "0")}
-            </Text>
-          </View>
-        </View>
+        <PlayerInfo
+          progress={progress}
+        />
         <Control
           nextAndPrevious={nextAndPrevious}
           isRepeat={applicationQueue.isRepeat}
@@ -198,7 +162,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
           isShuffle={isShuffle}
           setIsShuffle={setIsShuffle}
         />
-
         <View className=" h-14 w-full mt-5  flex items-center justify-around flex-row">
           <TouchableOpacity>
             <Image
@@ -228,7 +191,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
           </TouchableOpacity>
         </View>
       </View>
-    </Modal>
+    </Modal >
   )
 }
 export default memo(SongPlayer)

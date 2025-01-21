@@ -24,7 +24,7 @@ const TimerPopUp: React.FC<PopUpInterface> = ({
 }) => {
   return (
     <Show isVisible={vtimer}>
-      <View className="h-48  w-4/5 bg-red-500  absolute z-50 m-auto left-12 rounded-3xl flex items-center justify-center">
+      <View className="h-48  w-4/5 bg-black absolute z-50 m-auto left-12 rounded-3xl flex items-center justify-center">
         <Slider
           style={{ width: "100%" }}
           minimumValue={0}
@@ -37,7 +37,7 @@ const TimerPopUp: React.FC<PopUpInterface> = ({
         />
         <Text className="text-white text-xl mt-3 font-['500']">{value}</Text>
         <TouchableOpacity
-          className="mt-8 bg-fuchsia-500 px-16 py-3 rounded-md"
+          className="mt-8 bg-green-400 px-16 py-3 rounded-md"
           onPress={() => [
             setIsTimer(true),
             applicationService.timerMusicOff(value, dispatch, setIsTimer),

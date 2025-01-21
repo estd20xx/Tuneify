@@ -38,7 +38,11 @@ const TabBar = () => {
       }}
     >
       {tabBar.map((bar) => {
-        return <Tab.Screen name={bar.name} component={bar.component} key={bar.name} />
+        return <Tab.Screen
+          name={bar.name}
+          component={bar.component}
+          key={bar.name}
+        />
       })}
     </Tab.Navigator>
   )
