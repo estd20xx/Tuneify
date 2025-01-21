@@ -2,13 +2,13 @@ import React, { memo } from "react"
 import { FlatList, Image, RefreshControl, Text, TouchableOpacity, View } from "react-native"
 import TrackPlayer from "react-native-track-player"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
+import { screens } from "../../api/base/constrants"
 import Show from "../../components/Common/Show"
 import NotFound from "../../components/offline/Not-found"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { musicService } from "../../services/localMedia.service"
 import { centralQueue, SpecificQueue, updateQueue } from "../../store/slices/Queue.slice"
 import { tuneifyOfflines } from "../../store/slices/offline.slice"
-const screenId = "offlineSongs"
 const Folders = () => {
   const localFile = TypedSelectorHook(tuneifyOfflines)
   const dispatch = useAppDispatch()
@@ -16,13 +16,13 @@ const Folders = () => {
   const chnageQueueState = async (index: number, song: StoreSongTypes) => {
     try {
       if (localFile.LocalSong) {
-        if (applicationQueue.data.screenId != screenId) {
+        if (applicationQueue.data.screenId != screens.offlineScreenId) {
           await TrackPlayer.reset()
           await TrackPlayer.add(localFile.LocalSong)
           await TrackPlayer.skip(index)
           await TrackPlayer.play()
           const newQueue: SpecificQueue = {
-            screenId,
+            screenId: screens.offlineScreenId,
             isPlaying: true,
             song
           }
@@ -37,9 +37,8 @@ const Folders = () => {
   }
   return (
     <View
-      className={`w-full ${
-        localFile.LocalSong.length ? "h-auto" : "h-screen flex items-center justify-center"
-      }`}
+      className={`w-full ${localFile.LocalSong.length ? "h-auto" : "h-screen flex items-center justify-center"
+        }`}
     >
       <Show isVisible={localFile.LocalSong.length > 0}>
         <FlatList

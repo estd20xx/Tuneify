@@ -75,7 +75,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       await TrackPlayer.skip(random)
       return
     }
-    console.log("comming down")
     isNext ? await TrackPlayer.skipToNext() : await TrackPlayer.skipToPrevious()
   }
   const checkFavAvailable = (currentId: string): boolean => {
@@ -96,7 +95,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
         const activeTrack = await TrackPlayer.getActiveTrack()
         setCurrentTrack(activeTrack as StoreSongTypes)
         dispatch(updateSongQueue(activeTrack as StoreSongTypes))
-        if (applicationQueue.data?.screenId != screens.offline)
+        if (applicationQueue.data?.screenId != screens.offlineScreenId)
           dispatch(getSongsLyrics(activeTrack?.id))
       }
     }
