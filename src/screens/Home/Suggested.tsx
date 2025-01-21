@@ -23,7 +23,7 @@ const Suggested = () => {
       }
     >
       <View className=" w-full h-auto pb-24">
-        <Show isVisible={suggested.isLoading && suggested.data == null}>
+        <Show isVisible={suggested.isLoading || suggested.data == null}>
           <MainSkeleton />
         </Show>
         <Show isVisible={suggested.data != null}>

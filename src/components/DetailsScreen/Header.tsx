@@ -7,7 +7,7 @@ interface Props {
 }
 const Header: React.FC<Props> = ({ title, artwork, type }) => {
   return (
-    <>
+    <React.Fragment>
       <View className="w-full h-56  flex items-center justify-center">
         <Image source={{ uri: artwork }} className="h-52 w-52 rounded-md" />
       </View>
@@ -17,7 +17,7 @@ const Header: React.FC<Props> = ({ title, artwork, type }) => {
           <Text className="text-gray-300 text-base font-['400']">{type}</Text>
         </TouchableOpacity>
       </View>
-    </>
+    </React.Fragment>
   )
 }
 export default memo(Header)
