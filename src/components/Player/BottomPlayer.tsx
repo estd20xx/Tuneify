@@ -27,7 +27,7 @@ const BottomPlayer = () => {
       {applicationQueue.data.song && (
         <View>
           <TouchableOpacity
-            className="absolute h-14 w-full bottom-0 flex flex-row items-center justify-center px-3 bg-[#2D3250]"
+            className="absolute h-14 w-full bottom-0 flex flex-row items-center justify-center px-3 bg-bottomPlayer"
             activeOpacity={1}
             onPress={() => {
               setIsVisible(true)

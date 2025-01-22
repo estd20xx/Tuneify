@@ -6,7 +6,7 @@ const Tab = createMaterialTopTabNavigator()
 const TabBar = () => {
   useEffect(() => {
     if (Platform.OS === "android") {
-      StatusBar.setBackgroundColor("#181a20")
+      StatusBar.setBackgroundColor("#1b1002")
     }
   }, [])
   return (
@@ -22,7 +22,7 @@ const TabBar = () => {
           borderRadius: 50
         },
         tabBarStyle: {
-          backgroundColor: "#181a20",
+          backgroundColor: "#1b1002",
           zIndex: 1,
           borderBottomWidth: 1,
           borderBottomColor: "#a1a0a3"
@@ -38,11 +38,7 @@ const TabBar = () => {
       }}
     >
       {tabBar.map((bar) => {
-        return <Tab.Screen
-          name={bar.name}
-          component={bar.component}
-          key={bar.name}
-        />
+        return <Tab.Screen name={bar.name} component={bar.component} key={bar.name} />
       })}
     </Tab.Navigator>
   )

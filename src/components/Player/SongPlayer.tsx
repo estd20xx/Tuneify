@@ -110,10 +110,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
         style={{ margin: 0 }}
         onBackButtonPress={() => setIsVisible(false)}
       >
-        <SideModal
-          isVisible={isSide}
-          setSecond={setIsSide}
-        />
+        <SideModal isVisible={isSide} setSecond={setIsSide} />
         <TimerPopUp
           vtimer={vtimer}
           value={value}
@@ -122,12 +119,8 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
           setVtimer={setVtimer}
           dispatch={dispatch}
         />
-        <View className="w-full h-screen px-3 bg-[#181a20]">
-          <PlayerHeader
-            setIsVisible={setIsVisible}
-            flipCard={flipCard}
-            setSecond={setIsSide}
-          />
+        <View className="w-full h-screen px-3 bg-background">
+          <PlayerHeader setIsVisible={setIsVisible} flipCard={flipCard} setSecond={setIsSide} />
           <View className="relative h-1/2 w-full mt-6 flex items-center justify-center">
             <Animated.View
               style={[frontAnimatedStyle, { backfaceVisibility: "hidden" }]}
@@ -158,9 +151,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             </Animated.View>
           </View>
           <SongInfo currentTrack={currentTrack} />
-          <PlayerInfo
-            progress={progress}
-          />
+          <PlayerInfo progress={progress} />
           <Control
             nextAndPrevious={nextAndPrevious}
             isRepeat={applicationQueue.isRepeat}
@@ -199,7 +190,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             </TouchableOpacity>
           </View>
         </View>
-      </Modal >
+      </Modal>
     </React.Fragment>
   )
 }

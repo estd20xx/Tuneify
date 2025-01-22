@@ -1,8 +1,6 @@
-import React from 'react'
-import CommingSoon from '../../components/Common/CommingSoon'
+import React from "react"
+import CommingSoon from "../../components/Common/CommingSoon"
 const Albums = () => {
-  return (
-    <CommingSoon />
-  )
+  return <CommingSoon />
 }
 export default Albums
