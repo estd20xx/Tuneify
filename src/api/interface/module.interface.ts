@@ -18,7 +18,6 @@ interface CommonHeader {
   list_type: string
 }
 
-
 interface ResponseHeader extends CommonHeader {
   image: Image[]
 }

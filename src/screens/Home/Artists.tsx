@@ -6,8 +6,6 @@ import { useAppDispatch } from "../../hooks/store.hook"
 const localImage = Image.resolveAssetSource(tempImage).uri
 const Artists = () => {
   const dispatch = useAppDispatch()
-  return (
-    <CommingSoon />
-  )
+  return <CommingSoon />
 }
 export default memo(Artists)

@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { MainNavigationItems } from "../constants/naviG"
 const Stack = createNativeStackNavigator()
 const theme = DefaultTheme
-theme.colors.background = "#181a20"
+theme.colors.background = "#1b1002"
 const MainNavigation = () => {
   return (
     <Container theme={theme}>

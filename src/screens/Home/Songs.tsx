@@ -45,7 +45,7 @@ const Songs = () => {
     }
   }, [])
   return (
-    <View className="bg-[#181a20] w-full h-auto pt-2">
+    <View className="w-full h-auto pt-2">
       <Show isVisible={songs?.data?.songs?.length != undefined || songs?.data?.songs?.length != 0}>
         <FlatList
           data={songs.data?.songs}

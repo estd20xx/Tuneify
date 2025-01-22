@@ -15,15 +15,15 @@ const BottomTab = () => {
         <View>
           <BottomPlayer />
           <BottomNavigation.Bar
-            theme={{ colors: { secondaryContainer: "#2D3250" } }}
+            theme={{ colors: { secondaryContainer: "#261221" } }}
             navigationState={state}
             safeAreaInsets={insets}
             shifting={true}
-            activeColor="#a1a0a3"
+            activeColor="#FFF"
             inactiveColor="#a1a0a3"
             style={{
               height: 50,
-              backgroundColor: "#000000"
+              backgroundColor: "#000"
             }}
             onTabPress={({ route, preventDefault }) => {
               const event = navigation.emit({
@@ -31,7 +31,6 @@ const BottomTab = () => {
                 target: route.key,
                 canPreventDefault: true
               })
-
               if (event.defaultPrevented) {
                 preventDefault()
               } else {
@@ -48,7 +47,7 @@ const BottomTab = () => {
               }
               return null
             }}
-            /** TODO : to shot label
+          /** TODO : to shot label
 getLabelText={({ route }) => {
 return route.name
 }}
