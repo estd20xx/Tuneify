@@ -24,7 +24,6 @@ const Playlists = () => {
   }
   return (
     <View className="w-full h-screen flex   justify-center flex-row">
-      <View></View>
       <FlatList
         data={offlinePlaylist.playlist}
         keyExtractor={(item, index) => item[0].name}

@@ -5,9 +5,10 @@ import { Icons } from '../../constants/Icon'
 interface Props {
     setIsVisible: (isVisible: boolean) => void
     flipCard: () => void
+    setSecond: (isVis: boolean) => void
 }
 
-const PlayerHeader: React.FC<Props> = ({ setIsVisible, flipCard }) => {
+const PlayerHeader: React.FC<Props> = ({ setIsVisible, flipCard, setSecond }) => {
     return (
         <View className="h-10 w-full flex items-center justify-between flex-row">
             <TouchableOpacity onPress={() => setIsVisible(false)}>
@@ -17,7 +18,9 @@ const PlayerHeader: React.FC<Props> = ({ setIsVisible, flipCard }) => {
                 <TouchableOpacity onPress={() => flipCard()}>
                     <Icons.MoreIcon name="lyrics" size={20} color={"white"} className="mr-4" />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => setSecond(true)}
+                >
                     <Icons.MoreIcon name="more-vert" size={25} color={"white"} />
                 </TouchableOpacity>
             </View>

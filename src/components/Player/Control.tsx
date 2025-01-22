@@ -12,10 +12,10 @@ interface ControlersProps {
   isRepeat: boolean
   isShuffle: boolean
   playbackState:
-    | PlaybackState
-    | {
-        state: undefined
-      }
+  | PlaybackState
+  | {
+    state: undefined
+  }
   applicationQueue: InitialCentralQueue
   dispatch: Dispatch<UnknownAction>
   setIsShuffle: (isShuffle: boolean) => void
