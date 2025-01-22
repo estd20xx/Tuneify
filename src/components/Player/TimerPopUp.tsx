@@ -1,6 +1,6 @@
 import Slider from "@react-native-community/slider"
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
-import React from "react"
+import React, { memo } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import { applicationService } from "../../services/Tuneify.service"
 import Show from "../Common/Show"
@@ -51,4 +51,4 @@ const TimerPopUp: React.FC<PopUpInterface> = ({
   )
 }
 
-export default TimerPopUp
+export default memo(TimerPopUp)

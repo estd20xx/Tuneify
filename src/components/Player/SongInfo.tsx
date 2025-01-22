@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react"
 import { View } from "react-native"
 import TextTicker from "react-native-text-ticker"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
@@ -33,4 +33,4 @@ const SongInfo: React.FC<SongInfoInterface> = ({ currentTrack }) => {
   )
 }
 
-export default SongInfo
+export default memo(SongInfo)

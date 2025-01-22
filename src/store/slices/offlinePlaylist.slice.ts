@@ -23,17 +23,24 @@ const offlinePlaylist = createSlice({
       state: InitialPlaylistInterface,
       actions: PayloadAction<Array<ChildPlaylistInterface>>
     ) {
+      const isPresent = state.playlist.filter((c) => c[0].name == actions.payload[0].name)
+      if (isPresent.length > 0) {
+        return
+      }
       state.playlist.unshift(actions.payload)
     },
     addSongToPlaylist(
       state: InitialPlaylistInterface,
       actions: PayloadAction<UpdatePersonalizedPlaylist>
     ) {
+      const isPresent = state.playlist[actions.payload.index][0].songs.filter((c) => c.id == actions.payload.song.id)
+      if (isPresent.length > 0) {
+        return
+      }
       state.playlist[actions.payload.index][0].songs.push(actions.payload.song)
     }
   }
 })
-
 export const { newPlaylist, addSongToPlaylist } = offlinePlaylist.actions
 export const customePlaylist = (state: RootState) => state.persistedReducer.customePlaylist
 export default offlinePlaylist.reducer
