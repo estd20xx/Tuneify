@@ -10,7 +10,6 @@ export default class AlbumService implements Ialbum {
     setIsl: (isL: boolean) => void
   ): Promise<void> => {
     try {
-      console.log(this.getUrl())
       const result = await axios.get(this.getUrl())
       setCAlb(result.data.data.results)
       setIsl(false)

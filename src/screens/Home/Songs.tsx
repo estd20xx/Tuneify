@@ -19,7 +19,6 @@ const Songs = () => {
   const chnageQueueState = async (index: number, song: Song) => {
     try {
       if (songs.data?.songs) {
-        console.log(applicationQueue.data.screenId)
         if (applicationQueue.data.screenId != screens.songsScreenId) {
           await TrackPlayer.reset()
           await TrackPlayer.add(sanitize.songs(songs.data.songs))

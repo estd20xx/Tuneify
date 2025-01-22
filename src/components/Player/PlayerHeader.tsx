@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react"
 import { TouchableOpacity, View } from "react-native"
 import { Icons } from "../../constants/Icon"
 
@@ -26,4 +26,4 @@ const PlayerHeader: React.FC<Props> = ({ setIsVisible, flipCard, setSecond }) =>
   )
 }
 
-export default PlayerHeader
+export default memo(PlayerHeader)

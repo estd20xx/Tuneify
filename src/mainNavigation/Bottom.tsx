@@ -47,7 +47,7 @@ const BottomTab = () => {
               }
               return null
             }}
-          /** TODO : to shot label
+            /** TODO : to shot label
 getLabelText={({ route }) => {
 return route.name
 }}

@@ -102,7 +102,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       }
     }
   )
-
   return (
     <React.Fragment>
       <Modal
@@ -110,7 +109,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
         style={{ margin: 0 }}
         onBackButtonPress={() => setIsVisible(false)}
       >
-        <SideModal isVisible={isSide} setSecond={setIsSide} />
+        <SideModal isVisible={isSide} setSecond={setIsSide} song={currentTrack!} />
         <TimerPopUp
           vtimer={vtimer}
           value={value}

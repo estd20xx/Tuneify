@@ -57,6 +57,7 @@ const Playlists = () => {
                 >
                   {name?.length > 45 ? name.slice(0, 45) + "..." : name}
                 </Text>
+                <Text>{songs.length}</Text>
               </View>
             </TouchableOpacity>
           )
