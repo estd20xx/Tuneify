@@ -20,6 +20,7 @@ import Show from "../Common/Show"
 import Control from "./Control"
 import PlayerHeader from "./PlayerHeader"
 import PlayerInfo from "./PlayerInfo"
+import SideModal from "./SideModal"
 import SongInfo from "./SongInfo"
 import TimerPopUp from "./TimerPopUp"
 interface SongPlayerProps {
@@ -32,6 +33,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
   const lyrics = TypedSelectorHook(storedLyrics)
   const dispatch = useAppDispatch()
   const [isFlipped, setIsFlipped] = useState(false)
+  const [isSide, setIsSide] = useState<boolean>(false)
   const [flip, setFlip] = useState(new Animated.Value(0))
   const [vtimer, setVtimer] = useState(false)
   const [isTimer, setIsTimer] = useState(false)
@@ -102,96 +104,103 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
   )
 
   return (
-    <Modal
-      isVisible={isVisible}
-      style={{ margin: 0 }}
-      onBackButtonPress={() => setIsVisible(false)}
-    >
-      <TimerPopUp
-        vtimer={vtimer}
-        value={value}
-        setValue={setValue}
-        setIsTimer={setIsTimer}
-        setVtimer={setVtimer}
-        dispatch={dispatch}
-      />
-      <View className="w-full h-screen px-3 bg-[#181a20]">
-        <PlayerHeader
-          setIsVisible={setIsVisible}
-          flipCard={flipCard}
+    <React.Fragment>
+      <Modal
+        isVisible={isVisible}
+        style={{ margin: 0 }}
+        onBackButtonPress={() => setIsVisible(false)}
+      >
+        <SideModal
+          isVisible={isSide}
+          setSecond={setIsSide}
         />
-        <View className="relative h-1/2 w-full mt-6 flex items-center justify-center">
-          <Animated.View
-            style={[frontAnimatedStyle, { backfaceVisibility: "hidden" }]}
-            className="w-[90%]  overflow-hidden"
-          >
-            <Image
-              className="h-full w-full rounded-xl"
-              source={{
-                uri: currentTrack?.artwork
-              }}
-              resizeMode="contain"
-            />
-          </Animated.View>
-          <Animated.View
-            style={[backAnimatedStyle, { backfaceVisibility: "hidden" }]}
-            className="flex absolute  w-[95%] h-full  justify-center items-center rounded-xl  "
-          >
-            <Show isVisible={lyrics.data.lyrics?.length > 15}>
-              <ScrollView showsVerticalScrollIndicator={false}>
-                <Text className="text-white text-base  leading-8 flex items-center justify-center font-['300']">
-                  {lyrics.data.lyrics?.replaceAll("<br>", "\n")}
-                </Text>
-              </ScrollView>
-            </Show>
-            <Show isVisible={lyrics.data.lyrics?.length < 15}>
-              <Text className="absolute top-52 left-0 ">{lyrics.data.lyrics}</Text>
-            </Show>
-          </Animated.View>
-        </View>
-        <SongInfo currentTrack={currentTrack} />
-        <PlayerInfo
-          progress={progress}
-        />
-        <Control
-          nextAndPrevious={nextAndPrevious}
-          isRepeat={applicationQueue.isRepeat}
-          playbackState={playbackState}
-          applicationQueue={applicationQueue}
+        <TimerPopUp
+          vtimer={vtimer}
+          value={value}
+          setValue={setValue}
+          setIsTimer={setIsTimer}
+          setVtimer={setVtimer}
           dispatch={dispatch}
-          isShuffle={isShuffle}
-          setIsShuffle={setIsShuffle}
         />
-        <View className=" h-14 w-full mt-5  flex items-center justify-around flex-row">
-          <TouchableOpacity>
-            <Image
-              source={require("../../assets/images/tes/Timer-repeat.png")}
-              style={{ width: 28, height: 28, tintColor: "white" }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => [setVtimer(!vtimer)]}>
-            <Image
-              source={require("../../assets/images/tes/Timer.png")}
-              style={{
-                width: 32,
-                height: 32,
-                tintColor: isTimer ? "#ff8216" : "white"
-              }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => downloadSong(currentTrack!)}>
-            <Icons.MoreIcon name="download" size={23} color={"#ff8216"} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => [dispatch(addUserFavouritesData(currentTrack!))]}>
-            <Icons.HomeIcon
-              name="heart-fill"
-              size={23}
-              color={checkFavAvailable(currentTrack?.id || "") ? "gray" : "#ff8216"}
-            />
-          </TouchableOpacity>
+        <View className="w-full h-screen px-3 bg-[#181a20]">
+          <PlayerHeader
+            setIsVisible={setIsVisible}
+            flipCard={flipCard}
+            setSecond={setIsSide}
+          />
+          <View className="relative h-1/2 w-full mt-6 flex items-center justify-center">
+            <Animated.View
+              style={[frontAnimatedStyle, { backfaceVisibility: "hidden" }]}
+              className="w-[90%]  overflow-hidden"
+            >
+              <Image
+                className="h-full w-full rounded-xl"
+                source={{
+                  uri: currentTrack?.artwork
+                }}
+                resizeMode="contain"
+              />
+            </Animated.View>
+            <Animated.View
+              style={[backAnimatedStyle, { backfaceVisibility: "hidden" }]}
+              className="flex absolute  w-[95%] h-full  justify-center items-center rounded-xl  "
+            >
+              <Show isVisible={lyrics.data.lyrics?.length > 15}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  <Text className="text-white text-base  leading-8 flex items-center justify-center font-['300']">
+                    {lyrics.data.lyrics?.replaceAll("<br>", "\n")}
+                  </Text>
+                </ScrollView>
+              </Show>
+              <Show isVisible={lyrics.data.lyrics?.length < 15}>
+                <Text className="absolute top-52 left-0 ">{lyrics.data.lyrics}</Text>
+              </Show>
+            </Animated.View>
+          </View>
+          <SongInfo currentTrack={currentTrack} />
+          <PlayerInfo
+            progress={progress}
+          />
+          <Control
+            nextAndPrevious={nextAndPrevious}
+            isRepeat={applicationQueue.isRepeat}
+            playbackState={playbackState}
+            applicationQueue={applicationQueue}
+            dispatch={dispatch}
+            isShuffle={isShuffle}
+            setIsShuffle={setIsShuffle}
+          />
+          <View className=" h-14 w-full mt-5  flex items-center justify-around flex-row">
+            <TouchableOpacity>
+              <Image
+                source={require("../../assets/images/tes/Timer-repeat.png")}
+                style={{ width: 28, height: 28, tintColor: "white" }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => [setVtimer(!vtimer)]}>
+              <Image
+                source={require("../../assets/images/tes/Timer.png")}
+                style={{
+                  width: 32,
+                  height: 32,
+                  tintColor: isTimer ? "#ff8216" : "white"
+                }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => downloadSong(currentTrack!)}>
+              <Icons.MoreIcon name="download" size={23} color={"#ff8216"} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => [dispatch(addUserFavouritesData(currentTrack!))]}>
+              <Icons.HomeIcon
+                name="heart-fill"
+                size={23}
+                color={checkFavAvailable(currentTrack?.id || "") ? "gray" : "#ff8216"}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </Modal >
+      </Modal >
+    </React.Fragment>
   )
 }
 export default memo(SongPlayer)
