@@ -87,7 +87,7 @@ class ApplicationService implements ApplicationInterface {
           Capability.SkipToPrevious,
           Capability.SeekTo
         ],
-        stopIcon: require("../assets/images/forward.png")
+        stopIcon: require("../assets/images/stop.png")
       })
     } catch (error) {
       console.log(error)

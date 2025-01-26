@@ -9,10 +9,10 @@ import store, { persistor } from "./src/store/store"
 const App = () => {
   useEffect(() => {
     SplashScreen.hide()
+    StatusBar.setBackgroundColor("#1b1002")
   }, [])
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <StatusBar backgroundColor={"#181a20"} />
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={null}>
 

@@ -1,14 +1,9 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import React, { memo, useEffect } from "react"
-import { Platform, StatusBar } from "react-native"
+import React, { memo } from "react"
 import { tabBar } from "../constants/naviG"
 const Tab = createMaterialTopTabNavigator()
 const TabBar = () => {
-  useEffect(() => {
-    if (Platform.OS === "android") {
-      StatusBar.setBackgroundColor("#1b1002")
-    }
-  }, [])
+
   return (
     <Tab.Navigator
       screenOptions={{

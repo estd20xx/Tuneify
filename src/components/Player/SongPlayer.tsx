@@ -120,7 +120,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
         />
         <View className="w-full h-screen px-3 bg-background">
           <PlayerHeader setIsVisible={setIsVisible} flipCard={flipCard} setSecond={setIsSide} />
-          <View className="relative h-1/2 w-full mt-6 flex items-center justify-center">
+          <View className="relative h-1/2 w-full mt-9 flex items-center justify-center">
             <Animated.View
               style={[frontAnimatedStyle, { backfaceVisibility: "hidden" }]}
               className="w-[90%]  overflow-hidden"
@@ -131,6 +131,9 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                   uri: currentTrack?.artwork
                 }}
                 resizeMode="contain"
+                style={{
+                  borderRadius: 20
+                }}
               />
             </Animated.View>
             <Animated.View

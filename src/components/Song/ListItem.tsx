@@ -45,7 +45,7 @@ const ListItem: React.FC<ListItemProps> = React.memo(({ item, viewableItems, id 
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Image
               source={{ uri: item.image[2].link }}
-              style={{ width: 60, height: 60, borderRadius: 5 }}
+              style={{ width: 60, height: 60, borderRadius: 17 }}
             />
             <View style={{ marginLeft: 10 }}>
               <Text
