@@ -53,7 +53,10 @@ const Favourites = () => {
         removeClippedSubviews={true}
         windowSize={10}
         ListHeaderComponent={
-          <FavouriteHeader shuffleHandler={shuffleHandler} simplePlayHandler={simplePlayHandler} />
+          <FavouriteHeader
+            total={data.favouriteData.length}
+            shuffleHandler={shuffleHandler}
+            simplePlayHandler={simplePlayHandler} />
         }
         renderItem={({ item, index }) => {
           return (
@@ -74,7 +77,7 @@ const Favourites = () => {
                   <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Image
                       source={{ uri: item?.artwork }}
-                      style={{ width: 60, height: 60, borderRadius: 5 }}
+                      style={{ width: 60, height: 60, borderRadius: 17 }}
                     />
                     <View style={{ marginLeft: 10 }}>
                       <Text

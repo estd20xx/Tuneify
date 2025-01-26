@@ -33,7 +33,9 @@ const offlinePlaylist = createSlice({
       state: InitialPlaylistInterface,
       actions: PayloadAction<UpdatePersonalizedPlaylist>
     ) {
-      const isPresent = state.playlist[actions.payload.index][0].songs.filter((c) => c.id == actions.payload.song.id)
+      const isPresent = state.playlist[actions.payload.index][0].songs.filter(
+        (c) => c.id == actions.payload.song.id
+      )
       if (isPresent.length > 0) {
         return
       }

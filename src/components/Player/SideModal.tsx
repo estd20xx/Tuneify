@@ -69,10 +69,12 @@ const SideModal: React.FC<Props> = ({ isVisible, setSecond, song }) => {
       </Show>
       <View
         className="w-full h-[70%] bg-[#15130b]  absolute
-            bottom-0"
+            bottom-0 rounded-t-3xl border-t-2 border-slate-300"
       >
         <View className="w-full p-2 overflow-hidden z-10">
-          <Text className="text-2xl font-['500'] border-b-2 border-gray-300 mb-2 self-center">Playlists</Text>
+          <Text className="text-2xl font-['500'] border-b-2 border-gray-300 mb-2 self-center">
+            Playlists
+          </Text>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View className="w-full pb-32  flex items-center  gap-2 justify-evenly flex-row flex-wrap  overflow-hidden">
               {offlinePlaylist.playlist.map((playlist, index) => {
@@ -81,7 +83,7 @@ const SideModal: React.FC<Props> = ({ isVisible, setSecond, song }) => {
                   <TouchableOpacity
                     key={name.concat(String(index))}
                     className="w-[30%] h-36 mt-2 bg-black items-center justify-center rounded-xl overflow-hidden"
-                    onPress={() => dispatch(addSongToPlaylist({ song, index }))}
+                    onPress={() => [dispatch(addSongToPlaylist({ song, index })), setSecond(false)]}
                   >
                     <ImageBackground
                       source={{ uri: songs[0].artwork }}
