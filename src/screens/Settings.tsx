@@ -10,6 +10,7 @@ const settingService = new SettingService()
 const Settings = () => {
   const settingData = TypedSelectorHook(tuneifyUser)
   const dispatch = useAppDispatch()
+  console.log("setting render")
   return (
     <View className="w-full h-screen ">
       <View className="w-full  h-auto flex items-center flex-row justify-center">

@@ -61,11 +61,11 @@ const BottomPlayer = () => {
                 applicationService.playPauseAction(playbackState, applicationQueue, dispatch)
               }
             >
-              <Show isVisible={playbackState.state == State.Playing}>
-                <Icons.PlayIcon name="pause" color={"white"} size={20} />
-              </Show>
               <Show isVisible={playbackState.state != State.Playing}>
                 <Icons.PlayIcon name="play" color={"white"} size={20} />
+              </Show>
+              <Show isVisible={playbackState.state == State.Playing}>
+                <Icons.PlayIcon name="pause" color={"white"} size={20} />
               </Show>
             </TouchableOpacity>
           </TouchableOpacity>

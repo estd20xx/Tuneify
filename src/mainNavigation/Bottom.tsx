@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CommonActions } from "@react-navigation/native"
 import React, { memo } from "react"
-import { View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { BottomNavigation } from "react-native-paper"
 import BottomPlayer from "../components/Player/BottomPlayer"
 import { TabItems } from "../constants/naviG"
@@ -47,7 +47,7 @@ const BottomTab = () => {
               }
               return null
             }}
-            /** TODO : to shot label
+          /** TODO : to shot label
 getLabelText={({ route }) => {
 return route.name
 }}
@@ -73,4 +73,22 @@ return route.name
     </Tab.Navigator>
   )
 }
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bottomSheetContainer: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  content: {
+    padding: 20,
+  },
+});
 export default memo(BottomTab)

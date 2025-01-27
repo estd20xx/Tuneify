@@ -3,7 +3,8 @@ import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
   PlaybackState,
-  RepeatMode
+  RepeatMode,
+  State
 } from "react-native-track-player"
 import { ApplicationInterface } from "../Interfaces/application.interface"
 import { changeTunifyState, InitialCentralQueue, songRepeat } from "../store/slices/Queue.slice"
@@ -51,8 +52,7 @@ class ApplicationService implements ApplicationInterface {
     state: InitialCentralQueue,
     dispatch: Dispatch<UnknownAction>
   ): Promise<void> => {
-    state.data?.isPlaying ? await TrackPlayer.pause() : await TrackPlayer.play()
-    dispatch(changeTunifyState())
+    playbackState.state == State.Playing ? await TrackPlayer.pause() : await TrackPlayer.play()
   }
   public setUpPlayer = async () => {
     try {
