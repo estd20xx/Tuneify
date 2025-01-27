@@ -1,5 +1,13 @@
 import React, { memo, useEffect, useRef, useState } from "react"
-import { FlatList, Image, Keyboard, Text, TouchableOpacity, View } from "react-native"
+import {
+  FlatList,
+  Image,
+  Keyboard,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native"
 import { Bounce } from "react-native-animated-spinkit"
 import TrackPlayer from "react-native-track-player"
 import { screens } from "../api/base/constrants"
@@ -71,9 +79,7 @@ const Search = () => {
 
   const handleLoadMore = () => {
     if (isFetchingMore || searchedData.isLoading) return
-
     setIsFetchingMore(true)
-
     const nextQuery = {
       ...searchQuery,
       p: searchQuery.p + 1
@@ -94,6 +100,7 @@ const Search = () => {
   return (
     <View className="w-full h-screen flex items-center mb-20">
       <Input setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
+      {/* <SearchSwitch /> */}
       <Show isVisible={searchedData.isLoading}>
         <View className="w-full h-screen flex items-center justify-center bg-black">
           <Bounce size={140} color="#ff8216" />
@@ -102,6 +109,7 @@ const Search = () => {
       <Show isVisible={!searchedData.isLoading}>
         <View className="w-full h-full ">
           <FlatList
+            refreshControl={<RefreshControl refreshing={searchedData.isMoreLoading} />}
             ref={flatListRef}
             data={searchedData.data?.songs}
             keyExtractor={(item, index) => `${item.id}-${index}`}
@@ -129,21 +137,25 @@ const Search = () => {
                   className="w-full h-16 mt-2 flex flex-row items-center"
                   onPress={() => chnageQueueState(item)}
                 >
-                  <View className="h-16 w-20  pl-2">
-                    <Image source={{ uri: item.image[1].link }} className="h-16 w-16 rounded-md" />
+                  <View className="h-16 w-20 pl-2">
+                    <Image
+                      source={{ uri: item.image[1].link }}
+                      style={{ width: 60, height: 60, borderRadius: 17 }}
+                      resizeMode="contain"
+                    />
                   </View>
-                  <View className="w-4/5 ">
+                  <View className="w-4/5">
                     <Text
                       style={{
                         fontSize: 15,
-                        fontFamily: "500",
+                        fontFamily: "400",
                         color: item.id == applicationQueue.data.song?.id ? "#16FF00" : "white"
                       }}
                     >
                       {item.title?.length > 45 ? item.title.slice(0, 45) + "..." : item.title}
                     </Text>
                     <Text style={{ fontSize: 10, color: "#d0d0d1", fontFamily: "200" }}>
-                      {item.artist}
+                      {item.artist.length > 45 ? item.artist.slice(0, 45) + "..." : item.artist}
                     </Text>
                   </View>
                 </TouchableOpacity>

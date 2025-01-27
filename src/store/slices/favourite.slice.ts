@@ -25,7 +25,7 @@ const favouriteSlice = createSlice({
         artwork: actions.payload.artwork!,
         url: actions.payload.url
       }
-      state.favouriteData.push(dtx)
+      state.favouriteData.unshift(dtx)
     }
   }
 })

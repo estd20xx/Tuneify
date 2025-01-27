@@ -17,8 +17,8 @@ const persistConfig = {
   key: "@ap",
   version: 1,
   storage: AsyncStorage,
+  blacklist: ["childState", "album", "playlist", "searchedSong", "lyrics"],
   whitelist: ["home", "offline", "playerQueue", "geet", "favourite", "user", "customePlaylist"]
-  // whitelist: ["customePlaylist"]
 }
 const RootReducer = combineReducers({
   user: userSlice,

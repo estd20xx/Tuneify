@@ -56,8 +56,9 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
             return (
               <View
                 key={current.first}
-                className={`${nre == index ? "w-14" : "w-5"
-                  } h-2 rounded-full duration-1000  bg-themeOrange ml-1`}
+                className={`${
+                  nre == index ? "w-14" : "w-5"
+                } h-2 rounded-full duration-1000  bg-themeOrange ml-1`}
               />
             )
           })}

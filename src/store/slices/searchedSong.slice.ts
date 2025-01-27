@@ -6,11 +6,13 @@ import { RootState } from "../store"
 interface InitialSearchedSong {
   data: SearchedSongs | null
   isLoading: boolean
+  isMoreLoading: boolean
   isError: boolean
 }
 const initialState: InitialSearchedSong = {
   data: null,
   isLoading: false,
+  isMoreLoading: false,
   isError: false
 }
 const searchedSongsSlice = createSlice({
@@ -42,11 +44,24 @@ const searchedSongsSlice = createSlice({
         }
       )
       .addCase(
+        searchSongPagination.getSearchedSongDetails.pending,
+        (state: InitialSearchedSong) => {
+          state.isMoreLoading = true
+        }
+      )
+      .addCase(
         searchSongPagination.getSearchedSongDetails.fulfilled,
         (state: InitialSearchedSong, actions: PayloadAction<SearchedSongs>) => {
           if (state.data?.songs) {
             state.data.songs.push(...actions.payload.songs)
           }
+          state.isMoreLoading = false
+        }
+      )
+      .addCase(
+        searchSongPagination.getSearchedSongDetails.rejected,
+        (state: InitialSearchedSong, actions: PayloadAction<any>) => {
+          state.isMoreLoading = false
         }
       )
   }
