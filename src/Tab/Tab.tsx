@@ -3,7 +3,6 @@ import React, { memo } from "react"
 import { tabBar } from "../constants/naviG"
 const Tab = createMaterialTopTabNavigator()
 const TabBar = () => {
-
   return (
     <Tab.Navigator
       screenOptions={{

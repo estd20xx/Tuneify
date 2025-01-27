@@ -56,7 +56,8 @@ const Favourites = () => {
           <FavouriteHeader
             total={data.favouriteData.length}
             shuffleHandler={shuffleHandler}
-            simplePlayHandler={simplePlayHandler} />
+            simplePlayHandler={simplePlayHandler}
+          />
         }
         renderItem={({ item, index }) => {
           return (

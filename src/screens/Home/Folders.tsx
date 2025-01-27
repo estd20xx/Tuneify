@@ -37,8 +37,9 @@ const Folders = () => {
   }
   return (
     <View
-      className={`w-full ${localFile.LocalSong.length ? "h-auto" : "h-screen flex items-center justify-center"
-        }`}
+      className={`w-full ${
+        localFile.LocalSong.length ? "h-auto" : "h-screen flex items-center justify-center"
+      }`}
     >
       <Show isVisible={localFile.LocalSong.length > 0}>
         <FlatList
@@ -63,7 +64,8 @@ const Folders = () => {
                 onPress={() => chnageQueueState(index, item)}
               >
                 <View className="h-16 w-20  pl-2">
-                  <Image source={{ uri: item.artwork }}
+                  <Image
+                    source={{ uri: item.artwork }}
                     className="h-16 w-16"
                     style={{
                       borderRadius: 17
