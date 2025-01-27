@@ -47,7 +47,7 @@ const BottomTab = () => {
               }
               return null
             }}
-          /** TODO : to shot label
+            /** TODO : to shot label
 getLabelText={({ route }) => {
 return route.name
 }}
@@ -74,21 +74,19 @@ return route.name
   )
 }
 
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
   bottomSheetContainer: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopRightRadius: 20
   },
   content: {
-    padding: 20,
-  },
-});
+    padding: 20
+  }
+})
 export default memo(BottomTab)
