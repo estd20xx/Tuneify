@@ -6,11 +6,11 @@
 
 Architecture | Link
 --- | ---
-Tuneify Universal | [Download](https://cloud.appwrite.io/v1/storage/buckets/676fb69000016bdbdd6e/files/679a31f600296a272647/view?project=676fb66c002a088e4331&mode=admin)
+Tuneify Universal | [Download](https://github.com/estd20xx/Tuneify/releases/download/v1.1.11/app-universal-release.apk)
 Tuneify arm64-v8a | [Download](https://github.com/estd20xx/Tuneify/releases/download/v1.1.11/app-arm64-v8a-release.apk)
-Tuneify armeabi-v7a | [Download](https://cloud.appwrite.io/v1/storage/buckets/676fb69000016bdbdd6e/files/679a31e90035c3d069ea/view?project=676fb66c002a088e4331&mode=admin)
-Tuneify x86_64 | [Download](https://cloud.appwrite.io/v1/storage/buckets/676fb69000016bdbdd6e/files/679a3201003284a7c678/view?project=676fb66c002a088e4331&mode=admin)
-Tuneify x86 | [Download](https://cloud.appwrite.io/v1/storage/buckets/676fb69000016bdbdd6e/files/679a32100026b77a9aa0/view?project=676fb66c002a088e4331&mode=admin)
+Tuneify armeabi-v7a | [Download](https://github.com/estd20xx/Tuneify/releases/download/v1.1.11/app-armeabi-v7a-release.apk)
+Tuneify x86_64 | [Download](https://github.com/estd20xx/Tuneify/releases/download/v1.1.11/app-x86_64-release.apk)
+Tuneify x86 | [Download](https://github.com/estd20xx/Tuneify/releases/download/v1.1.11/app-x86-release.apk)
 
 
 
