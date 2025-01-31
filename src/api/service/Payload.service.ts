@@ -1,4 +1,5 @@
 import { AlbumDetailsRequest, AlbumDetailsResponse } from "../interface/album.interface"
+import { DynamicResponse } from "../interface/Dynamic.interface"
 import {
   HomeDataRequest,
   HomeDataResponse,
@@ -188,5 +189,71 @@ export class PayloadService extends ApiService {
         }
       })
     }
+  }
+  protected dynamicSearchPayload = (data: any): DynamicResponse => {
+    const DynamicResponse: DynamicResponse = {
+      topQuery: data?.data?.topquery?.data?.map((current: any) => {
+        return {
+          id: current.id,
+          title: current.title,
+          type: current.type,
+          image: handleImageVariation(current.image)
+        }
+      }),
+      artists: data?.data?.artists?.data?.map((current: any) => {
+        return {
+          id: current.id,
+          title: current.title,
+          type: current.type,
+          image: handleImageVariation(current.image)
+        }
+      })
+      // playlists: data?.data?.playlists?.data?.map((current: any) => {
+      //   return {
+      //     id: current.id,
+      //     title: current.title,
+      //     type: current.type,
+      //     image: handleImageVariation(current.image),
+      //     perma_url: current.perma_url,
+      //     more_info: {
+      //       artist_name: current.more_info.artist_name,
+      //       entity_type: current.more_info.entity_type
+      //     }
+      //   }
+      // }),
+      // albums: data?.data?.albums?.data?.map((current: any) => {
+      //   return {
+      //     id: current.id,
+      //     title: current.title,
+      //     type: current.type,
+      //     image: handleImageVariation(current.image),
+      //     perma_url: current.perma_url,
+      //     more_info: {
+      //       music: current.more_info.music,
+      //       year: current.more_info.year,
+      //       language: current.more_info.language,
+      //     },
+      //     song_pids: current.song_pids,
+      //     descriptions: current.descriptions
+      //   }
+      // }),
+      // songs: data?.data?.songs?.data?.map((current: any) => {
+      //   return {
+      //     id: current.id,
+      //     title: current.title,
+      //     type: current.type,
+      //     image: handleImageVariation(current.image),
+      //     perma_url: current.perma_url,
+      //     more_info: {
+      //       album: current.more_info.album,
+      //       album_id: current.more_info.album_id,
+      //       primary_artists: current.more_info.primary_artists,
+      //       singers: current.more_info.singers,
+      //     },
+      //     descriptions: current.descriptions,
+      //   }
+      // })
+    }
+    return DynamicResponse
   }
 }

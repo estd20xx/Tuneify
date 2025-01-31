@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View
 } from "react-native"
-import { Bounce } from "react-native-animated-spinkit"
 import TrackPlayer from "react-native-track-player"
 import { screens } from "../api/base/constrants"
 import { Song } from "../api/service/Payload.service"
@@ -16,9 +15,11 @@ import Show from "../components/Common/Show"
 import Input from "../components/Search/Input"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
 import { sanitize } from "../services/sanitizer.service"
+import { personalizedDynamic } from "../store/actions/SearchDynamic.action"
 import { personalizedSearchedSong } from "../store/actions/searchedSong.action"
 import { searchSongPagination } from "../store/actions/searchPagination.action"
 import { centralQueue, SpecificQueue, updateQueue } from "../store/slices/Queue.slice"
+import { dynamicSearchData } from "../store/slices/searchDynamic.slice"
 import { searchedSongData } from "../store/slices/searchedSong.slice"
 export interface SearchedSongQueryParams {
   p: number
@@ -28,6 +29,7 @@ export interface SearchedSongQueryParams {
 const Search = () => {
   const dispatch = useAppDispatch()
   const searchedData = TypedSelectorHook(searchedSongData)
+  const dynamicData = TypedSelectorHook(dynamicSearchData)
   const flatListRef = useRef<FlatList>(null)
   const [isFetchingMore, setIsFetchingMore] = useState(false)
   const [isInitialSearch, setIsInitialSearch] = useState(true)
@@ -67,6 +69,7 @@ const Search = () => {
     const controller: AbortController = new AbortController()
     const signal: AbortSignal = controller.signal
     const handler = setTimeout(() => {
+      dispatch(personalizedDynamic.searchDynamicHandler({ query: searchQuery.q, signal }))
       dispatch(
         personalizedSearchedSong.getSearchedSongDetails({ query: { ...searchQuery, p: 1 }, signal })
       )
@@ -100,12 +103,6 @@ const Search = () => {
   return (
     <View className="w-full h-screen flex items-center mb-20">
       <Input setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
-      {/* <SearchSwitch /> */}
-      <Show isVisible={searchedData.isLoading}>
-        <View className="w-full h-screen flex items-center justify-center bg-black">
-          <Bounce size={140} color="#ff8216" />
-        </View>
-      </Show>
       <Show isVisible={!searchedData.isLoading}>
         <View className="w-full h-full ">
           <FlatList
@@ -120,6 +117,42 @@ const Search = () => {
             contentContainerStyle={{ paddingTop: 10 }}
             removeClippedSubviews={true}
             windowSize={10}
+            ListHeaderComponent={() => {
+              return (
+                <View className="">
+                  {dynamicData.data?.topQuery.map((current) => {
+                    return (
+                      <TouchableOpacity
+                        key={current.id}
+                        className="w-full h-16 mt-2 flex flex-row items-center"
+                      >
+                        <View className="h-16 w-20 pl-2">
+                          <Image
+                            source={{ uri: current.image[1].link }}
+                            style={{ width: 60, height: 60, borderRadius: 17 }}
+                            resizeMode="contain"
+                          />
+                        </View>
+                        <View className="w-4/5">
+                          <Text
+                            style={{
+                              fontSize: 15,
+                              fontFamily: "400",
+                              color: "purple"
+                            }}
+                          >
+                            {current.title}
+                          </Text>
+                          <Text style={{ fontSize: 10, color: "#d0d0d1", fontFamily: "200" }}>
+                            {current.type}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    )
+                  })}
+                </View>
+              )
+            }}
             ListFooterComponent={() => {
               return (
                 <Show isVisible={searchedData.data != null}>

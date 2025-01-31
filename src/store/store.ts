@@ -10,6 +10,7 @@ import offlineSlice from "./slices/offline.slice"
 import offlinePlaylist from "./slices/offlinePlaylist.slice"
 import playlistDetailsSlice from "./slices/playlistDetails.slice"
 import PlayerQueue from "./slices/Queue.slice"
+import searchDynamics from "./slices/searchDynamic.slice"
 import searchedSongsSlice from "./slices/searchedSong.slice"
 import songSliceNew from "./slices/song.slice"
 import userSlice from "./slices/user.slice"
@@ -17,7 +18,7 @@ const persistConfig = {
   key: "@ap",
   version: 1,
   storage: AsyncStorage,
-  blacklist: ["childState", "album", "playlist", "searchedSong", "lyrics"],
+  blacklist: ["childState", "album", "playlist", "searchedSong", "lyrics", "dynamic"],
   whitelist: ["home", "offline", "playerQueue", "geet", "favourite", "user", "customePlaylist"]
 }
 const RootReducer = combineReducers({
@@ -32,7 +33,8 @@ const RootReducer = combineReducers({
   offline: offlineSlice,
   favourite: favouriteSlice,
   customePlaylist: offlinePlaylist,
-  lyrics: lyricsSlice
+  lyrics: lyricsSlice,
+  dynamic: searchDynamics
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({
