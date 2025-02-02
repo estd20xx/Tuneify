@@ -10,13 +10,12 @@ const settingService = new SettingService()
 const Settings = () => {
   const settingData = TypedSelectorHook(tuneifyUser)
   const dispatch = useAppDispatch()
-  console.log("setting render")
   return (
     <View className="w-full h-screen ">
       <View className="w-full  h-auto flex items-center flex-row justify-center">
         <Text className="  text-white text-base tracking-wider font-['400']">Setting</Text>
       </View>
-      <View className="w-full h-20  overflow-hidden flex items-center flex-row pl-2">
+      <View className="w-full h-20 overflow-hidden flex items-center flex-row pl-2">
         <TouchableOpacity
           className="-z-30"
           onPress={() => settingService.changeProfileImage(dispatch)}

@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import { persistReducer, persistStore } from "redux-persist"
 import albumSlice from "./slices/album.slice"
@@ -14,10 +13,11 @@ import searchDynamics from "./slices/searchDynamic.slice"
 import searchedSongsSlice from "./slices/searchedSong.slice"
 import songSliceNew from "./slices/song.slice"
 import userSlice from "./slices/user.slice"
+import { reduxStorage } from "./storage.store"
 const persistConfig = {
   key: "@ap",
   version: 1,
-  storage: AsyncStorage,
+  storage: reduxStorage,
   blacklist: ["childState", "album", "playlist", "searchedSong", "lyrics", "dynamic"],
   whitelist: ["home", "offline", "playerQueue", "geet", "favourite", "user", "customePlaylist"]
 }
