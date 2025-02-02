@@ -1,5 +1,6 @@
 import React, { memo, useCallback, useEffect, useState } from "react"
 import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import fs from "react-native-fs"
 import Modal from "react-native-modal"
 import TrackPlayer, {
   Event,
@@ -12,12 +13,14 @@ import { screens } from "../../api/base/constrants"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
+import { ApplicationCore } from "../../native/MusicFiles"
 import { getSongsLyrics } from "../../store/actions/lyrics.action"
 import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/favourite.slice"
 import { storedLyrics } from "../../store/slices/lyrics.slice"
 import { centralQueue, updateSongQueue } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
 import Control from "./Control"
+import DownloadInfo from "./downloadInfo"
 import PlayerHeader from "./PlayerHeader"
 import PlayerInfo from "./PlayerInfo"
 import SideModal from "./SideModal"
@@ -42,6 +45,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
   const [value, setValue] = useState<number>(0)
   const [isShuffle, setIsShuffle] = useState<boolean>(false)
   const progress = useProgress()
+  const [downloadProgress, setDownloadProgress] = useState<number>(0)
   const flipCard = useCallback(() => {
     Animated.timing(flip, {
       toValue: isFlipped ? 0 : 180,
@@ -80,12 +84,28 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
     isNext ? await TrackPlayer.skipToNext() : await TrackPlayer.skipToPrevious()
   }
   const checkFavAvailable = (currentId: string): boolean => {
-    const data = favourite.favouriteData.filter((liked: any) => liked.id == currentId)
-    if (data.length > 0) return false
+    if (favourite.favouriteData.filter((liked: any) => liked.id == currentId).length > 0)
+      return false
     return true
   }
   const downloadSong = async (c: StoreSongTypes) => {
     try {
+      const downloadDest = `${fs.ExternalStorageDirectoryPath}/Music/${c.title.concat(".mp3")}`
+      fs.downloadFile({
+        fromUrl: c.url,
+        toFile: downloadDest,
+        background: true,
+        discretionary: true,
+        progress: (res) =>
+          setDownloadProgress(Math.floor((res.bytesWritten / res.contentLength) * 100))
+      })
+        .promise.then(async (response) => {
+          await ApplicationCore.scanFile(downloadDest)
+          setDownloadProgress(0)
+        })
+        .catch((err) => {
+          console.log("Download error:", err)
+        })
     } catch (error) {
       console.log("Eroor downloading song...")
     }
@@ -109,6 +129,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
         style={{ margin: 0 }}
         onBackButtonPress={() => setIsVisible(false)}
       >
+        <DownloadInfo progress={downloadProgress} />
         <SideModal isVisible={isSide} setSecond={setIsSide} song={currentTrack!} />
         <TimerPopUp
           vtimer={vtimer}
