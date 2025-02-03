@@ -7,7 +7,7 @@ import TrackPlayer, {
   State
 } from "react-native-track-player"
 import { ApplicationInterface } from "../Interfaces/application.interface"
-import { changeTunifyState, InitialCentralQueue, songRepeat } from "../store/slices/Queue.slice"
+import { InitialCentralQueue, songRepeat } from "../store/slices/Queue.slice"
 class ApplicationService implements ApplicationInterface {
   public repeatMode = async (
     state: InitialCentralQueue,
@@ -22,9 +22,14 @@ class ApplicationService implements ApplicationInterface {
       console.log(error)
     }
   }
-  public timerSkip = async (position: number, forward: boolean): Promise<void> => {
+  public timerSkip = async (
+    position: number,
+    forward: boolean
+  ): Promise<void> => {
     try {
-      forward ? await TrackPlayer.seekTo(position + 10) : await TrackPlayer.seekTo(position - 10)
+      forward
+        ? await TrackPlayer.seekTo(position + 10)
+        : await TrackPlayer.seekTo(position - 10)
     } catch (error) {
       console.log("Error happens during forward and backward")
     }
@@ -32,13 +37,12 @@ class ApplicationService implements ApplicationInterface {
   public timerMusicOff = (
     period: number,
     dispatch: Dispatch<UnknownAction>,
-    setIsTimer: (isTimer: boolean) => void
+    toggleTimer: () => void
   ): void => {
     const trackOff = async () => {
       try {
         await TrackPlayer.pause()
-        dispatch(changeTunifyState())
-        setIsTimer(false)
+        toggleTimer()
       } catch (error) {
         console.log("Error In turning of Music")
       }
@@ -52,7 +56,9 @@ class ApplicationService implements ApplicationInterface {
     state: InitialCentralQueue,
     dispatch: Dispatch<UnknownAction>
   ): Promise<void> => {
-    playbackState.state == State.Playing ? await TrackPlayer.pause() : await TrackPlayer.play()
+    playbackState.state == State.Playing
+      ? await TrackPlayer.pause()
+      : await TrackPlayer.play()
   }
   public setUpPlayer = async () => {
     try {
@@ -62,7 +68,8 @@ class ApplicationService implements ApplicationInterface {
       })
       await TrackPlayer.updateOptions({
         android: {
-          appKilledPlaybackBehavior: AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification
+          appKilledPlaybackBehavior:
+            AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification
         },
         capabilities: [
           Capability.Play,

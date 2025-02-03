@@ -1,5 +1,11 @@
 import React, { memo, useState } from "react"
-import { Alert, ImageBackground, ScrollView, TextInput, TouchableOpacity } from "react-native"
+import {
+  Alert,
+  ImageBackground,
+  ScrollView,
+  TextInput,
+  TouchableOpacity
+} from "react-native"
 import { View } from "react-native-animatable"
 import Modal from "react-native-modal"
 import { Text } from "react-native-paper"
@@ -13,10 +19,10 @@ import {
 import Show from "../Common/Show"
 type Props = {
   isVisible: boolean
-  setSecond: (isVisible: boolean) => void
+  togglePlayist: () => void
   song: StoreSongTypes
 }
-const SideModal: React.FC<Props> = ({ isVisible, setSecond, song }) => {
+const SideModal: React.FC<Props> = ({ isVisible, togglePlayist, song }) => {
   const offlinePlaylist = TypedSelectorHook(customePlaylist)
   const dispatch = useAppDispatch()
   const [isInput, setIsInput] = useState<boolean>(false)
@@ -41,7 +47,7 @@ const SideModal: React.FC<Props> = ({ isVisible, setSecond, song }) => {
   return (
     <Modal
       isVisible={isVisible}
-      onBackButtonPress={() => setSecond(false)}
+      onBackButtonPress={togglePlayist}
       className="w-full h-screen relative -left-5"
     >
       <Show isVisible={isInput}>
@@ -83,7 +89,10 @@ const SideModal: React.FC<Props> = ({ isVisible, setSecond, song }) => {
                   <TouchableOpacity
                     key={name.concat(String(index))}
                     className="w-[30%] h-36 mt-2 bg-black items-center justify-center rounded-xl overflow-hidden"
-                    onPress={() => [dispatch(addSongToPlaylist({ song, index })), setSecond(false)]}
+                    onPress={() => [
+                      dispatch(addSongToPlaylist({ song, index })),
+                      togglePlayist()
+                    ]}
                   >
                     <ImageBackground
                       source={{ uri: songs[0].artwork }}
@@ -100,7 +109,7 @@ const SideModal: React.FC<Props> = ({ isVisible, setSecond, song }) => {
         <View className="h-20 w-full bg-[#201b18] absolute -bottom-5 flex items-center justify-evenly flex-row z-20">
           <TouchableOpacity
             className="w-2/5 rounded-md bg-[#302625] py-3 flex items-center justify-center"
-            onPress={() => setSecond(false)}
+            onPress={togglePlayist}
           >
             <Text>cancel</Text>
           </TouchableOpacity>

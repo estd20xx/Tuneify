@@ -4,7 +4,9 @@ import { Song } from "../api/service/Payload.service"
 import Isanitizer from "../Interfaces/sanitizer.interface"
 import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
 export default class SanitizeService implements Isanitizer {
-  public albumDetails = (songsList: Array<TrendingAlbumSons>): Array<StoreSongTypes> => {
+  public albumDetails = (
+    songsList: Array<TrendingAlbumSons>
+  ): Array<StoreSongTypes> => {
     const data = songsList.map((cx) => {
       return {
         id: cx.id,
@@ -28,7 +30,9 @@ export default class SanitizeService implements Isanitizer {
     })
     return data
   }
-  public playList = (songsList: Array<PlayListSongList>): Array<StoreSongTypes> => {
+  public playList = (
+    songsList: Array<PlayListSongList>
+  ): Array<StoreSongTypes> => {
     const data = songsList.map((cx) => {
       return {
         id: cx.id,

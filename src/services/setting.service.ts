@@ -4,7 +4,9 @@ import { SettingInterface } from "../Interfaces/setting.interface"
 import { changeProfile } from "../store/slices/user.slice"
 import appNotification from "./appNotification.service"
 export default class SettingService implements SettingInterface {
-  public changeProfileImage = async (dispatch: Dispatch<UnknownAction>): Promise<void> => {
+  public changeProfileImage = async (
+    dispatch: Dispatch<UnknownAction>
+  ): Promise<void> => {
     try {
       const userImage = await ImagePicker.pickSingle({
         type: ImagePicker.types.images

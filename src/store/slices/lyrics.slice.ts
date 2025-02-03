@@ -1,4 +1,8 @@
-import { ActionReducerMapBuilder, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import {
+  ActionReducerMapBuilder,
+  createSlice,
+  PayloadAction
+} from "@reduxjs/toolkit"
 import { getSongsLyrics } from "../actions/lyrics.action"
 import { RootState } from "../store"
 interface LyricsResponse {
@@ -28,7 +32,10 @@ const lyricsSlice = createSlice({
       })
       .addCase(
         getSongsLyrics.fulfilled,
-        (state: InitialLyricsInterface, actions: PayloadAction<LyricsResponse>) => {
+        (
+          state: InitialLyricsInterface,
+          actions: PayloadAction<LyricsResponse>
+        ) => {
           state.isLoading = false
           state.data.lyrics = actions.payload.lyrics
         }

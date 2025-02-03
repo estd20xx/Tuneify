@@ -1,4 +1,8 @@
-import { ActionReducerMapBuilder, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import {
+  ActionReducerMapBuilder,
+  createSlice,
+  PayloadAction
+} from "@reduxjs/toolkit"
 import { SearchedSongs } from "../../api/service/Payload.service"
 import { personalizedSearchedSong } from "../actions/searchedSong.action"
 import { searchSongPagination } from "../actions/searchPagination.action"
@@ -67,5 +71,6 @@ const searchedSongsSlice = createSlice({
   }
 })
 export const {} = searchedSongsSlice.actions
-export const searchedSongData = (state: RootState) => state.persistedReducer.searchedSong
+export const searchedSongData = (state: RootState) =>
+  state.persistedReducer.searchedSong
 export default searchedSongsSlice.reducer

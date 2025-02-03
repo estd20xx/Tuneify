@@ -19,13 +19,19 @@ const homeSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(homeService.getHomeData.pending, (state: InitialHomeDataInerface) => {
-        state.isLoading = true
-        state.isError = false
-      })
+      .addCase(
+        homeService.getHomeData.pending,
+        (state: InitialHomeDataInerface) => {
+          state.isLoading = true
+          state.isError = false
+        }
+      )
       .addCase(
         homeService.getHomeData.fulfilled,
-        (state: InitialHomeDataInerface, action: PayloadAction<HomeDataResponse>) => {
+        (
+          state: InitialHomeDataInerface,
+          action: PayloadAction<HomeDataResponse>
+        ) => {
           state.data = action.payload
           state.isLoading = false
         }

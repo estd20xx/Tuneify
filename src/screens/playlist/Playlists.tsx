@@ -1,27 +1,10 @@
-import React, { memo, useState } from "react"
+import React, { memo } from "react"
 import { FlatList, Text, TouchableOpacity, View } from "react-native"
 import FastImage from "react-native-fast-image"
-import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import {
-  ChildPlaylistInterface,
-  customePlaylist,
-  newPlaylist
-} from "../../store/slices/offlinePlaylist.slice"
-import { centralQueue } from "../../store/slices/Queue.slice"
+import { TypedSelectorHook } from "../../hooks/store.hook"
+import { customePlaylist } from "../../store/slices/offlinePlaylist.slice"
 const Playlists = () => {
-  const dispatch = useAppDispatch()
   const offlinePlaylist = TypedSelectorHook(customePlaylist)
-  const [userin, setUserin] = useState<string>("")
-  const applicationQueue = TypedSelectorHook(centralQueue)
-  const createNewPlaylist = () => {
-    if (applicationQueue.data.song) {
-      const d: ChildPlaylistInterface = {
-        name: userin,
-        songs: [applicationQueue.data.song]
-      }
-      dispatch(newPlaylist([d]))
-    }
-  }
   return (
     <View className="w-full h-screen flex   justify-center flex-row">
       <FlatList

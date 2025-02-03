@@ -1,6 +1,10 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import React, { MemoExoticComponent } from "react"
-import { AlbumResponse, ChartsResponse, PlaylistResponse } from "../api/interface/module.interface"
+import {
+  AlbumResponse,
+  ChartsResponse,
+  PlaylistResponse
+} from "../api/interface/module.interface"
 export interface NavigationStringsTypes {
   splash: string
   onboarding: string
@@ -33,8 +37,14 @@ export type RootStackParamList = {
   charts: undefined
   search: undefined
 }
-export type splashScreen = NativeStackNavigationProp<RootStackParamList, "splash">
-export type onBoardingScreen = NativeStackNavigationProp<RootStackParamList, "onboarding">
+export type splashScreen = NativeStackNavigationProp<
+  RootStackParamList,
+  "splash"
+>
+export type onBoardingScreen = NativeStackNavigationProp<
+  RootStackParamList,
+  "onboarding"
+>
 export interface SplashScreenPropsTypes {
   navigation: splashScreen
 }

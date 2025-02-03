@@ -18,13 +18,19 @@ const albumSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(album.getAlbumSongs.pending, (state: InitialAlbumSongsInterface) => {
-        state.isLoading = true
-        state.isError = false
-      })
+      .addCase(
+        album.getAlbumSongs.pending,
+        (state: InitialAlbumSongsInterface) => {
+          state.isLoading = true
+          state.isError = false
+        }
+      )
       .addCase(
         album.getAlbumSongs.fulfilled,
-        (state: InitialAlbumSongsInterface, action: PayloadAction<AlbumDetailsResponse>) => {
+        (
+          state: InitialAlbumSongsInterface,
+          action: PayloadAction<AlbumDetailsResponse>
+        ) => {
           state.data = action.payload
           state.isLoading = false
         }

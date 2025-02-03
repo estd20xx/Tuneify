@@ -41,7 +41,10 @@ const Suggested = () => {
                 data={suggested?.data?.tuneifyTopPlaylistsResponse}
                 topic={"Playlists"}
               />
-              <component.CAlbums data={suggested?.data?.tuneifyAlbumsResponse} topic={"Albums"} />
+              <component.CAlbums
+                data={suggested?.data?.tuneifyAlbumsResponse}
+                topic={"Albums"}
+              />
             </View>
           )}
         </Show>

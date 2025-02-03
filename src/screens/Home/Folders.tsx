@@ -1,5 +1,12 @@
 import React, { memo } from "react"
-import { FlatList, Image, RefreshControl, Text, TouchableOpacity, View } from "react-native"
+import {
+  FlatList,
+  Image,
+  RefreshControl,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native"
 import TrackPlayer from "react-native-track-player"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { screens } from "../../api/base/constrants"
@@ -7,7 +14,11 @@ import Show from "../../components/Common/Show"
 import NotFound from "../../components/offline/Not-found"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { musicService } from "../../services/localMedia.service"
-import { centralQueue, SpecificQueue, updateQueue } from "../../store/slices/Queue.slice"
+import {
+  centralQueue,
+  SpecificQueue,
+  updateQueue
+} from "../../store/slices/Queue.slice"
 import { tuneifyOfflines } from "../../store/slices/offline.slice"
 const Folders = () => {
   const localFile = TypedSelectorHook(tuneifyOfflines)
@@ -38,7 +49,9 @@ const Folders = () => {
   return (
     <View
       className={`w-full ${
-        localFile.LocalSong.length ? "h-auto" : "h-screen flex items-center justify-center"
+        localFile.LocalSong.length
+          ? "h-auto"
+          : "h-screen flex items-center justify-center"
       }`}
     >
       <Show isVisible={localFile.LocalSong.length > 0}>
@@ -77,7 +90,10 @@ const Folders = () => {
                     style={{
                       fontSize: 14,
                       fontFamily: "500",
-                      color: applicationQueue.data.song?.id == item.id ? "#16FF00" : "#FFF"
+                      color:
+                        applicationQueue.data.song?.id == item.id
+                          ? "#16FF00"
+                          : "#FFF"
                     }}
                   >
                     {item.title.slice(0, 40)}

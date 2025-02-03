@@ -1,5 +1,12 @@
 import { memo } from "react"
-import { BackHandler, FlatList, Image, Text, TouchableOpacity, View } from "react-native"
+import {
+  BackHandler,
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native"
 import UserImage from "react-native-fast-image"
 import Toast from "react-native-toast-message"
 import { settingsData } from "../constants/Settings"
@@ -13,7 +20,9 @@ const Settings = () => {
   return (
     <View className="w-full h-screen ">
       <View className="w-full  h-auto flex items-center flex-row justify-center">
-        <Text className="  text-white text-base tracking-wider font-['400']">Setting</Text>
+        <Text className="  text-white text-base tracking-wider font-['400']">
+          Setting
+        </Text>
       </View>
       <View className="w-full h-20 overflow-hidden flex items-center flex-row pl-2">
         <TouchableOpacity
@@ -29,7 +38,9 @@ const Settings = () => {
             className="h-16 w-16 rounded-full"
           />
         </TouchableOpacity>
-        <Text className=" ml-3 text-white font-['300'] text-xl">{settingData.userName}</Text>
+        <Text className=" ml-3 text-white font-['300'] text-xl">
+          {settingData.userName}
+        </Text>
       </View>
       <Toast />
       <FlatList
@@ -49,7 +60,11 @@ const Settings = () => {
               }}
               onPress={() => item.title == "Quit" && BackHandler.exitApp()}
             >
-              <Image source={item.leftIcon} style={{ tintColor: "#d0d0d1" }} className="h-5 w-5" />
+              <Image
+                source={item.leftIcon}
+                style={{ tintColor: "#d0d0d1" }}
+                className="h-5 w-5"
+              />
               <Text className="ml-4 text-gray-300 text-base font-['300'] tracking-widest">
                 {item.title}
               </Text>

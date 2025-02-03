@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
 import { View } from "react-native-animatable"
 import TextTicker from "react-native-text-ticker"
-import { PlaybackState, State, usePlaybackState } from "react-native-track-player"
+import {
+  PlaybackState,
+  State,
+  usePlaybackState
+} from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import { usePlayer } from "../../hooks/usePlayer"
 import { applicationService } from "../../services/Tuneify.service"
-import { changeApplicationSetup, tunifyChild } from "../../store/slices/childState.slice"
+import {
+  changeApplicationSetup,
+  tunifyChild
+} from "../../store/slices/childState.slice"
 import { centralQueue } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
 import SongPlayer from "./SongPlayer"
 const BottomPlayer = () => {
   const dispatch = useAppDispatch()
-  const [isVisible, setIsVisible] = useState(false)
+  const [isPlayer, togglePlayer] = usePlayer()
   const playbackState: PlaybackState | { state: undefined } = usePlaybackState()
   const applicationQueue = TypedSelectorHook(centralQueue)
   const playerState = TypedSelectorHook(tunifyChild)
@@ -29,9 +37,7 @@ const BottomPlayer = () => {
           <TouchableOpacity
             className="absolute h-14 w-full bottom-0 flex flex-row items-center justify-center px-3 bg-bottomPlayer"
             activeOpacity={1}
-            onPress={() => {
-              setIsVisible(true)
-            }}
+            onPress={togglePlayer}
           >
             <View className="flex flex-row items-center h-full w-11/12 overflow-hidden">
               <Image
@@ -58,7 +64,11 @@ const BottomPlayer = () => {
             </View>
             <TouchableOpacity
               onPress={() =>
-                applicationService.playPauseAction(playbackState, applicationQueue, dispatch)
+                applicationService.playPauseAction(
+                  playbackState,
+                  applicationQueue,
+                  dispatch
+                )
               }
             >
               <Show isVisible={playbackState.state != State.Playing}>
@@ -69,7 +79,7 @@ const BottomPlayer = () => {
               </Show>
             </TouchableOpacity>
           </TouchableOpacity>
-          <SongPlayer isVisible={isVisible} setIsVisible={setIsVisible} />
+          <SongPlayer isVisible={isPlayer} togglePlayer={togglePlayer} />
         </View>
       )}
     </>

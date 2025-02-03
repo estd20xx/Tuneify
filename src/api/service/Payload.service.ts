@@ -1,4 +1,7 @@
-import { AlbumDetailsRequest, AlbumDetailsResponse } from "../interface/album.interface"
+import {
+  AlbumDetailsRequest,
+  AlbumDetailsResponse
+} from "../interface/album.interface"
 import { DynamicResponse } from "../interface/Dynamic.interface"
 import {
   HomeDataRequest,
@@ -31,39 +34,43 @@ export interface SearchedSongs {
 export class PayloadService extends ApiService {
   protected homePayload(homeDataRequest: HomeDataRequest): HomeDataResponse {
     const homeDataPayload: HomeDataResponse = {
-      tuneifyTrendingAlbumsResponse: homeDataRequest.tuneifyTrendingAlbums.map((current) => {
-        return {
-          id: current.id,
-          title: current.title,
-          subtitle: current.subtitle,
-          header_desc: current.subtitle,
-          type: current.type,
-          perma_url: current.perma_url,
-          artwork: handleImageVariation(current.image),
-          language: current.language,
-          year: current.year,
-          release_date: current.more_info.release_date,
-          song_count: current.more_info.song_count,
-          artists: current.more_info.artistMap?.artists
-        }
-      }),
-      tuneifyTopPlaylistsResponse: homeDataRequest.tuneifyTopPlaylists.map((current) => {
-        return {
-          id: current.id,
-          title: current.title,
-          subtitle: current.subtitle,
-          type: current.type,
-          artwork: handleImageVariation(current.image),
-          perma_url: current.perma_url,
-          more_info: {
+      tuneifyTrendingAlbumsResponse: homeDataRequest.tuneifyTrendingAlbums.map(
+        (current) => {
+          return {
+            id: current.id,
+            title: current.title,
+            subtitle: current.subtitle,
+            header_desc: current.subtitle,
+            type: current.type,
+            perma_url: current.perma_url,
+            artwork: handleImageVariation(current.image),
+            language: current.language,
+            year: current.year,
+            release_date: current.more_info.release_date,
             song_count: current.more_info.song_count,
-            firstname: current.more_info.firstname,
-            follower_count: current.more_info.follower_count,
-            last_updated: current.more_info.last_updated,
-            uid: current.more_info.uid
+            artists: current.more_info.artistMap?.artists
           }
         }
-      }),
+      ),
+      tuneifyTopPlaylistsResponse: homeDataRequest.tuneifyTopPlaylists.map(
+        (current) => {
+          return {
+            id: current.id,
+            title: current.title,
+            subtitle: current.subtitle,
+            type: current.type,
+            artwork: handleImageVariation(current.image),
+            perma_url: current.perma_url,
+            more_info: {
+              song_count: current.more_info.song_count,
+              firstname: current.more_info.firstname,
+              follower_count: current.more_info.follower_count,
+              last_updated: current.more_info.last_updated,
+              uid: current.more_info.uid
+            }
+          }
+        }
+      ),
       tuneifyChartsResponse: homeDataRequest.tuneifyCharts.map((current) => {
         return {
           id: current.id,
@@ -93,7 +100,9 @@ export class PayloadService extends ApiService {
     }
     return homeDataPayload
   }
-  protected albumPayload(albumDetails: AlbumDetailsRequest): AlbumDetailsResponse {
+  protected albumPayload(
+    albumDetails: AlbumDetailsRequest
+  ): AlbumDetailsResponse {
     return {
       id: albumDetails.id,
       title: albumDetails.title,
@@ -120,7 +129,9 @@ export class PayloadService extends ApiService {
       })
     }
   }
-  protected playlistPayload = (playListData: PlayListRequest): PlaylistResponseOnce => {
+  protected playlistPayload = (
+    playListData: PlayListRequest
+  ): PlaylistResponseOnce => {
     return {
       id: playListData.id,
       title: playListData.title,
@@ -156,7 +167,9 @@ export class PayloadService extends ApiService {
             album: current.more_info.album,
             label: current.more_info.label,
             origin: current.more_info.origin,
-            songLink: createDownloadLinks(current.more_info.encrypted_media_url),
+            songLink: createDownloadLinks(
+              current.more_info.encrypted_media_url
+            ),
             duration: current.more_info.duration,
             artists: current?.more_info?.artists?.map((currentArtist) => {
               return {
@@ -178,7 +191,7 @@ export class PayloadService extends ApiService {
       songs: data?.results?.map((current: any) => {
         return {
           id: current?.id,
-          title: current?.title,
+          title: current?.title.replaceAll("&quot;", '"'),
           type: current?.type,
           image: handleImageVariation(current.image),
           language: current?.language,

@@ -21,7 +21,9 @@ const SearchSwitch = () => {
         onPress={() => setIsHindi(false)}
         className="flex items-center justify-center flex-row h-full"
       >
-        <Text className={` ${!isHindi && "text-white"} text-xl`}>universal</Text>
+        <Text className={` ${!isHindi && "text-white"} text-xl`}>
+          universal
+        </Text>
         <Checkbox
           disabled={isHindi}
           status={isHindi ? "unchecked" : "checked"}

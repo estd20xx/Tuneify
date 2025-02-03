@@ -18,7 +18,10 @@ export const createDownloadLinks = (encryptedMediaUrl: string): Audio[] => {
   const iv = "00000000"
 
   const encrypted = util.decode64(encryptedMediaUrl)
-  const decipher = cipher.createDecipher("DES-ECB", util.createBuffer(key, "utf8"))
+  const decipher = cipher.createDecipher(
+    "DES-ECB",
+    util.createBuffer(key, "utf8")
+  )
 
   decipher.start({ iv: util.createBuffer(iv, "utf8") })
   decipher.update(util.createBuffer(encrypted))

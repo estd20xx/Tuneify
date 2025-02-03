@@ -9,7 +9,11 @@ import ListItem from "../../components/Song/ListItem"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { sanitize } from "../../services/sanitizer.service"
 import { songServiceaction } from "../../store/actions/song.action"
-import { centralQueue, SpecificQueue, updateQueue } from "../../store/slices/Queue.slice"
+import {
+  centralQueue,
+  SpecificQueue,
+  updateQueue
+} from "../../store/slices/Queue.slice"
 import { testSong } from "../../store/slices/song.slice"
 const Songs = () => {
   const viewableItems = useSharedValue<ViewToken[]>([])
@@ -45,7 +49,12 @@ const Songs = () => {
   }, [])
   return (
     <View className="w-full h-auto pt-2">
-      <Show isVisible={songs?.data?.songs?.length != undefined || songs?.data?.songs?.length != 0}>
+      <Show
+        isVisible={
+          songs?.data?.songs?.length != undefined ||
+          songs?.data?.songs?.length != 0
+        }
+      >
         <FlatList
           data={songs.data?.songs}
           onViewableItemsChanged={({ viewableItems: vItems }) => {
