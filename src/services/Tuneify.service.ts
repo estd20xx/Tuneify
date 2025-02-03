@@ -7,6 +7,7 @@ import TrackPlayer, {
   State
 } from "react-native-track-player"
 import { ApplicationInterface } from "../Interfaces/application.interface"
+import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
 import { InitialCentralQueue, songRepeat } from "../store/slices/Queue.slice"
 class ApplicationService implements ApplicationInterface {
   public repeatMode = async (
@@ -60,7 +61,7 @@ class ApplicationService implements ApplicationInterface {
       ? await TrackPlayer.pause()
       : await TrackPlayer.play()
   }
-  public setUpPlayer = async () => {
+  public setUpPlayer = async (data: StoreSongTypes | null) => {
     try {
       await TrackPlayer.setupPlayer({
         maxCacheSize: 1024 * 10,
@@ -96,6 +97,8 @@ class ApplicationService implements ApplicationInterface {
         ],
         stopIcon: require("../assets/images/stop.png")
       })
+      if (!data) return
+      await TrackPlayer.add(data)
     } catch (error) {
       console.log(error)
     }

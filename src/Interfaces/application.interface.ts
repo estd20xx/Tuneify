@@ -1,6 +1,7 @@
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
 import { PlaybackState } from "react-native-track-player"
 import { InitialCentralQueue } from "../store/slices/Queue.slice"
+import { StoreSongTypes } from "./tuneifySlice.interface"
 export interface ApplicationInterface {
   repeatMode: (
     state: InitialCentralQueue,
@@ -17,6 +18,5 @@ export interface ApplicationInterface {
     state: InitialCentralQueue,
     dispatch: Dispatch<UnknownAction>
   ) => Promise<void>
-  // setUpPlayer: (data: Array<StoreSongTypes>) => void
-  setUpPlayer: () => void
+  setUpPlayer: (data: StoreSongTypes | null) => void
 }

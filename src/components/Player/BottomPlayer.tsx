@@ -15,7 +15,7 @@ import {
   changeApplicationSetup,
   tunifyChild
 } from "../../store/slices/childState.slice"
-import { centralQueue } from "../../store/slices/Queue.slice"
+import { centralQueue, resetScreen } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
 import SongPlayer from "./SongPlayer"
 const BottomPlayer = () => {
@@ -26,8 +26,9 @@ const BottomPlayer = () => {
   const playerState = TypedSelectorHook(tunifyChild)
   useEffect(() => {
     if (!playerState.isSetupped) {
-      applicationService.setUpPlayer()
+      applicationService.setUpPlayer(applicationQueue.data.song ?? null)
       dispatch(changeApplicationSetup())
+      dispatch(resetScreen())
     }
   }, [applicationQueue.data])
   return (
