@@ -38,10 +38,14 @@ const PlayerQueue = createSlice({
     },
     songRepeat(state: InitialCentralQueue) {
       state.isRepeat = !state.isRepeat
+    },
+    resetScreen(state: InitialCentralQueue) {
+      state.data.screenId = ""
     }
   }
 })
-export const { updateQueue, updateSongQueue, songRepeat } = PlayerQueue.actions
+export const { updateQueue, updateSongQueue, songRepeat, resetScreen } =
+  PlayerQueue.actions
 export const centralQueue = (state: RootState) =>
   state.persistedReducer.playerQueue
 export default PlayerQueue.reducer
