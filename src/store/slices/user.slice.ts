@@ -4,7 +4,8 @@ import { InitialUserState } from "../../Interfaces/tuneifySlice.interface"
 import { RootState } from "../store"
 const initialState: InitialUserState = {
   userName: "namelessnerd",
-  image: Image.resolveAssetSource(require("../../assets/images/developer.jpg")).uri
+  image: Image.resolveAssetSource(require("../../assets/images/developer.jpg"))
+    .uri
 }
 const userSlices = createSlice({
   name: "userDevs",

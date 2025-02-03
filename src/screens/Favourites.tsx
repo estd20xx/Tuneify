@@ -7,7 +7,11 @@ import { Icons } from "../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
 import { UserFavouritesTypes } from "../Interfaces/tuneifySlice.interface"
 import { tuneifyFavourites } from "../store/slices/favourite.slice"
-import { centralQueue, SpecificQueue, updateQueue } from "../store/slices/Queue.slice"
+import {
+  centralQueue,
+  SpecificQueue,
+  updateQueue
+} from "../store/slices/Queue.slice"
 const Favourites = () => {
   const data = TypedSelectorHook(tuneifyFavourites)
   const applicationQueue = TypedSelectorHook(centralQueue)
@@ -83,7 +87,10 @@ const Favourites = () => {
                     <View style={{ marginLeft: 10 }}>
                       <Text
                         style={{
-                          color: item.id == applicationQueue.data.song?.id ? "#16FF00" : "white",
+                          color:
+                            item.id == applicationQueue.data.song?.id
+                              ? "#16FF00"
+                              : "white",
                           fontSize: 14,
                           fontFamily: "400"
                         }}

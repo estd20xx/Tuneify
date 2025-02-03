@@ -4,11 +4,10 @@ import { Icons } from "../../constants/Icon"
 import { SearchedSongQueryParams } from "../../screens/Search"
 import Show from "../Common/Show"
 interface InputComponentProps {
-  setSearchQuery: (update: (prev: SearchedSongQueryParams) => SearchedSongQueryParams) => void
+  updateQuery: (prev: SearchedSongQueryParams) => void
   searchQuery: SearchedSongQueryParams
 }
-
-const Input: React.FC<InputComponentProps> = ({ setSearchQuery, searchQuery }) => {
+const Input: React.FC<InputComponentProps> = ({ updateQuery, searchQuery }) => {
   return (
     <View className=" h-11 w-[95%] rounded-md overflow-hidden  flex-row bg-[#2f271b] ">
       <TextInput
@@ -17,7 +16,7 @@ const Input: React.FC<InputComponentProps> = ({ setSearchQuery, searchQuery }) =
         placeholderTextColor={"white"}
         value={searchQuery.q}
         keyboardType="name-phone-pad"
-        onChangeText={(e) => setSearchQuery((prev: SearchedSongQueryParams) => ({ ...prev, q: e }))}
+        onChangeText={(e) => updateQuery({ ...searchQuery, q: e })}
         returnKeyType="search"
         returnKeyLabel="search"
         onSubmitEditing={() => Keyboard.dismiss()}
@@ -28,7 +27,7 @@ const Input: React.FC<InputComponentProps> = ({ setSearchQuery, searchQuery }) =
             name="close"
             size={20}
             color={"white"}
-            onPress={() => setSearchQuery((prev: SearchedSongQueryParams) => ({ ...prev, q: "" }))}
+            onPress={() => updateQuery({ ...searchQuery, q: "" })}
           />
         </Pressable>
       </Show>

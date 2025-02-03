@@ -6,15 +6,15 @@ export default class OnboadringService implements OnboardingInterface {
     return this.api
   }
   public onboardHandler = (
-    setnre: (newNre: number) => void,
+    updateOnIndex: (newNre: number) => void,
     initial: number,
     navigation: onBoardingScreen
   ) => {
     if (initial == 2) {
       navigation.navigate("bottom")
-      setnre(0)
+      updateOnIndex(0)
       return
     }
-    setnre(initial + 1)
+    updateOnIndex(initial + 1)
   }
 }

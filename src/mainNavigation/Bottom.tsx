@@ -64,7 +64,11 @@ return route.name
             key={item.name}
             options={{
               tabBarIcon: ({ color }) => (
-                <item.Active name={item.activeName} color={color} size={item.activeSize} />
+                <item.Active
+                  name={item.activeName}
+                  color={color}
+                  size={item.activeSize}
+                />
               )
             }}
           />

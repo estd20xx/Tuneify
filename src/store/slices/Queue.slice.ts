@@ -24,20 +24,24 @@ const PlayerQueue = createSlice({
   name: "player",
   initialState,
   reducers: {
-    updateQueue(state: InitialCentralQueue, actions: PayloadAction<SpecificQueue>) {
+    updateQueue(
+      state: InitialCentralQueue,
+      actions: PayloadAction<SpecificQueue>
+    ) {
       state.data = actions.payload
     },
-    updateSongQueue(state: InitialCentralQueue, actions: PayloadAction<StoreSongTypes>) {
+    updateSongQueue(
+      state: InitialCentralQueue,
+      actions: PayloadAction<StoreSongTypes>
+    ) {
       state.data.song = actions.payload
-    },
-    changeTunifyState(state: InitialCentralQueue) {
-      state.data.isPlaying = !state.data?.isPlaying
     },
     songRepeat(state: InitialCentralQueue) {
       state.isRepeat = !state.isRepeat
     }
   }
 })
-export const { updateQueue, updateSongQueue, changeTunifyState, songRepeat } = PlayerQueue.actions
-export const centralQueue = (state: RootState) => state.persistedReducer.playerQueue
+export const { updateQueue, updateSongQueue, songRepeat } = PlayerQueue.actions
+export const centralQueue = (state: RootState) =>
+  state.persistedReducer.playerQueue
 export default PlayerQueue.reducer

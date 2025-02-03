@@ -8,7 +8,10 @@ import {
   TouchableOpacity,
   View
 } from "react-native"
-import { PlaylistResponse, PlayListSongList } from "../../api/interface/module.interface"
+import {
+  PlaylistResponse,
+  PlayListSongList
+} from "../../api/interface/module.interface"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { playlistDetails } from "../../store/actions/playlist.action"
@@ -17,7 +20,11 @@ import TrackPlayer from "react-native-track-player"
 import { screens } from "../../api/base/constrants"
 import { sanitize } from "../../services/sanitizer.service"
 import { playListDetailsStore } from "../../store/slices/playlistDetails.slice"
-import { centralQueue, SpecificQueue, updateQueue } from "../../store/slices/Queue.slice"
+import {
+  centralQueue,
+  SpecificQueue,
+  updateQueue
+} from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
 import Header from "../DetailsScreen/Header"
 interface PlaylistData {
@@ -39,7 +46,8 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
     try {
       if (playlistStore.data?.list) {
         if (
-          applicationQueue.data.screenId != screens.playlistScreenId.concat(playlistStore.data.id)
+          applicationQueue.data.screenId !=
+          screens.playlistScreenId.concat(playlistStore.data.id)
         ) {
           await TrackPlayer.reset()
           await TrackPlayer.add(sanitize.playList(playlistStore.data.list))
@@ -67,7 +75,11 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
   return (
     <View className="w-full">
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Header title={data.title} artwork={data.artwork[2].link} type={data.type} />
+        <Header
+          title={data.title}
+          artwork={data.artwork[2].link}
+          type={data.type}
+        />
         <Show isVisible={playlistStore.isLoading}>
           <ActivityIndicator />
         </Show>
@@ -118,7 +130,9 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
                           <Text
                             style={{
                               color:
-                                item.id == applicationQueue.data.song?.id ? "#16FF00" : "white",
+                                item.id == applicationQueue.data.song?.id
+                                  ? "#16FF00"
+                                  : "white",
                               fontSize: 14,
                               fontFamily: "400"
                             }}
@@ -140,7 +154,11 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
                     </View>
                   </View>
                   <View className=" w-1/5 h-full flex items-center justify-end flex-row pr-3">
-                    <Icons.MoreIcon name="more-vert" size={25} color={"#bababa"} />
+                    <Icons.MoreIcon
+                      name="more-vert"
+                      size={25}
+                      color={"#bababa"}
+                    />
                   </View>
                 </TouchableOpacity>
               )

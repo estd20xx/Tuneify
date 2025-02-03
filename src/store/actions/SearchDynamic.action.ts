@@ -8,20 +8,23 @@ interface Props {
 }
 
 class PersonalizedDynamicSearch extends PayloadService {
-  public searchDynamicHandler = createAsyncThunk("searchDynamic", async (props: Props, Async) => {
-    try {
-      const response = await Interceptors.get("", {
-        params: {
-          ...endPoints.searchDynamic,
-          query: props.query
-        },
-        signal: props.signal,
-        headers
-      })
-      return this.dynamicSearchPayload(response)
-    } catch (error: any) {
-      return Async.rejectWithValue(error.message)
+  public searchDynamicHandler = createAsyncThunk(
+    "searchDynamic",
+    async (props: Props, Async) => {
+      try {
+        const response = await Interceptors.get("", {
+          params: {
+            ...endPoints.searchDynamic,
+            query: props.query
+          },
+          signal: props.signal,
+          headers
+        })
+        return this.dynamicSearchPayload(response)
+      } catch (error: any) {
+        return Async.rejectWithValue(error.message)
+      }
     }
-  })
+  )
 }
 export const personalizedDynamic = new PersonalizedDynamicSearch()

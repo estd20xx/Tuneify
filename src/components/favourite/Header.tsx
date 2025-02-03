@@ -7,7 +7,11 @@ interface Props {
   simplePlayHandler: () => void
   total: number
 }
-const FavouriteHeader: React.FC<Props> = ({ shuffleHandler, simplePlayHandler, total }) => {
+const FavouriteHeader: React.FC<Props> = ({
+  shuffleHandler,
+  simplePlayHandler,
+  total
+}) => {
   return (
     <React.Fragment>
       <View className="w-full h-20  flex flex-row items-center justify-evenly">
@@ -22,11 +26,18 @@ const FavouriteHeader: React.FC<Props> = ({ shuffleHandler, simplePlayHandler, t
           className="bg-[#35383f] h-8 px-10 rounded-full flex items-center justify-center flex-row"
           onPress={simplePlayHandler}
         >
-          <Icons.PlayIcon name="play" color={"white"} size={20} className="mr-1" />
+          <Icons.PlayIcon
+            name="play"
+            color={"white"}
+            size={20}
+            className="mr-1"
+          />
           <Text className="text-white text-base font-[400]">Play</Text>
         </TouchableOpacity>
       </View>
-      <Text className="text-white text-2xl font-['400'] ml-5">{total} Favourites</Text>
+      <Text className="text-white text-2xl font-['400'] ml-5 border-b-[1px] border-gray-500">
+        {total} Favourites
+      </Text>
     </React.Fragment>
   )
 }

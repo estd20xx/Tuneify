@@ -18,8 +18,23 @@ const persistConfig = {
   key: "@ap",
   version: 1,
   storage: reduxStorage,
-  blacklist: ["childState", "album", "playlist", "searchedSong", "lyrics", "dynamic"],
-  whitelist: ["home", "offline", "playerQueue", "geet", "favourite", "user", "customePlaylist"]
+  blacklist: [
+    "childState",
+    "album",
+    "playlist",
+    "searchedSong",
+    "lyrics",
+    "dynamic"
+  ],
+  whitelist: [
+    "home",
+    "offline",
+    "playerQueue",
+    "geet",
+    "favourite",
+    "user",
+    "customePlaylist"
+  ]
 }
 const RootReducer = combineReducers({
   user: userSlice,

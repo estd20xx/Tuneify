@@ -1,5 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { InitialLocalState, StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
+import {
+  InitialLocalState,
+  StoreSongTypes
+} from "../../Interfaces/tuneifySlice.interface"
 import { RootState } from "../store"
 const initialState: InitialLocalState = {
   LocalSong: [],
@@ -10,7 +13,10 @@ const offlineSong = createSlice({
   name: "offlineSongDev",
   initialState,
   reducers: {
-    addLocalFiles(state: InitialLocalState, actions: PayloadAction<StoreSongTypes[]>) {
+    addLocalFiles(
+      state: InitialLocalState,
+      actions: PayloadAction<StoreSongTypes[]>
+    ) {
       state.isUploading = true
       state.LocalSong = actions.payload
       state.isUploading = false
@@ -21,5 +27,6 @@ const offlineSong = createSlice({
   }
 })
 export const { addLocalFiles, accepted } = offlineSong.actions
-export const tuneifyOfflines = (state: RootState) => state.persistedReducer.offline
+export const tuneifyOfflines = (state: RootState) =>
+  state.persistedReducer.offline
 export default offlineSong.reducer

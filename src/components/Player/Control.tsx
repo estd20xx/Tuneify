@@ -18,7 +18,7 @@ interface ControlersProps {
       }
   applicationQueue: InitialCentralQueue
   dispatch: Dispatch<UnknownAction>
-  setIsShuffle: (isShuffle: boolean) => void
+  toggleShuffle: () => void
 }
 const Control: React.FC<ControlersProps> = ({
   nextAndPrevious,
@@ -26,14 +26,17 @@ const Control: React.FC<ControlersProps> = ({
   isShuffle,
   playbackState,
   applicationQueue,
-  setIsShuffle,
+  toggleShuffle,
   dispatch
 }) => {
   return (
     <View className="h-18  w-full flex items-center justify-evenly flex-row mt-3">
       <View className="h-full flex items-center flex-row justify-around pl-2 w-[20%]">
-        <TouchableOpacity onPress={() => setIsShuffle(!isShuffle)}>
-          <Shuffle size={24} className={`${isShuffle ? "text-[#ff8216]" : "text-[#bababa]"}`} />
+        <TouchableOpacity onPress={toggleShuffle}>
+          <Shuffle
+            size={24}
+            className={`${isShuffle ? "text-[#ff8216]" : "text-[#bababa]"}`}
+          />
         </TouchableOpacity>
       </View>
       <View className="h-full w-[60%] flex items-center justify-evenly flex-row">
@@ -44,7 +47,11 @@ const Control: React.FC<ControlersProps> = ({
           <FAB
             icon={playbackState.state == State.Playing ? "pause" : "play"}
             onPress={() =>
-              applicationService.playPauseAction(playbackState, applicationQueue, dispatch)
+              applicationService.playPauseAction(
+                playbackState,
+                applicationQueue,
+                dispatch
+              )
             }
             loading={playbackState.state === State.Loading}
             style={{ backgroundColor: "#ff8216", borderRadius: 50 }}
@@ -55,7 +62,11 @@ const Control: React.FC<ControlersProps> = ({
         </TouchableOpacity>
       </View>
       <View className="flex items-center flex-row justify-around pr-2 h-full w-[20%]">
-        <TouchableOpacity onPress={() => applicationService.repeatMode(applicationQueue, dispatch)}>
+        <TouchableOpacity
+          onPress={() =>
+            applicationService.repeatMode(applicationQueue, dispatch)
+          }
+        >
           <Icons.PlayListIcon
             name={isRepeat ? "repeat" : "repeat-off"}
             color={isRepeat ? "#ff8216" : "#bababa"}

@@ -17,10 +17,16 @@ import { TrendingAlbumParamsTypes } from "../../Interfaces/album.interface"
 import { sanitize } from "../../services/sanitizer.service"
 import { album } from "../../store/actions/album.action"
 import { albumData } from "../../store/slices/album.slice"
-import { centralQueue, SpecificQueue, updateQueue } from "../../store/slices/Queue.slice"
+import {
+  centralQueue,
+  SpecificQueue,
+  updateQueue
+} from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
 import Header from "../DetailsScreen/Header"
-const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => {
+const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
+  route
+}) => {
   const dispatch = useAppDispatch()
   const [data] = useState(route.params.albumData)
   const albumSongs = TypedSelectorHook(albumData)
@@ -31,7 +37,10 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
   const chnageQueueState = async (index: number, song: TrendingAlbumSons) => {
     try {
       if (albumSongs.data?.songs) {
-        if (applicationQueue.data.screenId != screens.albumScreenId.concat(data.id)) {
+        if (
+          applicationQueue.data.screenId !=
+          screens.albumScreenId.concat(data.id)
+        ) {
           await TrackPlayer.reset()
           await TrackPlayer.add(sanitize.albumDetails(albumSongs.data.songs))
           await TrackPlayer.skip(index)
@@ -53,7 +62,11 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
   return (
     <View className="w-full">
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Header title={data.title} artwork={data.artwork[2].link} type={data.type} />
+        <Header
+          title={data.title}
+          artwork={data.artwork[2].link}
+          type={data.type}
+        />
         <Show isVisible={albumSongs.isLoading}>
           <ActivityIndicator />
         </Show>
@@ -104,7 +117,9 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
                           <Text
                             style={{
                               color:
-                                item.id == applicationQueue.data.song?.id ? "#16FF00" : "white",
+                                item.id == applicationQueue.data.song?.id
+                                  ? "#16FF00"
+                                  : "white",
                               fontSize: 14,
                               fontFamily: "400"
                             }}
@@ -126,7 +141,11 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({ route }) => 
                     </View>
                   </View>
                   <View className=" w-1/5 h-full flex items-center justify-end flex-row pr-3">
-                    <Icons.MoreIcon name="more-vert" size={25} color={"#bababa"} />
+                    <Icons.MoreIcon
+                      name="more-vert"
+                      size={25}
+                      color={"#bababa"}
+                    />
                   </View>
                 </TouchableOpacity>
               )

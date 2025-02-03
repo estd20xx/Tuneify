@@ -1,6 +1,12 @@
 import React, { memo, useCallback, useEffect, useState } from "react"
-import { Animated, Image, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import fs from "react-native-fs"
+import {
+  Animated,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native"
 import Modal from "react-native-modal"
 import TrackPlayer, {
   Event,
@@ -12,10 +18,18 @@ import TrackPlayer, {
 import { screens } from "../../api/base/constrants"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import { useDownloadProgress } from "../../hooks/useDownloadProgress"
+import { useLyricsView } from "../../hooks/useLyricsView"
+import { usePlaylist } from "../../hooks/usePlaylistSlide"
+import { useShuffle } from "../../hooks/useShuffle"
+import { useTimer } from "../../hooks/useTimer"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
-import { ApplicationCore } from "../../native/MusicFiles"
+import { musicService } from "../../services/localMedia.service"
 import { getSongsLyrics } from "../../store/actions/lyrics.action"
-import { addUserFavouritesData, tuneifyFavourites } from "../../store/slices/favourite.slice"
+import {
+  addUserFavouritesData,
+  tuneifyFavourites
+} from "../../store/slices/favourite.slice"
 import { storedLyrics } from "../../store/slices/lyrics.slice"
 import { centralQueue, updateSongQueue } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
@@ -28,52 +42,57 @@ import SongInfo from "./SongInfo"
 import TimerPopUp from "./TimerPopUp"
 interface SongPlayerProps {
   isVisible: boolean
-  setIsVisible: (cntx: boolean) => void
+  togglePlayer: () => void
 }
-const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
+const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, togglePlayer }) => {
   const favourite = TypedSelectorHook(tuneifyFavourites)
   const applicationQueue = TypedSelectorHook(centralQueue)
   const lyrics = TypedSelectorHook(storedLyrics)
   const dispatch = useAppDispatch()
-  const [isFlipped, setIsFlipped] = useState(false)
-  const [isSide, setIsSide] = useState<boolean>(false)
-  const [flip, setFlip] = useState(new Animated.Value(0))
-  const [vtimer, setVtimer] = useState(false)
-  const [isTimer, setIsTimer] = useState(false)
+  const [isLyricsView, toggleLyricsView] = useLyricsView()
+  const [timer, toggleTimer, isTimerModal, toggleModal, value, setTimerValue] =
+    useTimer()
+  const [isShuffle, toggleShuffle] = useShuffle()
+  const [downloadProgress, updateDownloadValue] = useDownloadProgress()
+  const [isPlaylist, togglePlayist] = usePlaylist()
+  const [flip] = useState(new Animated.Value(0))
   const [currentTrack, setCurrentTrack] = useState<StoreSongTypes>()
   const playbackState = usePlaybackState()
-  const [value, setValue] = useState<number>(0)
-  const [isShuffle, setIsShuffle] = useState<boolean>(false)
   const progress = useProgress()
-  const [downloadProgress, setDownloadProgress] = useState<number>(0)
   const flipCard = useCallback(() => {
     Animated.timing(flip, {
-      toValue: isFlipped ? 0 : 180,
+      toValue: isLyricsView ? 0 : 180,
       duration: 500,
       useNativeDriver: true
     }).start(() => {
-      setIsFlipped(!isFlipped)
+      toggleLyricsView()
     })
-  }, [isFlipped])
+  }, [isLyricsView])
+
   const frontInterpolate = flip.interpolate({
     inputRange: [0, 180],
     outputRange: ["0deg", "180deg"]
   })
+
   const backInterpolate = flip.interpolate({
     inputRange: [0, 180],
     outputRange: ["180deg", "360deg"]
   })
+
   const frontAnimatedStyle = {
     transform: [{ rotateY: frontInterpolate }]
   }
+
   const backAnimatedStyle = {
     transform: [{ rotateY: backInterpolate }]
   }
+
   useEffect(() => {
     if (applicationQueue.data.song) {
       setCurrentTrack(applicationQueue.data.song)
     }
   }, [applicationQueue])
+
   const nextAndPrevious = async (isNext: boolean) => {
     if (isShuffle) {
       const index = (await TrackPlayer.getQueue()).length
@@ -81,42 +100,32 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       await TrackPlayer.skip(random)
       return
     }
+
     isNext ? await TrackPlayer.skipToNext() : await TrackPlayer.skipToPrevious()
   }
+
   const checkFavAvailable = (currentId: string): boolean => {
-    if (favourite.favouriteData.filter((liked: any) => liked.id == currentId).length > 0)
+    if (
+      favourite.favouriteData.filter((liked: any) => liked.id == currentId)
+        .length > 0
+    )
       return false
     return true
   }
-  const downloadSong = async (c: StoreSongTypes) => {
-    try {
-      const downloadDest = `${fs.ExternalStorageDirectoryPath}/Music/${c.title.concat(".mp3")}`
-      fs.downloadFile({
-        fromUrl: c.url,
-        toFile: downloadDest,
-        background: true,
-        discretionary: true,
-        progress: (res) =>
-          setDownloadProgress(Math.floor((res.bytesWritten / res.contentLength) * 100))
-      })
-        .promise.then(async (response) => {
-          await ApplicationCore.scanFile(downloadDest)
-          setDownloadProgress(0)
-        })
-        .catch((err) => {
-          console.log("Download error:", err)
-        })
-    } catch (error) {
-      console.log("Eroor downloading song...")
-    }
-  }
+
   useTrackPlayerEvents(
-    [Event.PlaybackState, Event.PlaybackError, Event.PlaybackState, Event.PlaybackError],
+    [
+      Event.PlaybackState,
+      Event.PlaybackError,
+      Event.PlaybackState,
+      Event.PlaybackError
+    ],
     async (event: any) => {
       if (event.state == State.Loading) {
         const activeTrack = await TrackPlayer.getActiveTrack()
         setCurrentTrack(activeTrack as StoreSongTypes)
         dispatch(updateSongQueue(activeTrack as StoreSongTypes))
+
         if (applicationQueue.data?.screenId != screens.offlineScreenId)
           dispatch(getSongsLyrics(activeTrack?.id))
       }
@@ -127,20 +136,28 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
       <Modal
         isVisible={isVisible}
         style={{ margin: 0 }}
-        onBackButtonPress={() => setIsVisible(false)}
+        onBackButtonPress={togglePlayer}
       >
         <DownloadInfo progress={downloadProgress} />
-        <SideModal isVisible={isSide} setSecond={setIsSide} song={currentTrack!} />
+        <SideModal
+          isVisible={isPlaylist}
+          togglePlayist={togglePlayist}
+          song={currentTrack!}
+        />
         <TimerPopUp
-          vtimer={vtimer}
+          isModal={isTimerModal}
           value={value}
-          setValue={setValue}
-          setIsTimer={setIsTimer}
-          setVtimer={setVtimer}
+          setValue={setTimerValue}
+          toggleTimer={toggleTimer}
+          toggleModal={toggleModal}
           dispatch={dispatch}
         />
         <View className="w-full h-screen px-3 bg-background">
-          <PlayerHeader setIsVisible={setIsVisible} flipCard={flipCard} setSecond={setIsSide} />
+          <PlayerHeader
+            togglePlayer={togglePlayer}
+            flipCard={flipCard}
+            togglePlayist={togglePlayist}
+          />
           <View className="relative h-1/2 w-full mt-8 flex items-center justify-center">
             <Animated.View
               style={[frontAnimatedStyle, { backfaceVisibility: "hidden" }]}
@@ -169,7 +186,9 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                 </ScrollView>
               </Show>
               <Show isVisible={lyrics.data.lyrics?.length < 15}>
-                <Text className="absolute top-52 left-0 ">{lyrics.data.lyrics}</Text>
+                <Text className="absolute top-52 left-0 ">
+                  {lyrics.data.lyrics}
+                </Text>
               </Show>
             </Animated.View>
           </View>
@@ -182,7 +201,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
             applicationQueue={applicationQueue}
             dispatch={dispatch}
             isShuffle={isShuffle}
-            setIsShuffle={setIsShuffle}
+            toggleShuffle={toggleShuffle}
           />
           <View className=" h-14 w-full mt-5  flex items-center justify-around flex-row">
             <TouchableOpacity>
@@ -191,24 +210,32 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, setIsVisible }) => {
                 style={{ width: 28, height: 28, tintColor: "white" }}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => [setVtimer(!vtimer)]}>
+            <TouchableOpacity onPress={toggleModal}>
               <Image
                 source={require("../../assets/images/tes/Timer.png")}
                 style={{
                   width: 32,
                   height: 32,
-                  tintColor: isTimer ? "#ff8216" : "white"
+                  tintColor: timer ? "#ff8216" : "white"
                 }}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => downloadSong(currentTrack!)}>
+            <TouchableOpacity
+              onPress={() =>
+                musicService.downloadSong(currentTrack!, updateDownloadValue)
+              }
+            >
               <Icons.MoreIcon name="download" size={23} color={"#ff8216"} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => [dispatch(addUserFavouritesData(currentTrack!))]}>
+            <TouchableOpacity
+              onPress={() => [dispatch(addUserFavouritesData(currentTrack!))]}
+            >
               <Icons.HomeIcon
                 name="heart-fill"
                 size={23}
-                color={checkFavAvailable(currentTrack?.id || "") ? "gray" : "#ff8216"}
+                color={
+                  checkFavAvailable(currentTrack?.id || "") ? "gray" : "#ff8216"
+                }
               />
             </TouchableOpacity>
           </View>

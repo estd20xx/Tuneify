@@ -21,6 +21,8 @@ const childStateSlice = createSlice({
     }
   }
 })
-export const { changeTunifyRepeatMode, changeApplicationSetup } = childStateSlice.actions
-export const tunifyChild = (state: RootState) => state.persistedReducer.childState
+export const { changeTunifyRepeatMode, changeApplicationSetup } =
+  childStateSlice.actions
+export const tunifyChild = (state: RootState) =>
+  state.persistedReducer.childState
 export default childStateSlice.reducer

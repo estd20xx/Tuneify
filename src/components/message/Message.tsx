@@ -5,7 +5,11 @@ interface MessageInterface {
   isvisible: boolean
   onDismis: (value: boolean) => void
 }
-const Messanger: React.FC<MessageInterface> = ({ message, isvisible, onDismis }) => {
+const Messanger: React.FC<MessageInterface> = ({
+  message,
+  isvisible,
+  onDismis
+}) => {
   return (
     <Snackbar
       style={{

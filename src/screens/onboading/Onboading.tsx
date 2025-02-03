@@ -1,22 +1,19 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useEffect } from "react"
 import { Platform, StatusBar, Text, TouchableOpacity, View } from "react-native"
 import * as Animatable from "react-native-animatable"
 import { onBoardImageApi } from "../../api/base/constrants"
 import { onboardingData } from "../../constants/naviG"
-import { OnBoardingDataTypes, OnBoardingPropsTypes } from "../../Interfaces/onboard.interface"
+import { useOnboarding } from "../../hooks/useOnboarding"
+import { OnBoardingPropsTypes } from "../../Interfaces/onboard.interface"
 import OnboadringService from "../../services/onboarding.service"
 const service = new OnboadringService(onBoardImageApi)
 const AnimatedButton = Animatable.createAnimatableComponent(TouchableOpacity)
 const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
-  const [nre, setNre] = useState<number>(0)
-  const [d, setD] = useState<OnBoardingDataTypes>(onboardingData[nre])
-  useEffect(() => {
-    setD(onboardingData[nre])
-  }, [nre])
+  const [data, updateData, onIndex, updateOnIndex] = useOnboarding()
+
   useEffect(() => {
     if (Platform.OS === "android") {
       StatusBar.setBackgroundColor("#e28f22")
-      // StatusBar.setTranslucent(true)
     }
   }, [])
   return (
@@ -32,7 +29,7 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
         {onboardingData.map((c, index) => {
           return (
             <View key={c.first}>
-              {nre == index && (
+              {onIndex == index && (
                 <View className="w-full  h-auto py-2 flex items-center justify-center mt-3 ">
                   {Object.values(c).map((selected, i) => {
                     return (
@@ -57,7 +54,7 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
               <View
                 key={current.first}
                 className={`${
-                  nre == index ? "w-14" : "w-5"
+                  onIndex == index ? "w-14" : "w-5"
                 } h-2 rounded-full duration-1000  bg-themeOrange ml-1`}
               />
             )
@@ -66,7 +63,9 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
         <AnimatedButton
           animation={"slideInUp"}
           className="bg-themeOrange absolute bottom-12 w-11/12 flex items-center justify-center py-3 rounded-3xl"
-          onPress={() => service.onboardHandler(setNre, nre, navigation)}
+          onPress={() =>
+            service.onboardHandler(updateOnIndex, onIndex, navigation)
+          }
         >
           <Text className="text-white text-xl font-[400]">Next</Text>
         </AnimatedButton>
