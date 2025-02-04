@@ -34,7 +34,7 @@ import { storedLyrics } from "../../store/slices/lyrics.slice"
 import { centralQueue, updateSongQueue } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
 import Control from "./Control"
-import DownloadInfo from "./DownloadInfo"
+import DownloadButton from "./DownloadButton"
 import PlayerHeader from "./PlayerHeader"
 import PlayerInfo from "./PlayerInfo"
 import SideModal from "./SideModal"
@@ -138,7 +138,6 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, togglePlayer }) => {
         style={{ margin: 0 }}
         onBackButtonPress={togglePlayer}
       >
-        <DownloadInfo progress={downloadProgress} />
         <SideModal
           isVisible={isPlaylist}
           togglePlayist={togglePlayist}
@@ -220,13 +219,10 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, togglePlayer }) => {
                 }}
               />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                musicService.downloadSong(currentTrack!, updateDownloadValue)
-              }
-            >
-              <Icons.MoreIcon name="download" size={23} color={"#ff8216"} />
-            </TouchableOpacity>
+            <DownloadButton
+              downloadProgress={downloadProgress}
+              onPress={() => musicService.downloadSong(currentTrack!, updateDownloadValue)}
+            />
             <TouchableOpacity
               onPress={() => [dispatch(addUserFavouritesData(currentTrack!))]}
             >
