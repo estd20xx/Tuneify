@@ -1,4 +1,23 @@
+<div align="center">
+
+# Tuneify
 [![made-with-Reac-Native](https://img.shields.io/badge/Made%20with-React_Native-1f425f.svg)](https://reactnative.dev/)
+
+
+<center>
+  
+ ### Let the Beat Move You: <br/>
+ ### <code>Tuneify</code> - Your Rhythm, Your Groove! <br/>
+
+ Experience music without limits with Tuneify, the open-source music app. Join a community of creators and listeners, shaping the future of music together. Customize your experience, contribute, and redefine how you enjoy music, all in one app.
+</center>
+
+
+
+
+
+
+
 
 
 
@@ -21,3 +40,5 @@ Tuneify x86 | [Download](https://github.com/estd20xx/Tuneify/releases/download/v
 
 
 
+
+</div>
