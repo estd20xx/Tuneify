@@ -1,4 +1,5 @@
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
+import { InteractionManager } from "react-native"
 import fs from "react-native-fs"
 import { LocalMediaInterface } from "../Interfaces/localMedia.interface"
 import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
@@ -54,25 +55,36 @@ class LocalMediaService implements LocalMediaInterface {
   ): Promise<void> => {
     try {
       await this.checkDir()
-      fs.downloadFile({
+      let lastUpdateTime = Date.now();
+      const task = fs.downloadFile({
         fromUrl: c.url,
         toFile: `${this.path}/${c.title.concat(".mp3")}`,
         background: true,
         discretionary: true,
-        progress: (res) =>
-          updateDownloadValue(
-            Math.floor((res.bytesWritten / res.contentLength) * 100)
-          )
+        progress: (res) => {
+          const now = Date.now();
+          if (now - lastUpdateTime > 500) {
+            lastUpdateTime = now;
+            requestAnimationFrame(() => {
+              updateDownloadValue(
+                Math.floor((res.bytesWritten / res.contentLength) * 100)
+              );
+            });
+          }
+        }
       })
-        .promise.then(async (response) => {
-          await ApplicationCore.scanFile(
-            `${this.path}/${c.title.concat(".mp3")}`
-          )
-          updateDownloadValue(0)
-        })
-        .catch((err) => {
-          console.log("Download error:", err)
-        })
+      task.promise.then((response) => {
+        InteractionManager.runAfterInteractions(() => {
+          setImmediate(async () => {
+            await ApplicationCore.scanFile(
+              `${this.path}/${c.title.concat(".mp3")}`
+            );
+            updateDownloadValue(0);
+          });
+        });
+      }).catch((err) => {
+        console.log("Download error:", err);
+      });
     } catch (error) {
       console.log("Eroor downloading song...")
     }
