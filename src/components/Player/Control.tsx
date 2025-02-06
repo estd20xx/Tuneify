@@ -43,20 +43,18 @@ const Control: React.FC<ControlersProps> = ({
         <TouchableOpacity onPress={() => nextAndPrevious(false)}>
           <Icons.KeyboardDown name="skip-previous" color={"white"} size={35} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => nextAndPrevious(false)}>
-          <FAB
-            icon={playbackState.state == State.Playing ? "pause" : "play"}
-            onPress={() =>
-              applicationService.playPauseAction(
-                playbackState,
-                applicationQueue,
-                dispatch
-              )
-            }
-            loading={playbackState.state === State.Loading}
-            style={{ backgroundColor: "#ff8216", borderRadius: 50 }}
-          />
-        </TouchableOpacity>
+        <FAB
+          icon={playbackState.state == State.Playing ? "pause" : "play"}
+          onPress={() =>
+            applicationService.playPauseAction(
+              playbackState,
+              applicationQueue,
+              dispatch
+            )
+          }
+          loading={playbackState.state === State.Loading}
+          style={{ backgroundColor: "#ff8216", borderRadius: 50 }}
+        />
         <TouchableOpacity onPress={() => nextAndPrevious(true)}>
           <Icons.KeyboardDown name="skip-next" color={"white"} size={35} />
         </TouchableOpacity>

@@ -56,6 +56,7 @@ const store = configureStore({
   reducer: { persistedReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
+      ignoredPaths: [""],
       serializableCheck: false
     })
 })

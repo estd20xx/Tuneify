@@ -16,7 +16,7 @@ const Playlists = () => {
         maxToRenderPerBatch={4}
         contentContainerStyle={{ paddingBottom: 80 }}
         removeClippedSubviews={true}
-        ListHeaderComponent={() =>
+        ListHeaderComponent={() => (
           <View>
             <Text className="text-white text-2xl font-['400'] ml-5 border-b-[1px] border-gray-500">
               {offlinePlaylist.playlist.length} Playlists
@@ -29,17 +29,16 @@ const Playlists = () => {
                 paddingLeft: 18,
                 paddingRight: 5,
                 marginTop: 10,
-                alignItems: "center",
+                alignItems: "center"
               }}
             >
-              <TouchableOpacity
-                className="h-14 w-14 rounded-full bg-orange-500 flex items-center justify-center">
+              <TouchableOpacity className="h-14 w-14 rounded-full bg-orange-500 flex items-center justify-center">
                 <Plus color={"#FFF"} />
               </TouchableOpacity>
               <Text className="text-xl text-white ml-3">Add New Playlist</Text>
             </View>
           </View>
-        }
+        )}
         windowSize={10}
         renderItem={({ item, index }) => {
           const { name, songs } = item[0]
@@ -98,11 +97,7 @@ const Playlists = () => {
                 </View>
               </View>
               <View className=" w-1/5 h-full flex items-center justify-end flex-row pr-3">
-                <Icons.MoreIcon
-                  name="more-vert"
-                  size={25}
-                  color={"#bababa"}
-                />
+                <Icons.MoreIcon name="more-vert" size={25} color={"#bababa"} />
               </View>
             </TouchableOpacity>
           )

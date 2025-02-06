@@ -10,6 +10,7 @@ const App = () => {
   useEffect(() => {
     SplashScreen.hide()
   }, [])
+  // #1b1002
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar backgroundColor={"#1b1002"} />
