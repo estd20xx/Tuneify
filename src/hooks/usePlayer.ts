@@ -1,9 +1,11 @@
 import { useCallback, useState } from "react"
 
-export const usePlayer = (initialState = false) => {
-  const [isPlayer, setIsPlayer] = useState(false)
+export const usePlayer = (initialState = true) => {
+  const [isPlayer, setIsPlayer] = useState(initialState)
+
   const togglePlayer = useCallback(() => {
     setIsPlayer((prev) => !prev)
   }, [])
+
   return [isPlayer, togglePlayer] as const
 }

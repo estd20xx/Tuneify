@@ -6,6 +6,8 @@ export interface SpecificQueue {
   song: StoreSongTypes
   isPlaying: boolean
 }
+export interface SongChangeInterface
+  extends Pick<SpecificQueue, "song" | "isPlaying"> {}
 export interface InitialCentralQueue {
   data: SpecificQueue
   isRepeat: boolean
@@ -32,9 +34,10 @@ const PlayerQueue = createSlice({
     },
     updateSongQueue(
       state: InitialCentralQueue,
-      actions: PayloadAction<StoreSongTypes>
+      actions: PayloadAction<SongChangeInterface>
     ) {
-      state.data.song = actions.payload
+      state.data.song = actions.payload.song
+      state.data.isPlaying = actions.payload.isPlaying
     },
     songRepeat(state: InitialCentralQueue) {
       state.isRepeat = !state.isRepeat

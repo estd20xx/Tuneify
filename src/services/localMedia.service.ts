@@ -55,36 +55,38 @@ class LocalMediaService implements LocalMediaInterface {
   ): Promise<void> => {
     try {
       await this.checkDir()
-      let lastUpdateTime = Date.now();
+      let lastUpdateTime = Date.now()
       const task = fs.downloadFile({
         fromUrl: c.url,
         toFile: `${this.path}/${c.title.concat(".mp3")}`,
         background: true,
         discretionary: true,
         progress: (res) => {
-          const now = Date.now();
+          const now = Date.now()
           if (now - lastUpdateTime > 500) {
-            lastUpdateTime = now;
+            lastUpdateTime = now
             requestAnimationFrame(() => {
               updateDownloadValue(
                 Math.floor((res.bytesWritten / res.contentLength) * 100)
-              );
-            });
+              )
+            })
           }
         }
       })
-      task.promise.then((response) => {
-        InteractionManager.runAfterInteractions(() => {
-          setImmediate(async () => {
-            await ApplicationCore.scanFile(
-              `${this.path}/${c.title.concat(".mp3")}`
-            );
-            updateDownloadValue(0);
-          });
-        });
-      }).catch((err) => {
-        console.log("Download error:", err);
-      });
+      task.promise
+        .then((response) => {
+          InteractionManager.runAfterInteractions(() => {
+            setImmediate(async () => {
+              await ApplicationCore.scanFile(
+                `${this.path}/${c.title.concat(".mp3")}`
+              )
+              updateDownloadValue(0)
+            })
+          })
+        })
+        .catch((err) => {
+          console.log("Download error:", err)
+        })
     } catch (error) {
       console.log("Eroor downloading song...")
     }

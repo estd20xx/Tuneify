@@ -3,7 +3,7 @@ import { CommonActions } from "@react-navigation/native"
 import React, { memo } from "react"
 import { StyleSheet, View } from "react-native"
 import { BottomNavigation } from "react-native-paper"
-import BottomPlayer from "../components/Player/BottomPlayer"
+import TuneifyPlayer from "../components/Player/MusicPlayer"
 import { TabItems } from "../constants/naviG"
 import { ItemTypes } from "../Interfaces/icons.interface"
 const Tab = createBottomTabNavigator()
@@ -13,7 +13,8 @@ const BottomTab = () => {
       screenOptions={{ headerShown: false }}
       tabBar={({ navigation, state, descriptors, insets }) => (
         <View>
-          <BottomPlayer />
+          {/* <BottomPlayer /> */}
+          <TuneifyPlayer />
           <BottomNavigation.Bar
             theme={{ colors: { secondaryContainer: "#261221" } }}
             navigationState={state}
@@ -23,7 +24,8 @@ const BottomTab = () => {
             inactiveColor="#a1a0a3"
             style={{
               height: 50,
-              backgroundColor: "#000"
+              backgroundColor: "#000",
+              zIndex: 40
             }}
             onTabPress={({ route, preventDefault }) => {
               const event = navigation.emit({
