@@ -1,21 +1,30 @@
 import React, { memo } from "react"
 import { TouchableOpacity, View } from "react-native"
+import { SharedValue, withSpring } from "react-native-reanimated"
 import { Icons } from "../../constants/Icon"
 
 interface Props {
-  togglePlayer: () => void
   flipCard: () => void
   togglePlayist: () => void
+  minValue: number
+  translateY: SharedValue<number>
+  Zindex: SharedValue<number>
 }
 
 const PlayerHeader: React.FC<Props> = ({
-  togglePlayer,
   flipCard,
-  togglePlayist
+  togglePlayist,
+  translateY,
+  minValue,
+  Zindex
 }) => {
   return (
     <View className="h-10 w-full flex items-center justify-between flex-row">
-      <TouchableOpacity onPress={togglePlayer}>
+      <TouchableOpacity
+        onPress={() => [
+          ((translateY.value = withSpring(minValue)), (Zindex.value = 20))
+        ]}
+      >
         <Icons.KeyboardDown
           name="keyboard-arrow-down"
           size={35}

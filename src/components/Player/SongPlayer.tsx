@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View
 } from "react-native"
+import { SharedValue } from "react-native-reanimated"
 import TrackPlayer, {
   Event,
   State,
@@ -34,7 +35,6 @@ import { centralQueue, updateSongQueue } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
 import Control from "./Control"
 import DownloadButton from "./DownloadButton"
-import PlayerHeader from "./PlayerHeader"
 import PlayerInfo from "./PlayerInfo"
 import SideModal from "./SideModal"
 import SongInfo from "./SongInfo"
@@ -42,8 +42,14 @@ import TimerPopUp from "./TimerPopUp"
 interface SongPlayerProps {
   isVisible: boolean
   togglePlayer: () => void
+  translateY: SharedValue<number>
+  minValue: number
 }
-const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, togglePlayer }) => {
+const SongPlayer: React.FC<SongPlayerProps> = ({
+  isVisible,
+  togglePlayer,
+  translateY
+}) => {
   const favourite = TypedSelectorHook(tuneifyFavourites)
   const applicationQueue = TypedSelectorHook(centralQueue)
   const lyrics = TypedSelectorHook(storedLyrics)
@@ -140,11 +146,11 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, togglePlayer }) => {
         dispatch={dispatch}
       />
       <View className="w-full h-screen px-3 bg-background">
-        <PlayerHeader
+        {/* <PlayerHeader
           togglePlayer={togglePlayer}
           flipCard={flipCard}
           togglePlayist={togglePlayist}
-        />
+        /> */}
         <View className="relative h-1/2 w-full mt-8 flex items-center justify-center">
           <Animated.View
             style={[frontAnimatedStyle, { backfaceVisibility: "hidden" }]}
@@ -153,7 +159,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, togglePlayer }) => {
             <Image
               className="h-full w-full rounded-xl"
               source={{
-                uri: applicationQueue.data.song.artwork
+                uri: applicationQueue.data.song?.artwork
               }}
               resizeMode="contain"
               style={{
@@ -173,7 +179,7 @@ const SongPlayer: React.FC<SongPlayerProps> = ({ isVisible, togglePlayer }) => {
               </ScrollView>
             </Show>
             <Show isVisible={lyrics.data.lyrics?.length < 15}>
-              <Text className="absolute top-52 left-0 ">
+              <Text className="absolute top-52 left-0">
                 {lyrics.data.lyrics}
               </Text>
             </Show>
