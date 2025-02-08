@@ -37,6 +37,12 @@ export type RootStackParamList = {
   charts: undefined
   search: undefined
 }
+
+export type HomeScreen = NativeStackNavigationProp<RootStackParamList, "home">
+export interface HomeScreenProps {
+  navigation: HomeScreen
+}
+
 export type splashScreen = NativeStackNavigationProp<
   RootStackParamList,
   "splash"
@@ -45,6 +51,7 @@ export type onBoardingScreen = NativeStackNavigationProp<
   RootStackParamList,
   "onboarding"
 >
+
 export interface SplashScreenPropsTypes {
   navigation: splashScreen
 }

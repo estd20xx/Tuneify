@@ -5,6 +5,7 @@ import { LocalMediaInterface } from "../Interfaces/localMedia.interface"
 import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
 import { ApplicationCore } from "../native/MusicFiles"
 import { addLocalFiles } from "../store/slices/offline.slice"
+
 export interface OfflineSongTypes {
   id: string
   title: string
@@ -14,11 +15,14 @@ export interface OfflineSongTypes {
   path: string
   artwork: string
 }
+
 class LocalMediaService implements LocalMediaInterface {
   private path: string
+
   constructor() {
     this.path = `${fs.ExternalStorageDirectoryPath}/Music`
   }
+
   private checkDir = async (): Promise<void> => {
     try {
       if (!(await fs.exists(this.path))) await fs.mkdir(this.path)
@@ -26,12 +30,14 @@ class LocalMediaService implements LocalMediaInterface {
       console.log(error)
     }
   }
+
   public getLocalmedia = async (
     dispatch: Dispatch<UnknownAction>
   ): Promise<boolean> => {
     try {
       const musicFiles = await ApplicationCore.getMusicFiles()
       let data: StoreSongTypes[] = new Array<StoreSongTypes>()
+
       data = musicFiles.map((cx) => {
         const { id, title, artist, artwork, path } = cx
         return {
@@ -42,6 +48,7 @@ class LocalMediaService implements LocalMediaInterface {
           url: path
         } as StoreSongTypes
       })
+
       dispatch(addLocalFiles(data))
       return true
     } catch (error) {
@@ -56,6 +63,7 @@ class LocalMediaService implements LocalMediaInterface {
     try {
       await this.checkDir()
       let lastUpdateTime = Date.now()
+
       const task = fs.downloadFile({
         fromUrl: c.url,
         toFile: `${this.path}/${c.title.concat(".mp3")}`,
@@ -73,6 +81,7 @@ class LocalMediaService implements LocalMediaInterface {
           }
         }
       })
+
       task.promise
         .then((response) => {
           InteractionManager.runAfterInteractions(() => {
@@ -84,6 +93,7 @@ class LocalMediaService implements LocalMediaInterface {
             })
           })
         })
+
         .catch((err) => {
           console.log("Download error:", err)
         })

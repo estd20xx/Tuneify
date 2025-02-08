@@ -12,6 +12,7 @@ const Suggested = () => {
   useEffect(() => {
     dispatch(homeService.getHomeData())
   }, [])
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}

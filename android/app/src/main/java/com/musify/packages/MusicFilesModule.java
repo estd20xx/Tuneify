@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Log;
 
@@ -16,6 +17,12 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 public class MusicFilesModule extends ReactContextBaseJavaModule {
     private final ReactApplicationContext reactContext;
     public MusicFilesModule(ReactApplicationContext reactContext) {
@@ -47,6 +54,7 @@ public class MusicFilesModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void getMusicFiles(Promise promise) {
         WritableArray musicList = new WritableNativeArray();
+        List<WritableMap> songs = new ArrayList<>();
         ContentResolver contentResolver = reactContext.getContentResolver();
         Cursor cursor = contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 new String[]{MediaStore.Audio.Media._ID,
@@ -59,23 +67,29 @@ public class MusicFilesModule extends ReactContextBaseJavaModule {
         String artwork = "android.resource://" + reactContext.getPackageName() + "/drawable/artwork";
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                WritableMap song = new WritableNativeMap();
+                WritableMap currentSong = new WritableNativeMap();
                 String songId = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID));
                 String title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
                 String artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
                 String album = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM));
                 String duration = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
                 String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
-                song.putString("id", songId);
-                song.putString("title", title);
-                song.putString("artist", artist);
-                song.putString("album", album);
-                song.putString("duration", duration);
-                song.putString("path", path);
-                song.putString("artwork", artwork);
-                musicList.pushMap(song);
+                currentSong.putString("id", songId);
+                currentSong.putString("title", title);
+                currentSong.putString("artist", artist);
+                currentSong.putString("album", album);
+                currentSong.putString("duration", duration);
+                currentSong.putString("path", path);
+                currentSong.putString("artwork", artwork);
+                songs.add(currentSong);
             }
             cursor.close();
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Collections.sort(songs, Comparator.comparing(s0 -> s0.getString("title")));
+        }
+        for (WritableMap song : songs) {
+            musicList.pushMap(song);
         }
         promise.resolve(musicList);
     }

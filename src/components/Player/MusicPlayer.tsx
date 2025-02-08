@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react"
 import {
+  BackHandler,
+  Animated as CustomAnimated,
   Dimensions,
-  Animated as FullPlayerAnimated,
   Image,
   NativeModules,
+  Pressable,
+  ScrollView,
   Text,
   TouchableOpacity,
   View
@@ -15,7 +18,8 @@ import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
-  withSpring
+  withSpring,
+  withTiming
 } from "react-native-reanimated"
 import TextTicker from "react-native-text-ticker"
 import TrackPlayer, {
@@ -36,13 +40,18 @@ import { usePlaylist } from "../../hooks/usePlaylistSlide"
 import { useShuffle } from "../../hooks/useShuffle"
 import { useTimer } from "../../hooks/useTimer"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
+import { musicService } from "../../services/localMedia.service"
 import { applicationService } from "../../services/Tuneify.service"
 import { getSongsLyrics } from "../../store/actions/lyrics.action"
+
 import {
   changeApplicationSetup,
   tunifyChild
 } from "../../store/slices/childState.slice"
-import { tuneifyFavourites } from "../../store/slices/favourite.slice"
+import {
+  addUserFavouritesData,
+  tuneifyFavourites
+} from "../../store/slices/favourite.slice"
 import { storedLyrics } from "../../store/slices/lyrics.slice"
 import {
   centralQueue,
@@ -50,7 +59,13 @@ import {
   updateSongQueue
 } from "../../store/slices/Queue.slice"
 import Show from "../Common/Show"
-import SongPlayer from "./SongPlayer"
+import Control from "./Control"
+import DownloadButton from "./DownloadButton"
+import PlayerHeader from "./PlayerHeader"
+import PlayerInfo from "./PlayerInfo"
+import SideModal from "./SideModal"
+import SongInfo from "./SongInfo"
+import TimerPopUp from "./TimerPopUp"
 const { StatusBarManager } = NativeModules
 const { height: SCREEN_HEIGHT } = Dimensions.get("window")
 const BOTTOM_TAB_BAR_HEIGHT = 0
@@ -60,11 +75,24 @@ const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + offSet
 const MIN_TRANSLATE_Y = -BOTTOM_TAB_BAR_HEIGHT - 10
 
 const TuneifyPlayer = () => {
+  const [enableGesture, setEnableGesture] = useState(true)
+
   const [isPlayer, togglePlayer] = usePlayer()
   const translateY = useSharedValue(MIN_TRANSLATE_Y)
   const Zindex = useSharedValue(20)
   const [showFullPlayer, setShowFullPlayer] = useState(false)
   const [showMiniPlayer, setShowMiniPlayer] = useState(true)
+
+  const favourite = TypedSelectorHook(tuneifyFavourites)
+  const lyrics = TypedSelectorHook(storedLyrics)
+  const [isLyricsView, toggleLyricsView] = useLyricsView()
+  const [timer, toggleTimer, isTimerModal, toggleModal, value, setTimerValue] =
+    useTimer()
+  const [isShuffle, toggleShuffle] = useShuffle()
+  const [downloadProgress, updateDownloadValue] = useDownloadProgress()
+  const [isPlaylist, togglePlayist] = usePlaylist()
+  const progress = useProgress()
+  const [flip] = useState(new CustomAnimated.Value(0))
 
   const dispatch = useAppDispatch()
   const playbackState: PlaybackState | { state: undefined } = usePlaybackState()
@@ -78,16 +106,22 @@ const TuneifyPlayer = () => {
 
   const gestureHandler = useAnimatedGestureHandler({
     onStart: (_, ctx) => {
+      if (!enableGesture) return
       ctx.startY = translateY.value
     },
+
     onActive: (event, ctx: any) => {
+      if (!enableGesture) return
       translateY.value = ctx.startY + event.translationY
       if (translateY.value < MAX_TRANSLATE_Y) translateY.value = MAX_TRANSLATE_Y
       if (translateY.value > MIN_TRANSLATE_Y) translateY.value = MIN_TRANSLATE_Y
     },
+
     onEnd: (event) => {
+      if (!enableGesture) return
       if (event.translationY < -10) {
-        Zindex.value = 50
+        Zindex.value = withTiming(50)
+
         translateY.value = withSpring(
           MAX_TRANSLATE_Y + StatusBarManager.HEIGHT,
           {
@@ -96,7 +130,7 @@ const TuneifyPlayer = () => {
           }
         )
       } else if (event.translationY > 10) {
-        Zindex.value = 20
+        Zindex.value = withTiming(20)
         translateY.value = withSpring(MIN_TRANSLATE_Y, {
           damping: 15,
           stiffness: 100
@@ -127,20 +161,8 @@ const TuneifyPlayer = () => {
     }
   })
 
-  //-- full player - start
-
-  const favourite = TypedSelectorHook(tuneifyFavourites)
-  const lyrics = TypedSelectorHook(storedLyrics)
-  const [isLyricsView, toggleLyricsView] = useLyricsView()
-  const [timer, toggleTimer, isTimerModal, toggleModal, value, setTimerValue] =
-    useTimer()
-  const [isShuffle, toggleShuffle] = useShuffle()
-  const [downloadProgress, updateDownloadValue] = useDownloadProgress()
-  const [isPlaylist, togglePlayist] = usePlaylist()
-  const progress = useProgress()
-  const [flip] = useState(new FullPlayerAnimated.Value(0))
   const flipCard = useCallback(() => {
-    FullPlayerAnimated.timing(flip, {
+    CustomAnimated.timing(flip, {
       toValue: isLyricsView ? 0 : 180,
       duration: 500,
       useNativeDriver: true
@@ -185,6 +207,40 @@ const TuneifyPlayer = () => {
       return false
     return true
   }
+
+  const handleBackButtonPress = () => {
+    if (showFullPlayer) {
+      ;(translateY.value = withSpring(MIN_TRANSLATE_Y)), (Zindex.value = 20)
+      return true
+    }
+    return false
+  }
+
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", handleBackButtonPress)
+    return () => {
+      BackHandler.removeEventListener(
+        "hardwareBackPress",
+        handleBackButtonPress
+      )
+    }
+  }, [showFullPlayer])
+
+  useEffect(() => {
+    if (!applicationQueue.data.song) {
+      return
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!playerState.isSetupped) {
+      applicationService.setUpPlayer(applicationQueue.data.song ?? null)
+      dispatch(changeApplicationSetup())
+      dispatch(resetScreen())
+      return
+    }
+  }, [applicationQueue.data])
+
   useTrackPlayerEvents(
     [
       Event.PlaybackState,
@@ -206,18 +262,8 @@ const TuneifyPlayer = () => {
       }
     }
   )
-  // full player -end
-
-  useEffect(() => {
-    if (!playerState.isSetupped) {
-      applicationService.setUpPlayer(applicationQueue.data.song ?? null)
-      dispatch(changeApplicationSetup())
-      dispatch(resetScreen())
-    }
-  }, [applicationQueue.data])
-
   return (
-    <PanGestureHandler onGestureEvent={gestureHandler}>
+    <PanGestureHandler enabled={enableGesture} onGestureEvent={gestureHandler}>
       <Animated.View
         style={[
           {
@@ -239,9 +285,10 @@ const TuneifyPlayer = () => {
                 className=" h-14 w-full bottom-0 flex flex-row items-center justify-center px-3 bg-bottomPlayer"
                 activeOpacity={1}
                 onPress={() => [
-                  (translateY.value =
-                    MAX_TRANSLATE_Y + StatusBarManager.HEIGHT),
-                  (Zindex.value = 50)
+                  (translateY.value = withSpring(
+                    MAX_TRANSLATE_Y + StatusBarManager.HEIGHT
+                  )),
+                  (Zindex.value = withTiming(50))
                 ]}
               >
                 <View className="flex flex-row items-center h-full w-11/12 overflow-hidden">
@@ -287,7 +334,125 @@ const TuneifyPlayer = () => {
             </View>
           )}
         </Show>
-        <SongPlayer isVisible={isPlayer} togglePlayer={togglePlayer} />
+        <Show isVisible={showFullPlayer}>
+          <SideModal
+            isVisible={isPlaylist}
+            togglePlayist={togglePlayist}
+            song={applicationQueue.data.song}
+          />
+          <TimerPopUp
+            isModal={isTimerModal}
+            value={value}
+            setValue={setTimerValue}
+            toggleTimer={toggleTimer}
+            toggleModal={toggleModal}
+            dispatch={dispatch}
+          />
+          <View className="w-full h-screen px-3 bg-background">
+            <PlayerHeader
+              minValue={MIN_TRANSLATE_Y}
+              Zindex={Zindex}
+              translateY={translateY}
+              flipCard={flipCard}
+              togglePlayist={togglePlayist}
+            />
+            <View className="relative h-1/2 w-full mt-8 flex items-center justify-center">
+              <CustomAnimated.View
+                style={[frontAnimatedStyle, { backfaceVisibility: "hidden" }]}
+                className="w-[90%]  overflow-hidden"
+                pointerEvents={isLyricsView ? "none" : "auto"}
+              >
+                <Image
+                  className="h-full w-full rounded-xl"
+                  source={{
+                    uri: applicationQueue.data.song?.artwork
+                  }}
+                  resizeMode="contain"
+                  style={{
+                    borderRadius: 20
+                  }}
+                />
+              </CustomAnimated.View>
+              <CustomAnimated.View
+                style={[backAnimatedStyle, { backfaceVisibility: "hidden" }]}
+                className="flex absolute  w-[95%] h-full  justify-center items-center rounded-xl"
+                pointerEvents={isLyricsView ? "auto" : "none"}
+              >
+                <Show isVisible={lyrics.data.lyrics?.length > 15}>
+                  <ScrollView showsVerticalScrollIndicator={false}>
+                    <Pressable
+                      onTouchStart={(e) => setEnableGesture(false)}
+                      onTouchMove={() => setEnableGesture(true)}
+                      onTouchEnd={() => setEnableGesture(true)}
+                    >
+                      <Text className="text-white  text-base  leading-8 flex items-center justify-center font-['300']">
+                        {lyrics.data.lyrics?.replaceAll("<br>", "\n")}
+                      </Text>
+                    </Pressable>
+                  </ScrollView>
+                </Show>
+                <Show isVisible={lyrics.data.lyrics?.length < 15}>
+                  <Text className="absolute top-52 left-0">
+                    {lyrics.data.lyrics}
+                  </Text>
+                </Show>
+              </CustomAnimated.View>
+            </View>
+            <SongInfo currentTrack={applicationQueue.data.song} />
+            <PlayerInfo progress={progress} />
+            <Control
+              nextAndPrevious={nextAndPrevious}
+              isRepeat={applicationQueue.isRepeat}
+              playbackState={playbackState}
+              applicationQueue={applicationQueue}
+              dispatch={dispatch}
+              isShuffle={isShuffle}
+              toggleShuffle={toggleShuffle}
+            />
+            <View className=" h-14 w-full mt-5  flex items-center justify-around flex-row">
+              <TouchableOpacity>
+                <Image
+                  source={require("../../assets/images/tes/Timer-repeat.png")}
+                  style={{ width: 28, height: 28, tintColor: "white" }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={toggleModal}>
+                <Image
+                  source={require("../../assets/images/tes/Timer.png")}
+                  style={{
+                    width: 32,
+                    height: 32,
+                    tintColor: timer ? "#ff8216" : "white"
+                  }}
+                />
+              </TouchableOpacity>
+              <DownloadButton
+                downloadProgress={downloadProgress}
+                onPress={() =>
+                  musicService.downloadSong(
+                    applicationQueue.data.song,
+                    updateDownloadValue
+                  )
+                }
+              />
+              <TouchableOpacity
+                onPress={() => [
+                  dispatch(addUserFavouritesData(applicationQueue.data.song!))
+                ]}
+              >
+                <Icons.HomeIcon
+                  name="heart-fill"
+                  size={23}
+                  color={
+                    checkFavAvailable(applicationQueue.data.song?.id || "")
+                      ? "gray"
+                      : "#ff8216"
+                  }
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Show>
       </Animated.View>
     </PanGestureHandler>
   )

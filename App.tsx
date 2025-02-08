@@ -5,8 +5,14 @@ import SplashScreen from "react-native-splash-screen"
 import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
 import MainNavigation from "./src/mainNavigation/MainNavigation"
+import PermissionService from "./src/services/permission.service"
 import store, { persistor } from "./src/store/store"
-const App = () => {
+import { HomeScreenProps } from "./src/Types/Types"
+const permission = new PermissionService()
+const App: React.FC<HomeScreenProps> = ({ navigation }) => {
+
+
+
   useEffect(() => {
     SplashScreen.hide()
   }, [])
