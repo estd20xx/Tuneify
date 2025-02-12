@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { endPoints } from "../../api/base/endpoint"
+import { PlayListRequest } from "../../api/interface/module.interface"
 import { PayloadService } from "../../api/service/Payload.service"
 import { Interceptors } from "../../lib/axios"
 class PersonalizedAlbumSongs extends PayloadService {
@@ -16,6 +17,22 @@ class PersonalizedAlbumSongs extends PayloadService {
         return this.albumPayload(data.data)
       } catch (error: any) {
         return Async.rejectWithValue(error.message)
+      }
+    }
+  )
+  public albumPlaylist = createAsyncThunk(
+    "albumPlaylist",
+    async (id: string, Async) => {
+      try {
+        const data = await Interceptors.get<PlayListRequest>("", {
+          params: {
+            ...endPoints.playlistDetails,
+            listid: id
+          }
+        })
+        return this.playlistPayload(data.data)
+      } catch (e: any) {
+        return Async.rejectWithValue(e?.message)
       }
     }
   )

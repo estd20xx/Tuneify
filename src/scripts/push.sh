@@ -18,11 +18,11 @@ function projectPrettify {
     yarn run format
 }
 function pushToDevelopmentBranch {
-    git push origin development
+    git push origin features
     checkCommandStatus "Git push"
 }
 function addingToGitStage {
-    git pull origin development
+    git pull origin features
     checkCommandStatus "Git pull"
     git add .
     checkCommandStatus "Git add"

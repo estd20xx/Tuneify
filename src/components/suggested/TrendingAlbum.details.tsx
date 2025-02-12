@@ -32,6 +32,11 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
   const albumSongs = TypedSelectorHook(albumData)
   const applicationQueue = TypedSelectorHook(centralQueue)
   useEffect(() => {
+    if (data.type == "playlist") {
+      dispatch(album.albumPlaylist(route.params.albumData.id))
+      return
+    }
+    console.log("alnum called")
     dispatch(album.getAlbumSongs(route.params.albumData.id))
   }, [])
   const chnageQueueState = async (index: number, song: TrendingAlbumSons) => {
