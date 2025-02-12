@@ -95,18 +95,7 @@ export interface AlbumDetailsResponse {
   year: string
   list_count: string
   list_type: string
-  songs: {
-    id: string
-    title: string
-    subtitle: string
-    image: ImageApi[]
-    year: string
-    play_count: string
-    songLink: Audio[]
-    duration: string
-    artists: string
-    has_lyrics: string
-  }[]
+  songs: Array<TrendingAlbumSons>
 }
 
 //// New here dont refactor below this line ---
