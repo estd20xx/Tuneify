@@ -1,5 +1,5 @@
 import React, { memo } from "react"
-import { Image, Text, TouchableOpacity, View } from "react-native"
+import { Image, Text, View } from "react-native"
 interface Props {
   title: string
   artwork: string
@@ -15,9 +15,6 @@ const Header: React.FC<Props> = ({ title, artwork, type }) => {
         <Text className="text-white font-['500'] text-lg tracking-wider">
           {title.slice(0, 35)}
         </Text>
-        <TouchableOpacity>
-          <Text className="text-gray-300 text-base font-['400']">{type}</Text>
-        </TouchableOpacity>
       </View>
     </React.Fragment>
   )

@@ -38,7 +38,7 @@ export class PayloadService extends ApiService {
         (current) => {
           return {
             id: current.id,
-            title: current.title,
+            title: current.title.replaceAll("&quot;", '"'),
             subtitle: current.subtitle,
             header_desc: current.subtitle,
             type: current.type,
@@ -56,7 +56,7 @@ export class PayloadService extends ApiService {
         (current) => {
           return {
             id: current.id,
-            title: current.title,
+            title: current.title.replaceAll("&quot;", '"'),
             subtitle: current.subtitle,
             type: current.type,
             artwork: handleImageVariation(current.image),
@@ -74,7 +74,7 @@ export class PayloadService extends ApiService {
       tuneifyChartsResponse: homeDataRequest.tuneifyCharts.map((current) => {
         return {
           id: current.id,
-          title: current.title,
+          title: current.title.replaceAll("&quot;", '"'),
           subtitle: current.subtitle,
           type: current.type,
           artwork: handleImageVariation(current.image),
@@ -84,7 +84,7 @@ export class PayloadService extends ApiService {
       tuneifyAlbumsResponse: homeDataRequest.tuneifyAlbums.map((current) => {
         return {
           id: current.id,
-          title: current.title,
+          title: current.title.replaceAll("&quot;", '"'),
           subtitle: current.subtitle,
           header_desc: current.header_desc,
           type: current.type,
@@ -105,7 +105,7 @@ export class PayloadService extends ApiService {
   ): AlbumDetailsResponse {
     return {
       id: albumDetails.id,
-      title: albumDetails.title,
+      title: albumDetails.title.replaceAll("&quot;", '"'),
       subtitle: albumDetails.subtitle,
       header_desc: albumDetails.header_desc,
       type: albumDetails.type,
@@ -116,7 +116,7 @@ export class PayloadService extends ApiService {
       songs: albumDetails.list.map((current) => {
         return {
           id: current.id,
-          title: current.title,
+          title: current.title.replaceAll("&quot;", '"'),
           subtitle: current.subtitle,
           image: handleImageVariation(current.image),
           year: current.year,
@@ -134,7 +134,7 @@ export class PayloadService extends ApiService {
   ): PlaylistResponseOnce => {
     return {
       id: playListData.id,
-      title: playListData.title,
+      title: playListData.title.replaceAll("&quot;", '"'),
       type: playListData.type,
       image: handleImageVariation(playListData?.image),
       year: playListData.year,
@@ -149,7 +149,7 @@ export class PayloadService extends ApiService {
       list: playListData.list.map((current) => {
         return {
           id: current.id,
-          title: current.title,
+          title: current.title.replaceAll("&quot;", '"'),
           type: current.type,
           image: handleImageVariation(current.image),
           year: current.year,
@@ -208,7 +208,7 @@ export class PayloadService extends ApiService {
       topQuery: data?.data?.topquery?.data?.map((current: any) => {
         return {
           id: current.id,
-          title: current.title,
+          title: current.title.replaceAll("&quot;", '"'),
           type: current.type,
           image: handleImageVariation(current.image)
         }
@@ -216,57 +216,69 @@ export class PayloadService extends ApiService {
       artists: data?.data?.artists?.data?.map((current: any) => {
         return {
           id: current.id,
-          title: current.title,
+          title: current.title.replaceAll("&quot;", '"'),
           type: current.type,
           image: handleImageVariation(current.image)
         }
+      }),
+      playlists: data?.data?.playlists?.data?.map((current: any) => {
+        return {
+          id: current.id,
+          title: current.title.replaceAll("&quot;", '"'),
+          type: current.type,
+          image: handleImageVariation(current.image),
+          perma_url: current.perma_url,
+          more_info: {
+            artist_name: current.more_info.artist_name,
+            entity_type: current.more_info.entity_type
+          }
+        }
+      }),
+      albums: data?.data?.albums?.data?.map((current: any) => {
+        return {
+          id: current.id,
+          title: current.title.replaceAll("&quot;", '"'),
+          type: current.type,
+          image: handleImageVariation(current.image),
+          perma_url: current.perma_url,
+          more_info: {
+            music: current.more_info.music,
+            year: current.more_info.year,
+            language: current.more_info.language,
+          },
+          song_pids: current.song_pids,
+          descriptions: current.descriptions
+        }
+      }),
+      songs: data?.data?.songs?.data?.map((current: any) => {
+        return {
+          id: current.id,
+          title: current.title.replaceAll("&quot;", '"'),
+          type: current.type,
+          image: handleImageVariation(current.image),
+          perma_url: current.perma_url,
+          more_info: {
+            album: current.more_info.album,
+            album_id: current.more_info.album_id,
+            primary_artists: current.more_info.primary_artists,
+            singers: current.more_info.singers,
+          },
+          descriptions: current.descriptions,
+        }
       })
-      // playlists: data?.data?.playlists?.data?.map((current: any) => {
-      //   return {
-      //     id: current.id,
-      //     title: current.title,
-      //     type: current.type,
-      //     image: handleImageVariation(current.image),
-      //     perma_url: current.perma_url,
-      //     more_info: {
-      //       artist_name: current.more_info.artist_name,
-      //       entity_type: current.more_info.entity_type
-      //     }
-      //   }
-      // }),
-      // albums: data?.data?.albums?.data?.map((current: any) => {
-      //   return {
-      //     id: current.id,
-      //     title: current.title,
-      //     type: current.type,
-      //     image: handleImageVariation(current.image),
-      //     perma_url: current.perma_url,
-      //     more_info: {
-      //       music: current.more_info.music,
-      //       year: current.more_info.year,
-      //       language: current.more_info.language,
-      //     },
-      //     song_pids: current.song_pids,
-      //     descriptions: current.descriptions
-      //   }
-      // }),
-      // songs: data?.data?.songs?.data?.map((current: any) => {
-      //   return {
-      //     id: current.id,
-      //     title: current.title,
-      //     type: current.type,
-      //     image: handleImageVariation(current.image),
-      //     perma_url: current.perma_url,
-      //     more_info: {
-      //       album: current.more_info.album,
-      //       album_id: current.more_info.album_id,
-      //       primary_artists: current.more_info.primary_artists,
-      //       singers: current.more_info.singers,
-      //     },
-      //     descriptions: current.descriptions,
-      //   }
-      // })
     }
     return DynamicResponse
   }
 }
+
+// id: string
+// title: string
+// type: string
+// image: Image[]
+
+// language: string
+// year: string
+// play_count: string
+
+// link: Audio[] // more_info.encrp
+// artist: string // more_info.music

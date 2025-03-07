@@ -86,7 +86,7 @@ public class MusicFilesModule extends ReactContextBaseJavaModule {
             cursor.close();
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Collections.sort(songs, Comparator.comparing(s0 -> s0.getString("title")));
+            Collections.sort(songs, Comparator.comparing(s0 -> s0.getString("title"),String.CASE_INSENSITIVE_ORDER));
         }
         for (WritableMap song : songs) {
             musicList.pushMap(song);

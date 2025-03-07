@@ -54,9 +54,9 @@ interface DynamicAlbum {
 }
 
 export interface DynamicResponse {
-  topQuery: Array<DynamicTopQuery> // done
-  artists: Array<DynamicArtists> // done
-  // albums: Array<DynamicAlbum> // done
-  // playlists: Array<DynamicPlaylist> // done
-  // songs: Array<DynamicSong>
+  topQuery: Array<DynamicTopQuery>
+  artists: Array<DynamicArtists>
+  albums: Array<DynamicAlbum>
+  playlists: Array<DynamicPlaylist>
+  songs: Array<DynamicSong>
 }
