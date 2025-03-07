@@ -34,6 +34,7 @@ export interface SearchedSongQueryParams {
   n: number
 }
 const Search = () => {
+    // Handle More Specific Search Functionality with Artist, Album, Playlists and Many More
   const applicationQueue = TypedSelectorHook(centralQueue)
   const dispatch = useAppDispatch()
   const searchedData = TypedSelectorHook(searchedSongData)
@@ -113,6 +114,9 @@ const Search = () => {
       updateInitial(false)
     }
   }, [searchedData.data])
+
+
+  console.log(searchedData.isMoreLoading)
   return (
     <View className="w-full h-screen flex items-center mb-20">
       <Input updateQuery={updateQuery} searchQuery={searchQuery} />

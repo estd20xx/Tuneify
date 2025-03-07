@@ -34,8 +34,7 @@ class MainApplication : Application(), ReactApplication {
         override val isHermesEnabled: Boolean = BuildConfig.IS_HERMES_ENABLED
     }
 
-    override val reactHost: ReactHost
-        get() = getDefaultReactHost(this.applicationContext, reactNativeHost)
+sudo snap refresh intellij-idea-community
 
     override fun onCreate() {
         super.onCreate()
