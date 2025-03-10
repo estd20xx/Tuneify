@@ -3,7 +3,7 @@
   "version": "1.0.11",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "react-native run-android --verbose",
     "ios": "react-native run-ios",
     "lint": "eslint . --ext \".ts\"",
     "start": "react-native start",
@@ -18,12 +18,13 @@
     "link": "npx react-native-asset"
   },
   "dependencies": {
-    "@react-native-community/slider": "^4.5.0",
+    "@react-native-community/slider": "^4.5.6",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/material-top-tabs": "^6.6.5",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.11.0",
     "@reduxjs/toolkit": "^2.2.0",
+    "add": "^2.0.6",
     "axios": "^1.6.7",
     "depcheck": "^1.4.7",
     "lucide-react-native": "^0.473.0",
@@ -55,7 +56,8 @@
     "react-native-track-player": "^4.1.1",
     "react-native-vector-icons": "^10.0.3",
     "react-redux": "^9.1.0",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
