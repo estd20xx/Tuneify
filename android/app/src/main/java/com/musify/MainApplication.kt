@@ -34,8 +34,6 @@ class MainApplication : Application(), ReactApplication {
         override val isHermesEnabled: Boolean = BuildConfig.IS_HERMES_ENABLED
     }
 
-sudo snap refresh intellij-idea-community
-
     override fun onCreate() {
         super.onCreate()
         SoLoader.init(this, false)

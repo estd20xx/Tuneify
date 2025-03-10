@@ -34,7 +34,7 @@ export interface SearchedSongQueryParams {
   n: number
 }
 const Search = () => {
-    // Handle More Specific Search Functionality with Artist, Album, Playlists and Many More
+  // Handle More Specific Search Functionality with Artist, Album, Playlists and Many More
   const applicationQueue = TypedSelectorHook(centralQueue)
   const dispatch = useAppDispatch()
   const searchedData = TypedSelectorHook(searchedSongData)
