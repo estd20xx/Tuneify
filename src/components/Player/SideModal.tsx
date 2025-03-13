@@ -73,12 +73,9 @@ const SideModal: React.FC<Props> = ({ isVisible, togglePlayist, song }) => {
           </View>
         </View>
       </Show>
-      <View
-        className="w-full h-[70%] bg-[#15130b]  absolute
-            bottom-0 rounded-t-3xl border-t-2 border-slate-300"
-      >
+      <View className="w-full h-[70%] bg-white absolute bottom-0 rounded-t-3xl border-t-2 border-slate-300">
         <View className="w-full p-2 overflow-hidden z-10">
-          <Text className="text-2xl font-['500'] border-b-2 border-gray-300 mb-2 self-center">
+          <Text className="text-2xl font-['500'] border-b-2 border-gray-300 text-black mb-2 self-center">
             Playlists
           </Text>
           <ScrollView showsVerticalScrollIndicator={false}>

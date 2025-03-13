@@ -44,6 +44,7 @@ import { musicService } from "../../services/localMedia.service"
 import { applicationService } from "../../services/Tuneify.service"
 import { getSongsLyrics } from "../../store/actions/lyrics.action"
 
+import { welcomeSong } from "../../constants/welcome"
 import {
   changeApplicationSetup,
   tunifyChild
@@ -234,7 +235,7 @@ const TuneifyPlayer = () => {
 
   useEffect(() => {
     if (!playerState.isSetupped) {
-      applicationService.setUpPlayer(applicationQueue.data.song ?? null)
+      applicationService.setUpPlayer(applicationQueue.data.song ?? welcomeSong)
       dispatch(changeApplicationSetup())
       dispatch(resetScreen())
       return
@@ -262,6 +263,7 @@ const TuneifyPlayer = () => {
       }
     }
   )
+  // print(applicationQueue.data.song)
   return (
     <PanGestureHandler enabled={enableGesture} onGestureEvent={gestureHandler}>
       <Animated.View

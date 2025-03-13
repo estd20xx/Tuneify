@@ -24,7 +24,6 @@
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.11.0",
     "@reduxjs/toolkit": "^2.2.0",
-    "add": "^2.0.6",
     "axios": "^1.6.7",
     "depcheck": "^1.4.7",
     "lucide-react-native": "^0.473.0",
@@ -44,6 +43,7 @@
     "react-native-modal": "^13.0.1",
     "react-native-pager-view": "^6.2.3",
     "react-native-paper": "^5.12.3",
+    "react-native-popup-menu": "^0.16.1",
     "react-native-reanimated": "^3.6.2",
     "react-native-safe-area-context": "^4.9.0",
     "react-native-screens": "^3.29.0",
@@ -56,8 +56,7 @@
     "react-native-track-player": "^4.1.1",
     "react-native-vector-icons": "^10.0.3",
     "react-redux": "^9.1.0",
-    "redux-persist": "^6.0.0",
-    "yarn": "^1.22.22"
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

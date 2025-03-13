@@ -244,7 +244,7 @@ export class PayloadService extends ApiService {
           more_info: {
             music: current.more_info.music,
             year: current.more_info.year,
-            language: current.more_info.language,
+            language: current.more_info.language
           },
           song_pids: current.song_pids,
           descriptions: current.descriptions
@@ -261,9 +261,9 @@ export class PayloadService extends ApiService {
             album: current.more_info.album,
             album_id: current.more_info.album_id,
             primary_artists: current.more_info.primary_artists,
-            singers: current.more_info.singers,
+            singers: current.more_info.singers
           },
-          descriptions: current.descriptions,
+          descriptions: current.descriptions
         }
       })
     }

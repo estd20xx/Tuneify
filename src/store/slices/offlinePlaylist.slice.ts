@@ -31,6 +31,14 @@ const offlinePlaylist = createSlice({
       }
       state.playlist.unshift(actions.payload)
     },
+
+    deletePlaylist(
+      state: InitialPlaylistInterface,
+      actions: PayloadAction<number>
+    ) {
+      state.playlist.splice(actions.payload, actions.payload + 1)
+    },
+
     addSongToPlaylist(
       state: InitialPlaylistInterface,
       actions: PayloadAction<UpdatePersonalizedPlaylist>
@@ -45,7 +53,8 @@ const offlinePlaylist = createSlice({
     }
   }
 })
-export const { newPlaylist, addSongToPlaylist } = offlinePlaylist.actions
+export const { newPlaylist, addSongToPlaylist, deletePlaylist } =
+  offlinePlaylist.actions
 export const customePlaylist = (state: RootState) =>
   state.persistedReducer.customePlaylist
 export default offlinePlaylist.reducer

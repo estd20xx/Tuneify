@@ -19,7 +19,7 @@ import Suggested from "../screens/Home/Suggested"
 import Onboading from "../screens/onboading/Onboading"
 import Playlists from "../screens/playlist/Playlists"
 import Search from "../screens/Search"
-import Settings from "../screens/Settings"
+import Settings from "../screens/Settings/Settings"
 import Splash from "../screens/Splash"
 export const component = {
   Home,
