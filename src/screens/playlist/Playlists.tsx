@@ -1,16 +1,30 @@
 import { Plus } from "lucide-react-native"
 import React, { memo } from "react"
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native"
+import {
+  Alert,
+  FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native"
 import { Icons } from "../../constants/Icon"
-import { TypedSelectorHook } from "../../hooks/store.hook"
-import { customePlaylist } from "../../store/slices/offlinePlaylist.slice"
+import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import {
+  customePlaylist,
+  deletePlaylist
+} from "../../store/slices/offlinePlaylist.slice"
 const Playlists = () => {
   const offlinePlaylist = TypedSelectorHook(customePlaylist)
+  const dispatch = useAppDispatch()
+
+  const handlePlaylistCreation = () => {}
+
   return (
     <View className="w-full h-screen flex  justify-center flex-row">
       <FlatList
         data={offlinePlaylist.playlist}
-        keyExtractor={(item, index) => item[0].name}
+        keyExtractor={(item) => item[0].name}
         initialNumToRender={3}
         showsVerticalScrollIndicator={false}
         maxToRenderPerBatch={4}
@@ -32,7 +46,10 @@ const Playlists = () => {
                 alignItems: "center"
               }}
             >
-              <TouchableOpacity className="h-14 w-14 rounded-full bg-orange-500 flex items-center justify-center">
+              <TouchableOpacity
+                className="h-14 w-14 rounded-full bg-orange-500 flex items-center justify-center"
+                onPress={() => handlePlaylistCreation()}
+              >
                 <Plus color={"#FFF"} />
               </TouchableOpacity>
               <Text className="text-xl text-white ml-3">Add New Playlist</Text>
@@ -52,6 +69,24 @@ const Playlists = () => {
                 paddingLeft: 2,
                 paddingRight: 5,
                 marginTop: 10
+              }}
+              onLongPress={() => {
+                Alert.alert(
+                  "Delete Playlist",
+                  "Are you sure you want to delete your existing playlist? \n\nNote: This will remove all saved songs from related playlists.",
+                  [
+                    {
+                      text: "Cancel",
+                      onPress: () => console.log("Cancel Pressed"),
+                      style: "default"
+                    },
+                    {
+                      text: "OK",
+                      onPress: () => dispatch(deletePlaylist(index)),
+                      style: "destructive"
+                    }
+                  ]
+                )
               }}
             >
               <View className="w-4/5  h-full pl-3 flex flex-row ">

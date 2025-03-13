@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from "react"
-import { FlatList, TouchableOpacity, View, ViewToken } from "react-native"
+import { FlatList, View, ViewToken } from "react-native"
 import { useSharedValue } from "react-native-reanimated"
 import TrackPlayer from "react-native-track-player"
 import { screens } from "../../api/base/constrants"
@@ -67,16 +67,13 @@ const Songs = () => {
           renderItem={(items) => {
             const { item, index } = items
             return (
-              <TouchableOpacity
+              <ListItem
                 key={JSON.stringify(index)}
-                onPress={() => chnageQueueState(index, item)}
-              >
-                <ListItem
-                  item={item}
-                  viewableItems={viewableItems}
-                  id={applicationQueue.data.song?.id ?? "random"}
-                />
-              </TouchableOpacity>
+                onpress={() => chnageQueueState(index, item)}
+                item={item}
+                viewableItems={viewableItems}
+                id={applicationQueue.data.song?.id ?? "random"}
+              />
             )
           }}
         />

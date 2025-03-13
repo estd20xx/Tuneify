@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { StatusBar } from "react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { MenuProvider } from "react-native-popup-menu"
 import SplashScreen from "react-native-splash-screen"
 import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
@@ -8,11 +9,9 @@ import MainNavigation from "./src/mainNavigation/MainNavigation"
 import PermissionService from "./src/services/permission.service"
 import store, { persistor } from "./src/store/store"
 import { HomeScreenProps } from "./src/Types/Types"
+
 const permission = new PermissionService()
 const App: React.FC<HomeScreenProps> = ({ navigation }) => {
-
-
-
   useEffect(() => {
     SplashScreen.hide()
   }, [])
@@ -22,7 +21,9 @@ const App: React.FC<HomeScreenProps> = ({ navigation }) => {
       <StatusBar backgroundColor={"#1b1002"} />
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={null}>
-          <MainNavigation />
+          <MenuProvider>
+            <MainNavigation />
+          </MenuProvider>
         </PersistGate>
       </Provider>
     </GestureHandlerRootView>

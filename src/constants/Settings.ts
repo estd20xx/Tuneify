@@ -1,57 +1,65 @@
-export const settingsData = [
+import { ImageSourcePropType } from "react-native"
+
+export interface SettingsAssetsInterface {
+  leftIcon: ImageSourcePropType
+  title: String
+  command: String
+}
+
+export const settingsData: SettingsAssetsInterface[] = [
   {
     leftIcon: require("../assets/images/setting.png"),
     title: "General Settings",
-    link: ""
+    command: "general"
   },
   {
     leftIcon: require("../assets/images/backup-file.png"),
     title: "BackUp",
-    link: ""
+    command: "backup"
   },
   {
     leftIcon: require("../assets/images/notification.png"),
     title: "Notification",
-    link: ""
+    command: "notification"
   },
   {
     leftIcon: require("../assets/images/language.png"),
     title: "Language",
-    link: ""
+    command: "language"
   },
   {
     leftIcon: require("../assets/images/mode.png"),
     title: "Accent Color",
-    link: ""
+    command: "accent-color"
   },
   {
     leftIcon: require("../assets/images/shareApp.png"),
     title: "Share App",
-    link: ""
+    command: "share"
   },
   {
     leftIcon: require("../assets/images/log.png"),
     title: "Change Log",
-    link: ""
+    command: "log"
   },
   {
     leftIcon: require("../assets/images/privacy.png"),
     title: "Privacy Policy",
-    link: ""
+    command: "privacy"
   },
   {
     leftIcon: require("../assets/images/faq.png"),
     title: "FAQ",
-    link: ""
+    command: "faq"
   },
   {
     leftIcon: require("../assets/images/info.png"),
     title: "About Tuneify",
-    link: ""
+    command: "about"
   },
   {
     leftIcon: require("../assets/images/exit.png"),
     title: "Quit",
-    link: ""
+    command: "quit"
   }
 ]
