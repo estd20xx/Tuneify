@@ -24,7 +24,7 @@ const Folders = () => {
   const localFile = TypedSelectorHook(tuneifyOfflines)
   const dispatch = useAppDispatch()
   const applicationQueue = TypedSelectorHook(centralQueue)
-  const chnageQueueState = async (index: number, song: StoreSongTypes) => {
+  const changeQueueState = async (index: number, song: StoreSongTypes) => {
     try {
       if (localFile.LocalSong) {
         if (applicationQueue.data.screenId != screens.offlineScreenId) {
@@ -74,7 +74,7 @@ const Folders = () => {
             return (
               <TouchableOpacity
                 className="w-full h-16 mt-2 flex flex-row items-center"
-                onPress={() => chnageQueueState(index, item)}
+                onPress={() => changeQueueState(index, item)}
               >
                 <View className="h-16 w-20  pl-2">
                   <Image

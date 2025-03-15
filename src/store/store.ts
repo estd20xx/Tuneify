@@ -11,6 +11,7 @@ import playlistDetailsSlice from "./slices/playlistDetails.slice"
 import PlayerQueue from "./slices/Queue.slice"
 import searchDynamics from "./slices/searchDynamic.slice"
 import searchedSongsSlice from "./slices/searchedSong.slice"
+import shareSlice from "./slices/share.slice"
 import songSliceNew from "./slices/song.slice"
 import userSlice from "./slices/user.slice"
 import { reduxStorage } from "./storage.store"
@@ -24,7 +25,8 @@ const persistConfig = {
     "playlist",
     "searchedSong",
     "lyrics",
-    "dynamic"
+    "dynamic",
+    "share"
   ],
   whitelist: [
     "home",
@@ -49,7 +51,8 @@ const RootReducer = combineReducers({
   favourite: favouriteSlice,
   customePlaylist: offlinePlaylist,
   lyrics: lyricsSlice,
-  dynamic: searchDynamics
+  dynamic: searchDynamics,
+  share: shareSlice
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({

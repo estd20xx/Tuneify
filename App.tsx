@@ -15,6 +15,7 @@ const App: React.FC<HomeScreenProps> = ({ navigation }) => {
   useEffect(() => {
     SplashScreen.hide()
   }, [])
+
   // #1b1002
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

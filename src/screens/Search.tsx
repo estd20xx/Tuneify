@@ -42,7 +42,7 @@ const Search = () => {
   const [searchQuery, updateQuery] = useSearch()
   const [isInitialSearch, updateInitial, isFetchingMore, updateFetchingMore] =
     useFetchingState()
-  const chnageQueueState = async (song: Song) => {
+  const changeQueueState = async (song: Song) => {
     try {
       if (searchedData.data?.songs) {
         if (applicationQueue.data.screenId != screens.searchScreenId) {
@@ -195,7 +195,7 @@ const Search = () => {
               return (
                 <TouchableOpacity
                   className="w-full h-16 mt-2 flex flex-row items-center"
-                  onPress={() => chnageQueueState(item)}
+                  onPress={() => changeQueueState(item)}
                 >
                   <View className="h-16 w-20 pl-2">
                     <Image

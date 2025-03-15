@@ -40,7 +40,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
 
     dispatch(album.getAlbumSongs(route.params.albumData.id))
   }, [])
-  const chnageQueueState = async (index: number, song: TrendingAlbumSons) => {
+  const changeQueueState = async (index: number, song: TrendingAlbumSons) => {
     try {
       if (albumSongs.data?.songs) {
         if (
@@ -99,7 +99,7 @@ const TrendingAlbumDetails: React.FC<TrendingAlbumParamsTypes> = ({
                     paddingRight: 5,
                     marginTop: 10
                   }}
-                  onPress={() => chnageQueueState(index, item)}
+                  onPress={() => changeQueueState(index, item)}
                 >
                   <View className="w-4/5  h-full pl-3 flex flex-row ">
                     <View className="w-full rounded-lg overflow-hidden ">
