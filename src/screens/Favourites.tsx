@@ -16,7 +16,7 @@ const Favourites = () => {
   const data = TypedSelectorHook(tuneifyFavourites)
   const applicationQueue = TypedSelectorHook(centralQueue)
   const dispatch = useAppDispatch()
-  const chnageQueueState = async (index: number, song: UserFavouritesTypes) => {
+  const changeQueueState = async (index: number, song: UserFavouritesTypes) => {
     try {
       if (data.favouriteData) {
         if (applicationQueue.data.screenId != screens.favouriteScreenId) {
@@ -40,10 +40,10 @@ const Favourites = () => {
   }
   const shuffleHandler = async () => {
     const randomIndex = Math.floor(Math.random() * data.favouriteData.length)
-    chnageQueueState(randomIndex, data.favouriteData[randomIndex])
+    changeQueueState(randomIndex, data.favouriteData[randomIndex])
   }
   const simplePlayHandler = () => {
-    chnageQueueState(0, data.favouriteData[0])
+    changeQueueState(0, data.favouriteData[0])
   }
   return (
     <View className="w-full h-screen flex items-center justify-center pb-20 ">
@@ -75,7 +75,7 @@ const Favourites = () => {
                 paddingRight: 5,
                 marginTop: 10
               }}
-              onPress={() => chnageQueueState(index, item)}
+              onPress={() => changeQueueState(index, item)}
             >
               <View className="w-[90%]  h-full pl-3 flex flex-row ">
                 <View className="w-full rounded-lg overflow-hidden ">

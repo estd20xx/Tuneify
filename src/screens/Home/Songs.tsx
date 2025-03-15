@@ -20,7 +20,7 @@ const Songs = () => {
   const dispatch = useAppDispatch()
   const songs = TypedSelectorHook(testSong)
   const applicationQueue = TypedSelectorHook(centralQueue)
-  const chnageQueueState = async (index: number, song: Song) => {
+  const changeQueueState = async (index: number, song: Song) => {
     try {
       if (songs.data?.songs) {
         if (applicationQueue.data.screenId != screens.songsScreenId) {
@@ -69,7 +69,7 @@ const Songs = () => {
             return (
               <ListItem
                 key={JSON.stringify(index)}
-                onpress={() => chnageQueueState(index, item)}
+                onpress={() => changeQueueState(index, item)}
                 item={item}
                 viewableItems={viewableItems}
                 id={applicationQueue.data.song?.id ?? "random"}

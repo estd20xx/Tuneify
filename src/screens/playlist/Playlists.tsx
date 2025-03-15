@@ -1,5 +1,5 @@
-import { Plus } from "lucide-react-native"
-import React, { memo } from "react"
+import { Camera, Plus, Share } from "lucide-react-native"
+import React, { memo, useState } from "react"
 import {
   Alert,
   FlatList,
@@ -8,20 +8,24 @@ import {
   TouchableOpacity,
   View
 } from "react-native"
-import { Icons } from "../../constants/Icon"
+import "text-encoding"
+import QrCode from "../../components/playlist/QrCode"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import {
   customePlaylist,
   deletePlaylist
 } from "../../store/slices/offlinePlaylist.slice"
+import { sharePlaylist } from "../../store/slices/share.slice"
 const Playlists = () => {
   const offlinePlaylist = TypedSelectorHook(customePlaylist)
   const dispatch = useAppDispatch()
+  const [isVisible, setIsVisible] = useState<boolean>(false)
 
   const handlePlaylistCreation = () => {}
 
   return (
     <View className="w-full h-screen flex  justify-center flex-row">
+      <QrCode isVisible={isVisible} onpress={() => setIsVisible(!isVisible)} />
       <FlatList
         data={offlinePlaylist.playlist}
         keyExtractor={(item) => item[0].name}
@@ -32,9 +36,18 @@ const Playlists = () => {
         removeClippedSubviews={true}
         ListHeaderComponent={() => (
           <View>
-            <Text className="text-white text-2xl font-['400'] ml-5 border-b-[1px] border-gray-500">
-              {offlinePlaylist.playlist.length} Playlists
-            </Text>
+            <View className="flex justify-between flex-row pr-3 border-b">
+              <Text className="text-white text-2xl font-['400'] ml-5 pb-2">
+                {offlinePlaylist.playlist.length} Playlists
+              </Text>
+              <TouchableOpacity
+                onPress={() =>
+                  Alert.alert("Developer Message", "work is in progress...")
+                }
+              >
+                <Camera size={25} color={"#fff"} />
+              </TouchableOpacity>
+            </View>
             <View
               style={{
                 width: "100%",
@@ -60,36 +73,28 @@ const Playlists = () => {
         renderItem={({ item, index }) => {
           const { name, songs } = item[0]
           return (
-            <TouchableOpacity
-              style={{
-                width: "100%",
-                height: 60,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                paddingLeft: 2,
-                paddingRight: 5,
-                marginTop: 10
-              }}
-              onLongPress={() => {
-                Alert.alert(
-                  "Delete Playlist",
-                  "Are you sure you want to delete your existing playlist? \n\nNote: This will remove all saved songs from related playlists.",
-                  [
-                    {
-                      text: "Cancel",
-                      onPress: () => console.log("Cancel Pressed"),
-                      style: "default"
-                    },
-                    {
-                      text: "OK",
-                      onPress: () => dispatch(deletePlaylist(index)),
-                      style: "destructive"
-                    }
-                  ]
-                )
-              }}
-            >
-              <View className="w-4/5  h-full pl-3 flex flex-row ">
+            <View className="w-full h-16 flex justify-between flex-row px-5 mt-2">
+              <TouchableOpacity
+                className="w-4/5 h-full flex flex-row "
+                onLongPress={() => {
+                  Alert.alert(
+                    "Delete Playlist",
+                    "Are you sure you want to delete your existing playlist? \n\nNote: This will remove all saved songs from related playlists.",
+                    [
+                      {
+                        text: "Cancel",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "default"
+                      },
+                      {
+                        text: "OK",
+                        onPress: () => dispatch(deletePlaylist(index)),
+                        style: "destructive"
+                      }
+                    ]
+                  )
+                }}
+              >
                 <View className="w-full rounded-lg overflow-hidden ">
                   <View
                     style={{
@@ -130,11 +135,16 @@ const Playlists = () => {
                     </View>
                   </View>
                 </View>
-              </View>
-              <View className=" w-1/5 h-full flex items-center justify-end flex-row pr-3">
-                <Icons.MoreIcon name="more-vert" size={25} color={"#bababa"} />
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => [
+                  dispatch(sharePlaylist(item[0])),
+                  setIsVisible(!isVisible)
+                ]}
+              >
+                <Share size={25} color={"#bababa"} />
+              </TouchableOpacity>
+            </View>
           )
         }}
       />
