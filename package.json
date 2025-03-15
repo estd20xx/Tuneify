@@ -24,7 +24,7 @@
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.11.0",
     "@reduxjs/toolkit": "^2.2.0",
-    "axios": "^1.6.7",
+    "axios": "^1.8.2",
     "crypto-js": "^4.2.0",
     "depcheck": "^1.4.7",
     "lucide-react-native": "^0.473.0",
