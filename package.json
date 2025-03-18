@@ -8,7 +8,7 @@
     "lint": "eslint . --ext \".ts\"",
     "start": "react-native start",
     "test": "jest",
-    "cache": " react-native start --reset-cache",
+    "cache": "react-native start --reset-cache",
     "check": "npx depcheck",
     "clean": "rimraf node_modules && yarn install & yarn run cache",
     "format": "prettier --write ./src",

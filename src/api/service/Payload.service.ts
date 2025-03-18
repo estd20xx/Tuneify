@@ -205,12 +205,28 @@ export class PayloadService extends ApiService {
   }
   protected dynamicSearchPayload = (data: any): DynamicResponse => {
     const DynamicResponse: DynamicResponse = {
-      topQuery: data?.data?.topquery?.data?.map((current: any) => {
+      top: data?.data?.topquery?.data?.map((current: any) => {
         return {
           id: current.id,
           title: current.title.replaceAll("&quot;", '"'),
           type: current.type,
           image: handleImageVariation(current.image)
+        }
+      }),
+      songs: data?.data?.songs?.data?.map((current: any) => {
+        return {
+          id: current.id,
+          title: current.title.replaceAll("&quot;", '"'),
+          type: current.type,
+          image: handleImageVariation(current.image),
+          perma_url: current.perma_url,
+          more_info: {
+            album: current.more_info.album,
+            album_id: current.more_info.album_id,
+            primary_artists: current.more_info.primary_artists,
+            singers: current.more_info.singers
+          },
+          descriptions: current.descriptions
         }
       }),
       artists: data?.data?.artists?.data?.map((current: any) => {
@@ -250,22 +266,6 @@ export class PayloadService extends ApiService {
           descriptions: current.descriptions
         }
       }),
-      songs: data?.data?.songs?.data?.map((current: any) => {
-        return {
-          id: current.id,
-          title: current.title.replaceAll("&quot;", '"'),
-          type: current.type,
-          image: handleImageVariation(current.image),
-          perma_url: current.perma_url,
-          more_info: {
-            album: current.more_info.album,
-            album_id: current.more_info.album_id,
-            primary_artists: current.more_info.primary_artists,
-            singers: current.more_info.singers
-          },
-          descriptions: current.descriptions
-        }
-      })
     }
     return DynamicResponse
   }

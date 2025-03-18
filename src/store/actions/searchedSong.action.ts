@@ -13,14 +13,14 @@ class PersonalizedSearchSongDetails extends PayloadService {
     "searchedSong",
     async (props: Props, Async) => {
       try {
-        const data = await Interceptors.get("", {
+        const response = await Interceptors.get("", {
           params: {
             ...endPoints.searchedSongsDetails,
             ...props.query
           },
           signal: props.signal
         })
-        return this.searchedSongPayload(data.data)
+        return this.searchedSongPayload(response.data)
       } catch (error: any) {
         return Async.rejectWithValue(error.message)
       }

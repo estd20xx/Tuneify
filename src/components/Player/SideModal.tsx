@@ -48,7 +48,7 @@ const SideModal: React.FC<Props> = ({ isVisible, togglePlayist, song }) => {
     <Modal
       isVisible={isVisible}
       onBackButtonPress={togglePlayist}
-      className="w-full h-screen relative -left-5"
+      className="w-full h-screen relative -left-5 bg-red-500"
     >
       <Show isVisible={isInput}>
         <View className="bg-[#313c56c6] h-36 w-full absolute top-10 rounded-md  items-center justify-center blur-lg z-30">
