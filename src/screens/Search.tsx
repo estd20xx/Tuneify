@@ -109,7 +109,7 @@ const Search = () => {
       updateFetchingMore(false)
     })
   }
-
+  11
   useEffect(() => {
     if (searchedData.data?.songs?.length && isInitialSearch) {
       flatListRef.current?.scrollToOffset({ animated: true, offset: 0 })
@@ -141,15 +141,15 @@ const Search = () => {
             contentContainerStyle={{ paddingTop: 10 }}
             removeClippedSubviews={true}
             windowSize={10}
-            ListFooterComponent={() => {
-              return (
-                <Show isVisible={searchedData.data != null}>
-                  <View className="w-full h-20 flex items-center justify-center mb-20">
-                    <Text className="text-white">Loading </Text>
-                  </View>
-                </Show>
-              )
-            }}
+            // ListFooterComponent={() => {
+            //   return (
+            //     <Show isVisible={searchedData.data != null && searchedData.data.songs.length>4}>
+            //       <View className="w-full h-20 flex items-center justify-center mb-20">
+            //         <Text className="text-white">Loading </Text>
+            //       </View>
+            //     </Show>
+            //   )
+            // }}
             onEndReachedThreshold={0.5}
             onEndReached={handleLoadMore}
             renderItem={({ item }) => {

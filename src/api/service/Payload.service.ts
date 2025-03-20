@@ -265,7 +265,7 @@ export class PayloadService extends ApiService {
           song_pids: current.song_pids,
           descriptions: current.descriptions
         }
-      }),
+      })
     }
     return DynamicResponse
   }

@@ -5,6 +5,7 @@ import {
   ChartsResponse,
   PlaylistResponse
 } from "../api/interface/module.interface"
+import { Docs } from "../screens/Home/Albums"
 export interface NavigationStringsTypes {
   splash: string
   onboarding: string
@@ -20,6 +21,7 @@ export interface NavigationStringsTypes {
   trendingSongDetails: string
   charts: string
   search: string
+  audioBookDetails: string
 }
 export type RootStackParamList = {
   splash: undefined
@@ -36,6 +38,7 @@ export type RootStackParamList = {
   trendingSongDetails: undefined
   charts: undefined
   search: undefined
+  audioBookDetails: { audios: Docs }
 }
 
 export type HomeScreen = NativeStackNavigationProp<RootStackParamList, "home">

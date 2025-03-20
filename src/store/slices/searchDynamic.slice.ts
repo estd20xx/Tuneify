@@ -2,10 +2,10 @@ import {
   ActionReducerMapBuilder,
   createSlice,
   PayloadAction
-} from "@reduxjs/toolkit";
-import { DynamicResponse } from "../../api/interface/Dynamic.interface";
-import { personalizedDynamic } from "../actions/SearchDynamic.action";
-import { RootState } from "../store";
+} from "@reduxjs/toolkit"
+import { DynamicResponse } from "../../api/interface/Dynamic.interface"
+import { personalizedDynamic } from "../actions/SearchDynamic.action"
+import { RootState } from "../store"
 interface InitialDynamicSearch {
   data: DynamicResponse | null
   isLoading: boolean
@@ -48,7 +48,7 @@ const searchDynamics = createSlice({
       )
   }
 })
-export const { } = searchDynamics.actions
+export const {} = searchDynamics.actions
 export const dynamicSearchData = (state: RootState) =>
   state.persistedReducer.dynamic
 export default searchDynamics.reducer

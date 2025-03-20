@@ -56,7 +56,6 @@ const searchedSongsSlice = createSlice({
       .addCase(
         searchSongPagination.getSearchedSongDetails.fulfilled,
         (state: InitialSearchedSong, actions: PayloadAction<SearchedSongs>) => {
-          console.log(actions.payload.songs + "dsdsd")
           if (state.data?.songs) {
             state.data.songs.push(...actions.payload.songs)
           }
@@ -71,7 +70,7 @@ const searchedSongsSlice = createSlice({
       )
   }
 })
-export const { } = searchedSongsSlice.actions
+export const {} = searchedSongsSlice.actions
 export const searchedSongData = (state: RootState) =>
   state.persistedReducer.searchedSong
 export default searchedSongsSlice.reducer
