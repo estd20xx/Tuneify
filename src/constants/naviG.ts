@@ -1,3 +1,4 @@
+import AudioBookDetails from "../components/audioBook/AudioBook.details"
 import { ItemTypes } from "../Interfaces/icons.interface"
 import { OnBoardingDataTypes } from "../Interfaces/onboard.interface"
 import { navigationStrings } from "../NavigationStrings/NavigationStrings"
@@ -18,7 +19,7 @@ export const tabBar: TabItemTypes[] = [
     component: component.Artists
   },
   {
-    name: "Albums",
+    name: "Audio Books",
     component: component.Albums
   },
   {
@@ -67,6 +68,10 @@ export const MainNavigationItems: any[] = [
   {
     name: navigationStrings.search,
     component: component.Search
+  },
+  {
+    name: navigationStrings.audioBookDetails,
+    component: AudioBookDetails
   }
 ]
 export const onboardingData: OnBoardingDataTypes[] = [

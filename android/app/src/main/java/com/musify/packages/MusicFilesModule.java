@@ -62,7 +62,8 @@ public class MusicFilesModule extends ReactContextBaseJavaModule {
                         MediaStore.Audio.Media.ARTIST,
                         MediaStore.Audio.Media.ALBUM,
                         MediaStore.Audio.Media.DURATION,
-                        MediaStore.Audio.Media.DATA},
+                        MediaStore.Audio.Media.DATA
+                },
                 MediaStore.Audio.Media.IS_MUSIC + " != 0", null, MediaStore.Audio.Media.TITLE + " ASC");
         String artwork = "android.resource://" + reactContext.getPackageName() + "/drawable/artwork";
         if (cursor != null) {

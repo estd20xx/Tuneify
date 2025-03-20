@@ -13,6 +13,7 @@ import TrackPlayer from "react-native-track-player"
 import { screens } from "../api/base/constrants"
 import { Song } from "../api/service/Payload.service"
 import Show from "../components/Common/Show"
+import Category from "../components/Search/Category"
 import Input from "../components/Search/Input"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
 import { useFetchingState } from "../hooks/useFetchingState"
@@ -38,6 +39,7 @@ const Search = () => {
   const dispatch = useAppDispatch()
   const searchedData = TypedSelectorHook(searchedSongData)
   const dynamicData = TypedSelectorHook(dynamicSearchData)
+
   const flatListRef = useRef<FlatList>(null)
   const [searchQuery, updateQuery] = useSearch()
   const [isInitialSearch, updateInitial, isFetchingMore, updateFetchingMore] =
@@ -107,7 +109,7 @@ const Search = () => {
       updateFetchingMore(false)
     })
   }
-
+  11
   useEffect(() => {
     if (searchedData.data?.songs?.length && isInitialSearch) {
       flatListRef.current?.scrollToOffset({ animated: true, offset: 0 })
@@ -117,6 +119,7 @@ const Search = () => {
   return (
     <View className="w-full h-screen flex items-center mb-20">
       <Input updateQuery={updateQuery} searchQuery={searchQuery} />
+      <Category categoryData={dynamicData.data} />
       <Show isVisible={searchedData.isLoading}>
         <View className="w-full h-screen flex items-center justify-center bg-black">
           <Bounce size={140} color="#ff8216" />
@@ -138,57 +141,15 @@ const Search = () => {
             contentContainerStyle={{ paddingTop: 10 }}
             removeClippedSubviews={true}
             windowSize={10}
-            ListHeaderComponent={() => {
-              return (
-                <View className="">
-                  {dynamicData.data?.topQuery.map((current) => {
-                    return (
-                      <TouchableOpacity
-                        key={current.id}
-                        className="w-full h-16 mt-2 flex flex-row items-center"
-                      >
-                        <View className="h-16 w-20 pl-2">
-                          <Image
-                            source={{ uri: current.image[1].link }}
-                            style={{ width: 60, height: 60, borderRadius: 17 }}
-                            resizeMode="contain"
-                          />
-                        </View>
-                        <View className="w-4/5">
-                          <Text
-                            style={{
-                              fontSize: 15,
-                              fontFamily: "400",
-                              color: "purple"
-                            }}
-                          >
-                            {current.title}
-                          </Text>
-                          <Text
-                            style={{
-                              fontSize: 10,
-                              color: "#d0d0d1",
-                              fontFamily: "200"
-                            }}
-                          >
-                            {current.type}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    )
-                  })}
-                </View>
-              )
-            }}
-            ListFooterComponent={() => {
-              return (
-                <Show isVisible={searchedData.data != null}>
-                  <View className="w-full h-20 flex items-center justify-center mb-20">
-                    <Text className="text-white">Loading </Text>
-                  </View>
-                </Show>
-              )
-            }}
+            // ListFooterComponent={() => {
+            //   return (
+            //     <Show isVisible={searchedData.data != null && searchedData.data.songs.length>4}>
+            //       <View className="w-full h-20 flex items-center justify-center mb-20">
+            //         <Text className="text-white">Loading </Text>
+            //       </View>
+            //     </Show>
+            //   )
+            // }}
             onEndReachedThreshold={0.5}
             onEndReached={handleLoadMore}
             renderItem={({ item }) => {

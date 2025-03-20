@@ -26,8 +26,8 @@ const Charts: React.FC<ChartsPropsTypes> = ({ data, topic }) => {
           return (
             <TouchableOpacity
               className="w-28 flex items-center justify-center"
-              //@ts-ignore
               onPress={() =>
+                //@ts-ignore
                 navigation.navigate("PlaylistDetails", { playlistData: item })
               }
             >
