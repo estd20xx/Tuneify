@@ -7,7 +7,6 @@ type Props = {
 }
 const Category: React.FC<Props> = ({ categoryData }) => {
   const [category, updateCategory] = useSearchCategory()
-  console.log(category)
   return (
     <View className="w-full  flex items-center justify-start flex-row  py-2 pl-2">
       {Object.keys(categoryData || {}).map((current, index) => {

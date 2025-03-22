@@ -31,7 +31,6 @@ const Albums = () => {
   useEffect(() => {
     dispatch(getAudioBooks())
   }, [])
-  console.log(audioData.data)
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}

@@ -48,7 +48,7 @@ const SideModal: React.FC<Props> = ({ isVisible, togglePlayist, song }) => {
     <Modal
       isVisible={isVisible}
       onBackButtonPress={togglePlayist}
-      className="w-full h-screen relative -left-5 bg-red-500"
+      className="w-full h-screen relative -left-5"
     >
       <Show isVisible={isInput}>
         <View className="bg-[#313c56c6] h-36 w-full absolute top-10 rounded-md  items-center justify-center blur-lg z-30">
@@ -73,9 +73,9 @@ const SideModal: React.FC<Props> = ({ isVisible, togglePlayist, song }) => {
           </View>
         </View>
       </Show>
-      <View className="w-full h-[70%] bg-white absolute bottom-0 rounded-t-3xl border-t-2 border-slate-300">
+      <View className="w-full h-[70%] bg-slate-950 absolute bottom-0 rounded-t-3xl border-t-2 border-slate-300">
         <View className="w-full p-2 overflow-hidden z-10">
-          <Text className="text-2xl font-['500'] border-b-2 border-gray-300 text-black mb-2 self-center">
+          <Text className="text-2xl font-['500'] border-b-2 border-gray-300 text-white mb-2 self-center">
             Playlists
           </Text>
           <ScrollView showsVerticalScrollIndicator={false}>

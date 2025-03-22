@@ -14,7 +14,6 @@ export const getSongsDetails = createAsyncThunk(
           pids: props.pids
         }
       })
-      console.log(response.data)
       return response.data
     } catch (error: any) {
       return Async.rejectWithValue(error.message)

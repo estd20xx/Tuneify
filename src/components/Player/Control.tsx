@@ -5,12 +5,11 @@ import { TouchableOpacity, View } from "react-native"
 import { FAB } from "react-native-paper"
 import { PlaybackState, State } from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
+import { useSongChange } from "../../hooks/useSongChange"
 import { applicationService } from "../../services/Tuneify.service"
 import { InitialCentralQueue } from "../../store/slices/Queue.slice"
 interface ControlersProps {
-  nextAndPrevious: (is: boolean) => void
   isRepeat: boolean
-  isShuffle: boolean
   playbackState:
     | PlaybackState
     | {
@@ -18,17 +17,18 @@ interface ControlersProps {
       }
   applicationQueue: InitialCentralQueue
   dispatch: Dispatch<UnknownAction>
+  isShuffle: boolean
   toggleShuffle: () => void
 }
 const Control: React.FC<ControlersProps> = ({
-  nextAndPrevious,
   isRepeat,
-  isShuffle,
   playbackState,
   applicationQueue,
-  toggleShuffle,
-  dispatch
+  dispatch,
+  isShuffle,
+  toggleShuffle
 }) => {
+  const [previous, next] = useSongChange(isShuffle)
   return (
     <View className="h-18  w-full flex items-center justify-evenly flex-row mt-3">
       <View className="h-full flex items-center flex-row justify-around pl-2 w-[20%]">
@@ -40,7 +40,7 @@ const Control: React.FC<ControlersProps> = ({
         </TouchableOpacity>
       </View>
       <View className="h-full w-[60%] flex items-center justify-evenly flex-row">
-        <TouchableOpacity onPress={() => nextAndPrevious(false)}>
+        <TouchableOpacity onPress={() => previous()}>
           <Icons.KeyboardDown name="skip-previous" color={"white"} size={35} />
         </TouchableOpacity>
         <FAB
@@ -55,7 +55,7 @@ const Control: React.FC<ControlersProps> = ({
           loading={playbackState.state === State.Loading}
           style={{ backgroundColor: "#ff8216", borderRadius: 50 }}
         />
-        <TouchableOpacity onPress={() => nextAndPrevious(true)}>
+        <TouchableOpacity onPress={() => next()}>
           <Icons.KeyboardDown name="skip-next" color={"white"} size={35} />
         </TouchableOpacity>
       </View>
