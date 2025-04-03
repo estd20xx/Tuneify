@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import { persistReducer, persistStore } from "redux-persist"
 import albumSlice from "./slices/album.slice"
 import audioBookSlice from "./slices/audioBook.slice"
+import audioBookDetailsWithChapter from "./slices/audioBookDetails.slice"
 import childStateSlice from "./slices/childState.slice"
 import favouriteSlice from "./slices/favourite.slice"
 import homeSlice from "./slices/home.slice"
@@ -27,7 +28,8 @@ const persistConfig = {
     "searchedSong",
     "lyrics",
     "dynamic",
-    "share"
+    "share",
+    "audioBookDetailsWithChapter"
   ],
   whitelist: [
     "home",
@@ -55,7 +57,8 @@ const RootReducer = combineReducers({
   lyrics: lyricsSlice,
   dynamic: searchDynamics,
   share: shareSlice,
-  audioBook: audioBookSlice
+  audioBook: audioBookSlice,
+  audioBookDetailsWithChapter: audioBookDetailsWithChapter
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({

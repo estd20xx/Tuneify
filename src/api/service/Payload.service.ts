@@ -114,7 +114,6 @@ export class PayloadService extends ApiService {
       list_count: albumDetails.list_count,
       list_type: albumDetails.list_type,
       songs: albumDetails.list.map((current) => {
-
         /**
          * 
          *  id: string

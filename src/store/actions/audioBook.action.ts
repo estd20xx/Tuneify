@@ -5,7 +5,7 @@ import {
   mostDownloadedOfAllTime,
   mostViewedInThisWeek
 } from "../../api/base/constrants"
-import { AudioBookScreenInterface } from "../../screens/Home/Albums"
+import { AudioBookScreenInterface } from "../../screens/Home/AudioBook"
 export const getAudioBooks = createAsyncThunk(
   "@getAsyncBooks",
   async (_, Async) => {

@@ -27,7 +27,6 @@ export interface AudioBookScreenInterface {
 
 const Albums = () => {
   const audioData = TypedSelectorHook(audioBooks)
-  console.log(audioData.data[0].audios[0])
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(getAudioBooks())

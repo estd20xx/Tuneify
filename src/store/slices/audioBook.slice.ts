@@ -3,7 +3,7 @@ import {
   createSlice,
   PayloadAction
 } from "@reduxjs/toolkit"
-import { AudioBookScreenInterface } from "../../screens/Home/Albums"
+import { AudioBookScreenInterface } from "../../screens/Home/AudioBook"
 import { getAudioBooks } from "../actions/audioBook.action"
 import { RootState } from "../store"
 

@@ -20,10 +20,13 @@ const Header: React.FC<Props> = ({ title, artwork, type, desc }) => {
         </Text>
       </View>
       <Show isVisible={desc != undefined && desc.length > 10}>
-        <Text className="px-3">
+        <Text className="px-3 mb-2">
           {desc?.slice(0, isFull ? desc.length : 150)}
           <Pressable onPress={() => setIsFull(!isFull)}>
-            <Text className="text-orange-400">...Tap to read more</Text>
+            <Text className="text-orange-400">
+              <Show isVisible={!isFull}>...Tap to read more</Show>
+              <Show isVisible={isFull}>...Tap to read less</Show>
+            </Text>
           </Pressable>
         </Text>
       </Show>

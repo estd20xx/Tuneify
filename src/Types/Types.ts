@@ -5,7 +5,7 @@ import {
   ChartsResponse,
   PlaylistResponse
 } from "../api/interface/module.interface"
-import { Docs } from "../screens/Home/Albums"
+import { Docs } from "../screens/Home/AudioBook"
 export interface NavigationStringsTypes {
   splash: string
   onboarding: string
