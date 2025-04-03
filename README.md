@@ -14,7 +14,7 @@
 
 
 
-## Download Link [ v1.1.15] [old versions](https://github.com/estd20xx/Tuneify/releases)
+## Download Link [ v1.1.17] [old versions](https://github.com/estd20xx/Tuneify/releases)
 
 Architecture | Link | Size
 --- | --- | ---
