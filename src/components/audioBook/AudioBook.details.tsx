@@ -1,7 +1,9 @@
-import React, { memo } from "react"
+import React, { memo, useEffect } from "react"
 import { View } from "react-native"
 import { audioBookImageBaseUrl } from "../../api/base/constrants"
+import { useAppDispatch } from "../../hooks/store.hook"
 import { Docs } from "../../screens/Home/Albums"
+import { audioBookDetails } from "../../store/actions/audioBookDetails.action"
 import Header from "../DetailsScreen/Header"
 interface AudioBookData {
   key: string
@@ -15,6 +17,21 @@ export interface AudioBookDetailsProps {
 }
 const AudioBookDetails: React.FC<AudioBookDetailsProps> = ({ route }) => {
   const { audios } = route.params
+  const dispatch = useAppDispatch()
+
+  const get = async () => {
+    try {
+      dispatch(
+        audioBookDetails.getAudioBookDetails({ identifier: audios.identifier })
+      )
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    get()
+  }, [])
   return (
     <View>
       <Header
