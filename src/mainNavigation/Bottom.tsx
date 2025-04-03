@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { CommonActions } from "@react-navigation/native"
 import React, { memo } from "react"
-import { StyleSheet, View } from "react-native"
+import { View } from "react-native"
 import { BottomNavigation } from "react-native-paper"
 import TuneifyPlayer from "../components/Player/MusicPlayer"
 import { TabItems } from "../constants/naviG"
@@ -13,7 +13,6 @@ const BottomTab = () => {
       screenOptions={{ headerShown: false }}
       tabBar={({ navigation, state, descriptors, insets }) => (
         <View>
-          {/* <BottomPlayer /> */}
           <TuneifyPlayer />
           <BottomNavigation.Bar
             theme={{ colors: { secondaryContainer: "#261221" } }}
@@ -79,20 +78,4 @@ return route.name
     </Tab.Navigator>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  bottomSheetContainer: {
-    backgroundColor: "white",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20
-  },
-  content: {
-    padding: 20
-  }
-})
 export default memo(BottomTab)

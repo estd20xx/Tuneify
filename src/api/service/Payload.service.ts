@@ -114,6 +114,14 @@ export class PayloadService extends ApiService {
       list_count: albumDetails.list_count,
       list_type: albumDetails.list_type,
       songs: albumDetails.list.map((current) => {
+        /**
+         * 
+         *  id: string
+  title: string
+  artist: string
+  artwork: string
+  url: string
+         */
         return {
           id: current.id,
           title: current.title.replaceAll("&quot;", '"'),

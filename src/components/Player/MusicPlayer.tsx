@@ -37,7 +37,6 @@ import { useDownloadProgress } from "../../hooks/useDownloadProgress"
 import { useLyricsView } from "../../hooks/useLyricsView"
 import { usePlayer } from "../../hooks/usePlayer"
 import { usePlaylist } from "../../hooks/usePlaylistSlide"
-import { useShuffle } from "../../hooks/useShuffle"
 import { useTimer } from "../../hooks/useTimer"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { musicService } from "../../services/localMedia.service"
@@ -45,6 +44,7 @@ import { applicationService } from "../../services/Tuneify.service"
 import { getSongsLyrics } from "../../store/actions/lyrics.action"
 
 import { welcomeSong } from "../../constants/welcome"
+import { useShuffle } from "../../hooks/useShuffle"
 import {
   changeApplicationSetup,
   tunifyChild
@@ -76,33 +76,39 @@ const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + offSet
 const MIN_TRANSLATE_Y = -BOTTOM_TAB_BAR_HEIGHT - 10
 
 const TuneifyPlayer = () => {
-  const [enableGesture, setEnableGesture] = useState(true)
+  const dispatch = useAppDispatch()
+  const [
+    isPlayer,
+    togglePlayer,
+    enableGesture,
+    toggleGesture,
+    showFullPlayer,
+    toggleFullScreen,
+    showMiniPlayer,
+    toggleMiniPlayer
+  ] = usePlayer()
 
-  const [isPlayer, togglePlayer] = usePlayer()
   const translateY = useSharedValue(MIN_TRANSLATE_Y)
   const Zindex = useSharedValue(20)
-  const [showFullPlayer, setShowFullPlayer] = useState(false)
-  const [showMiniPlayer, setShowMiniPlayer] = useState(true)
-
+  const [isShuffle, toggleShuffle] = useShuffle()
   const favourite = TypedSelectorHook(tuneifyFavourites)
   const lyrics = TypedSelectorHook(storedLyrics)
   const [isLyricsView, toggleLyricsView] = useLyricsView()
   const [timer, toggleTimer, isTimerModal, toggleModal, value, setTimerValue] =
     useTimer()
-  const [isShuffle, toggleShuffle] = useShuffle()
+
   const [downloadProgress, updateDownloadValue] = useDownloadProgress()
   const [isPlaylist, togglePlayist] = usePlaylist()
   const progress = useProgress()
   const [flip] = useState(new CustomAnimated.Value(0))
 
-  const dispatch = useAppDispatch()
   const playbackState: PlaybackState | { state: undefined } = usePlaybackState()
   const applicationQueue = TypedSelectorHook(centralQueue)
   const playerState = TypedSelectorHook(tunifyChild)
 
   useDerivedValue(() => {
-    runOnJS(setShowMiniPlayer)(translateY.value > MIN_TRANSLATE_Y - 40)
-    runOnJS(setShowFullPlayer)(translateY.value < MIN_TRANSLATE_Y - 40)
+    runOnJS(toggleMiniPlayer)(translateY.value > MIN_TRANSLATE_Y - 40)
+    runOnJS(toggleFullScreen)(translateY.value < MIN_TRANSLATE_Y - 40)
   }, [translateY])
 
   const gestureHandler = useAnimatedGestureHandler({
@@ -189,17 +195,6 @@ const TuneifyPlayer = () => {
   const backAnimatedStyle = {
     transform: [{ rotateY: backInterpolate }]
   }
-  const nextAndPrevious = async (isNext: boolean) => {
-    if (isShuffle) {
-      const index = (await TrackPlayer.getQueue()).length
-      const random = Math.floor(Math.random() * index)
-      await TrackPlayer.skip(random)
-      return
-    }
-
-    isNext ? await TrackPlayer.skipToNext() : await TrackPlayer.skipToPrevious()
-  }
-
   const checkFavAvailable = (currentId: string): boolean => {
     if (
       favourite.favouriteData.filter((liked: any) => liked.id == currentId)
@@ -383,9 +378,9 @@ const TuneifyPlayer = () => {
                 <Show isVisible={lyrics.data.lyrics?.length > 15}>
                   <ScrollView showsVerticalScrollIndicator={false}>
                     <Pressable
-                      onTouchStart={(e) => setEnableGesture(false)}
-                      onTouchMove={() => setEnableGesture(true)}
-                      onTouchEnd={() => setEnableGesture(true)}
+                      onTouchStart={(e) => toggleGesture(false)}
+                      onTouchMove={() => toggleGesture(true)}
+                      onTouchEnd={() => toggleGesture(true)}
                     >
                       <Text className="text-white  text-base  leading-8 flex items-center justify-center font-['300']">
                         {lyrics.data.lyrics?.replaceAll("<br>", "\n")}
@@ -403,7 +398,6 @@ const TuneifyPlayer = () => {
             <SongInfo currentTrack={applicationQueue.data.song} />
             <PlayerInfo progress={progress} />
             <Control
-              nextAndPrevious={nextAndPrevious}
               isRepeat={applicationQueue.isRepeat}
               playbackState={playbackState}
               applicationQueue={applicationQueue}

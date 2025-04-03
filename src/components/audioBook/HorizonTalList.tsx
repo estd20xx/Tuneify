@@ -4,7 +4,7 @@ import React from "react"
 import { FlatList, Text, TouchableOpacity, View } from "react-native"
 import FastImage from "react-native-fast-image"
 import { audioBookImageBaseUrl } from "../../api/base/constrants"
-import { AudioBookScreenInterface } from "../../screens/Home/Albums"
+import { AudioBookScreenInterface } from "../../screens/Home/AudioBook"
 import { RootStackParamList } from "../../Types/Types"
 const HorizonTalList: React.FC<AudioBookScreenInterface> = ({
   title,
