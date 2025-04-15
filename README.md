@@ -10,11 +10,13 @@
  ### <code>Tuneify</code> - Your Rhythm, Your Groove! <br/>
 
  Experience music without limits with Tuneify, the open-source music app. Join a community of creators and listeners, shaping the future of music together. Customize your experience, contribute, and redefine how you enjoy music, all in one app.
+
+ ### <code>Note</code> :<ins>Monthly major update</ins>
 </center>
 
 
 
-## Download Link [ v1.1.17] [old versions](https://github.com/estd20xx/Tuneify/releases)
+## Download Link [ v1.1.17] [old versions](https://github.com/estd20xx/Tuneify/releases)  
 
 Architecture | Link | Size
 --- | --- | ---
