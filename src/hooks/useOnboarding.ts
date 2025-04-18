@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { onboardingData } from "../constants/naviG"
+import { onboardingData } from "../constants/navigation"
 import { OnBoardingDataTypes } from "../Interfaces/onboard.interface"
 
 export const useOnboarding = (initialState = 0) => {

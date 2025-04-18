@@ -258,7 +258,6 @@ const TuneifyPlayer = () => {
       }
     }
   )
-  // print(applicationQueue.data.song)
   return (
     <PanGestureHandler enabled={enableGesture} onGestureEvent={gestureHandler}>
       <Animated.View
