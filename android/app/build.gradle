@@ -14,10 +14,13 @@ android {
 
     namespace "com.musify"
     defaultConfig {
+
+
         applicationId "com.musify"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 8
+  missingDimensionStrategy 'react-native-camera', 'general'
         versionName "1.1.17"   
     }
     signingConfigs {

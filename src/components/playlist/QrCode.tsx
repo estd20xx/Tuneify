@@ -13,7 +13,6 @@ type QrProps = {
 const QrCode: React.FC<QrProps> = ({ isVisible, onpress }) => {
   const [height, width] = useDimensions()
   const currentShare = TypedSelectorHook(sharedPlaylist)
-
   return (
     <Modal className="" isVisible={isVisible}>
       <TouchableOpacity onPress={onpress} className="absolute right-3 top-3">
@@ -25,6 +24,7 @@ const QrCode: React.FC<QrProps> = ({ isVisible, onpress }) => {
           logo={require("../../assets/images/namelessnerd.jpg")}
           logoSize={30}
           size={height / 2.6}
+          ecl="L"
         />
       </View>
     </Modal>

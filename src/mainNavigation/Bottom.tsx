@@ -4,7 +4,7 @@ import React, { memo } from "react"
 import { View } from "react-native"
 import { BottomNavigation } from "react-native-paper"
 import TuneifyPlayer from "../components/Player/MusicPlayer"
-import { TabItems } from "../constants/naviG"
+import { TabItems } from "../constants/navigation"
 import { ItemTypes } from "../Interfaces/icons.interface"
 const Tab = createBottomTabNavigator()
 const BottomTab = () => {

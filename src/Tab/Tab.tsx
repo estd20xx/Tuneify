@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import React, { memo } from "react"
-import { tabBar } from "../constants/naviG"
+import { tabBar } from "../constants/navigation"
 const Tab = createMaterialTopTabNavigator()
 const TabBar = () => {
   return (

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react"
 import { Snackbar } from "react-native-paper"
 interface MessageInterface {
   message: string
@@ -28,4 +28,4 @@ const Messanger: React.FC<MessageInterface> = ({
     </Snackbar>
   )
 }
-export default Messanger
+export default memo(Messanger)
