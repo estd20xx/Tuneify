@@ -9,7 +9,7 @@ const Playlist: React.FC<PlaylistDataProps> = ({ data, topic }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>()
   return (
-    <View className="w-full  h-44   ">
+    <View className="w-full h-48">
       <View className="w-full pl-3 h-10 flex items-center flex-row  mb-3">
         <Text className="text-lg text-white font-['500'] tracking-widest">
           {topic}
@@ -27,7 +27,7 @@ const Playlist: React.FC<PlaylistDataProps> = ({ data, topic }) => {
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-              className=" w-28 flex items-center justify-center"
+              className="w-28 flex items-center justify-center"
               onPress={() =>
                 navigation.navigate("PlaylistDetails", { playlistData: item })
               }
@@ -41,6 +41,7 @@ const Playlist: React.FC<PlaylistDataProps> = ({ data, topic }) => {
                     cache: Image.cacheControl.immutable
                   }}
                   className="w-full h-full"
+                  resizeMode="cover"
                 />
               </View>
               <View className=" w-full h-9 flex items-center justify-center">

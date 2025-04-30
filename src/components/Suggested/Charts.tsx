@@ -7,7 +7,7 @@ const Charts: React.FC<ChartsPropsTypes> = ({ data, topic }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>()
   return (
-    <View className="w-full h-44  ">
+    <View className="w-full h-48 mt-1">
       <View className="w-full pl-3 h-10 flex items-center flex-row  mb-3">
         <Text className="text-lg text-white font-['500'] tracking-widest">
           {topic}

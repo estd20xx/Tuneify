@@ -290,3 +290,5 @@ export class PayloadService extends ApiService {
 
 // link: Audio[] // more_info.encrp
 // artist: string // more_info.music
+
+export const payloadService = new PayloadService()

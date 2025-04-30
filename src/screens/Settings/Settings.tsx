@@ -1,3 +1,4 @@
+import Slider from "@react-native-community/slider"
 import { memo } from "react"
 import {
   BackHandler,
@@ -12,11 +13,16 @@ import Toast from "react-native-toast-message"
 import { settingsData } from "../../constants/Settings"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import SettingService from "../../services/setting.service"
+import {
+  bottomPlayer,
+  changePosition
+} from "../../store/slices/bottomPlayer.slice"
 import { tuneifyUser } from "../../store/slices/user.slice"
 const settingService = new SettingService()
 const Settings = () => {
   const settingData = TypedSelectorHook(tuneifyUser)
   const dispatch = useAppDispatch()
+  const bottomPlayerPosition = TypedSelectorHook(bottomPlayer)
   return (
     <View className="w-full h-screen ">
       <View className="w-full  h-auto flex items-center flex-row justify-center">
@@ -41,6 +47,19 @@ const Settings = () => {
         <Text className=" ml-3 text-white font-['300'] text-xl">
           {settingData.userName}
         </Text>
+      </View>
+
+      <View className="w-full h-auto my-5">
+        <Text className="self-center my-2 text-lg">Position Bottom Player</Text>
+        <Slider
+          minimumValue={54}
+          maximumValue={100}
+          value={bottomPlayerPosition.value}
+          minimumTrackTintColor="#ff8216"
+          maximumTrackTintColor="#d0d0d1"
+          thumbTintColor="#ff8216"
+          onSlidingComplete={(e: number) => dispatch(changePosition(e))}
+        />
       </View>
       <Toast />
       <FlatList

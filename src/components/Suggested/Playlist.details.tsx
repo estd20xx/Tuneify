@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useState } from "react"
 import {
   ActivityIndicator,
   FlatList,
@@ -14,17 +14,16 @@ import {
 } from "../../api/interface/module.interface"
 import { Icons } from "../../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import { playlistDetails } from "../../store/actions/playlist.action"
 
 import TrackPlayer from "react-native-track-player"
 import { screens } from "../../api/base/constrants"
 import { sanitize } from "../../services/sanitizer.service"
-import { playListDetailsStore } from "../../store/slices/playlistDetails.slice"
 import {
   centralQueue,
   SpecificQueue,
   updateQueue
 } from "../../store/slices/Queue.slice"
+import { useGetPlaylistSongs } from "../../tanstack/query/useGetPlaylistSongs"
 import Show from "../Common/Show"
 import Header from "../DetailsScreen/Header"
 interface PlaylistData {
@@ -39,22 +38,22 @@ export interface PlaylistDetailsTypes {
 }
 const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
   const [data] = useState(route.params.playlistData)
+  const { data: response, isLoading, isError } = useGetPlaylistSongs(data.id)
   const dispatch = useAppDispatch()
-  const playlistStore = TypedSelectorHook(playListDetailsStore)
   const applicationQueue = TypedSelectorHook(centralQueue)
   const changeQueueState = async (index: number, song: PlayListSongList) => {
     try {
-      if (playlistStore.data?.list) {
+      if (response?.list) {
         if (
           applicationQueue.data.screenId !=
-          screens.playlistScreenId.concat(playlistStore.data.id)
+          screens.playlistScreenId.concat(response.id)
         ) {
           await TrackPlayer.reset()
-          await TrackPlayer.add(sanitize.playList(playlistStore.data.list))
+          await TrackPlayer.add(sanitize.playList(response.list))
           await TrackPlayer.skip(index)
           await TrackPlayer.play()
           const newQueue: SpecificQueue = {
-            screenId: screens.playlistScreenId + playlistStore.data.id,
+            screenId: screens.playlistScreenId + response.id,
             isPlaying: true,
             song: sanitize.playList([song])[0]
           }
@@ -67,11 +66,6 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
       console.log(error)
     }
   }
-  useEffect(() => {
-    if (data.id) {
-      dispatch(playlistDetails.getPlaylistsSongs(data.id))
-    }
-  }, [data.id])
   return (
     <View className="w-full">
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -80,12 +74,17 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
           artwork={data.artwork[2].link}
           type={data.type}
         />
-        <Show isVisible={playlistStore.isLoading}>
+        <Show isVisible={isLoading}>
           <ActivityIndicator />
         </Show>
-        <Show isVisible={!playlistStore.isLoading}>
+        <Show isVisible={isError}>
+          <View className="w-full h-1/2 flex items-center justify-center">
+            <Text>Something went wrong...</Text>
+          </View>
+        </Show>
+        <Show isVisible={!isLoading && isError}>
           <FlatList
-            data={playlistStore.data?.list}
+            data={response?.list}
             keyExtractor={(item) => item.id}
             initialNumToRender={3}
             showsVerticalScrollIndicator={false}

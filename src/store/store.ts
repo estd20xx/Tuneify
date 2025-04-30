@@ -3,13 +3,12 @@ import { persistReducer, persistStore } from "redux-persist"
 import albumSlice from "./slices/album.slice"
 import audioBookSlice from "./slices/audioBook.slice"
 import audioBookDetailsWithChapter from "./slices/audioBookDetails.slice"
+import bottomSlice from "./slices/bottomPlayer.slice"
 import childStateSlice from "./slices/childState.slice"
 import favouriteSlice from "./slices/favourite.slice"
-import homeSlice from "./slices/home.slice"
 import lyricsSlice from "./slices/lyrics.slice"
 import offlineSlice from "./slices/offline.slice"
 import offlinePlaylist from "./slices/offlinePlaylist.slice"
-import playlistDetailsSlice from "./slices/playlistDetails.slice"
 import PlayerQueue from "./slices/Queue.slice"
 import searchDynamics from "./slices/searchDynamic.slice"
 import searchedSongsSlice from "./slices/searchedSong.slice"
@@ -24,7 +23,6 @@ const persistConfig = {
   blacklist: [
     "childState",
     "album",
-    "playlist",
     "searchedSong",
     "lyrics",
     "dynamic",
@@ -32,22 +30,20 @@ const persistConfig = {
     "audioBookDetailsWithChapter"
   ],
   whitelist: [
-    "home",
     "offline",
     "playerQueue",
     "geet",
     "favourite",
     "user",
     "customePlaylist",
-    "audioBook"
+    "audioBook",
+    "bottomPlayer"
   ]
 }
 const RootReducer = combineReducers({
   user: userSlice,
   childState: childStateSlice,
-  home: homeSlice,
   album: albumSlice,
-  playlist: playlistDetailsSlice,
   geet: songSliceNew,
   searchedSong: searchedSongsSlice,
   playerQueue: PlayerQueue,
@@ -58,7 +54,8 @@ const RootReducer = combineReducers({
   dynamic: searchDynamics,
   share: shareSlice,
   audioBook: audioBookSlice,
-  audioBookDetailsWithChapter: audioBookDetailsWithChapter
+  audioBookDetailsWithChapter: audioBookDetailsWithChapter,
+  bottomPlayer: bottomSlice
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({
