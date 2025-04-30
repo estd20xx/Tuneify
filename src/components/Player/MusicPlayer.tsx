@@ -45,6 +45,7 @@ import { getSongsLyrics } from "../../store/actions/lyrics.action"
 
 import { welcomeSong } from "../../constants/welcome"
 import { useShuffle } from "../../hooks/useShuffle"
+import { bottomPlayer } from "../../store/slices/bottomPlayer.slice"
 import {
   changeApplicationSetup,
   tunifyChild
@@ -71,12 +72,13 @@ const { StatusBarManager } = NativeModules
 const { height: SCREEN_HEIGHT } = Dimensions.get("window")
 const BOTTOM_TAB_BAR_HEIGHT = 0
 
-const offSet = 54
-const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + offSet
-const MIN_TRANSLATE_Y = -BOTTOM_TAB_BAR_HEIGHT - 10
-
 const TuneifyPlayer = () => {
   const dispatch = useAppDispatch()
+  const bottomPlayerPosition = TypedSelectorHook(bottomPlayer)
+  const offSet = bottomPlayerPosition.value
+  const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + offSet
+  const MIN_TRANSLATE_Y = -BOTTOM_TAB_BAR_HEIGHT - 10
+
   const [
     isPlayer,
     togglePlayer,
