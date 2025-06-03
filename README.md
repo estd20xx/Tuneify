@@ -35,6 +35,7 @@ Tuneify x86 | [Download](https://github.com/estd20xx/Tuneify/releases/download/v
 
 ![Screenshot 2025-02-07 152200](https://github.com/user-attachments/assets/79828d11-02c6-48c9-9fca-45d67906ce4f)
 
+![Screenshot 2025-06-03 233712](https://github.com/user-attachments/assets/4ee48349-b1d0-4acf-87fb-7c80e9d09087)
 
 
 </div>
