@@ -46,7 +46,7 @@ export const screens: CurrentScreen = {
   audioBook: "audioBook"
 }
 
-export interface DynamicProps { }
+export interface DynamicProps {}
 interface ArtistScreenDataProps {
   name: string
   id: string
