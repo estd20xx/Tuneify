@@ -5,9 +5,11 @@ import { View } from "react-native"
 import { BottomNavigation } from "react-native-paper"
 import TuneifyPlayer from "../components/Player/MusicPlayer"
 import { TabItems } from "../constants/navigation"
+import { useTheme } from "../hooks/useTheme"
 import { ItemTypes } from "../Interfaces/icons.interface"
 const Tab = createBottomTabNavigator()
 const BottomTab = () => {
+  const theme = useTheme()
   return (
     <Tab.Navigator
       screenOptions={{ headerShown: false }}
@@ -15,15 +17,15 @@ const BottomTab = () => {
         <View>
           <TuneifyPlayer />
           <BottomNavigation.Bar
-            theme={{ colors: { secondaryContainer: "#261221" } }}
+            theme={{ colors: { secondaryContainer: theme.accentMuted } }}
             navigationState={state}
             safeAreaInsets={insets}
             shifting={true}
-            activeColor="#FFF"
-            inactiveColor="#a1a0a3"
+            activeColor={theme.textPrimary}
+            inactiveColor={theme.inactive}
             style={{
               height: 50,
-              backgroundColor: "#000",
+              backgroundColor: theme.surface,
               zIndex: 40
             }}
             onTabPress={({ route, preventDefault }) => {

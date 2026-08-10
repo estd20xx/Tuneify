@@ -1,25 +1,27 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import React, { memo } from "react"
 import { tabBar } from "../constants/navigation"
+import { useTheme } from "../hooks/useTheme"
 const Tab = createMaterialTopTabNavigator()
 const TabBar = () => {
+  const theme = useTheme()
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarScrollEnabled: true,
-        tabBarActiveTintColor: "#ff8216",
-        tabBarInactiveTintColor: "#a1a0a3",
+        tabBarActiveTintColor: theme.accent,
+        tabBarInactiveTintColor: theme.inactive,
         tabBarIndicatorStyle: {
-          backgroundColor: "#ff8216",
+          backgroundColor: theme.accent,
           height: 4,
           marginBottom: -2.2,
           borderRadius: 50
         },
         tabBarStyle: {
-          backgroundColor: "#1b1002",
+          backgroundColor: theme.background,
           zIndex: 1,
           borderBottomWidth: 1,
-          borderBottomColor: "#a1a0a3"
+          borderBottomColor: theme.inactive
         },
         tabBarItemStyle: {
           width: 90

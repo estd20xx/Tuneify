@@ -1,10 +1,9 @@
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
 import React from "react"
-import { Image as Img, Text, TouchableOpacity, View } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 import Image from "react-native-fast-image"
 import notFoundImage from "../../assets/images/not-found.png"
 import { musicService } from "../../services/localMedia.service"
-const notFound = Img.resolveAssetSource(notFoundImage).uri
 interface Props {
   dispatch: Dispatch<UnknownAction>
 }
@@ -22,12 +21,7 @@ const NotFound: React.FC<Props> = ({ dispatch }) => {
         <Text className="text-black">Sync music</Text>
       </TouchableOpacity>
       <Image
-        source={{
-          uri: notFound,
-          headers: { Authorization: "not found" },
-          priority: Image.priority.high,
-          cache: Image.cacheControl.immutable
-        }}
+        source={notFoundImage}
         className="h-full w-full"
       />
     </View>

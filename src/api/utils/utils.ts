@@ -48,9 +48,6 @@ export const handleImageVariation = (link: string): Image[] => {
 }
 
 export const handleArtists = (artists: Artists[]): string => {
-  let artis = ""
-  artists.map((curret) => {
-    artis += curret.name + ", "
-  })
-  return artis
+  if (!artists) return ""
+  return artists.map((current) => current.name).join(", ")
 }

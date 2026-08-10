@@ -1,4 +1,4 @@
-import React, { memo } from "react"
+import React, { memo, useMemo } from "react"
 import {
   FlatList,
   Image,
@@ -13,7 +13,9 @@ import { screens } from "../../api/base/constrants"
 import Show from "../../components/Common/Show"
 import NotFound from "../../components/offline/Not-found"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import { mergeDownloadMeta } from "../../helpers/localMedia"
 import { musicService } from "../../services/localMedia.service"
+import { downloadedMeta } from "../../store/slices/downloads.slice"
 import {
   centralQueue,
   SpecificQueue,
@@ -22,14 +24,19 @@ import {
 import { tuneifyOfflines } from "../../store/slices/offline.slice"
 const Folders = () => {
   const localFile = TypedSelectorHook(tuneifyOfflines)
+  const downloads = TypedSelectorHook(downloadedMeta)
   const dispatch = useAppDispatch()
   const applicationQueue = TypedSelectorHook(centralQueue)
+  const localSongs = useMemo(
+    () => mergeDownloadMeta(localFile.LocalSong, downloads.byPath),
+    [localFile.LocalSong, downloads.byPath]
+  )
   const changeQueueState = async (index: number, song: StoreSongTypes) => {
     try {
-      if (localFile.LocalSong) {
+      if (localSongs.length) {
         if (applicationQueue.data.screenId != screens.offlineScreenId) {
           await TrackPlayer.reset()
-          await TrackPlayer.add(localFile.LocalSong)
+          await TrackPlayer.add(localSongs)
           await TrackPlayer.skip(index)
           await TrackPlayer.play()
           const newQueue: SpecificQueue = {
@@ -42,6 +49,7 @@ const Folders = () => {
         }
       }
       await TrackPlayer.skip(index)
+      await TrackPlayer.play()
     } catch (error) {
       console.log(error)
     }
@@ -49,12 +57,12 @@ const Folders = () => {
   return (
     <View
       className={`w-full ${
-        localFile.LocalSong.length
+        localSongs.length
           ? "h-auto"
           : "h-screen flex items-center justify-center"
       }`}
     >
-      <Show isVisible={localFile.LocalSong.length > 0}>
+      <Show isVisible={localSongs.length > 0}>
         <FlatList
           refreshControl={
             <RefreshControl
@@ -62,7 +70,7 @@ const Folders = () => {
               onRefresh={() => musicService.getLocalmedia(dispatch)}
             />
           }
-          data={localFile.LocalSong}
+          data={localSongs}
           keyExtractor={(item) => item.id}
           initialNumToRender={3}
           showsVerticalScrollIndicator={false}
@@ -113,7 +121,7 @@ const Folders = () => {
           }}
         />
       </Show>
-      <Show isVisible={localFile.LocalSong.length == 0}>
+      <Show isVisible={localSongs.length == 0}>
         <NotFound dispatch={dispatch} />
       </Show>
     </View>

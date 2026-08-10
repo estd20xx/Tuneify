@@ -51,7 +51,7 @@ const Songs = () => {
     <View className="w-full h-auto pt-2">
       <Show
         isVisible={
-          songs?.data?.songs?.length != undefined ||
+          songs?.data?.songs?.length != undefined &&
           songs?.data?.songs?.length != 0
         }
       >

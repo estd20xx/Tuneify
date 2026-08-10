@@ -10,6 +10,7 @@ import Animated, {
 } from "react-native-reanimated"
 import { PlaybackState, State } from "react-native-track-player"
 import { Icons } from "../../constants/Icon"
+import { useAccent } from "../../hooks/useAccent"
 import { useSongChange } from "../../hooks/useSongChange"
 import { applicationService } from "../../services/Tuneify.service"
 import { InitialCentralQueue } from "../../store/slices/Queue.slice"
@@ -36,6 +37,7 @@ const Control: React.FC<ControlersProps> = ({
   toggleShuffle
 }) => {
   const [previous, next] = useSongChange(isShuffle)
+  const accent = useAccent()
   const borderRadius = useSharedValue(50)
 
   const animatedBorder = useAnimatedStyle(() => {
@@ -48,10 +50,7 @@ const Control: React.FC<ControlersProps> = ({
     <View className="h-18  w-full flex items-center justify-evenly flex-row mt-3">
       <View className="h-full flex items-center flex-row justify-around pl-2 w-[20%]">
         <TouchableOpacity onPress={toggleShuffle}>
-          <Shuffle
-            size={24}
-            className={`${isShuffle ? "text-[#ff8216]" : "text-[#bababa]"}`}
-          />
+          <Shuffle size={24} color={isShuffle ? accent : "#bababa"} />
         </TouchableOpacity>
       </View>
       <View className="h-full w-[60%] flex items-center justify-evenly flex-row">
@@ -68,9 +67,11 @@ const Control: React.FC<ControlersProps> = ({
               dispatch
             )
           }}
-          loading={playbackState.state === (State.Loading || State.Buffering)}
-          className={"bg-themeOrange"}
-          style={animatedBorder}
+          loading={
+            playbackState.state === State.Loading ||
+            playbackState.state === State.Buffering
+          }
+          style={[animatedBorder, { backgroundColor: accent }]}
         />
         <TouchableOpacity onPress={() => next()}>
           <Icons.KeyboardDown name="skip-next" color={"white"} size={35} />
@@ -84,7 +85,7 @@ const Control: React.FC<ControlersProps> = ({
         >
           <Icons.PlayListIcon
             name={isRepeat ? "repeat" : "repeat-off"}
-            color={isRepeat ? "#ff8216" : "#bababa"}
+            color={isRepeat ? accent : "#bababa"}
             size={28}
           />
         </TouchableOpacity>

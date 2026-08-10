@@ -5,12 +5,14 @@ import audioBookSlice from "./slices/audioBook.slice"
 import audioBookDetailsWithChapter from "./slices/audioBookDetails.slice"
 import bottomSlice from "./slices/bottomPlayer.slice"
 import childStateSlice from "./slices/childState.slice"
+import downloadsSlice from "./slices/downloads.slice"
 import favouriteSlice from "./slices/favourite.slice"
 import lyricsSlice from "./slices/lyrics.slice"
 import offlineSlice from "./slices/offline.slice"
 import offlinePlaylist from "./slices/offlinePlaylist.slice"
 import PlayerQueue from "./slices/Queue.slice"
 import searchDynamics from "./slices/searchDynamic.slice"
+import settingsSlice from "./slices/settings.slice"
 import searchedSongsSlice from "./slices/searchedSong.slice"
 import shareSlice from "./slices/share.slice"
 import songSliceNew from "./slices/song.slice"
@@ -37,7 +39,9 @@ const persistConfig = {
     "user",
     "customePlaylist",
     "audioBook",
-    "bottomPlayer"
+    "bottomPlayer",
+    "downloads",
+    "settings"
   ]
 }
 const RootReducer = combineReducers({
@@ -55,7 +59,9 @@ const RootReducer = combineReducers({
   share: shareSlice,
   audioBook: audioBookSlice,
   audioBookDetailsWithChapter: audioBookDetailsWithChapter,
-  bottomPlayer: bottomSlice
+  bottomPlayer: bottomSlice,
+  downloads: downloadsSlice,
+  settings: settingsSlice
 })
 const persistedReducer = persistReducer(persistConfig, RootReducer)
 const store = configureStore({

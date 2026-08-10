@@ -1,17 +1,20 @@
 import Slider from "@react-native-community/slider"
-import React from "react"
+import React, { memo } from "react"
 import { Text, View } from "react-native"
-import TrackPlayer, { Progress } from "react-native-track-player"
-const PlayerInfo = ({ progress }: Readonly<{ progress: Progress }>) => {
+import TrackPlayer, { useProgress } from "react-native-track-player"
+import { useAccent } from "../../hooks/useAccent"
+const PlayerInfo = () => {
+  const accent = useAccent()
+  const progress = useProgress()
   return (
     <View className="w-full  mt-5 py-2">
       <Slider
         minimumValue={0}
         maximumValue={progress.duration}
         value={progress.position}
-        minimumTrackTintColor="#ff8216"
+        minimumTrackTintColor={accent}
         maximumTrackTintColor="#d0d0d1"
-        thumbTintColor="#ff8216"
+        thumbTintColor={accent}
         onSlidingComplete={(e) => TrackPlayer.seekTo(e)}
       />
       <View
@@ -28,10 +31,10 @@ const PlayerInfo = ({ progress }: Readonly<{ progress: Progress }>) => {
         </Text>
         <Text style={{ color: "white", fontFamily: "300" }}>
           {JSON.stringify(Math.floor(progress.duration / 60)).padStart(2, "0")}:
-          {JSON.stringify(Math.floor(progress.duration / 60)).padStart(2, "0")}
+          {JSON.stringify(Math.floor(progress.duration % 60)).padStart(2, "0")}
         </Text>
       </View>
     </View>
   )
 }
-export default PlayerInfo
+export default memo(PlayerInfo)

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from "react"
+import React, { memo, useEffect, useMemo, useRef } from "react"
 import {
   FlatList,
   Image,
@@ -17,7 +17,10 @@ import Category from "../components/Search/Category"
 import Input from "../components/Search/Input"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
 import { useFetchingState } from "../hooks/useFetchingState"
+import { buildSearchRows } from "../helpers/searchResults"
 import { useSearch } from "../hooks/useSearch"
+import { useSearchCategory } from "../hooks/useSearchCategory"
+import { useTheme } from "../hooks/useTheme"
 import { sanitize } from "../services/sanitizer.service"
 import { personalizedDynamic } from "../store/actions/SearchDynamic.action"
 import { personalizedSearchedSong } from "../store/actions/searchedSong.action"
@@ -39,6 +42,8 @@ const Search = () => {
   const dispatch = useAppDispatch()
   const searchedData = TypedSelectorHook(searchedSongData)
   const dynamicData = TypedSelectorHook(dynamicSearchData)
+  const theme = useTheme()
+  const [category, updateCategory] = useSearchCategory()
 
   const flatListRef = useRef<FlatList>(null)
   const [searchQuery, updateQuery] = useSearch()
@@ -72,6 +77,7 @@ const Search = () => {
       return
     }
     updateInitial(true)
+    if (searchQuery.p != 1) updateQuery({ ...searchQuery, p: 1 })
     const controller: AbortController = new AbortController()
     const signal: AbortSignal = controller.signal
     const handler = setTimeout(() => {
@@ -94,7 +100,14 @@ const Search = () => {
     }
   }, [searchQuery.q])
 
+  const activeId = applicationQueue.data.song?.id
+  const rows = useMemo(
+    () => buildSearchRows(category, searchedData.data?.songs, dynamicData.data),
+    [category, searchedData.data, dynamicData.data]
+  )
+
   const handleLoadMore = () => {
+    if (category !== "top" && category !== "songs") return
     if (isFetchingMore || searchedData.isLoading) return
     updateFetchingMore(true)
     const nextQuery = {
@@ -109,7 +122,6 @@ const Search = () => {
       updateFetchingMore(false)
     })
   }
-  11
   useEffect(() => {
     if (searchedData.data?.songs?.length && isInitialSearch) {
       flatListRef.current?.scrollToOffset({ animated: true, offset: 0 })
@@ -119,10 +131,17 @@ const Search = () => {
   return (
     <View className="w-full h-screen flex items-center mb-20">
       <Input updateQuery={updateQuery} searchQuery={searchQuery} />
-      <Category categoryData={dynamicData.data} />
+      <Category
+        categoryData={dynamicData.data}
+        selected={category}
+        onSelect={updateCategory}
+      />
       <Show isVisible={searchedData.isLoading}>
-        <View className="w-full h-screen flex items-center justify-center bg-black">
-          <Bounce size={140} color="#ff8216" />
+        <View
+          style={{ backgroundColor: theme.background }}
+          className="w-full h-screen flex items-center justify-center"
+        >
+          <Bounce size={140} color={theme.accent} />
         </View>
       </Show>
       <Show isVisible={!searchedData.isLoading}>
@@ -132,7 +151,7 @@ const Search = () => {
               <RefreshControl refreshing={searchedData.isMoreLoading} />
             }
             ref={flatListRef}
-            data={searchedData.data?.songs}
+            data={rows}
             keyExtractor={(item, index) => `${item.id}-${index}`}
             initialNumToRender={3}
             onScrollBeginDrag={Keyboard.dismiss}
@@ -156,11 +175,12 @@ const Search = () => {
               return (
                 <TouchableOpacity
                   className="w-full h-16 mt-2 flex flex-row items-center"
-                  onPress={() => changeQueueState(item)}
+                  disabled={!item.song}
+                  onPress={() => item.song && changeQueueState(item.song)}
                 >
                   <View className="h-16 w-20 pl-2">
                     <Image
-                      source={{ uri: item.image[1].link }}
+                      source={{ uri: item.image }}
                       style={{ width: 60, height: 60, borderRadius: 17 }}
                       resizeMode="contain"
                     />
@@ -171,9 +191,7 @@ const Search = () => {
                         fontSize: 15,
                         fontFamily: "400",
                         color:
-                          item.id == applicationQueue.data.song?.id
-                            ? "#16FF00"
-                            : "white"
+                          item.id === activeId ? theme.accent : "white"
                       }}
                     >
                       {item.title?.length > 45
@@ -187,9 +205,9 @@ const Search = () => {
                         fontFamily: "200"
                       }}
                     >
-                      {item.artist.length > 45
-                        ? item.artist.slice(0, 45) + "..."
-                        : item.artist}
+                      {item.subtitle?.length > 45
+                        ? item.subtitle.slice(0, 45) + "..."
+                        : item.subtitle}
                     </Text>
                   </View>
                 </TouchableOpacity>

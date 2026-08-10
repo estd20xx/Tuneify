@@ -16,12 +16,11 @@ const favouriteSlice = createSlice({
       state: InitialFavouriteState,
       actions: PayloadAction<Track>
     ) {
-      const data = state.favouriteData.filter((c) => c.id == actions.payload.id)
-      if (data.length != 0) {
-        state.favouriteData.splice(
-          state.favouriteData.indexOf(data[0]),
-          state.favouriteData.indexOf(data[0]) + 1
-        )
+      const existingIndex = state.favouriteData.findIndex(
+        (c) => c.id == actions.payload.id
+      )
+      if (existingIndex != -1) {
+        state.favouriteData.splice(existingIndex, 1)
         return
       }
       const dtx: StoreSongTypes = {

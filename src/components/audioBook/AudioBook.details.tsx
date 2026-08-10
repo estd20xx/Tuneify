@@ -41,7 +41,7 @@ const AudioBookDetails: React.FC<AudioBookDetailsProps> = ({ route }) => {
   const changeQueueState = async (index: number, song: StoreSongTypes) => {
     try {
       if (audioBookChapters.data) {
-        if (applicationQueue.data.screenId != screens.favouriteScreenId) {
+        if (applicationQueue.data.screenId != screens.audioBook) {
           await TrackPlayer.reset()
           await TrackPlayer.add(audioBookChapters.data)
           await TrackPlayer.skip(index)

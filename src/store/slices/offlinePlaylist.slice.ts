@@ -1,4 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import {
+  containsSong,
+  dedupeSongs,
+  findPlaylistIndex,
+  mergeSongs,
+  uniquePlaylistName
+} from "../../helpers/playlist"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { RootState } from "../store"
 export interface ChildPlaylistInterface {
@@ -23,38 +30,58 @@ const offlinePlaylist = createSlice({
       state: InitialPlaylistInterface,
       actions: PayloadAction<Array<ChildPlaylistInterface>>
     ) {
-      const isPresent = state.playlist.filter(
-        (c) => c[0].name == actions.payload[0].name
-      )
-      if (isPresent.length > 0) {
-        return
-      }
-      state.playlist.unshift(actions.payload)
+      const incoming = actions.payload?.[0]
+      if (!incoming) return
+      if (findPlaylistIndex(state.playlist, incoming.name) !== -1) return
+      state.playlist.unshift([
+        { name: incoming.name.trim(), songs: dedupeSongs(incoming.songs) }
+      ])
     },
 
     deletePlaylist(
       state: InitialPlaylistInterface,
       actions: PayloadAction<number>
     ) {
-      state.playlist.splice(actions.payload, actions.payload + 1)
+      state.playlist.splice(actions.payload, 1)
     },
 
     addSongToPlaylist(
       state: InitialPlaylistInterface,
       actions: PayloadAction<UpdatePersonalizedPlaylist>
     ) {
-      const isPresent = state.playlist[actions.payload.index][0].songs.filter(
-        (c) => c.id == actions.payload.song.id
-      )
-      if (isPresent.length > 0) {
+      const target = state.playlist[actions.payload.index]?.[0]
+      if (!target) return
+      if (!actions.payload.song?.id) return
+      if (containsSong(target.songs, actions.payload.song.id)) return
+      target.songs.push(actions.payload.song)
+    },
+
+    importPlaylist(
+      state: InitialPlaylistInterface,
+      actions: PayloadAction<ChildPlaylistInterface>
+    ) {
+      const incoming = actions.payload
+      if (!incoming) return
+      const songs = dedupeSongs(incoming.songs)
+      if (!songs.length) return
+      const existingIndex = findPlaylistIndex(state.playlist, incoming.name)
+      if (existingIndex !== -1) {
+        const target = state.playlist[existingIndex][0]
+        target.songs = mergeSongs(target.songs, songs)
         return
       }
-      state.playlist[actions.payload.index][0].songs.push(actions.payload.song)
+      state.playlist.unshift([
+        { name: uniquePlaylistName(state.playlist, incoming.name), songs }
+      ])
     }
   }
 })
-export const { newPlaylist, addSongToPlaylist, deletePlaylist } =
-  offlinePlaylist.actions
+export const {
+  newPlaylist,
+  addSongToPlaylist,
+  deletePlaylist,
+  importPlaylist
+} = offlinePlaylist.actions
 export const customePlaylist = (state: RootState) =>
   state.persistedReducer.customePlaylist
 export default offlinePlaylist.reducer

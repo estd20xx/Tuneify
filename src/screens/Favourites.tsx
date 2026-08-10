@@ -34,15 +34,18 @@ const Favourites = () => {
         }
       }
       await TrackPlayer.skip(index)
+      await TrackPlayer.play()
     } catch (error) {
       console.log(error)
     }
   }
   const shuffleHandler = async () => {
+    if (!data.favouriteData.length) return
     const randomIndex = Math.floor(Math.random() * data.favouriteData.length)
     changeQueueState(randomIndex, data.favouriteData[randomIndex])
   }
   const simplePlayHandler = () => {
+    if (!data.favouriteData.length) return
     changeQueueState(0, data.favouriteData[0])
   }
   return (

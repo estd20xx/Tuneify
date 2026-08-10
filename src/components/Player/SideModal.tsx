@@ -10,6 +10,7 @@ import { View } from "react-native-animatable"
 import Modal from "react-native-modal"
 import { Text } from "react-native-paper"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import { useTheme } from "../../hooks/useTheme"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import {
   addSongToPlaylist,
@@ -25,6 +26,7 @@ type Props = {
 const SideModal: React.FC<Props> = ({ isVisible, togglePlayist, song }) => {
   const offlinePlaylist = TypedSelectorHook(customePlaylist)
   const dispatch = useAppDispatch()
+  const theme = useTheme()
   const [isInput, setIsInput] = useState<boolean>(false)
   const [playlistName, setPlaylistName] = useState<string>("")
   const handleCustom = (name: string) => {
@@ -73,7 +75,10 @@ const SideModal: React.FC<Props> = ({ isVisible, togglePlayist, song }) => {
           </View>
         </View>
       </Show>
-      <View className="w-full h-[70%] bg-slate-950 absolute bottom-0 rounded-t-3xl border-t-2 border-slate-300">
+      <View
+        style={{ backgroundColor: theme.surface, borderTopColor: theme.border }}
+        className="w-full h-[70%] absolute bottom-0 rounded-t-3xl border-t-2"
+      >
         <View className="w-full p-2 overflow-hidden z-10">
           <Text className="text-2xl font-['500'] border-b-2 border-gray-300 text-white mb-2 self-center">
             Playlists
@@ -85,7 +90,8 @@ const SideModal: React.FC<Props> = ({ isVisible, togglePlayist, song }) => {
                 return (
                   <TouchableOpacity
                     key={name.concat(String(index))}
-                    className="w-[30%] h-36 mt-2 bg-black items-center justify-center rounded-xl overflow-hidden"
+                    style={{ backgroundColor: theme.surfaceRaised }}
+                    className="w-[30%] h-36 mt-2 items-center justify-center rounded-xl overflow-hidden"
                     onPress={() => [
                       dispatch(addSongToPlaylist({ song, index })),
                       togglePlayist()
@@ -103,7 +109,10 @@ const SideModal: React.FC<Props> = ({ isVisible, togglePlayist, song }) => {
             </View>
           </ScrollView>
         </View>
-        <View className="h-20 w-full bg-[#201b18] absolute -bottom-5 flex items-center justify-evenly flex-row z-20">
+        <View
+          style={{ backgroundColor: theme.surfaceRaised }}
+          className="h-20 w-full absolute -bottom-5 flex items-center justify-evenly flex-row z-20"
+        >
           <TouchableOpacity
             className="w-2/5 rounded-md bg-[#302625] py-3 flex items-center justify-center"
             onPress={togglePlayist}

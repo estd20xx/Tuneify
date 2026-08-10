@@ -3,34 +3,39 @@ import React, { useEffect } from "react"
 import { StatusBar } from "react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { MenuProvider } from "react-native-popup-menu"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 import SplashScreen from "react-native-splash-screen"
+import Toast from "react-native-toast-message"
 import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
+import ErrorBoundary from "./src/components/Common/ErrorBoundary"
+import ThemedChrome from "./src/components/Common/ThemedChrome"
 import MainNavigation from "./src/mainNavigation/MainNavigation"
-import PermissionService from "./src/services/permission.service"
 import store, { persistor } from "./src/store/store"
-import { HomeScreenProps } from "./src/Types/Types"
-const permission = new PermissionService()
 
 const queryClient = new QueryClient()
-const App: React.FC<HomeScreenProps> = ({ navigation }) => {
+const App = () => {
   useEffect(() => {
     SplashScreen.hide()
   }, [])
 
-  // #1b1002
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <StatusBar backgroundColor={"#1b1002"} />
-      <Provider store={store}>
-        <PersistGate persistor={persistor} loading={null}>
-          <MenuProvider>
-            <QueryClientProvider client={queryClient}>
-              <MainNavigation />
-            </QueryClientProvider>
-          </MenuProvider>
-        </PersistGate>
-      </Provider>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <PersistGate persistor={persistor} loading={null}>
+            <MenuProvider>
+              <QueryClientProvider client={queryClient}>
+                <ThemedChrome />
+                <ErrorBoundary>
+                  <MainNavigation />
+                </ErrorBoundary>
+                <Toast />
+              </QueryClientProvider>
+            </MenuProvider>
+          </PersistGate>
+        </Provider>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   )
 }

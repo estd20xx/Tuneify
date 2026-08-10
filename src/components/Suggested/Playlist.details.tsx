@@ -82,7 +82,7 @@ const PlaylistDetails: React.FC<PlaylistDetailsTypes> = ({ route }) => {
             <Text>Something went wrong...</Text>
           </View>
         </Show>
-        <Show isVisible={!isLoading && isError}>
+        <Show isVisible={!isLoading && !isError}>
           <FlatList
             data={response?.list}
             keyExtractor={(item) => item.id}
