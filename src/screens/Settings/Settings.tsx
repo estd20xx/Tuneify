@@ -1,16 +1,13 @@
 import { memo, useState } from "react"
+import { Alert, BackHandler, ScrollView, Share, View } from "react-native"
 import {
-  Alert,
-  BackHandler,
-  FlatList,
-  Image,
-  Share,
+  Avatar,
+  Divider,
+  List,
+  RadioButton,
   Switch,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native"
-import UserImage from "react-native-fast-image"
+  Text
+} from "react-native-paper"
 import SettingsPanel from "../../components/Settings/SettingsPanel"
 import { settingsData } from "../../constants/Settings"
 import {
@@ -22,7 +19,7 @@ import {
   PRIVACY_CONTENT
 } from "../../constants/settingsContent"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
-import { useTheme } from "../../hooks/useTheme"
+import { useMd3Colors } from "../../hooks/useMd3"
 import appNotification from "../../services/appNotification.service"
 import { backupService, buildBackup } from "../../services/backup.service"
 import SettingService from "../../services/setting.service"
@@ -54,13 +51,27 @@ const INFO_PANELS: Record<string, InfoSection[]> = {
   faq: FAQ_CONTENT
 }
 
+const ICONS: Record<string, string> = {
+  general: "tune",
+  backup: "cloud-upload-outline",
+  notification: "bell-outline",
+  language: "translate",
+  "accent-color": "palette-outline",
+  share: "share-variant-outline",
+  log: "history",
+  privacy: "shield-lock-outline",
+  faq: "help-circle-outline",
+  about: "information-outline",
+  quit: "logout"
+}
+
 const Settings = () => {
   const settingData = TypedSelectorHook(tuneifyUser)
   const dispatch = useAppDispatch()
   const preferences = TypedSelectorHook(appSettings)
   const playlists = TypedSelectorHook(customePlaylist)
   const favourites = TypedSelectorHook(tuneifyFavourites)
-  const theme = useTheme()
+  const md3 = useMd3Colors()
   const [panel, setPanel] = useState<string>("")
 
   const closePanel = () => setPanel("")
@@ -95,7 +106,7 @@ const Settings = () => {
   const handleShareApp = async () => {
     try {
       await Share.share({
-        message: `Tuneify ${APP_VERSION} - a user friendly music player for your device.`
+        message: `Tuneify ${APP_VERSION} - free music, audio books and offline playlists.`
       })
     } catch (error) {
       appNotification.errorMessage("Could not share", "Try again")
@@ -128,30 +139,51 @@ const Settings = () => {
   }
 
   return (
-    <View className="w-full h-screen ">
-      <View className="w-full  h-auto flex items-center flex-row justify-center">
-        <Text className="  text-white text-base tracking-wider font-['400']">
-          Setting
-        </Text>
-      </View>
-      <View className="w-full h-20 overflow-hidden flex items-center flex-row pl-2">
-        <TouchableOpacity
-          className="-z-30"
-          onPress={() => settingService.changeProfileImage(dispatch)}
+    <View style={{ flex: 1, backgroundColor: md3.background }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingHorizontal: 24,
+            paddingTop: 16,
+            paddingBottom: 24
+          }}
         >
-          <UserImage
-            source={{
-              uri: settingData.image,
-              priority: UserImage.priority.high,
-              cache: UserImage.cacheControl.immutable
-            }}
-            className="h-16 w-16 rounded-full"
+          <Avatar.Image
+            size={64}
+            source={{ uri: settingData.image }}
+            onTouchEnd={() => settingService.changeProfileImage(dispatch)}
           />
-        </TouchableOpacity>
-        <Text className=" ml-3 text-white font-['300'] text-xl">
-          {settingData.userName}
-        </Text>
-      </View>
+          <View style={{ marginLeft: 16, flex: 1 }}>
+            <Text variant="titleLarge" style={{ color: md3.onSurface }}>
+              {settingData.userName}
+            </Text>
+            <Text variant="bodyMedium" style={{ color: md3.onSurfaceVariant }}>
+              Tuneify {APP_VERSION}
+            </Text>
+          </View>
+        </View>
+        <Divider style={{ backgroundColor: md3.outlineVariant }} />
+        <List.Section>
+          {settingsData.map((item) => (
+            <List.Item
+              key={String(item.command)}
+              title={String(item.title)}
+              titleStyle={{ color: md3.onSurface }}
+              left={(props) => (
+                <List.Icon
+                  {...props}
+                  icon={ICONS[String(item.command)] ?? "circle-small"}
+                  color={md3.onSurfaceVariant}
+                />
+              )}
+              onPress={() => handleCommand(item.command)}
+            />
+          ))}
+        </List.Section>
+        <View style={{ height: 140 }} />
+      </ScrollView>
 
       <SettingsPanel
         isVisible={Boolean(INFO_PANELS[panel])}
@@ -159,116 +191,79 @@ const Settings = () => {
         sections={INFO_PANELS[panel] ?? []}
         onClose={closePanel}
       />
+
       <SettingsPanel
         isVisible={panel === "general" || panel === "notification"}
         title={panel === "notification" ? "Notification" : "General Settings"}
         sections={[]}
         onClose={closePanel}
       >
-        <View className="flex-row items-center justify-between py-2">
-          <Text className="text-gray-200 text-base font-['300']">
-            In-app notifications
-          </Text>
-          <Switch
-            value={preferences.notifications}
-            onValueChange={() => {
-              dispatch(toggleNotifications())
-            }}
-            trackColor={{ true: theme.accent, false: "#4b4b4b" }}
-            thumbColor={"#ffffff"}
-          />
-        </View>
-        <View className="flex-row items-center justify-between py-2">
-          <Text className="text-gray-200 text-base font-['300']">
-            Prefer high quality audio
-          </Text>
-          <Switch
-            value={preferences.highQuality}
-            onValueChange={() => {
-              dispatch(toggleHighQuality())
-            }}
-            trackColor={{ true: theme.accent, false: "#4b4b4b" }}
-            thumbColor={"#ffffff"}
-          />
-        </View>
+        <List.Item
+          title="In-app notifications"
+          titleStyle={{ color: md3.onSurface }}
+          right={() => (
+            <Switch
+              value={preferences.notifications}
+              onValueChange={() => {
+                dispatch(toggleNotifications())
+              }}
+            />
+          )}
+        />
+        <List.Item
+          title="Prefer high quality audio"
+          titleStyle={{ color: md3.onSurface }}
+          right={() => (
+            <Switch
+              value={preferences.highQuality}
+              onValueChange={() => {
+                dispatch(toggleHighQuality())
+              }}
+            />
+          )}
+        />
       </SettingsPanel>
+
       <SettingsPanel
         isVisible={panel === "language"}
         title="Language"
         sections={[]}
         onClose={closePanel}
       >
-        {LANGUAGES.map((language) => (
-          <TouchableOpacity
-            key={language}
-            className="py-3 border-b border-[#2c2c2c]"
-            onPress={() => dispatch(changeLanguage(language))}
-          >
-            <Text
-              className="text-base capitalize font-['300']"
-              style={{
-                color:
-                  preferences.language === language
-                    ? theme.accent
-                    : theme.textMuted
-              }}
-            >
-              {language}
-            </Text>
-          </TouchableOpacity>
-        ))}
+        <RadioButton.Group
+          value={preferences.language}
+          onValueChange={(value) => dispatch(changeLanguage(value))}
+        >
+          {LANGUAGES.map((language) => (
+            <RadioButton.Item
+              key={language}
+              label={language.charAt(0).toUpperCase() + language.slice(1)}
+              value={language}
+              labelStyle={{ color: md3.onSurface }}
+            />
+          ))}
+        </RadioButton.Group>
       </SettingsPanel>
+
       <SettingsPanel
         isVisible={panel === "accent-color"}
         title="Accent Color"
         sections={[]}
         onClose={closePanel}
       >
-        <View className="flex-row flex-wrap justify-start py-2">
+        <View style={{ flexDirection: "row", flexWrap: "wrap", paddingTop: 8 }}>
           {ACCENTS.map((accent) => (
-            <TouchableOpacity
+            <Avatar.Icon
               key={accent}
-              onPress={() => dispatch(changeAccent(accent))}
-              style={{
-                backgroundColor: accent,
-                borderWidth: preferences.accent === accent ? 3 : 0,
-                borderColor: "#ffffff"
-              }}
-              className="h-12 w-12 rounded-full mr-3 mb-3"
+              size={56}
+              icon={preferences.accent === accent ? "check" : "blank"}
+              color={md3.onPrimary}
+              style={{ backgroundColor: accent, marginRight: 12, marginBottom: 12 }}
+              onTouchEnd={() => dispatch(changeAccent(accent))}
             />
           ))}
         </View>
       </SettingsPanel>
-      <FlatList
-        data={settingsData}
-        keyExtractor={(item) => String(item.command)}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity
-              style={{
-                width: "95%",
-                height: 50,
-                flexDirection: "row",
-                alignItems: "center",
-                paddingLeft: 2,
-                paddingRight: 5,
-                marginTop: 4,
-                alignSelf: "center"
-              }}
-              onPress={() => handleCommand(item.command)}
-            >
-              <Image
-                source={item.leftIcon}
-                style={{ tintColor: "#d0d0d1" }}
-                className="h-5 w-5"
-              />
-              <Text className="ml-4 text-gray-300 text-base font-['300'] tracking-widest">
-                {item.title}
-              </Text>
-            </TouchableOpacity>
-          )
-        }}
-      />
     </View>
   )
 }

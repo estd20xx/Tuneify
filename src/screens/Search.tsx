@@ -13,6 +13,7 @@ import TrackPlayer from "react-native-track-player"
 import { screens } from "../api/base/constrants"
 import { Song } from "../api/service/Payload.service"
 import Show from "../components/Common/Show"
+import SongRow from "../components/Common/SongRow"
 import Category from "../components/Search/Category"
 import Input from "../components/Search/Input"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
@@ -171,48 +172,16 @@ const Search = () => {
             // }}
             onEndReachedThreshold={0.5}
             onEndReached={handleLoadMore}
-            renderItem={({ item }) => {
-              return (
-                <TouchableOpacity
-                  className="w-full h-16 mt-2 flex flex-row items-center"
-                  disabled={!item.song}
-                  onPress={() => item.song && changeQueueState(item.song)}
-                >
-                  <View className="h-16 w-20 pl-2">
-                    <Image
-                      source={{ uri: item.image }}
-                      style={{ width: 60, height: 60, borderRadius: 17 }}
-                      resizeMode="contain"
-                    />
-                  </View>
-                  <View className="w-4/5">
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontFamily: "400",
-                        color:
-                          item.id === activeId ? theme.accent : "white"
-                      }}
-                    >
-                      {item.title?.length > 45
-                        ? item.title.slice(0, 45) + "..."
-                        : item.title}
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        color: "#d0d0d1",
-                        fontFamily: "200"
-                      }}
-                    >
-                      {item.subtitle?.length > 45
-                        ? item.subtitle.slice(0, 45) + "..."
-                        : item.subtitle}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              )
-            }}
+            renderItem={({ item }) => (
+              <SongRow
+                title={item.title}
+                subtitle={item.subtitle}
+                artwork={item.image}
+                isActive={item.id === activeId}
+                disabled={!item.song}
+                onPress={() => item.song && changeQueueState(item.song)}
+              />
+            )}
           />
         </View>
       </Show>

@@ -1,7 +1,8 @@
 import React, { memo } from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import { ScrollView } from "react-native"
+import { Chip } from "react-native-paper"
 import { DynamicResponse } from "../../api/interface/Dynamic.interface"
-import { useTheme } from "../../hooks/useTheme"
+import { useMd3Colors } from "../../hooks/useMd3"
 
 export const SEARCH_CATEGORIES = [
   "top",
@@ -19,27 +20,43 @@ type Props = {
   onSelect: (category: SearchCategory) => void
 }
 
-const Category: React.FC<Props> = ({ categoryData, selected, onSelect }) => {
-  const theme = useTheme()
+const Category: React.FC<Props> = ({ selected, onSelect }) => {
+  const md3 = useMd3Colors()
   return (
-    <View className="w-full  flex items-center justify-start flex-row  py-2 pl-2">
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        gap: 8
+      }}
+    >
       {SEARCH_CATEGORIES.map((current) => {
         const isActive = selected === current
         return (
-          <TouchableOpacity
+          <Chip
             key={current}
+            selected={isActive}
+            showSelectedCheck={isActive}
             onPress={() => onSelect(current)}
             style={{
-              backgroundColor: isActive ? theme.accent : "transparent",
-              borderColor: isActive ? theme.accent : "#4b4b4b"
+              backgroundColor: isActive
+                ? md3.secondaryContainer
+                : "transparent",
+              borderColor: md3.outline
             }}
-            className="py-1 mr-2 items-center justify-center px-4 rounded-xl border-[1px]"
+            textStyle={{
+              color: isActive ? md3.onSecondaryContainer : md3.onSurfaceVariant,
+              textTransform: "capitalize"
+            }}
+            mode={isActive ? "flat" : "outlined"}
           >
-            <Text className="capitalize text-white">{current}</Text>
-          </TouchableOpacity>
+            {current}
+          </Chip>
         )
       })}
-    </View>
+    </ScrollView>
   )
 }
 export default memo(Category)

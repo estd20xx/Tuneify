@@ -18,6 +18,7 @@
     "link": "npx react-native-asset"
   },
   "dependencies": {
+    "@material/material-color-utilities": "0.3.0",
     "@react-native-community/slider": "^4.5.6",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/material-top-tabs": "^6.6.5",

@@ -1,9 +1,9 @@
 import React, { memo } from "react"
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native"
+import { FlatList, View } from "react-native"
 import TrackPlayer from "react-native-track-player"
 import { screens } from "../api/base/constrants"
+import SongRow from "../components/Common/SongRow"
 import FavouriteHeader from "../components/favourite/Header"
-import { Icons } from "../constants/Icon"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
 import { UserFavouritesTypes } from "../Interfaces/tuneifySlice.interface"
 import { tuneifyFavourites } from "../store/slices/favourite.slice"
@@ -66,60 +66,15 @@ const Favourites = () => {
             simplePlayHandler={simplePlayHandler}
           />
         }
-        renderItem={({ item, index }) => {
-          return (
-            <TouchableOpacity
-              style={{
-                width: "100%",
-                height: 60,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                paddingLeft: 2,
-                paddingRight: 5,
-                marginTop: 10
-              }}
-              onPress={() => changeQueueState(index, item)}
-            >
-              <View className="w-[90%]  h-full pl-3 flex flex-row ">
-                <View className="w-full rounded-lg overflow-hidden ">
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Image
-                      source={{ uri: item?.artwork }}
-                      style={{ width: 60, height: 60, borderRadius: 17 }}
-                    />
-                    <View style={{ marginLeft: 10 }}>
-                      <Text
-                        style={{
-                          color:
-                            item.id == applicationQueue.data.song?.id
-                              ? "#16FF00"
-                              : "white",
-                          fontSize: 14,
-                          fontFamily: "400"
-                        }}
-                      >
-                        {item.title.slice(0, 40)}
-                      </Text>
-                      <Text
-                        style={{
-                          color: "#d0d0d1",
-                          fontSize: 10,
-                          marginTop: 1,
-                          fontFamily: "300"
-                        }}
-                      >
-                        {item.artist}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View className="w-[10%] h-full flex items-center justify-end flex-row pr-3">
-                <Icons.MoreIcon name="more-vert" size={25} color={"#bababa"} />
-              </View>
-            </TouchableOpacity>
-          )
-        }}
+        renderItem={({ item, index }) => (
+          <SongRow
+            title={item.title}
+            subtitle={item.artist}
+            artwork={item.artwork}
+            isActive={item.id === applicationQueue.data.song?.id}
+            onPress={() => changeQueueState(index, item)}
+          />
+        )}
       />
     </View>
   )

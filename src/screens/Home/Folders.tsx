@@ -11,6 +11,7 @@ import TrackPlayer from "react-native-track-player"
 import { StoreSongTypes } from "../../Interfaces/tuneifySlice.interface"
 import { screens } from "../../api/base/constrants"
 import Show from "../../components/Common/Show"
+import SongRow from "../../components/Common/SongRow"
 import NotFound from "../../components/offline/Not-found"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import { mergeDownloadMeta } from "../../helpers/localMedia"
@@ -80,43 +81,13 @@ const Folders = () => {
           windowSize={10}
           renderItem={({ item, index }) => {
             return (
-              <TouchableOpacity
-                className="w-full h-16 mt-2 flex flex-row items-center"
+              <SongRow
+                title={item.title}
+                subtitle={item.artist}
+                artwork={item.artwork}
+                isActive={applicationQueue.data.song?.id === item.id}
                 onPress={() => changeQueueState(index, item)}
-              >
-                <View className="h-16 w-20  pl-2">
-                  <Image
-                    source={{ uri: item.artwork }}
-                    className="h-16 w-16"
-                    style={{
-                      borderRadius: 17
-                    }}
-                  />
-                </View>
-                <View className="w-4/5 ">
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      fontFamily: "500",
-                      color:
-                        applicationQueue.data.song?.id == item.id
-                          ? "#16FF00"
-                          : "#FFF"
-                    }}
-                  >
-                    {item.title.slice(0, 40)}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 10,
-                      color: "#d0d0d1",
-                      fontFamily: "200"
-                    }}
-                  >
-                    {item.artist}
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              />
             )
           }}
         />

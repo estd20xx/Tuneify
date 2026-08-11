@@ -1,8 +1,8 @@
 import React, { memo } from "react"
-import { ScrollView, Text, TouchableOpacity, View } from "react-native"
-import Modal from "react-native-modal"
+import { ScrollView, View } from "react-native"
+import { Button, Divider, Modal, Portal, Text } from "react-native-paper"
 import { InfoSection } from "../../constants/settingsContent"
-import { useTheme } from "../../hooks/useTheme"
+import { useMd3Colors } from "../../hooks/useMd3"
 
 type Props = {
   isVisible: boolean
@@ -19,38 +19,54 @@ const SettingsPanel: React.FC<Props> = ({
   onClose,
   children
 }) => {
-  const theme = useTheme()
+  const md3 = useMd3Colors()
   return (
-    <Modal isVisible={isVisible} onBackButtonPress={onClose} onBackdropPress={onClose}>
-      <View
-        style={{ backgroundColor: theme.surfaceRaised }}
-        className="w-full max-h-[80%] rounded-2xl p-5"
+    <Portal>
+      <Modal
+        visible={isVisible}
+        onDismiss={onClose}
+        contentContainerStyle={{
+          backgroundColor: md3.elevation.level3,
+          marginHorizontal: 24,
+          borderRadius: 28,
+          paddingTop: 24,
+          paddingHorizontal: 24,
+          paddingBottom: 16,
+          maxHeight: "80%"
+        }}
       >
-        <Text className="text-white text-xl font-['500'] mb-3">{title}</Text>
+        <Text variant="headlineSmall" style={{ color: md3.onSurface }}>
+          {title}
+        </Text>
+        <Divider style={{ marginTop: 16, backgroundColor: md3.outlineVariant }} />
         <ScrollView showsVerticalScrollIndicator={false}>
-          {sections.map((section) => (
-            <View key={section.heading} className="mb-4">
-              <Text
-                style={{ color: theme.accent }}
-                className="text-base font-['500'] mb-1"
-              >
-                {section.heading}
-              </Text>
-              <Text className="text-gray-300 text-sm leading-5 font-['300']">
-                {section.body}
-              </Text>
-            </View>
-          ))}
-          {children}
+          <View style={{ paddingVertical: 16 }}>
+            {sections.map((section) => (
+              <View key={section.heading} style={{ marginBottom: 20 }}>
+                <Text
+                  variant="titleMedium"
+                  style={{ color: md3.primary, marginBottom: 4 }}
+                >
+                  {section.heading}
+                </Text>
+                <Text
+                  variant="bodyMedium"
+                  style={{ color: md3.onSurfaceVariant, lineHeight: 20 }}
+                >
+                  {section.body}
+                </Text>
+              </View>
+            ))}
+            {children}
+          </View>
         </ScrollView>
-        <TouchableOpacity
-          onPress={onClose}
-          className="mt-3 py-3 rounded-md bg-[#302625] items-center"
-        >
-          <Text className="text-white">Close</Text>
-        </TouchableOpacity>
-      </View>
-    </Modal>
+        <View style={{ alignItems: "flex-end" }}>
+          <Button mode="text" onPress={onClose} textColor={md3.primary}>
+            Close
+          </Button>
+        </View>
+      </Modal>
+    </Portal>
   )
 }
 

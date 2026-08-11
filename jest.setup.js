@@ -70,7 +70,18 @@ jest.mock("react-native-track-player", () => {
     usePlaybackState: () => ({ state: undefined }),
     useTrackPlayerEvents: jest.fn(),
     Event: Enum,
-    State: Enum,
+    State: {
+      None: "none",
+      Ready: "ready",
+      Playing: "playing",
+      Paused: "paused",
+      Stopped: "stopped",
+      Buffering: "buffering",
+      Connecting: "connecting",
+      Loading: "loading",
+      Ended: "ended",
+      Error: "error"
+    },
     Capability: Enum,
     RepeatMode: { Off: 0, Track: 1, Queue: 2 },
     AppKilledPlaybackBehavior: Enum
@@ -101,22 +112,35 @@ jest.mock("react-native-document-picker", () => ({
 }))
 
 jest.mock("react-native-safe-area-context", () => {
+  const React = require("react")
   const inset = { top: 24, right: 0, bottom: 0, left: 0 }
+  const frame = { x: 0, y: 0, width: 390, height: 844 }
+  const InsetsContext = React.createContext(inset)
+  const FrameContext = React.createContext(frame)
   return {
     SafeAreaProvider: ({ children }) => children,
-    SafeAreaConsumer: ({ children }) => children(inset),
+    SafeAreaConsumer: InsetsContext.Consumer,
+    SafeAreaInsetsContext: InsetsContext,
+    SafeAreaFrameContext: FrameContext,
     SafeAreaView: ({ children }) => children,
+    initialWindowMetrics: { insets: inset, frame },
     useSafeAreaInsets: () => inset,
-    useSafeAreaFrame: () => ({ x: 0, y: 0, width: 390, height: 844 })
+    useSafeAreaFrame: () => frame
   }
 })
 
-jest.mock("react-native-vector-icons/MaterialIcons", () => "MaterialIcons")
-jest.mock("react-native-vector-icons/MaterialCommunityIcons", () => "MCIcons")
-jest.mock("react-native-vector-icons/Octicons", () => "Octicons")
-jest.mock("react-native-vector-icons/Ionicons", () => "Ionicons")
-jest.mock("react-native-vector-icons/AntDesign", () => "AntDesign")
-jest.mock("react-native-vector-icons/Feather", () => "Feather")
-jest.mock("react-native-vector-icons/Entypo", () => "Entypo")
+const mockIcon = (name) => ({ __esModule: true, default: name })
+
+jest.mock("react-native-vector-icons/MaterialIcons", () =>
+  mockIcon("MaterialIcons")
+)
+jest.mock("react-native-vector-icons/MaterialCommunityIcons", () =>
+  mockIcon("MaterialCommunityIcons")
+)
+jest.mock("react-native-vector-icons/Octicons", () => mockIcon("Octicons"))
+jest.mock("react-native-vector-icons/Ionicons", () => mockIcon("Ionicons"))
+jest.mock("react-native-vector-icons/AntDesign", () => mockIcon("AntDesign"))
+jest.mock("react-native-vector-icons/Feather", () => mockIcon("Feather"))
+jest.mock("react-native-vector-icons/Entypo", () => mockIcon("Entypo"))
 
 jest.mock("react-native/Libraries/Animated/NativeAnimatedHelper")

@@ -67,8 +67,10 @@ import PlayerInfo from "./PlayerInfo"
 import SideModal from "./SideModal"
 import SongInfo from "./SongInfo"
 import TimerPopUp from "./TimerPopUp"
-const MINI_PLAYER_HEIGHT = 56
-const TAB_BAR_HEIGHT = 50
+import {
+  BOTTOM_NAV_HEIGHT as TAB_BAR_HEIGHT,
+  MINI_PLAYER_HEIGHT
+} from "../../constants/layout"
 
 const TuneifyPlayer = () => {
   const dispatch = useAppDispatch()
@@ -276,8 +278,11 @@ const TuneifyPlayer = () => {
           {applicationQueue.data.song && (
             <View>
               <TouchableOpacity
-                style={{ backgroundColor: theme.surface }}
-                className=" h-14 w-full bottom-0 flex flex-row items-center justify-center px-3"
+                style={{
+                  backgroundColor: theme.surfaceRaised,
+                  height: MINI_PLAYER_HEIGHT
+                }}
+                className=" w-full bottom-0 flex flex-row items-center justify-center px-3"
                 activeOpacity={1}
                 onPress={() => [
                   (translateY.value = withSpring(
