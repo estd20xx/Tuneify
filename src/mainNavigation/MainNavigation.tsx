@@ -4,10 +4,14 @@ import {
 } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { MainNavigationItems } from "../constants/navigation"
+import { useTheme } from "../hooks/useTheme"
 const Stack = createNativeStackNavigator()
-const theme = DefaultTheme
-theme.colors.background = "#1b1002"
 const MainNavigation = () => {
+  const appTheme = useTheme()
+  const theme = {
+    ...DefaultTheme,
+    colors: { ...DefaultTheme.colors, background: appTheme.background }
+  }
   return (
     <Container theme={theme}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>

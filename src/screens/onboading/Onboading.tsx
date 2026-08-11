@@ -1,23 +1,21 @@
-import React, { memo, useEffect } from "react"
-import { Platform, StatusBar, Text, TouchableOpacity, View } from "react-native"
+import React, { memo } from "react"
+import { StatusBar, Text, TouchableOpacity, View } from "react-native"
 import * as Animatable from "react-native-animatable"
 import { onBoardImageApi } from "../../api/base/constrants"
 import { onboardingData } from "../../constants/navigation"
 import { useOnboarding } from "../../hooks/useOnboarding"
+import { useTheme } from "../../hooks/useTheme"
 import { OnBoardingPropsTypes } from "../../Interfaces/onboard.interface"
 import OnboadringService from "../../services/onboarding.service"
 const service = new OnboadringService(onBoardImageApi)
 const AnimatedButton = Animatable.createAnimatableComponent(TouchableOpacity)
 const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
   const [data, updateData, onIndex, updateOnIndex] = useOnboarding()
+  const theme = useTheme()
 
-  useEffect(() => {
-    if (Platform.OS === "android") {
-      StatusBar.setBackgroundColor("#e28f22")
-    }
-  }, [])
   return (
     <View className="w-full h-screen">
+      <StatusBar backgroundColor={theme.accentStrong} barStyle="light-content" />
       <View className="w-full h-[80%] overflow-hidden">
         <Animatable.Image
           animation="zoomInUp"
@@ -25,7 +23,10 @@ const Onboading: React.FC<OnBoardingPropsTypes> = ({ navigation }) => {
           className="w-full h-full"
         />
       </View>
-      <View className="w-full h-[45%] bg-[#181a20] absolute bottom-0 rounded-t-[50px] pt-10 flex items-center">
+      <View
+        style={{ backgroundColor: theme.surface }}
+        className="w-full h-[45%] absolute bottom-0 rounded-t-[50px] pt-10 flex items-center"
+      >
         {onboardingData.map((c, index) => {
           return (
             <View key={c.first}>

@@ -1,96 +1,269 @@
-import Slider from "@react-native-community/slider"
-import { memo } from "react"
+import { memo, useState } from "react"
+import { Alert, BackHandler, ScrollView, Share, View } from "react-native"
 import {
-  BackHandler,
-  FlatList,
-  Image,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native"
-import UserImage from "react-native-fast-image"
-import Toast from "react-native-toast-message"
+  Avatar,
+  Divider,
+  List,
+  RadioButton,
+  Switch,
+  Text
+} from "react-native-paper"
+import SettingsPanel from "../../components/Settings/SettingsPanel"
 import { settingsData } from "../../constants/Settings"
+import {
+  ABOUT_CONTENT,
+  APP_VERSION,
+  CHANGELOG_CONTENT,
+  FAQ_CONTENT,
+  InfoSection,
+  PRIVACY_CONTENT
+} from "../../constants/settingsContent"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
+import { useMd3Colors } from "../../hooks/useMd3"
+import appNotification from "../../services/appNotification.service"
+import { backupService, buildBackup } from "../../services/backup.service"
 import SettingService from "../../services/setting.service"
 import {
-  bottomPlayer,
-  changePosition
-} from "../../store/slices/bottomPlayer.slice"
+  addUserFavouritesData,
+  tuneifyFavourites
+} from "../../store/slices/favourite.slice"
+import {
+  customePlaylist,
+  importPlaylist
+} from "../../store/slices/offlinePlaylist.slice"
+import {
+  ACCENTS,
+  appSettings,
+  changeAccent,
+  changeLanguage,
+  LANGUAGES,
+  toggleHighQuality,
+  toggleNotifications
+} from "../../store/slices/settings.slice"
 import { tuneifyUser } from "../../store/slices/user.slice"
+
 const settingService = new SettingService()
+
+const INFO_PANELS: Record<string, InfoSection[]> = {
+  about: ABOUT_CONTENT,
+  log: CHANGELOG_CONTENT,
+  privacy: PRIVACY_CONTENT,
+  faq: FAQ_CONTENT
+}
+
+const ICONS: Record<string, string> = {
+  general: "tune",
+  backup: "cloud-upload-outline",
+  notification: "bell-outline",
+  language: "translate",
+  "accent-color": "palette-outline",
+  share: "share-variant-outline",
+  log: "history",
+  privacy: "shield-lock-outline",
+  faq: "help-circle-outline",
+  about: "information-outline",
+  quit: "logout"
+}
+
 const Settings = () => {
   const settingData = TypedSelectorHook(tuneifyUser)
   const dispatch = useAppDispatch()
-  const bottomPlayerPosition = TypedSelectorHook(bottomPlayer)
-  return (
-    <View className="w-full h-screen ">
-      <View className="w-full  h-auto flex items-center flex-row justify-center">
-        <Text className="  text-white text-base tracking-wider font-['400']">
-          Setting
-        </Text>
-      </View>
-      <View className="w-full h-20 overflow-hidden flex items-center flex-row pl-2">
-        <TouchableOpacity
-          className="-z-30"
-          onPress={() => settingService.changeProfileImage(dispatch)}
-        >
-          <UserImage
-            source={{
-              uri: settingData.image,
-              priority: UserImage.priority.high,
-              cache: UserImage.cacheControl.immutable
-            }}
-            className="h-16 w-16 rounded-full"
-          />
-        </TouchableOpacity>
-        <Text className=" ml-3 text-white font-['300'] text-xl">
-          {settingData.userName}
-        </Text>
-      </View>
+  const preferences = TypedSelectorHook(appSettings)
+  const playlists = TypedSelectorHook(customePlaylist)
+  const favourites = TypedSelectorHook(tuneifyFavourites)
+  const md3 = useMd3Colors()
+  const [panel, setPanel] = useState<string>("")
 
-      <View className="w-full h-auto my-5">
-        <Text className="self-center my-2 text-lg">Position Bottom Player</Text>
-        <Slider
-          minimumValue={54}
-          maximumValue={100}
-          value={bottomPlayerPosition.value}
-          minimumTrackTintColor="#ff8216"
-          maximumTrackTintColor="#d0d0d1"
-          thumbTintColor="#ff8216"
-          onSlidingComplete={(e: number) => dispatch(changePosition(e))}
-        />
-      </View>
-      <Toast />
-      <FlatList
-        data={settingsData}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity
-              style={{
-                width: "95%",
-                height: 50,
-                flexDirection: "row",
-                alignItems: "center",
-                paddingLeft: 2,
-                paddingRight: 5,
-                marginTop: 4,
-                alignSelf: "center"
-              }}
-              onPress={() => item.command == "quit" && BackHandler.exitApp()}
-            >
-              <Image
-                source={item.leftIcon}
-                style={{ tintColor: "#d0d0d1" }}
-                className="h-5 w-5"
-              />
-              <Text className="ml-4 text-gray-300 text-base font-['300'] tracking-widest">
-                {item.title}
-              </Text>
-            </TouchableOpacity>
-          )
-        }}
+  const closePanel = () => setPanel("")
+
+  const handleBackup = async () => {
+    const ok = await backupService.save(
+      buildBackup(playlists.playlist, favourites.favouriteData)
+    )
+    if (!ok) {
+      appNotification.errorMessage("Backup failed", "Could not write the file")
+      return
+    }
+    appNotification.successMessage(
+      "Backup saved",
+      `${playlists.playlist.length} playlists, ${favourites.favouriteData.length} favourites`
+    )
+  }
+
+  const handleRestore = async () => {
+    const data = await backupService.load()
+    if (!data) {
+      appNotification.errorMessage("No backup", "Nothing to restore yet")
+      return
+    }
+    data.playlists.forEach((entry) => {
+      if (entry?.[0]) dispatch(importPlaylist(entry[0]))
+    })
+    data.favourites.forEach((song) => dispatch(addUserFavouritesData(song)))
+    appNotification.successMessage("Restored", "Your library is back")
+  }
+
+  const handleShareApp = async () => {
+    try {
+      await Share.share({
+        message: `Tuneify ${APP_VERSION} - free music, audio books and offline playlists.`
+      })
+    } catch (error) {
+      appNotification.errorMessage("Could not share", "Try again")
+    }
+  }
+
+  const handleCommand = (command: String) => {
+    switch (command) {
+      case "quit":
+        BackHandler.exitApp()
+        return
+      case "share":
+        handleShareApp()
+        return
+      case "backup":
+        Alert.alert("Backup", "Save a copy of your library or restore it.", [
+          { text: "Cancel", style: "cancel" },
+          { text: "Restore", onPress: handleRestore },
+          { text: "Save", onPress: handleBackup }
+        ])
+        return
+      default:
+        setPanel(String(command))
+    }
+  }
+
+  const panelTitle = (): string => {
+    const found = settingsData.find((item) => item.command === panel)
+    return found ? String(found.title) : ""
+  }
+
+  return (
+    <View style={{ flex: 1, backgroundColor: md3.background }}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingHorizontal: 24,
+            paddingTop: 16,
+            paddingBottom: 24
+          }}
+        >
+          <Avatar.Image
+            size={64}
+            source={{ uri: settingData.image }}
+            onTouchEnd={() => settingService.changeProfileImage(dispatch)}
+          />
+          <View style={{ marginLeft: 16, flex: 1 }}>
+            <Text variant="titleLarge" style={{ color: md3.onSurface }}>
+              {settingData.userName}
+            </Text>
+            <Text variant="bodyMedium" style={{ color: md3.onSurfaceVariant }}>
+              Tuneify {APP_VERSION}
+            </Text>
+          </View>
+        </View>
+        <Divider style={{ backgroundColor: md3.outlineVariant }} />
+        <List.Section>
+          {settingsData.map((item) => (
+            <List.Item
+              key={String(item.command)}
+              title={String(item.title)}
+              titleStyle={{ color: md3.onSurface }}
+              left={(props) => (
+                <List.Icon
+                  {...props}
+                  icon={ICONS[String(item.command)] ?? "circle-small"}
+                  color={md3.onSurfaceVariant}
+                />
+              )}
+              onPress={() => handleCommand(item.command)}
+            />
+          ))}
+        </List.Section>
+        <View style={{ height: 140 }} />
+      </ScrollView>
+
+      <SettingsPanel
+        isVisible={Boolean(INFO_PANELS[panel])}
+        title={panelTitle()}
+        sections={INFO_PANELS[panel] ?? []}
+        onClose={closePanel}
       />
+
+      <SettingsPanel
+        isVisible={panel === "general" || panel === "notification"}
+        title={panel === "notification" ? "Notification" : "General Settings"}
+        sections={[]}
+        onClose={closePanel}
+      >
+        <List.Item
+          title="In-app notifications"
+          titleStyle={{ color: md3.onSurface }}
+          right={() => (
+            <Switch
+              value={preferences.notifications}
+              onValueChange={() => {
+                dispatch(toggleNotifications())
+              }}
+            />
+          )}
+        />
+        <List.Item
+          title="Prefer high quality audio"
+          titleStyle={{ color: md3.onSurface }}
+          right={() => (
+            <Switch
+              value={preferences.highQuality}
+              onValueChange={() => {
+                dispatch(toggleHighQuality())
+              }}
+            />
+          )}
+        />
+      </SettingsPanel>
+
+      <SettingsPanel
+        isVisible={panel === "language"}
+        title="Language"
+        sections={[]}
+        onClose={closePanel}
+      >
+        <RadioButton.Group
+          value={preferences.language}
+          onValueChange={(value) => dispatch(changeLanguage(value))}
+        >
+          {LANGUAGES.map((language) => (
+            <RadioButton.Item
+              key={language}
+              label={language.charAt(0).toUpperCase() + language.slice(1)}
+              value={language}
+              labelStyle={{ color: md3.onSurface }}
+            />
+          ))}
+        </RadioButton.Group>
+      </SettingsPanel>
+
+      <SettingsPanel
+        isVisible={panel === "accent-color"}
+        title="Accent Color"
+        sections={[]}
+        onClose={closePanel}
+      >
+        <View style={{ flexDirection: "row", flexWrap: "wrap", paddingTop: 8 }}>
+          {ACCENTS.map((accent) => (
+            <Avatar.Icon
+              key={accent}
+              size={56}
+              icon={preferences.accent === accent ? "check" : "blank"}
+              color={md3.onPrimary}
+              style={{ backgroundColor: accent, marginRight: 12, marginBottom: 12 }}
+              onTouchEnd={() => dispatch(changeAccent(accent))}
+            />
+          ))}
+        </View>
+      </SettingsPanel>
     </View>
   )
 }

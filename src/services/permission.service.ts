@@ -11,4 +11,14 @@ export default class PermissionService implements PermissionInterface {
       return false
     }
   }
+  public askCameraPermission = async (): Promise<boolean> => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA
+      )
+      return granted === PermissionsAndroid.RESULTS.GRANTED
+    } catch (err) {
+      return false
+    }
+  }
 }

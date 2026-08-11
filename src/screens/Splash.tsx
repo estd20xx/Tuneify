@@ -3,12 +3,14 @@ import { View } from "react-native"
 import { Chase } from "react-native-animated-spinkit"
 import { SplashScreenPropsTypes } from "../Types/Types"
 import { TypedSelectorHook, useAppDispatch } from "../hooks/store.hook"
+import { useTheme } from "../hooks/useTheme"
 import { musicService } from "../services/localMedia.service"
 import PermissionService from "../services/permission.service"
 import { accepted, tuneifyOfflines } from "../store/slices/offline.slice"
 const permission = new PermissionService()
 const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {
   const dispatch = useAppDispatch()
+  const theme = useTheme()
   const offline = TypedSelectorHook(tuneifyOfflines)
   // TODO : need to optimize it
   const fn = async () => {
@@ -29,8 +31,11 @@ const Splash: React.FC<SplashScreenPropsTypes> = ({ navigation }) => {
     offline.isAccepted ? navigation.navigate("bottom") : fn()
   }, [])
   return (
-    <View className="w-full h-screen flex items-center justify-center bg-black">
-      <Chase size={140} color="#ff8216" />
+    <View
+      style={{ backgroundColor: theme.background }}
+      className="w-full h-screen flex items-center justify-center"
+    >
+      <Chase size={140} color={theme.accent} />
     </View>
   )
 }

@@ -65,7 +65,9 @@ const ListItem: React.FC<ListItemProps> = React.memo(
                       fontFamily: "400"
                     }}
                   >
-                    {item.title.slice(0, 40) + "..."}
+                    {item.title.length > 40
+                      ? item.title.slice(0, 40) + "..."
+                      : item.title}
                   </Text>
                   <Text
                     style={{

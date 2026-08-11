@@ -1,28 +1,62 @@
 import React, { memo } from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import { ScrollView } from "react-native"
+import { Chip } from "react-native-paper"
 import { DynamicResponse } from "../../api/interface/Dynamic.interface"
-import { useSearchCategory } from "../../hooks/useSearchCategory"
+import { useMd3Colors } from "../../hooks/useMd3"
+
+export const SEARCH_CATEGORIES = [
+  "top",
+  "songs",
+  "artists",
+  "playlists",
+  "albums"
+] as const
+
+export type SearchCategory = (typeof SEARCH_CATEGORIES)[number]
+
 type Props = {
   categoryData: Readonly<DynamicResponse | null>
+  selected: SearchCategory
+  onSelect: (category: SearchCategory) => void
 }
-const Category: React.FC<Props> = ({ categoryData }) => {
-  const [category, updateCategory] = useSearchCategory()
+
+const Category: React.FC<Props> = ({ selected, onSelect }) => {
+  const md3 = useMd3Colors()
   return (
-    <View className="w-full  flex items-center justify-start flex-row  py-2 pl-2">
-      {Object.keys(categoryData || {}).map((current, index) => {
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        gap: 8
+      }}
+    >
+      {SEARCH_CATEGORIES.map((current) => {
+        const isActive = selected === current
         return (
-          <TouchableOpacity
+          <Chip
             key={current}
-            onPress={() => updateCategory(index)}
-            className={`py-1 mr-2 items-center justify-center px-4 rounded-xl border-[1px] ${
-              category == index && "bg-green-600"
-            } border-gray-700`}
+            selected={isActive}
+            showSelectedCheck={isActive}
+            onPress={() => onSelect(current)}
+            style={{
+              backgroundColor: isActive
+                ? md3.secondaryContainer
+                : "transparent",
+              borderColor: md3.outline
+            }}
+            textStyle={{
+              color: isActive ? md3.onSecondaryContainer : md3.onSurfaceVariant,
+              textTransform: "capitalize"
+            }}
+            mode={isActive ? "flat" : "outlined"}
           >
-            <Text className={`capitalize text-white`}>{current}</Text>
-          </TouchableOpacity>
+            {current}
+          </Chip>
         )
       })}
-    </View>
+    </ScrollView>
   )
 }
 export default memo(Category)

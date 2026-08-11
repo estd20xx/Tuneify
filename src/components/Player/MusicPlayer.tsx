@@ -2,21 +2,21 @@ import React, { useCallback, useEffect, useState } from "react"
 import {
   BackHandler,
   Animated as CustomAnimated,
-  Dimensions,
   Image,
-  NativeModules,
   Pressable,
   ScrollView,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View
 } from "react-native"
 import { PanGestureHandler } from "react-native-gesture-handler"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
+  useAnimatedReaction,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withSpring,
   withTiming
@@ -27,7 +27,6 @@ import TrackPlayer, {
   PlaybackState,
   State,
   usePlaybackState,
-  useProgress,
   useTrackPlayerEvents
 } from "react-native-track-player"
 import { screens } from "../../api/base/constrants"
@@ -45,7 +44,7 @@ import { getSongsLyrics } from "../../store/actions/lyrics.action"
 
 import { welcomeSong } from "../../constants/welcome"
 import { useShuffle } from "../../hooks/useShuffle"
-import { bottomPlayer } from "../../store/slices/bottomPlayer.slice"
+import { useTheme } from "../../hooks/useTheme"
 import {
   changeApplicationSetup,
   tunifyChild
@@ -68,16 +67,18 @@ import PlayerInfo from "./PlayerInfo"
 import SideModal from "./SideModal"
 import SongInfo from "./SongInfo"
 import TimerPopUp from "./TimerPopUp"
-const { StatusBarManager } = NativeModules
-const { height: SCREEN_HEIGHT } = Dimensions.get("window")
-const BOTTOM_TAB_BAR_HEIGHT = 0
+import {
+  BOTTOM_NAV_HEIGHT as TAB_BAR_HEIGHT,
+  MINI_PLAYER_HEIGHT
+} from "../../constants/layout"
 
 const TuneifyPlayer = () => {
   const dispatch = useAppDispatch()
-  const bottomPlayerPosition = TypedSelectorHook(bottomPlayer)
-  const offSet = bottomPlayerPosition.value
-  const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + offSet
-  const MIN_TRANSLATE_Y = -BOTTOM_TAB_BAR_HEIGHT - 10
+  const insets = useSafeAreaInsets()
+  const theme = useTheme()
+  const { height: SCREEN_HEIGHT } = useWindowDimensions()
+  const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + MINI_PLAYER_HEIGHT
+  const MIN_TRANSLATE_Y = -(TAB_BAR_HEIGHT + insets.bottom)
 
   const [
     isPlayer,
@@ -101,17 +102,21 @@ const TuneifyPlayer = () => {
 
   const [downloadProgress, updateDownloadValue] = useDownloadProgress()
   const [isPlaylist, togglePlayist] = usePlaylist()
-  const progress = useProgress()
   const [flip] = useState(new CustomAnimated.Value(0))
 
   const playbackState: PlaybackState | { state: undefined } = usePlaybackState()
   const applicationQueue = TypedSelectorHook(centralQueue)
   const playerState = TypedSelectorHook(tunifyChild)
 
-  useDerivedValue(() => {
-    runOnJS(toggleMiniPlayer)(translateY.value > MIN_TRANSLATE_Y - 40)
-    runOnJS(toggleFullScreen)(translateY.value < MIN_TRANSLATE_Y - 40)
-  }, [translateY])
+  useAnimatedReaction(
+    () => translateY.value < MIN_TRANSLATE_Y - 40,
+    (expanded, previous) => {
+      if (expanded === previous) return
+      runOnJS(toggleFullScreen)(expanded)
+      runOnJS(toggleMiniPlayer)(!expanded)
+    },
+    [MIN_TRANSLATE_Y]
+  )
 
   const gestureHandler = useAnimatedGestureHandler({
     onStart: (_, ctx) => {
@@ -132,7 +137,7 @@ const TuneifyPlayer = () => {
         Zindex.value = withTiming(50)
 
         translateY.value = withSpring(
-          MAX_TRANSLATE_Y + StatusBarManager.HEIGHT,
+          MAX_TRANSLATE_Y,
           {
             damping: 15,
             stiffness: 100
@@ -225,12 +230,6 @@ const TuneifyPlayer = () => {
   }, [showFullPlayer])
 
   useEffect(() => {
-    if (!applicationQueue.data.song) {
-      return
-    }
-  }, [])
-
-  useEffect(() => {
     if (!playerState.isSetupped) {
       applicationService.setUpPlayer(applicationQueue.data.song ?? welcomeSong)
       dispatch(changeApplicationSetup())
@@ -240,23 +239,22 @@ const TuneifyPlayer = () => {
   }, [applicationQueue.data])
 
   useTrackPlayerEvents(
-    [
-      Event.PlaybackState,
-      Event.PlaybackError,
-      Event.PlaybackState,
-      Event.PlaybackError
-    ],
+    [Event.PlaybackActiveTrackChanged, Event.PlaybackError],
     async (event: any) => {
-      if (event.state == State.Loading) {
-        const activeTrack = await TrackPlayer.getActiveTrack()
+      if (event.type === Event.PlaybackActiveTrackChanged) {
+        const activeTrack = event.track ?? (await TrackPlayer.getActiveTrack())
+        if (!activeTrack) return
         dispatch(
           updateSongQueue({
             song: activeTrack as StoreSongTypes,
             isPlaying: true
           })
         )
-        if (applicationQueue.data?.screenId != screens.offlineScreenId)
-          dispatch(getSongsLyrics(activeTrack?.id))
+        if (
+          activeTrack?.id &&
+          applicationQueue.data?.screenId != screens.offlineScreenId
+        )
+          dispatch(getSongsLyrics(activeTrack.id))
       }
     }
   )
@@ -268,9 +266,9 @@ const TuneifyPlayer = () => {
             position: "absolute",
             left: 0,
             right: 0,
-            bottom: -SCREEN_HEIGHT + StatusBarManager.HEIGHT + offSet,
+            bottom: -SCREEN_HEIGHT + MINI_PLAYER_HEIGHT,
             height: SCREEN_HEIGHT,
-            backgroundColor: "#1b1002"
+            backgroundColor: theme.background
           },
           animatedStyles,
           animatedStyle
@@ -280,11 +278,15 @@ const TuneifyPlayer = () => {
           {applicationQueue.data.song && (
             <View>
               <TouchableOpacity
-                className=" h-14 w-full bottom-0 flex flex-row items-center justify-center px-3 bg-bottomPlayer"
+                style={{
+                  backgroundColor: theme.surfaceRaised,
+                  height: MINI_PLAYER_HEIGHT
+                }}
+                className=" w-full bottom-0 flex flex-row items-center justify-center px-3"
                 activeOpacity={1}
                 onPress={() => [
                   (translateY.value = withSpring(
-                    MAX_TRANSLATE_Y + StatusBarManager.HEIGHT
+                    MAX_TRANSLATE_Y
                   )),
                   (Zindex.value = withTiming(50))
                 ]}
@@ -346,7 +348,14 @@ const TuneifyPlayer = () => {
             toggleModal={toggleModal}
             dispatch={dispatch}
           />
-          <View className="w-full h-screen px-3 bg-background">
+          <View
+            style={{
+              flex: 1,
+              paddingTop: insets.top,
+              paddingBottom: insets.bottom + TAB_BAR_HEIGHT
+            }}
+            className="w-full px-3"
+          >
             <PlayerHeader
               minValue={MIN_TRANSLATE_Y}
               Zindex={Zindex}
@@ -354,10 +363,13 @@ const TuneifyPlayer = () => {
               flipCard={flipCard}
               togglePlayist={togglePlayist}
             />
-            <View className="relative h-1/2 w-full mt-8 flex items-center justify-center">
+            <View className="relative flex-1 w-full my-4 flex items-center justify-center">
               <CustomAnimated.View
-                style={[frontAnimatedStyle, { backfaceVisibility: "hidden" }]}
-                className="w-[90%]  overflow-hidden"
+                style={[
+                  frontAnimatedStyle,
+                  { backfaceVisibility: "hidden", position: "absolute" }
+                ]}
+                className="w-[90%] h-full overflow-hidden"
                 pointerEvents={isLyricsView ? "none" : "auto"}
               >
                 <Image
@@ -397,7 +409,7 @@ const TuneifyPlayer = () => {
               </CustomAnimated.View>
             </View>
             <SongInfo currentTrack={applicationQueue.data.song} />
-            <PlayerInfo progress={progress} />
+            <PlayerInfo />
             <Control
               isRepeat={applicationQueue.isRepeat}
               playbackState={playbackState}
@@ -428,7 +440,8 @@ const TuneifyPlayer = () => {
                 onPress={() =>
                   musicService.downloadSong(
                     applicationQueue.data.song,
-                    updateDownloadValue
+                    updateDownloadValue,
+                    dispatch
                   )
                 }
               />

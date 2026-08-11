@@ -10,6 +10,7 @@ import {
 } from "react-native"
 import "text-encoding"
 import QrCode from "../../components/playlist/QrCode"
+import QrScanner from "../../components/playlist/QrScanner"
 import { TypedSelectorHook, useAppDispatch } from "../../hooks/store.hook"
 import {
   customePlaylist,
@@ -20,12 +21,17 @@ const Playlists = () => {
   const offlinePlaylist = TypedSelectorHook(customePlaylist)
   const dispatch = useAppDispatch()
   const [isVisible, setIsVisible] = useState<boolean>(false)
+  const [isScanning, setIsScanning] = useState<boolean>(false)
 
   const handlePlaylistCreation = () => {}
 
   return (
     <View className="w-full h-screen flex  justify-center flex-row">
       <QrCode isVisible={isVisible} onpress={() => setIsVisible(!isVisible)} />
+      <QrScanner
+        isVisible={isScanning}
+        onClose={() => setIsScanning(false)}
+      />
       <FlatList
         data={offlinePlaylist.playlist}
         keyExtractor={(item) => item[0].name}
@@ -40,11 +46,7 @@ const Playlists = () => {
               <Text className="text-white text-2xl font-['400'] ml-5 pb-2">
                 {offlinePlaylist.playlist.length} Playlists
               </Text>
-              <TouchableOpacity
-                onPress={() =>
-                  Alert.alert("Developer Message", "work is in progress...")
-                }
-              >
+              <TouchableOpacity onPress={() => setIsScanning(true)}>
                 <Camera size={25} color={"#fff"} />
               </TouchableOpacity>
             </View>

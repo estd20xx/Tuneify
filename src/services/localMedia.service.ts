@@ -4,6 +4,7 @@ import fs from "react-native-fs"
 import { LocalMediaInterface } from "../Interfaces/localMedia.interface"
 import { StoreSongTypes } from "../Interfaces/tuneifySlice.interface"
 import { ApplicationCore } from "../native/MusicFiles"
+import { rememberDownload } from "../store/slices/downloads.slice"
 import { addLocalFiles } from "../store/slices/offline.slice"
 
 export interface OfflineSongTypes {
@@ -58,21 +59,24 @@ class LocalMediaService implements LocalMediaInterface {
   }
   public downloadSong = async (
     c: StoreSongTypes,
-    updateDownloadValue: (progress: number) => void
+    updateDownloadValue: (progress: number) => void,
+    dispatch?: Dispatch<UnknownAction>
   ): Promise<void> => {
     try {
       await this.checkDir()
       let lastUpdateTime = Date.now()
+      const target = `${this.path}/${c.title.concat(".mp3")}`
 
       const task = fs.downloadFile({
         fromUrl: c.url,
-        toFile: `${this.path}/${c.title.concat(".mp3")}`,
+        toFile: target,
         background: true,
         discretionary: true,
         progress: (res) => {
           const now = Date.now()
           if (now - lastUpdateTime > 500) {
             lastUpdateTime = now
+            if (res.contentLength <= 0) return
             requestAnimationFrame(() => {
               updateDownloadValue(
                 Math.floor((res.bytesWritten / res.contentLength) * 100)
@@ -84,11 +88,21 @@ class LocalMediaService implements LocalMediaInterface {
 
       task.promise
         .then((response) => {
+          if (dispatch)
+            dispatch(
+              rememberDownload({
+                path: target,
+                meta: {
+                  id: c.id,
+                  title: c.title,
+                  artist: c.artist,
+                  artwork: c.artwork
+                }
+              })
+            )
           InteractionManager.runAfterInteractions(() => {
             setImmediate(async () => {
-              await ApplicationCore.scanFile(
-                `${this.path}/${c.title.concat(".mp3")}`
-              )
+              await ApplicationCore.scanFile(target)
               updateDownloadValue(0)
             })
           })
@@ -96,8 +110,10 @@ class LocalMediaService implements LocalMediaInterface {
 
         .catch((err) => {
           console.log("Download error:", err)
+          updateDownloadValue(0)
         })
     } catch (error) {
+      updateDownloadValue(0)
       console.log("Eroor downloading song...")
     }
   }

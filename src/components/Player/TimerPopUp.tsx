@@ -2,6 +2,7 @@ import Slider from "@react-native-community/slider"
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit"
 import React, { memo } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
+import { useTheme } from "../../hooks/useTheme"
 import { applicationService } from "../../services/Tuneify.service"
 import Show from "../Common/Show"
 
@@ -22,9 +23,13 @@ const TimerPopUp: React.FC<PopUpInterface> = ({
   toggleModal,
   dispatch
 }) => {
+  const theme = useTheme()
   return (
     <Show isVisible={isModal}>
-      <View className="h-48  w-4/5 bg-black absolute z-50 m-auto left-12 rounded-3xl flex items-center justify-center">
+      <View
+        style={{ backgroundColor: theme.surfaceRaised }}
+        className="h-48  w-4/5 absolute z-50 m-auto left-12 rounded-3xl flex items-center justify-center"
+      >
         <Slider
           style={{ width: "100%" }}
           minimumValue={0}

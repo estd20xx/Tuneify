@@ -15,9 +15,10 @@ class ApplicationService implements ApplicationInterface {
     dispatch: Dispatch<UnknownAction>
   ): Promise<void> => {
     try {
-      state.isRepeat
-        ? TrackPlayer.setRepeatMode(RepeatMode.Track)
-        : TrackPlayer.setRepeatMode(RepeatMode.Queue)
+      const nextIsRepeat = !state.isRepeat
+      await TrackPlayer.setRepeatMode(
+        nextIsRepeat ? RepeatMode.Track : RepeatMode.Off
+      )
       dispatch(songRepeat())
     } catch (error) {
       console.log(error)
@@ -35,6 +36,7 @@ class ApplicationService implements ApplicationInterface {
       console.log("Error happens during forward and backward")
     }
   }
+  private sleepTimer: ReturnType<typeof setTimeout> | null = null
   public timerMusicOff = (
     period: number,
     dispatch: Dispatch<UnknownAction>,
@@ -42,13 +44,15 @@ class ApplicationService implements ApplicationInterface {
   ): void => {
     const trackOff = async () => {
       try {
+        this.sleepTimer = null
         await TrackPlayer.pause()
         toggleTimer()
       } catch (error) {
         console.log("Error In turning of Music")
       }
     }
-    setTimeout(() => {
+    if (this.sleepTimer) clearTimeout(this.sleepTimer)
+    this.sleepTimer = setTimeout(() => {
       trackOff()
     }, period * 1000 * 60)
   }
@@ -75,6 +79,7 @@ class ApplicationService implements ApplicationInterface {
         capabilities: [
           Capability.Play,
           Capability.Pause,
+          Capability.SkipToNext,
           Capability.SkipToPrevious,
           Capability.Stop,
           Capability.SeekTo
